@@ -1,0 +1,2886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="scripts/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="./scripts/jquery-ui-1.12.1.custom/jquery-ui.min.css"/>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script src="https://pagecdn.io/lib/chart/2.9.3/Chart.min.js" crossorigin="anonymous"  ></script>
+    <link href="https://pagecdn.io/lib/chart/2.9.3/Chart.min.css" rel="stylesheet" crossorigin="anonymous"  >
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoltHbe0FsMkNbMCAbY5dRYBjxwkdSVQQ&libraries=places"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet'>
+
+    <link href="styles/search_style.css" type="text/css" rel="stylesheet" />
+    <link href="styles/site_currency.css" type="text/css" rel="stylesheet" />
+    <link href="styles/page_loader.css" type="text/css" rel="stylesheet" />
+    <script src="scripts/page_loader.js" type="text/javascript"></script>
+
+    <title>TicketSite | Search</title>
+  </head>
+  <body>
+
+    <div id="full_page_loader_container">
+      <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+        <p style="letter-spacing: 0.5px; max-width: 300px; margin: auto; text-align: center; font-weight: bolder; color: white;">
+          Confirming price availability</p>
+      </div>
+    </div>
+
+    <div id="order_room_form_container">
+      <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+        <div id="order_room_form_content_container">
+
+          <i onclick="toggle_show_hotel_booking_form();" style="font-size: 18px; position: absolute; z-index: 10; padding: 20px; top: 0; right: 0; cursor: pointer; color: orangered;" class="fa fa-times" aria-hidden="true"></i>
+          
+          <div id="order_room_form_hotel_infor_container">
+            
+            <div style="padding: 40px;">
+              <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                   width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                  <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                  </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:rgb(0, 60, 83);">
+                  <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                  getting hotel information
+                </p>
+              </div>
+            </div>
+            
+          </div>
+
+          <div id="order_room_form_inputs_container">
+
+            <div style="padding: 10px;">
+              <h1 style="font-weight: bolder; letter-spacing: 0.5px; color:rgb(6, 62, 83); color:rgb(6, 62, 83);">
+                BOOK YOUR ROOM HERE</h1>
+            </div>
+
+            <div  id="hotels_forms_multi_step_indicator">
+
+              <div id="order_room_form_hotel_rates_list_indicator" class="forms_each_step_indicator active">
+                <div id="order_room_form_hotel_rates_list_indicator_number" class="forms_each_step_indicator_number _active">1</div>
+                <p id="order_room_form_hotel_rates_list_indicator_title" class="__active" style="font-size: 12px; font-weight: bolder;">Room Rates</p>
+              </div>
+
+              <div id="hotels_final_price_step_indicator" class="forms_each_step_indicator">
+                <div id="hotels_final_price_step_indicator_number" class="forms_each_step_indicator_number">2</div>
+                <p id="hotels_final_price_step_indicator_title" style="font-size: 12px; font-weight: bolder;">Final Price</p>
+              </div>
+
+              <div id="hotels_forms_step_three_indicator" class="forms_each_step_indicator">
+                <div id="hotels_forms_step_three_indicator_number" class="forms_each_step_indicator_number">3</div>
+                <p id="hotels_forms_step_three_indicator_title" style="font-size: 12px; font-weight: bolder;">Guests & Payment</p>
+                <div id="hotels_order_ticket_form_container_review_and_submit_indicator" class="forms_each_step_indicator_number">
+                  <p style="margin-left: 0 !important; text-align: center;"><img src="./images/taskList.png" style="width: 35px; height: 35px;" alt=""></p>
+                </div>
+              </div>
+              
+            </div>
+
+            <div id="view_rooms_and_rates_main_title" style="padding-top: 30px; padding-left: 10px;">
+              <p style="font-weight: bolder; font-size: 13px; letter-spacing: 0.5px; color:rgb(6, 62, 83); color:rgb(6, 62, 83);">
+                View rooms and rates below</p>
+            </div>
+
+            <div style="margin-top: 20px" id="order_room_form_hotel_rates_list_container">
+              
+              <div style="padding: 40px;">
+                <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                  <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                    <animateTransform attributeType="xml"
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 25 25"
+                      to="360 25 25"
+                      dur="0.6s"
+                      repeatCount="indefinite"/>
+                    </path>
+                  </svg>
+                  <p style="text-align: center; font-size: 14px; color:rgb(0, 60, 83);">
+                    <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    getting rooms and rates
+                  </p>
+                </div>
+              </div>
+
+              <!--div class="order_room_form_hotel_each_rate_content">
+                <div>
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Details</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Room Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                        <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>
+                          unavailable
+                        </p>
+                    </div>
+                    <div>
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Bed Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">King</p>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px;">
+                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Description:</p>
+                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                      Long Term Stay rate, see Rate Rules
+                        Sleeps 2, Fast & free WiFi throughout the hotel
+                        , 1 King, 210sqft/19sqm-230sqft/21sqm, Wireless
+                    </p>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Details</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checkin:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">2021-01-21</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checout:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2021-01-26</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Guests:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2 adults</p>
+                    </div>
+                    <div>
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Rooms</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2 Rooms</p>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Hotel Policies</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">Cancellation:</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Deadline:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2021-01-20, 23:59</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount: </p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">$1439.24</p>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Price</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 50px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Total:</p>
+                      <p style="color: rgb(17, 95, 126); font-size: 17px; font-weight: bolder; margin-top: 10px; margin-left: 10px;">
+                        $ 726.89
+                      </p>
+                    </div>
+                    <div style="background-color: rgb(0, 127, 177); padding: 20px;">
+                      <p style="font-size: 13px; font-weight: bolder; color: white;">Book Room</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order_room_form_hotel_each_rate_content">
+                <div>
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Details</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Room Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                        <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>
+                          unavailable
+                        </p>
+                    </div>
+                    <div>
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Bed Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">King</p>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px;">
+                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Description:</p>
+                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                      Long Term Stay rate, see Rate Rules
+                        Sleeps 2, Fast & free WiFi throughout the hotel
+                        , 1 King, 210sqft/19sqm-230sqft/21sqm, Wireless
+                    </p>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Details</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checkin:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">2021-01-21</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checout:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2021-01-26</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Guests:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2 adults</p>
+                    </div>
+                    <div>
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Rooms</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2 Rooms</p>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Hotel Policies</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">Cancellation:</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Deadline:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2021-01-20, 23:59</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount: </p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">$1439.24</p>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Price</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 50px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Total:</p>
+                      <p style="color: rgb(17, 95, 126); font-size: 17px; font-weight: bolder; margin-top: 10px; margin-left: 10px;">
+                        $ 726.89
+                      </p>
+                    </div>
+                    <div style="background-color: rgb(0, 127, 177); padding: 20px;">
+                      <p style="font-size: 13px; font-weight: bolder; color: white;">Book Room</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="order_room_form_hotel_each_rate_content">
+                <div>
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Details</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Room Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                        <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>
+                          unavailable
+                        </p>
+                    </div>
+                    <div>
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Bed Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">King</p>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px;">
+                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Description:</p>
+                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                      Long Term Stay rate, see Rate Rules
+                        Sleeps 2, Fast & free WiFi throughout the hotel
+                        , 1 King, 210sqft/19sqm-230sqft/21sqm, Wireless
+                    </p>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Details</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checkin:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">2021-01-21</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checout:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2021-01-26</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Guests:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2 adults</p>
+                    </div>
+                    <div>
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Rooms</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2 Rooms</p>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Hotel Policies</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">Cancellation:</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Deadline:</p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">2021-01-20, 23:59</p>
+                    </div>
+                    <div style="margin-right: 20px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount: </p>
+                      <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">$1439.24</p>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 20px;">
+                  <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Price</p>
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 50px;">
+                      <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Total:</p>
+                      <p style="color: rgb(17, 95, 126); font-size: 17px; font-weight: bolder; margin-top: 10px; margin-left: 10px;">
+                        $ 726.89
+                      </p>
+                    </div>
+                    <div style="background-color: rgb(0, 127, 177); padding: 20px;">
+                      <p style="font-size: 13px; font-weight: bolder; color: white;">Book Room</p>
+                    </div>
+                  </div>
+                </div>
+              </div-->
+              
+            </div>
+
+            <div style="margin-top: 20px; display: none;" id="order_room_form_final_price_container">
+              
+            </div>
+
+            <div style="margin-top: 20px; display: none;" id="order_room_form_step_three_container">
+              
+              
+
+            </div>
+
+            <div style="margin-top: 20px; display: none;" id="hotels_order_ticket_form_container_review_and_submit_container">
+              <p>Review and Submit</p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="order_ticket_form_container">
+      <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+        <div id="order_ticket_form_content_container">
+          
+          <i onclick="toggle_show_finish_booking_form();" style="color: rgb(245, 151, 37); font-size: 18px; position: absolute; padding: 20px; top: 0; right: 0; cursor: pointer;" class="fa fa-times" aria-hidden="true"></i>
+          
+          <div style="padding: 20px;">
+            <p style="font-weight: bolder; font-size: 13px; letter-spacing: 0.5px; color:rgb(6, 62, 83); color:rgb(6, 62, 83);">
+              Fill out the forms below</p>
+          </div>
+
+          <div style="height: 120px; width: 95px; margin: auto;  
+          background-image: url('./images/travelersBg.svg'); background-size: cover; background-repeat: no-repeat; "></div>
+
+          <div  id="forms_multi_step_indicator">
+
+            <div id="forms_personal_info_step_indicator" class="forms_each_step_indicator active">
+              <div id="forms_personal_info_step_indicator_number" class="forms_each_step_indicator_number _active">1</div>
+              <p id="forms_personal_info_step_indicator_title" class="__active" style="font-size: 12px; font-weight: bolder;">Personal Info</p>
+            </div>
+
+            <div id="forms_contacts_step_indicator" class="forms_each_step_indicator">
+              <div id="forms_contacts_step_indicator_number" class="forms_each_step_indicator_number">2</div>
+              <p id="forms_contacts_step_indicator_title" style="font-size: 12px; font-weight: bolder;">Contacts</p>
+            </div>
+
+            <div id="forms_documents_step_indicator" class="forms_each_step_indicator">
+              <div id="forms_documents_step_indicator_number" class="forms_each_step_indicator_number">3</div>
+              <p id="forms_documents_step_indicator_title" style="font-size: 12px; font-weight: bolder;">Documents</p>
+              <div id="order_ticket_form_container_review_and_submit_indicator" class="forms_each_step_indicator_number">
+                <p style="margin-left: 0 !important; text-align: center;"><img src="./images/taskList.png" style="width: 35px; height: 35px;" alt=""></p>
+              </div>
+            </div>
+            
+          </div>
+
+          <div style="display: none; margin-bottom: 80px;" id="order_ticket_form_container_review_and_submit">
+            <p style="font-weight: bolder; margin: 0 20px; margin-top: 25px; font-size: 14px; color:rgb(0, 127, 177);">Review Travelers and Submit</p>
+
+            <div style="padding: 10px;" id="order_ticket_form_container_review_and_submit_travelers_list">
+
+            </div>
+
+            <div style="position: relative; height: 95px; display: flex; flex-direction: column !important; margin-bottom: 10px;
+                          justify-content: flex-end;" id="submit_flight_ticket_booking_loader">
+              
+                <div class="loader">
+                    <div class="mask"></div>
+                </div>
+                <p style="font-size: 12px; font-weight: bolder; color:rgb(212, 78, 0); text-align: center;">
+                  booking your flight</p>​
+              
+            </div>
+
+            <div style="padding: 10px;" id="submit_booking_travelers_info_status_containter">
+              
+            </div>
+
+            <div style="padding: 10px;">
+              <input onclick="book_ticket();" style="padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
+              type="submit" value="Submit" />
+            </div>
+
+          </div>
+
+          <div id="order_ticket_form_container_personal_info" style="opacity: 1; padding: 20px; position: relative; padding-bottom: 70px; margin-bottom: 20px;">
+            
+            <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              <div id="login_fld_container_5" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_5" class="login_fld_title">
+                First Name</p>
+                <input onblur="de_activate_login_fld(5);" onclick="activate_login_fld(5);" id="login_fld_5" class="login_fld" type="text" />
+              </div>
+
+              <div style="width: calc(100% - 10px);" id="login_fld_container_8" class="login_fld_container">
+                <p id="login_fld_title_8" class="login_fld_title">
+                Last Name</p>
+                <input onblur="de_activate_login_fld(8);" onclick="activate_login_fld(8);" id="login_fld_8" class="login_fld" type="text" />
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              <div id="login_fld_container_9" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_9" class="login_fld_title">
+                Date of Birth</p>
+                <input onblur="de_activate_login_fld(9);" onclick="activate_login_fld(9);" id="login_fld_9" class="login_fld" type="text" />
+              </div>
+
+              <div style="width: 100%;" id="login_fld_container_10" class="login_fld_container">
+                <p id="login_fld_title_10" class="login_fld_title">
+                Gender</p>
+                <select id="login_fld_10" class="login_fld">
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                </select>
+              </div>
+            </div>
+
+            <div onclick="show_finish_booking_form_contacts_fieldset();" class="finish_booking_forms_next_previous">
+              <i aria-hidden="true" class="fa fa-chevron-right"></i>
+            </div>
+           
+          </div>
+
+
+          <div id="order_ticket_form_container_contacts_info" style="display: none; padding: 20px; position: relative; padding-bottom: 70px; margin-bottom: 20px;">
+            
+            <div id="login_fld_container_6" class="login_fld_container">
+              <p id="login_fld_title_6" class="login_fld_title">
+              Email</p>
+              <input onblur="de_activate_login_fld(6);" onclick="activate_login_fld(6);" id="login_fld_6" class="login_fld" type="email" />
+            </div>
+
+            <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              
+              <div style="width: 170px !important;" id="login_fld_container_11" class="login_fld_container">
+                <p id="login_fld_title_11" class="login_fld_title">
+                Country Code</p>
+                <select id="login_fld_11" class="login_fld">
+                  <option>+1</option>
+                  <option>+233</option>
+                </select>
+              </div>
+
+              <div id="login_fld_container_7" style="width: 100%;" class="login_fld_container">
+                <p id="login_fld_title_7" class="login_fld_title">
+                  Mobile Number</p>
+                <input onblur="de_activate_login_fld(7);" onclick="activate_login_fld(7);" id="login_fld_7" class="login_fld" type="text" />
+              </div>
+
+            </div>
+
+            <div onclick="show_finish_booking_form_personal_info_fieldset();" style="left: 20px;" class="finish_booking_forms_next_previous">
+              <i aria-hidden="true" class="fa fa-chevron-left"></i>
+            </div>
+
+            <div onclick="show_finish_booking_form_documents_fieldset();" class="finish_booking_forms_next_previous">
+              <i aria-hidden="true" class="fa fa-chevron-right"></i>
+            </div>
+            
+          </div>
+
+          <div id="order_ticket_form_container_documents_info" style="display: none; padding: 20px; position: relative; padding-bottom: 70px; margin-bottom: 80px;">
+            
+            <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              
+              <div style="width: 100%;" id="login_fld_container_10" class="login_fld_container">
+                <p id="login_fld_title_110" class="login_fld_title">
+                Type</p>
+                <select id="login_fld_110" class="login_fld">
+                  <option>Passport</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div id="login_fld_container_12" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_12" class="login_fld_title">
+                Number</p>
+                <input onblur="de_activate_login_fld(12);" onclick="activate_login_fld(12);" id="login_fld_12" class="login_fld" type="text" placeholder="" />
+              </div>
+
+            </div>
+
+            <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              <div id="login_fld_container_13" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_13" class="login_fld_title">
+                Issuance Date</p>
+                <input onblur="de_activate_login_fld(13);" onclick="activate_login_fld(13);" id="login_fld_13" class="login_fld" type="text" placeholder="" />
+              </div>
+
+              <div style="width: calc(100% - 10px);" id="login_fld_container_14" class="login_fld_container">
+                <p id="login_fld_title_14" class="login_fld_title">
+                Expiry Date</p>
+                <input onblur="de_activate_login_fld(14);" onclick="activate_login_fld(14);" id="login_fld_14" class="login_fld" type="text" placeholder="" />
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              <div id="login_fld_container_15" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_15" class="login_fld_title">
+                Issuance Country</p>
+                <input onblur="de_activate_login_fld(15);" onclick="activate_login_fld(15);" id="login_fld_15" class="login_fld" type="text" placeholder="" />
+              </div>
+
+              <div style="width: calc(100% - 10px);" id="login_fld_container_16" class="login_fld_container">
+                <p id="login_fld_title_16" class="login_fld_title">
+                Validity Country</p>
+                <input onblur="de_activate_login_fld(16);" onclick="activate_login_fld(16);" id="login_fld_16" class="login_fld" type="text" placeholder="" />
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              <div id="login_fld_container_17" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_17" class="login_fld_title">
+                Nationality</p>
+                <input onblur="de_activate_login_fld(17);" onclick="activate_login_fld(17);" id="login_fld_17" class="login_fld" type="text" placeholder="" />
+              </div>
+
+              <div style="width: calc(100% - 10px);" id="login_fld_container_18" class="login_fld_container">
+                <p id="login_fld_title_18" class="login_fld_title">
+                Birth City</p>
+                <input onblur="de_activate_login_fld(18);" onclick="activate_login_fld(18);" id="login_fld_18" class="login_fld" type="text" placeholder="" />
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              <div id="login_fld_container_19" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_19" class="login_fld_title">
+                Issuance Location</p>
+                <input onblur="de_activate_login_fld(19);" onclick="activate_login_fld(19);" id="login_fld_19" class="login_fld" type="text" placeholder="" />
+              </div>
+
+              <div style="width: 100%;" id="login_fld_container_10" class="login_fld_container">
+                <p id="login_fld_title_111" class="login_fld_title">
+                Are you the holder</p>
+                <select id="login_fld_111" class="login_fld">
+                  <option value="true">Yes</option>
+                  <option value='false'>No</option>
+                </select>
+              </div>
+            </div>
+
+            <div onclick="show_finish_booking_form_contacts_fieldset();" style="left: 20px;" class="finish_booking_forms_next_previous">
+              <i aria-hidden="true" class="fa fa-chevron-left"></i>
+            </div>
+
+            <div onclick="show_finish_booking_form_reivew_and_submit();" class="finish_booking_forms_next_previous">
+              <i aria-hidden="true" class="fa fa-chevron-right"></i>
+            </div>
+
+          </div>
+          
+        </div>
+       </div>
+      </div>
+    </div>
+
+    <div id="sign_in_container">
+      <div style="flex-direction: row !important;" class="sign_in_div">
+        <div style="overflow-y: auto !important;" class="sign_in_elems">
+          <i onclick="toggle_show_login_div();" style="color: rgb(245, 151, 37); font-size: 18px; position: absolute; padding: 20px; top: 0; right: 0; cursor: pointer;" class="fa fa-times" aria-hidden="true"></i>
+          <p id="login_and_signup_title">
+            Login and Save</p>
+          <div style="background-image: url('./images/LoginBg2.svg'); margin: auto;
+            background-size: cover; background-repeat: no-repeat; width: 250px; height: 175px;">
+            
+          </div>
+          <div id="login_form_container" style="padding: 20px;">
+            
+            <div id="login_fld_container_0" class="login_fld_container">
+              <p id="login_fld_title_0" class="login_fld_title">
+                Email</p>
+              <input onblur="de_activate_login_fld(0);" onclick="activate_login_fld(0);" id="login_fld_0" class="login_fld" type="email" />
+            </div>
+
+            <div style="margin-top: 15px;" id="login_fld_container_1" class="login_fld_container">
+              <p id="login_fld_title_1" class="login_fld_title">
+                Password</p>
+              <input onblur="de_activate_login_fld(1);" onclick="activate_login_fld(1);" id="login_fld_1" class="login_fld" type="password" />
+            </div>
+
+            <input id="main_login_submit_btn" style="margin-top: 10px; padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
+            type="submit" value="Login" />
+          </div>
+
+          <div id="sign_up_form_container" style="padding: 20px; display: none;">
+
+            <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+              <div id="login_fld_container_20" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                <p id="login_fld_title_20" class="login_fld_title">
+                First Name</p>
+                <input onblur="de_activate_login_fld(20);" onclick="activate_login_fld(20);" id="login_fld_20" class="login_fld" type="text" />
+              </div>
+
+              <div style="width: calc(100% - 10px);" id="login_fld_container_2" class="login_fld_container">
+                <p id="login_fld_title_2" class="login_fld_title">
+                Last Name</p>
+                <input onblur="de_activate_login_fld(2);" onclick="activate_login_fld(2);" id="login_fld_2" class="login_fld" type="text" />
+              </div>
+            </div>
+
+            <div style="margin-top: 15px;" id="login_fld_container_3" class="login_fld_container">
+              <p id="login_fld_title_3" class="login_fld_title">
+                Email</p>
+              <input onblur="de_activate_login_fld(3);" onclick="activate_login_fld(3);" id="login_fld_3" class="login_fld" type="email" />
+            </div>
+
+            <div style="margin-top: 15px;" id="login_fld_container_4" class="login_fld_container">
+              <p id="login_fld_title_4" class="login_fld_title">
+                Password</p>
+              <input onblur="de_activate_login_fld(4);" onclick="activate_login_fld(4);" id="login_fld_4" class="login_fld" type="password" />
+            </div>
+
+            <div style="margin-top: 15px;" id="login_fld_container_199" class="login_fld_container">
+              <p id="login_fld_title_199" class="login_fld_title">
+                Confirm Password</p>
+              <input onblur="de_activate_login_fld(199);" onclick="activate_login_fld(199);" id="login_fld_199" class="login_fld" type="password" />
+            </div>
+
+            <input style="margin-top: 10px; padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
+            type="submit" value="Submit" />
+          </div>
+
+          <p id="toggle_show_login_or_signup_formsbtn" onclick="toggle_show_login_or_signup_forms()">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>dont have an account ? (sign up)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="full_page_picture_viewer">
+      <div onclick="close_full_Screen_photo_viewer();" class="page_popup_close_button" style="width: 30px; text-align: center; padding: 5px 0; margin: 10px; margin-right: 15px; background-color: rgba(0, 0, 0, 0.568); border-radius: 4px;">
+        <i style="color: white;" class="fa fa-times" aria-hidden="true"></i>
+      </div>
+      <div style="width: fit-content; margin: auto;">
+        <img id="full_page_picture_viewer_img" src="./images/HotelPic2.jpg" alt=""/>
+      </div>
+    </div>
+    <div id="book_hotel_view_full_profile_info" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: white; z-index: 101; overflow: auto !important;">
+      <div onclick="toggle_show_hide_book_hotel_view_full_profile_info();" class="page_popup_close_button" style="margin-right: 10px;">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </div>
+      <div id="book_hotel_view_full_profile_header" style="overflow: initial !important; height: 130px; background-color: #023057; display: flex; flex-direction: column !important; justify-content: center;">
+        <div style="margin-left: 20px; height: initial !important; overflow: initial !important;" class="site_logo_container">
+          <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+            <p  style="text-shadow: none;"><span style="text-shadow: none;">An</span style="text-shadow: none;">i<span style="text-shadow: none;">d</span style="text-shadow: none;">a<span style="text-shadow: none;">s</span>o<sup style="font-size: 12px; text-shadow: none;">&reg;</sup></p>
+          </div>
+        </div>
+        <p style="overflow: initial !important; margin-left: 20px; font-size: 11px; color: white; letter-spacing: 1px;">
+          View Hotel Full Info.</p>
+        <p id="book_hotel_view_full_profile_hotel_name" style="overflow: initial !important; text-align: center; color: rgb(231, 231, 231); font-size: 14px; margin-top: 25px; font-weight: bolder; letter-spacing: 1px;">
+          Hotel Name Here</p>
+          <p id="book_hotel_view_full_profile_hotel_location" style="font-size: 11px; color:rgb(255, 173, 73); margin-top: 5px; letter-spacing: 1px; text-align: center;">
+            hotel location here
+          </p>
+      </div>
+      <div id="book_hotel_view_full_profile_body">
+        <div class="book_hotel_view_full_profile_infor_row">
+          <div class="book_hotel_view_full_profile_infor_row_set">
+            <div id="book_hotel_view_full_profile_ratings_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+              
+            </div>
+            <div id="book_hotel_view_full_profile_amenities_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+              
+            </div>
+          </div>
+          <div class="book_hotel_view_full_profile_infor_row_set">
+            <div id="book_hotel_view_full_profile_sentiments_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+              
+            </div>
+            <div id="book_hotel_view_full_profile_contacts_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+              
+            </div>
+          </div>
+        </div>
+        <div id="book_hotel_view_full_profile_body_content">
+          <div id="book_hotel_view_full_profile_photos">
+            
+          </div>
+        </div>
+        <div class="book_hotel_view_full_profile_infor_row">
+          <div class="book_hotel_view_full_profile_infor_row_set">
+            <div id="book_hotel_view_full_profile_child_policies_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+            </div>
+            <div id="book_hotel_view_full_profile_whats_nearby_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+            </div>
+          </div>
+          <div class="book_hotel_view_full_profile_infor_row_set">
+            <div id="book_hotel_view_full_profile_public_transit_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+            </div>
+            <div  id="book_hotel_view_full_profile_other_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+            </div>
+          </div>
+        </div>
+        <div id="view_full_hotel_profile_reviews">
+          <p style="font-size: 14px; color:rgb(0, 127, 177); text-align: center; font-weight: bolder; letter-spacing: 1px; margin-bottom: 15px;">
+            What Hotel Guests Say</p>
+          <div id="view_full_hotel_profile_reviews_list">
+
+          </div>
+          <div style="border-radius: 4px; text-align: center; background-color:rgb(0, 60, 83); color: white; padding: 20px; width: 150px; font-size: 14px; margin: auto; margin-top: 10px;">
+            load reviews...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--page loader-->
+  
+    <div class='progress' id="progress_div">
+      <div class='bar' id='bar1'></div>
+      <div class='percent' id='percent1'></div>
+    </div>
+
+    <!--page loader-->
+
+    <header>
+      <div class="wrapper">
+        <div class="header_content_container">
+          <div id="logo_as_home_btn" class="site_logo_container">
+            <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+              <p><span>An</span>i<span>d</span>a<span>s</span>o<sup style="font-size: 12px;">&reg;</sup></p>
+            </div>
+          </div>
+          <div class="top_nav_links">
+            <ul>
+              <li
+                id="main_menu_flights_option"
+                class="top_nav_var_main_menu_item active_top_nav_link"
+              >
+                <a href="#"><i class="fa fa-plane" aria-hidden="true"></i>Flights</a>
+              </li>
+              <li
+                id="main_menu_hotels_option"
+                class="top_nav_var_main_menu_item"
+              >
+                <a href="#"
+                  ><i class="fa fa-bed" aria-hidden="true"></i>Hotels</a
+                >
+              </li>
+              <li
+                id="main_menu_car_rentals_option"
+                class="top_nav_var_main_menu_item"
+              >
+                <a href="#"
+                  ><i class="fa fa-car" aria-hidden="true"></i>Cars</a
+                >
+              </li>
+              <li id="top_nav_trip_btn">
+                <a href="/">
+                  <i style="color:rgb(0, 177, 139);" class="fa fa-home" aria-hidden="true"></i>Home</a>
+              </li>
+              <li onclick="toggle_show_login_div();" id="top_nav_signin_btn">
+                <a href="#" style="color: goldenrod"
+                  ><i class="fa fa-sign-in" aria-hidden="true"></i>Sign in</a
+                >
+              </li>
+              <li style="position: relative;" id="other_menu_languages_option">
+                
+                <a href="#" style="color: #b12900; font-size: 14px"
+                  >Language:
+                  <img
+                    class="header_lang_flag"
+                    src="images/USflag2.png" alt="usa flag"
+                  />
+                  <span style="color: rgb(253, 158, 158); font-size: 12px"
+                    >Eng - US</span
+                  >
+                </a>
+                <div style="position: absolute;" id="main_menu_language_submenu">
+                  <p style="padding-bottom: 10px; text-align: center">
+                    <a
+                      href="#"
+                      style="color: white; text-decoration: none; font-size: 13px"
+                    >
+                      English
+                    </a>
+                  </p>
+                  <p
+                    style="
+                      padding: 10px 0;
+                      border-top: 1px solid #2a4255;
+                      text-align: center;
+                    "
+                  >
+                    <a
+                      href="#"
+                      style="color: rgb(117, 117, 117); text-decoration: none; font-size: 13px"
+                    >
+                      Spanish
+                    </a>
+                  </p>
+                  <p
+                    style="
+                      padding-top: 10px;
+                      border-top: 1px solid #2a4255;
+                      text-align: center;
+                    "
+                  >
+                    <a
+                      href="#"
+                      style="color: rgb(117, 117, 117); text-decoration: none; font-size: 13px"
+                    >
+                      French
+                    </a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!--script>
+      //flight_search or hotel_search or car_search or package_search
+      if(localStorage.getItem("main_search_type") === "hotel_search"){
+        let elemArr = Array.from(document.getElementsByClassName("top_nav_var_main_menu_item"));
+        elemArr.forEach(each => {
+          each.classList.remove("active_top_nav_link")
+        });
+        document.getElementById("main_menu_hotels_option").classList.add("active_top_nav_link")
+      }
+    </script-->
+
+    <section>
+      <div class="hero_section_container">
+          
+        <div style="position: relative;" class="wrapper">
+
+          <p id="MobilehowSearchFormInputsBtn" style="position: absolute; width: 35px; height: 35px; border-radius: 100%; text-align: center;
+            flex-direction: column; justify-content: center; text-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3), 0px 0px 2.9px rgba(0, 0, 0, 0.23);
+            background-color: rgb(235, 86, 0); right: 0px; top: 45px; color: white; font-size: 20px; z-index: 10; transition: all 0.5s;">
+            <i id="MobilehowSearchFormInputsBtn_i" class="fa fa-search" aria-hidden="true"></i>
+          </p>
+          <div id="mobile_search_change_type_of_service">
+            <div
+                id="mobile_menu_flights_option"
+                class="top_nav_var_main_menu_item active_mobile_nav_link"
+              >
+                <a href="#"><i class="fa fa-plane" aria-hidden="true"></i>Flights</a>
+            </div>
+              <div
+                id="mobile_menu_hotels_option"
+                class="top_nav_var_main_menu_item"
+              >
+                <a href="#"
+                  ><i class="fa fa-bed" aria-hidden="true"></i>Hotels</a
+                >
+              </div>
+              <div
+                id="mobile_menu_car_rentals_option"
+                class="top_nav_var_main_menu_item"
+              >
+                <a href="#"
+                  ><i class="fa fa-car" aria-hidden="true"></i>Cars</a
+                >
+              </div>
+              <div
+              onclick="mobile_toggle_show_login_div();"
+              id="mobile_menu_packages_option"
+              class="top_nav_var_main_menu_item"
+            >
+              <a><i style="color:rgb(117, 154, 253);" class="fa fa-sign-in" aria-hidden="true"></i>Sign in</a
+              >
+            </div>
+          </div>
+
+          <div id="hide_trip_top_params" style="display: none; position: absolute; background-color:rgb(212, 78, 0); top: 35px; z-index: 15; 
+          right: -5px; border-top-right-radius: 10px;box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3), 0px 0px 2.9px rgba(0, 0, 0, 0.33);">
+            <p style="color:rgb(112, 41, 0); padding: 15px; font-size: 14px;"><i style="margin-right: 5px;" class="fa fa-times" aria-hidden="true"></i> hide</p>
+          </div>
+
+          <div id="trip_type_param_round_trip_option_container" style="overflow: initial !important; width: fit-content;">
+            <ul id="trip_type_parameters">
+              <li id="trip_type_param_round_trip_option">
+                Round-trip 
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+              </li>
+              <li id="trip_type_param_number_of_people_option">
+                1 adult 
+                <i class="fa fa-caret-down" aria-hidden="true"></i></li>
+              <li id="trip_type_param_flight_class_option">
+                Economy 
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+              </li>
+              <div id="main_round_trip_type_options" class="round_trip_type_options">
+                <div class="round_trip_type_options_content">
+                    <div id="oneway_or_round_trip_type_options_item" class="round_trip_type_options_item">
+                      <p onclick="set_flight_trip_round_for_search('Round-trip');"><input id="roundtrip_radio_option" checked="true" type="radio" name="round_or_single_trip" > <label for="roundtrip_radio_option">Round-Trip</label></p>
+                      <p onclick="set_flight_trip_round_for_search('One-way');"><input id="oneway_radio_option" type="radio" name="round_or_single_trip" > <label for="oneway_radio_option">One-Way</label></p>
+                    </div>
+
+                    <div id="flight_class_round_trip_type_options_item" style="display: none;" class="round_trip_type_options_item">
+                      <p onclick="set_flight_class_for_search('ECONOMY');"><input id="economy_flight_class_option" checked="true" type="radio" name="flight_class_option" > <label for="economy_flight_class_option">Economy</label></p>
+                      <p onclick="set_flight_class_for_search('PREMIUM_ECONOMY');"><input id="premium_flight_class_option" type="radio" name="flight_class_option" > <label for="premium_flight_class_option">Premium Economy</label></p>
+                      <p onclick="set_flight_class_for_search('BUSINESS');"><input id="business_flight_class_option" type="radio" name="flight_class_option" > <label for="business_flight_class_option">Business</label></p>
+                      <p onclick="set_flight_class_for_search('FIRST');"><input id="first_flight_class_option" type="radio" name="flight_class_option" > <label for="first_flight_class_option">First</label></p>
+                      <p onclick="set_flight_class_for_search('ECONOMY');"><input id="multiple_flight_class_option" type="radio" name="flight_class_option" > <label for="multiple_flight_class_option">Multiple</label></p>
+                    </div>
+                    
+                    <div id="number_of_people_round_trip_type_options_item" style="display: none;" class="round_trip_type_options_item">
+                      <div class="each_round_trip_options_person_selector">
+                        <div class="each_round_trip_options_person_type">Adults <span>18-64</span></div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_person_from_flight_search('Adult');"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div id="number_of_adults_count">1</div>
+                          <div onclick="add_person_to_flight_search('Adult');"
+                            class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div class="each_round_trip_options_person_selector">
+                        <div class="each_round_trip_options_person_type">Students <span>over 18</span></div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_person_from_flight_search('Student');"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div id="number_of_students_count">0</div>
+                          <div onclick="add_person_to_flight_search('Student');"
+                              class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div class="each_round_trip_options_person_selector">
+                        <div class="each_round_trip_options_person_type">Seniors <span>65+</span></div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_person_from_flight_search('Senior');"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div id="number_of_seniors_count">0</div>
+                          <div onclick="add_person_to_flight_search('Senior');"
+                            class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div class="each_round_trip_options_person_selector">
+                        <div class="each_round_trip_options_person_type">Youth <span>12-17</span></div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_person_from_flight_search('Youth');"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div id="number_of_youth_count">0</div>
+                          <div onclick="add_person_to_flight_search('Youth');"
+                            class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div class="each_round_trip_options_person_selector">
+                        <div class="each_round_trip_options_person_type">Child <span>2-11</span></div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_person_from_flight_search('Child');"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div id="number_of_children_count">0</div>
+                          <div onclick="add_person_to_flight_search('Child');"
+                            class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div class="each_round_trip_options_person_selector">
+                        <div class="each_round_trip_options_person_type">Toddler in own seat <span>under 2</span></div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_person_from_flight_search('Toddler');"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div id="number_of_toddlers_count">0</div>
+                          <div onclick="add_person_to_flight_search('Toddler');"
+                              class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div class="each_round_trip_options_person_selector">
+                        <div class="each_round_trip_options_person_type">Infant on lap <span>under 2</span></div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_person_from_flight_search('Infant');"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div id="number_of_infants_count">0</div>
+                          <div onclick="add_person_to_flight_search('Infant');"
+                            class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+
+                      <div id="number_of_people_indicator"></div>
+                    </div>
+                </div>
+              </div>
+            </ul>
+            <ul style="display: none;" id="hotels_accommodations_parameters">
+              <li id="hotels_accommodations_parameters_option">
+                  1 room, 1 traveler
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+              </li>
+              <div id="main_hotels_accommodations_parameters_options" class="round_trip_type_options">
+                <div class="round_trip_type_options_content">
+                  <div style="padding: 0 10px;">
+                    <div class="each_round_trip_options_person_selector">
+                      <div class="each_round_trip_options_person_type">Rooms</div>
+                      <div class="each_round_trip_options_increase_person_div">
+                        <div onclick="remov_a_room();"
+                          class="each_round_trip_options_increase_person_btn">-</div>
+                        <div id="number_of_rooms_count">1</div>
+                        <div onclick="add_a_room();"
+                          class="each_round_trip_options_increase_person_btn">+</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="hotels_search_form_rooms_list">
+                    <div style="padding: 0 10px;">
+                      <p style="color: rgb(255, 102, 0); margin-top: 15px;  font-weight: bolder; text-shadow: none !important;">
+                      Room 1</p>
+                      <div style="margin-top: -5px;" class="each_round_trip_options_person_selector">
+                        <div style="margin-left: 15px;" class="each_round_trip_options_person_type">Adults</div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_a_adult(1,1);"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div class="hotels_number_of_items_count" id="hotels_number_of_adults_count1">1</div>
+                          <div onclick="add_a_adult(1,1);"
+                            class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div style="margin-top: -10px;" class="each_round_trip_options_person_selector">
+                        <div style="margin-left: 15px;" class="each_round_trip_options_person_type">Children</div>
+                        <div class="each_round_trip_options_increase_person_div">
+                          <div onclick="remove_a_child(1,1);"
+                            class="each_round_trip_options_increase_person_btn">-</div>
+                          <div class="hotels_number_of_items_count" id="hotels_number_of_children_count1">0</div>
+                          <div onclick="add_a_child(1, 1);"
+                            class="each_round_trip_options_increase_person_btn">+</div>
+                        </div>
+                      </div>
+                      <div style="flex-direction: row !important;" class="hotels_search_form_room_children_list" id="hotels_search_form_room_children_list1">
+                      <div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ul>
+            <ul style="display: none;" id="car_rentals_pickup_time_parameters">
+              <li id="car_rentals_pickup_time_parameters_option">
+                  Pickup and Drop-off Time
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+              </li>
+              <div id="car_rentals_pickup_time_parameters_options" class="round_trip_type_options">
+                <div class="round_trip_type_options_content">
+                  <div style="padding: 0 10px;">
+                    <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                      <div>
+                        <p>Pickup</p>
+                      </div>
+                      <div>
+                        <input style="padding: 10px; border-radius: 4px; border: none;" type="text" placeholder="pick a time" />
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding: 0 10px; margin-top: 10px;">
+                    <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                      <div>
+                        <p>Drop-off</p>
+                      </div>
+                      <div>
+                        <input style="padding: 10px; border-radius: 4px; border: none;" type="text" placeholder="pick a time" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ul>
+          </div>
+          <!--Additional Search Inputs and Options-->
+          <div id="additional_search_inputs_and_Options">
+            <div id="flight_set_off_additional_options" class="each_set_off_additional_options">
+              <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                <div class="each_additional_search_inputs_and_Option">
+                    <input id="multiple_city_search_option" type="checkbox" />
+                    <label onclick="add_a_flight(0);" for="multiple_city_search_option">
+                      <span style="color: #023057;">Multi-city</span>
+                    </label>
+                </div>
+                <div style="font-weight: lighter !important;" id="main_add_flight_btn" onclick="add_a_flight(1);" class="each_additional_search_inputs_and_Option add_flight_btn">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span>Add Flight <span id="total_cities_for_flight_search" style="font-weight: lighter !important; color:rgb(233, 214, 190);">(1 default)</span></span>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: row !important;">
+                <div class="each_additional_search_inputs_and_Option">
+                  <input id="add_a_hotel_to_flight_search" type="checkbox" />
+                  <label for="add_a_hotel_to_flight_search">
+                    <span>Add a Hotel</span>
+                </label>
+                </div>
+                <div class="each_additional_search_inputs_and_Option">
+                  <input id="add_a_car_to_flight_search" type="checkbox" />
+                  <label for="add_a_car_to_flight_search">
+                    <span>Add a Car</span>
+                </label>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <div style="padding: 0; display: flex;" class="each_additional_search_inputs_and_Option">
+                  <p>Filter by Airline:</p>
+                  <select  id="book_flights_filter_airlines_list" class="current_search_results_filter_options">
+                    <option>All</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div id="rental_cars_set_off_additional_options" style="display: none;" class="each_set_off_additional_options">
+              <div style="display: flex; flex-direction: row !important;">
+                <div class="each_additional_search_inputs_and_Option">
+                  <input id="add_a_hotel_to_flight_search" type="checkbox" />
+                  <label for="add_a_hotel_to_flight_search">
+                    <span>Include AARP member rates
+                      <span style="margin-left: 5px; color:rgb(148, 148, 148);">(Membership is required and verified at pick-up.)</span></span>
+                </label>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <div class="each_additional_search_inputs_and_Option">
+                  <input id="apply_discount_code_to_car_search" type="checkbox" />
+                  <label for="apply_discount_code_to_car_search">
+                    <span>I have a discount code 
+                      <i class="fa fa-angle-down" style="font-size: 18px;
+                      margin: 0 10px; color:rgb(235, 86, 0); font-weight: bolder;" aria-hidden="true"></i>
+                    </span>
+                </label>
+                </div>
+              </div>
+            </div>
+            <div id="hotel_set_off_additional_options" style="display: none;" class="each_set_off_additional_options">
+              <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                <div class="each_additional_search_inputs_and_Option">
+                  <input id="multiple_hotels_to_stay_check" type="checkbox" />
+                  <label for="multiple_hotels_to_stay_check">
+                    <span style="color: rgb(235, 86, 0);">I need multiple places to stay</span>
+                </label>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: row !important;">
+                <div class="each_additional_search_inputs_and_Option">
+                  <input id="add_a_flight_to_hotel_search" type="checkbox" />
+                  <label for="add_a_flight_to_hotel_search">
+                    <span>Add a Flight</span>
+                </label>
+                </div>
+                <div class="each_additional_search_inputs_and_Option">
+                  <input id="add_a_car_to_hotel_search" type="checkbox" />
+                  <label for="add_a_car_to_hotel_search">
+                    <span>Add a Car</span>
+                </label>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <div style="padding: 0; display: flex;" class="each_additional_search_inputs_and_Option">
+                  <p>Filter by Rating:</p>
+                  <select id="book_hotels_filter_hotel_by_stars" style="border: rgb(24, 103, 134) 1px solid; min-width: 200px; background-color: #37a0f5; color: white;" class="current_search_results_filter_options">
+                    <option>All</option>
+                    <option>5 star</option>
+                    <option>4 star</option>
+                    <option>3 star</option>
+                    <option>2 star</option>
+                    <option>1 star</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--End Additional Search Input and Options-->
+          <!--Begin Multi-City Search Container-->
+          <div id="multi_city_search_inputs_display" style="max-width: 100% !important; overflow-y: hidden !important;">
+            
+          </div>
+          <!--End Multi-City Search Container-->
+          <!--Begin Flight Search Form Container-->
+          <div id="flights_search_tickets_form_container" class="search_tickets_form_container">
+            <div id="city_search_fieldset" class="search_fieldset">
+              <div id="from_where_city_input_container">
+                <i class="fa fa-map-marker" aria-hidden="true"></i
+                ><input id="from_where_search_input_fld" type="text" placeholder="From where" autocomplete="off"/>
+              </div>
+              <div id="airports_exchange_search_fields_values_icon" class="exchange_search_fields_values_icon">
+                <i style="color: white;" class="fa fa-exchange" aria-hidden="true"></i>
+              </div>
+              <div id="to_where_city_input_container">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <input id="to_where_search_input_fld" type="text" placeholder="To where" autocomplete="off"/>
+              </div>
+              <div id="main_from_where_city_show_container" class="from_where_city_show_container">
+                <div style="margin-top: 30px;">
+                  
+                  <div id="people_also_searched_list_div">
+                    <ul id="flights_auto_complete_list">
+
+                    </ul>
+                    <div class="search_fieldset_done_btn" id="city_search_fieldset_done_btn">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="date_search_fieldset" class="search_fieldset">
+              <div style="width: 100% !important;" id="from_when_date_input_container">
+                <i class="fa fa-calendar" aria-hidden="true"></i
+                ><input readonly="readonly" id="from_when_search_input" type="text" placeholder="click here to add date" />
+                <!--script>
+                  function jqueryHelper1(){
+                    if($(window).width() > 700){
+                      document.getElementsByClassName('ui-datepicker')[0].classList.remove('secondJQuery');
+                    }
+                  }
+                </script-->
+              </div>
+              <span style="display: none;" id="airportSearch_date_title_span"></span>
+              <!--div id="to_when_date_input_container">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input onclick="jqueryHelper2()" readonly="readonly" id="to_when_search_input" type="text" placeholder="Return" />
+              <script>
+                function jqueryHelper2(){
+                  if($(window).width() > 700)
+                    document.getElementsByClassName('ui-datepicker')[0].classList.add('secondJQuery');
+                }
+              </script>
+              </div-->
+              <div style="padding-bottom: 0 !important;" id="main_from_when_date_show_container" class="from_when_date_show_container">
+                <div id="more_options_date_show_container">
+                  <div id="dates_search_fieldset_done_btn" style="color: white; font-size: 14px; font-weight: bolder; background-color: #023057; border-radius: 4px;
+                        box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.2), 0px 0px 2.9px rgba(0, 0, 0, 0.23); cursor: pointer;
+                        display: flex; flex-direction: column; justify-content: center; height: 40px; text-align: center; margin: 0 10px;">
+                      Cancel
+                    </div>
+                  <!--p>Estimated Prices</p>
+                  <div id="more_options_date_show_list">
+                    <div style="background-color: rgb(0, 151, 211)" class="more_options_date_show_item">$212 +</div>
+                    <div style="background-color: rgb(255, 153, 0)" class="more_options_date_show_item">$324 +</div>
+                    <div style="background-color: rgb(255, 102, 0)" class="more_options_date_show_item">$465 +</div>
+                    <div style="background-color: red" class="more_options_date_show_item">$504 +</div>
+                </div-->
+                </div>
+              </div>
+            </div>
+            <div id="home_page_search_button">
+              <p style="color: white; text-align: center">Search</p>
+            </div>
+          </div>
+          <!--End Flight Search Form Container-->
+          <!--Begin Hotels Search Form Container-->
+          <div style="display: none;" id="hotels__search_form_container" class="search_tickets_form_container">
+            <div id="hotels_city_search_fieldset" class="search_fieldset">
+              <div id="hotels_where_city_input_container">
+                <i class="fa fa-map-marker" aria-hidden="true"></i
+                ><input id="hotels_where_search_input_fld" type="text" placeholder="Enter city here to search hotels" autocomplete="off"/>
+              </div>
+              <div id="hotels_main_where_city_show_container" class="from_where_city_show_container">
+                <div style="margin-top: 50px;">
+                  
+                  <div id="hotels_people_also_searched_list_div">
+                    <ul id="list_of_cities_for_hotels_search">
+                      
+                    </ul>
+                    <div class="search_fieldset_done_btn" id="hotels_city_search_fieldset_done_btn">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="hotels_date_search_fieldset" class="search_fieldset">
+              <div id="hotels_from_when_date_input_container">
+                <i class="fa fa-calendar" aria-hidden="true"></i
+                ><input readonly="readonly" id="hotels_from_when_search_input" type="text" placeholder="click here to add date" />
+              </div>
+              <div style="padding-bottom: 0 !important;" id="hotels_main_from_when_date_show_container" class="from_when_date_show_container">
+                <div id="hotels_more_options_date_show_container">
+                  <div id="hotels_date_search_fieldset_done_btn" style="color: white; font-size: 14px; font-weight: bolder; background-color: #023057; border-radius: 4px;
+                        box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.2), 0px 0px 2.9px rgba(0, 0, 0, 0.23); cursor: pointer;
+                        display: flex; flex-direction: column; justify-content: center; height: 40px; text-align: center; margin: 0 10px;">
+                      Cancel
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div id="home_page_hotels_search_button">
+              <p style="color: white; text-align: center">Search</p>
+            </div>
+          </div>
+          <!--End Hotels Search Form Container-->
+          <!--Begin Car Rentals Search Form Container-->
+          <div style="display: none;" id="car_rentals_search_form_container" class="search_tickets_form_container">
+            <div id="car_rentals_city_search_fieldset" class="search_fieldset">
+              <div id="car_rentals_from_where_city_input_container">
+                <i class="fa fa-map-marker" aria-hidden="true"></i
+                ><input id="car_rentals_from_where_search_input_fld" type="text" placeholder="Pickup" autocomplete="off"/>
+              </div>
+              <div id="car_rentals_exchange_search_fields_values_icon" class="exchange_search_fields_values_icon">
+                <i style="color: white;" class="fa fa-exchange" aria-hidden="true"></i>
+            </div>
+              <div id="car_rentals_to_where_city_input_container">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <input id="car_rentals_to_where_search_input_fld" type="text" placeholder="Drop-off" autocomplete="off"/>
+              </div>
+              <div id="car_rentals_main_from_where_city_show_container" class="from_where_city_show_container">
+                <div style="margin-top: 50px;">
+                  
+                  <div id="car_rentals_people_also_searched_list_div">
+                    
+                    <div class="search_fieldset_done_btn" id="car_rentals_city_search_fieldset_done_btn">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="car_rentals_date_search_fieldset" class="search_fieldset">
+              <div  style="width: 100% !important;" id="car_rentals_from_when_date_input_container">
+                <i class="fa fa-calendar" aria-hidden="true"></i
+                ><input readonly="readonly" id="car_rentals_from_when_search_input" type="text" placeholder="click here to add date" />
+                <!--script>
+                  function jqueryHelper1(){
+                    if($(window).width() > 700){
+                      document.getElementsByClassName('ui-datepicker')[0].classList.remove('secondJQuery');
+                    }
+                  }
+                </script-->
+              </div>
+              
+              <!--div id="car_rentals_to_when_date_input_container">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input onclick="jqueryHelper2()" readonly="readonly" id="car_rentals_to_when_search_input" type="text" placeholder="Drop-off Date" />
+              <script>
+                function jqueryHelper2(){
+                  if($(window).width() > 700)
+                    document.getElementsByClassName('ui-datepicker')[0].classList.add('secondJQuery');
+                }
+              </script>
+              </div-->
+              <div style="padding-bottom: 0 !important;" id="car_rentals_main_from_when_date_show_container" class="from_when_date_show_container">
+                <div id="car_rentals_more_options_date_show_container">
+                  <div id="car_rentals_date_fieldset_done_btn" style="color: white; font-size: 14px; font-weight: bolder; background-color: #023057; border-radius: 4px;
+                        box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.2), 0px 0px 2.9px rgba(0, 0, 0, 0.23); cursor: pointer;
+                        display: flex; flex-direction: column; justify-content: center; height: 40px; text-align: center; margin: 0 10px;">
+                      Cancel
+                    </div>
+                  <!--p>Estimated Prices</p>
+                  <div id="car_rentals_more_options_date_show_list" style="flex-direction: row !important;">
+                    <div style="background-color: rgb(0, 151, 211)" class="more_options_date_show_item">$212 +</div>
+                    <div style="background-color: rgb(255, 153, 0)" class="more_options_date_show_item">$324 +</div>
+                    <div style="background-color: rgb(255, 102, 0)" class="more_options_date_show_item">$465 +</div>
+                    <div style="background-color: red" class="more_options_date_show_item">$504 +</div>
+                </div-->
+                </div>
+              </div>
+            </div>
+            <div id="home_page_car_rentals_search_button">
+              <p style="color: white; text-align: center">Search</p>
+            </div>
+          </div>
+          <!--End Car Rentals Search Form Container-->
+        </div>
+      </div>
+    </section>
+
+    <section id="site_lower_section">
+      
+      <div class="site_lower_section_top_area">
+        <div class="wrapper">
+          <canvas style="display: none; width: 100%; height: 100%; min-height: 250px;" id="line-chart"></canvas>
+          <script>
+            if(localStorage.getItem("main_search_type") !== "flight_search"){
+              document.getElementById("line-chart").style.display = "none";
+            }
+          </script>
+        </div>
+      </div>
+      <div class="wrapper">
+        <div id="show_search_results_options_btn">
+          <p style="color: white; text-align: center; margin-top: 20px; margin-bottom: 10px;">
+            <i style="margin-right: 5px; color:rgb(0, 127, 177);" class="fa fa-cog" aria-hidden="true"></i>
+            Search Settings
+            <i id="search_settings_angle_down" style="margin-left: 5px;" class="fa fa-chevron-down" aria-hidden="true"></i>
+          </p>
+        </div>
+        <div class="site_lower_section_content">
+          <div id="site_lower_section_left_container" class="site_lower_section_left">
+            <div class="site_lower_left_section_part">
+              <div class="trip_advisor_card">
+                <div class="trip_advisor_card_top">
+                  <p style="font-weight: bolder; font-size: 14px;">Our Advice</p>
+                  <p style="font-size: 24px; text-align: center; margin-top: 15px; color:rgb(233, 128, 0);">
+                    <i style="font-size: 24px;" aria-hidden="true" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                    <span class="sr-only">Loading...</span>
+                  </p>
+                  <p style="margin: 15px 0; font-size: 13px; color:rgb(152, 197, 214);">We're still gathering data for this route </p>
+                </div>
+                <div class="trip_advisor_card_bottom">
+                  <div><strong style="font-size: 13px;">Price Alert</strong></div>
+                  <div>
+                    <input style="margin-bottom: -1px;" id="price_alert_toggle" type="checkbox" /> <span style="font-size: 13px;">OFF</span>
+                  </div>
+                </div>
+              </div>
+              <p class="flights_site_lower_left_section_part" id="left_settings_total_number_of_found_flights" style="color: rgb(235, 210, 210); margin-top: 15px; font-size: 14px;">getting flights...</p>
+              <div class="flights_site_lower_left_section_part" style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <p><i class="fa fa-exclamation" style="color:rgb(0, 177, 139); margin-right: 5px;" aria-hidden="true"></i></p>
+                <p style="font-size: 12px; color: white; ">we show only revant flights out of the total flights found.</p>
+              </div>
+              <p class="hotels_site_lower_left_section_part" id="left_settings_total_number_of_found_hotels" style="display: none; color: rgb(235, 210, 210); margin-top: 15px; font-size: 14px;">getting rooms...</p>
+              <div class="hotels_site_lower_left_section_part" id="hotels_number_of_hotels_found_info" style="display: none; margin-top: 10px; flex-direction: row !important;">
+                <p><i class="fa fa-exclamation" style="color:rgb(0, 177, 139); margin-right: 5px;" aria-hidden="true"></i></p>
+                <p style="font-size: 12px; color: white; ">we show only revant rooms out of the total rooms found.</p>
+              </div>
+            </div>
+            <div class="site_lower_left_section_part flights_site_lower_left_section_part">
+              <div  id="toggle_show_stops_settings_btn" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Stops</p>
+                <i id="toggle_show_stops_settings_btn_i"class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="main_stops_settings_container" class="site_lower_left_section_last_part_settings">
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input onclick="flights_filter_func_with_cleanup();" id="left_setting_no_stop_option" type="checkbox" checked="true"/> 
+                    <label for="left_setting_no_stop_option"><span>No Stop</span></label>
+                  </div>
+                  <p id="left_setting_no_stop_price_tag">
+                    <i style="color: yellow; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    no flights</p>
+                </div>
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input onclick="flights_filter_func_with_cleanup();" id="left_setting_one_stop_option" type="checkbox" checked="true"/> 
+                    <label for="left_setting_one_stop_option"><span>1 Stop</span></label>
+                  </div>
+                  <p id="left_setting_one_stop_price_tag">
+                    <i style="color: yellow; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    no flights</p>
+                </div>
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input onclick="flights_filter_func_with_cleanup();" id="left_setting_twoplus_stop_option" type="checkbox" checked="true"/> 
+                    <label for="left_setting_twoplus_stop_option"><span>2+ Stops</span></label>
+                  </div>
+                  <p  id="left_setting_many_stops_price_tag">
+                    <i style="color: yellow; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    no flights</p>
+                </div>
+              </div>
+            </div>
+            <div style="display: none;" class="site_lower_left_section_part flights_site_lower_left_section_part">
+              <div  id="toggle_show_flexible_options_settings_btn" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Flexible options</p>
+                <i id="toggle_show_flexible_options_settings_btn_i" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="main_flexible_options_settings_container" class="site_lower_left_section_last_part_settings">
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox"/> 
+                    <span>Show only flexible booking options due to COVID-19</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display: none;" class="site_lower_left_section_part flights_site_lower_left_section_part">
+              <div id="toggle_airports_settings_btn" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Airports</p>
+                <i id="toggle_airports_settings_btn_i" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="main_airports_settings_container" class="site_lower_left_section_last_part_settings">
+                <p class="site_lower_left_section_last_part_settings_itemset_title">Hartford</p>
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox" checked="true"/> 
+                    <span>BDL: Bradley Intl</span>
+                  </div>
+                  <p>$263</p>
+                </div>
+                <p class="site_lower_left_section_last_part_settings_itemset_title">Jacksonville</p>
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox" checked="true"/> 
+                    <span>JAX: Jacksonville</span>
+                  </div>
+                  <p>$253</p>
+                </div>
+              </div>
+            </div>
+            <div style="display: none;" class="site_lower_left_section_part flights_site_lower_left_section_part">
+              <div id="toggle_transport_types_settings_btn" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Transportation types</p>
+                <i id="toggle_transport_types_settings_btn_i" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="main_transport_types_settings_container" class="site_lower_left_section_last_part_settings">
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox" checked="true"/> 
+                    <span>Flights</span>
+                  </div>
+                  <p>$246</p>
+                </div>
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox"/> 
+                    <span>Flights + trains</span>
+                  </div>
+                  <p>$276</p>
+                </div>
+              </div>
+            </div>
+            <div style="display: none;" class="site_lower_left_section_part flights_site_lower_left_section_part">
+              <div id="toggle_times_settings_btn" style="margin-bottom: 15px;" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Times</p>
+                <i id="toggle_times_settings_btn_i" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="main_times_settings_container" class="site_lower_left_section_last_part_settings">
+                <div class="takeoff_landing_switch">
+                  <div class="active">Take-off</div>
+                  <div>Landing</div>
+                </div>
+                <div style="margin-top: 30px;" class="each_site_lower_left_section_last_part_slider_setting">
+                  <div>
+                    <p>Take-off from JAX</p>
+                    <p>
+                      <span>Sun 6:00 AM</span>
+                      –
+                      <span>7:00 PM</span>
+                    </p>
+                  </div>
+                  <div class='wrap' style='--a: -30; --b: 20; --min: 1; --max: 100'>
+                    <input id="a" type="range" min="1" max="100" value="100" class="slider" id="myRange">
+                    <input id="b" type="range" min="1" max="100" value="1" class="slider" id="myRange">
+                  </div>
+                </div>
+                <div style="margin-top: 30px;" class="each_site_lower_left_section_last_part_slider_setting">
+                  <div>
+                    <p>Take-off from BDL</p>
+                    <p>
+                      <span>Sun 5:30 AM</span>
+                      –
+                      <span>8:00 PM</span>
+                    </p>
+                  </div>
+                  <div class='wrap' style='--a: -30; --b: 20; --min: 1; --max: 100'>
+                    <input id="a" type="range" min="1" max="100" value="100" class="slider" id="myRange">
+                    <input id="b" type="range" min="1" max="100" value="1" class="slider" id="myRange">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display: none;" class="site_lower_left_section_last_part flights_site_lower_left_section_part">
+              <div id="toggle_airlines_settings_btn" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Airlines</p>
+                <i id="toggle_airlines_settings_btn_i" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="main_airlines_settings_container" class="site_lower_left_section_last_part_settings">
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox" checked="true"/> 
+                    <span>Flights</span>
+                  </div>
+                  <p>$246</p>
+                </div>
+              </div>
+            </div>
+            <div class="site_lower_section_right_top_ad general_adds_card no_needed_on_mobile" style="margin-left: 0; margin-right: 15px; padding-top: 5px;">
+              <div style="display: flex; flex-direction: row !important; justify-content: space-between; padding: 5px;">
+                <div style="display: flex; flex-direction: column !important; justify-content: center;">
+                  <div style="background-color: white; font-size: 11px; font-weight: bolder; text-align: center; letter-spacing: 1px; 
+                    margin-left: 5px; padding: 5px; border-radius: 20px; width: 30px !important; cursor: pointer;">
+                    AD</div>
+                </div>
+                <div style="padding: 5x; width: 30px !important; text-align: center; border-radius: 5px; background-color: #000000a1;">
+                  <i style="color: white; font-size: 11px;" class="fa fa-times" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <div class="site_lower_left_section_part hotels_site_lower_left_section_part" style="display: none;">
+              <div  id="toggle_hotel_settings_btn_1" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Flexible options</p>
+                <i id="toggle_hotel_settings_btn_i_1" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="hotel_settings_container_1" class="site_lower_left_section_last_part_settings">
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox"/> 
+                    <span>Hotel Settings</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="site_lower_left_section_part hotels_site_lower_left_section_part" style="display: none;">
+              <div  id="toggle_hotel_settings_btn_2" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Flexible options</p>
+                <i id="toggle_hotel_settings_btn_i_2" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="hotel_settings_container_2" class="site_lower_left_section_last_part_settings">
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox"/> 
+                    <span>Hotel Settings</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="site_lower_left_section_part hotels_site_lower_left_section_part" style="display: none;">
+              <div  id="toggle_hotel_settings_btn_3" class="site_lower_left_section_part_title_container">
+                <p class="site_lower_left_section_part_title">Flexible options</p>
+                <i id="toggle_hotel_settings_btn_i_3" class="fa fa-angle-up" aria-hidden="true"></i>
+              </div>
+              <div id="hotel_settings_container_3" class="site_lower_left_section_last_part_settings">
+                <div class="each_site_lower_left_section_last_part_setting">
+                  <div class="each_site_lower_left_section_last_part_setting_left">
+                    <input type="checkbox"/> 
+                    <span>Hotel Settings</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>
+
+            function hide_flights_left_section_settings(){
+                Array.from(document.querySelectorAll(".flights_site_lower_left_section_part")).forEach(
+                    elem => elem.style.display = "none"
+                );
+            }
+
+            function show_hotels_left_section_settings(){
+                Array.from(document.querySelectorAll(".hotels_site_lower_left_section_part")).forEach(
+                    elem => elem.style.display = "block"
+                );
+                document.getElementById("hotels_number_of_hotels_found_info")
+                .style.display = "flex";
+            }
+
+            if(localStorage.getItem("main_search_type") !== "flight_search"){
+              hide_flights_left_section_settings();
+            }
+
+            if(localStorage.getItem("main_search_type") === "hotel_search"){
+              show_hotels_left_section_settings();
+            }
+
+          </script>
+          
+          <div class="site_lower_section_middle">
+            <div id="fights_site_lower_section_tabs" class="site_lower_section_tabs">
+              <div onclick="getCheapFlights();" id="site_lower_section_tabs_cheapest_option" class="site_lower_section_tabs_option  active">
+                <div id="site_lower_section_tabs_cheapest_option_content" class="site_lower_section_tabs_option_content" style="border-right: rgb(112, 2, 2) 1px solid;">
+                  <p><strong>Unfiltered</strong></p>
+                  <div style=" margin-top: 7px; display: flex; flex-direction: row !important; justify-content: center;">
+                    <p id="ticks_top_custom_categories_price" style="font-size: 13px;">0.00</p>
+                    <p class="site_lower_section_tabs_option_content_middle_dot" style="font-size: 5px; margin: 0 6px; margin-top: 4px"><i  class="fa fa-circle" aria-hidden="true"></i></p>
+                    <p id="ticks_top_custom_categories_time" style="font-size: 13px;">0h 00m</p>
+                  </div>
+                </div>
+              </div>
+              <div onclick="getBestFlights();" id="site_lower_section_tabs_best_option" class="site_lower_section_tabs_option">
+                <div id="site_lower_section_tabs_best_option_content" class="site_lower_section_tabs_option_content" style="border-right: #a32600 1px solid;">
+                  <p><strong>Save Time</strong></p>
+                  <div style=" margin-top: 7px; display: flex; flex-direction: row !important; justify-content: center;">
+                    <p id="ticks_top_fastest_categories_price" style="font-size: 13px;">0.00</p>
+                    <p class="site_lower_section_tabs_option_content_middle_dot" style="font-size: 5px; margin: 0 6px; margin-top: 4px"><i  class="fa fa-circle" aria-hidden="true"></i></p>
+                    <p id="ticks_top_fastest_categories_time" style="font-size: 13px;">0h 00m</p>
+                  </div>
+                </div>
+              </div>
+              <div onclick="getLeastC02Flights();" id="site_lower_section_tabs_LeastC02_option" class="site_lower_section_tabs_option">
+                <div class="site_lower_section_tabs_option_content">
+                  <p><strong>Save Cash</strong></p>
+                  <div style=" margin-top: 7px; display: flex; flex-direction: row !important; justify-content: center;">
+                    <p id="ticks_top_cheapest_categories_price" style="font-size: 13px;">0.00</p>
+                    <p class="site_lower_section_tabs_option_content_middle_dot" style="font-size: 5px; margin: 0 6px; margin-top: 4px"><i  class="fa fa-circle" aria-hidden="true"></i></p>
+                    <p id="ticks_top_cheapest_categories_time" style="font-size: 13px;">0h 00m</p>
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <script>
+              if(localStorage.getItem("main_search_type") !== "flight_search"){
+                document.getElementById("fights_site_lower_section_tabs").style.display = "none";
+              }
+            </script>
+
+            <div id="main_tickets_section_list_container" class="tickets_section_list_container">
+              <script>
+                if(localStorage.getItem("main_search_type") === "hotel_search"){
+                  document.getElementById("main_tickets_section_list_container").style.display = "none";
+                }
+              </script>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div style="display: none !important;" class="each_ticket_item_top">
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 15px;" class="loading_card_data_element">
+                      <i style="font-size: 19px;" class="fa fa-plane" aria-hidden="true"></i>
+                      <i style="margin-left: 20px;" class="fa fa-train" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <p style="margin-bottom: 2px; font-weight: bolder;"  class="loading_card_data_element">Interested in flight + train prices?</p>
+                        <p  class="loading_card_data_element">Beat flight costs by including train connections.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="background-color: rgb(160, 160, 160); color: rgb(160, 160, 160); border: none;" class="each_ticket_item_top_show_more_btn loading_card_data_element">Show more</div>
+                  </div>
+                </div>
+                <div class="each_ticket_item_main_extra_container">
+                  <div class="each_ticket_item_main_extra">
+                    <div>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Cheapest</span>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Flight + train</span>
+                      <span class="COVID_policy_desktop loading_card_data_element" style="color: rgb(160, 160, 160)">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-medkit" aria-hidden="true"></i>
+                        COVID-19 policies
+                      </span>
+                    </div>
+                    <div class="each_ticket_item_emogi_and_rating">
+                      <span  class="loading_card_data_element" style="font-size: 14px; padding-right: 15px; border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder;">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                      </span>
+                    </div>
+                  </div>
+              </div>
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">PHL</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">5h 00m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              BDL ‐ JAX</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="main_ticket_info_area_bottom">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">CLT</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">5h 15m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              JAX ‐ BDL</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="tickets_main_additional_text loading_card_data_element" style="color: rgb(160, 160, 160)">Operated by Psa Airlines AS American Eagle, Republic Airways AS American Eagle</p>
+                  </div>
+                  <div class="each_ticket_item_main_right">
+                    <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                    <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                      American Airlines</p>
+                    <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                      Main Cabin
+                    </div>
+                    <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">Book Flight</div>
+                  </div>
+                </div>
+              </div>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div style="display: none !important;" class="each_ticket_item_top">
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 15px;" class="loading_card_data_element">
+                      <i style="font-size: 19px;" class="fa fa-plane" aria-hidden="true"></i>
+                      <i style="margin-left: 20px;" class="fa fa-train" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <p style="margin-bottom: 2px; font-weight: bolder;"  class="loading_card_data_element">Interested in flight + train prices?</p>
+                        <p  class="loading_card_data_element">Beat flight costs by including train connections.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="background-color: rgb(160, 160, 160); color: rgb(160, 160, 160); border: none;" class="each_ticket_item_top_show_more_btn loading_card_data_element">Show more</div>
+                  </div>
+                </div>
+                <div class="each_ticket_item_main_extra_container">
+                  <div class="each_ticket_item_main_extra">
+                    <div>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Cheapest</span>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Flight + train</span>
+                      <span class="COVID_policy_desktop loading_card_data_element" style="color: rgb(160, 160, 160)">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-medkit" aria-hidden="true"></i>
+                        COVID-19 policies
+                      </span>
+                    </div>
+                    <div class="each_ticket_item_emogi_and_rating">
+                      <span  class="loading_card_data_element" style="font-size: 14px; padding-right: 15px; border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder;">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                      </span>
+                    </div>
+                  </div>
+              </div>
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">PHL</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">5h 00m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              BDL ‐ JAX</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="main_ticket_info_area_bottom">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">CLT</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">5h 15m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              JAX ‐ BDL</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="tickets_main_additional_text loading_card_data_element" style="color: rgb(160, 160, 160)">Operated by Psa Airlines AS American Eagle, Republic Airways AS American Eagle</p>
+                  </div>
+                  <div class="each_ticket_item_main_right">
+                    <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                    <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                      American Airlines</p>
+                    <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                      Main Cabin
+                    </div>
+                    <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">Book Flight</div>
+                  </div>
+                </div>
+              </div>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div style="display: none !important;" class="each_ticket_item_top">
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 15px;" class="loading_card_data_element">
+                      <i style="font-size: 19px;" class="fa fa-plane" aria-hidden="true"></i>
+                      <i style="margin-left: 20px;" class="fa fa-train" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <p style="margin-bottom: 2px; font-weight: bolder;"  class="loading_card_data_element">Interested in flight + train prices?</p>
+                        <p  class="loading_card_data_element">Beat flight costs by including train connections.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="background-color: rgb(160, 160, 160); color: rgb(160, 160, 160); border: none;" class="each_ticket_item_top_show_more_btn loading_card_data_element">Show more</div>
+                  </div>
+                </div>
+                <div class="each_ticket_item_main_extra_container">
+                  <div class="each_ticket_item_main_extra">
+                    <div>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Cheapest</span>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Flight + train</span>
+                      <span class="COVID_policy_desktop loading_card_data_element" style="color: rgb(160, 160, 160)">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-medkit" aria-hidden="true"></i>
+                        COVID-19 policies
+                      </span>
+                    </div>
+                    <div class="each_ticket_item_emogi_and_rating">
+                      <span  class="loading_card_data_element" style="font-size: 14px; padding-right: 15px; border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder;">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                      </span>
+                    </div>
+                  </div>
+              </div>
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">PHL</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">5h 00m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              BDL ‐ JAX</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="main_ticket_info_area_bottom">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">CLT</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">5h 15m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              JAX ‐ BDL</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="tickets_main_additional_text loading_card_data_element" style="color: rgb(160, 160, 160)">Operated by Psa Airlines AS American Eagle, Republic Airways AS American Eagle</p>
+                  </div>
+                  <div class="each_ticket_item_main_right">
+                    <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                    <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                      American Airlines</p>
+                    <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                      Main Cabin
+                    </div>
+                    <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">Book Flight</div>
+                  </div>
+                </div>
+              </div>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div style="display: none !important;" class="each_ticket_item_top">
+                  <div style="display: flex; flex-direction: row !important;">
+                    <div style="margin-right: 15px;" class="loading_card_data_element">
+                      <i style="font-size: 19px;" class="fa fa-plane" aria-hidden="true"></i>
+                      <i style="margin-left: 20px;" class="fa fa-train" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <p style="margin-bottom: 2px; font-weight: bolder;"  class="loading_card_data_element">Interested in flight + train prices?</p>
+                        <p  class="loading_card_data_element">Beat flight costs by including train connections.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="background-color: rgb(160, 160, 160); color: rgb(160, 160, 160); border: none;" class="each_ticket_item_top_show_more_btn loading_card_data_element">Show more</div>
+                  </div>
+                </div>
+                <div class="each_ticket_item_main_extra_container">
+                  <div class="each_ticket_item_main_extra">
+                    <div>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Cheapest</span>
+                      <span style="color: rgb(160, 160, 160)"  class="loading_card_data_element">Flight + train</span>
+                      <span class="COVID_policy_desktop loading_card_data_element" style="color: rgb(160, 160, 160)">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-medkit" aria-hidden="true"></i>
+                        COVID-19 policies
+                      </span>
+                    </div>
+                    <div class="each_ticket_item_emogi_and_rating">
+                      <span  class="loading_card_data_element" style="font-size: 14px; padding-right: 15px; border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder;">
+                        <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                      </span>
+                    </div>
+                  </div>
+              </div>
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">PHL</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">5h 00m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              BDL ‐ JAX</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="main_ticket_info_area_bottom">
+                        <div  class="loading_card_data_element" style="flex-direction: row !important;">
+                          <div></div>
+                          <div style="padding-left: 10px;"></div>
+                        </div>
+                        <div style="flex-direction: row !important; width: 100%; justify-content: space-between;">
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">
+                              5:58 pm – 11:18 pm</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                              American Airlines</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">1 stop</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">CLT</p>
+                          </div>
+                          <div>
+                            <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;color: rgb(160, 160, 160)">5h 15m</p>
+                            <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">
+                              JAX ‐ BDL</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="tickets_main_additional_text loading_card_data_element" style="color: rgb(160, 160, 160)">Operated by Psa Airlines AS American Eagle, Republic Airways AS American Eagle</p>
+                  </div>
+                  <div class="each_ticket_item_main_right">
+                    <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                    <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                      American Airlines</p>
+                    <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                      Main Cabin
+                    </div>
+                    <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">Book Flight</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="hotels_tickets_section_list_container" class="tickets_section_list_container">
+              <script>
+                if(localStorage.getItem("main_search_type") === "flight_search"){
+                  document.getElementById("hotels_tickets_section_list_container").style.display = "none";
+                }
+              </script>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div class="hotels_card_pic loading_card_data_element">
+                          
+                        </div>
+                        <div style="justify-content: flex-start;">
+                          <div style="margin: 10px 0;">
+                            <p class="loading_card_data_element" style="color: rgb(160, 160, 160)">
+                              This Part Is The Hotel Name
+                            </p>
+                            <p class="loading_card_data_element" style="margin-top: 2px; color: rgb(160, 160, 160); font-size: 13px; 
+                            font-weight: bolder; letter-spacing: 0.5px; margin-top: 5px;">Manhattan, New York, USA</p>
+                            
+                          </div>
+                          <div class="each_ticket_item_emogi_and_rating">
+                            <span  class="loading_card_data_element" style="font-size: 14px; padding: 5px 10px;  border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder; max-width: 70px;">
+                              <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                            </span>
+                          </div>
+                          <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px;">
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                                Quantity:</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                                3 Rooms</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkin</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">June 25, 2021</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkout</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160);">
+                                July 5, 2021</p>
+                            </div>
+                          </div>
+                          <p class="loading_card_data_element" style="margin-top: 20px; margin-bottom: 5px; color: rgb(160, 160, 160); font-weight: bolder; font-size: 14px;">Description: </p>
+                          <p class="loading_card_data_element" style="opacity: 0.8; color: rgb(160, 160, 160); margin-bottom: 20px; font-size: 13px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                            Unde nihil atque sapiente temporibus cupiditate consectetur
+                             at exercitationem nobis ad dolorum libero!</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding: 0; width: calc(29% + 20px); background-color: white; border: none; justify-content: space-between;" class="each_ticket_item_main_right hotels_each_ticket_item_main_right">
+                      <div style="padding: 10px;">
+                        <p class="loading_card_data_element" style="color: rgb(160, 160, 160); font-size: 14px; font-weight: bolder;">Contact:</p>
+                        <p class="loading_card_data_element" style="margin-top: 10px; color: rgb(160, 160, 160); font-size: 14px;">
+                          <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>
+                          1-732-799-9546
+                        </p>
+                        <p class="loading_card_data_element" style="margin-bottom: 10px; margin-top: 5px; color: rgb(160, 160, 160); font-size: 14px;">
+                         <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
+                          1-718-898-4955
+                        </p>
+                      </div>
+                      <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
+                      <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                      <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                        American Airlines</p>
+                      <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                        Main Cabin
+                      </div>
+                      <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">View Rates</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div class="hotels_card_pic loading_card_data_element">
+                          
+                        </div>
+                        <div style="justify-content: flex-start;">
+                          <div style="margin: 10px 0;">
+                            <p class="loading_card_data_element" style="color: rgb(160, 160, 160)">
+                              This Part Is The Hotel Name
+                            </p>
+                            <p class="loading_card_data_element" style="margin-top: 2px; color: rgb(160, 160, 160); font-size: 13px; 
+                            font-weight: bolder; letter-spacing: 0.5px; margin-top: 5px;">Manhattan, New York, USA</p>
+                            
+                          </div>
+                          <div class="each_ticket_item_emogi_and_rating">
+                            <span  class="loading_card_data_element" style="font-size: 14px; padding: 5px 10px;  border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder; max-width: 70px;">
+                              <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                            </span>
+                          </div>
+                          <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px;">
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                                Quantity:</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                                3 Rooms</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkin</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">June 25, 2021</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkout</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160);">
+                                July 5, 2021</p>
+                            </div>
+                          </div>
+                          <p class="loading_card_data_element" style="margin-top: 20px; margin-bottom: 5px; color: rgb(160, 160, 160); font-weight: bolder; font-size: 14px;">Description: </p>
+                          <p class="loading_card_data_element" style="opacity: 0.8; color: rgb(160, 160, 160); margin-bottom: 20px; font-size: 13px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                            Unde nihil atque sapiente temporibus cupiditate consectetur
+                             at exercitationem nobis ad dolorum libero!</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding: 0; width: calc(29% + 20px); background-color: white; border: none; justify-content: space-between;" class="each_ticket_item_main_right hotels_each_ticket_item_main_right">
+                      <div style="padding: 10px;">
+                        <p class="loading_card_data_element" style="color: rgb(160, 160, 160); font-size: 14px; font-weight: bolder;">Contact:</p>
+                        <p class="loading_card_data_element" style="margin-top: 10px; color: rgb(160, 160, 160); font-size: 14px;">
+                          <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>
+                          1-732-799-9546
+                        </p>
+                        <p class="loading_card_data_element" style="margin-bottom: 10px; margin-top: 5px; color: rgb(160, 160, 160); font-size: 14px;">
+                         <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
+                          1-718-898-4955
+                        </p>
+                      </div>
+                      <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
+                      <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                      <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                        American Airlines</p>
+                      <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                        Main Cabin
+                      </div>
+                      <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">View Rates</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div class="hotels_card_pic loading_card_data_element">
+                          
+                        </div>
+                        <div style="justify-content: flex-start;">
+                          <div style="margin: 10px 0;">
+                            <p class="loading_card_data_element" style="color: rgb(160, 160, 160)">
+                              This Part Is The Hotel Name
+                            </p>
+                            <p class="loading_card_data_element" style="margin-top: 2px; color: rgb(160, 160, 160); font-size: 13px; 
+                            font-weight: bolder; letter-spacing: 0.5px; margin-top: 5px;">Manhattan, New York, USA</p>
+                            
+                          </div>
+                          <div class="each_ticket_item_emogi_and_rating">
+                            <span  class="loading_card_data_element" style="font-size: 14px; padding: 5px 10px;  border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder; max-width: 70px;">
+                              <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                            </span>
+                          </div>
+                          <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px;">
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                                Quantity:</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                                3 Rooms</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkin</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">June 25, 2021</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkout</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160);">
+                                July 5, 2021</p>
+                            </div>
+                          </div>
+                          <p class="loading_card_data_element" style="margin-top: 20px; margin-bottom: 5px; color: rgb(160, 160, 160); font-weight: bolder; font-size: 14px;">Description: </p>
+                          <p class="loading_card_data_element" style="opacity: 0.8; color: rgb(160, 160, 160); margin-bottom: 20px; font-size: 13px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                            Unde nihil atque sapiente temporibus cupiditate consectetur
+                             at exercitationem nobis ad dolorum libero!</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding: 0; width: calc(29% + 20px); background-color: white; border: none; justify-content: space-between;" class="each_ticket_item_main_right hotels_each_ticket_item_main_right">
+                      <div style="padding: 10px;">
+                        <p class="loading_card_data_element" style="color: rgb(160, 160, 160); font-size: 14px; font-weight: bolder;">Contact:</p>
+                        <p class="loading_card_data_element" style="margin-top: 10px; color: rgb(160, 160, 160); font-size: 14px;">
+                          <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>
+                          1-732-799-9546
+                        </p>
+                        <p class="loading_card_data_element" style="margin-bottom: 10px; margin-top: 5px; color: rgb(160, 160, 160); font-size: 14px;">
+                         <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
+                          1-718-898-4955
+                        </p>
+                      </div>
+                      <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
+                      <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                      <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                        American Airlines</p>
+                      <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                        Main Cabin
+                      </div>
+                      <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">View Rates</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div class="hotels_card_pic loading_card_data_element">
+                          
+                        </div>
+                        <div style="justify-content: flex-start;">
+                          <div style="margin: 10px 0;">
+                            <p class="loading_card_data_element" style="color: rgb(160, 160, 160)">
+                              This Part Is The Hotel Name
+                            </p>
+                            <p class="loading_card_data_element" style="margin-top: 2px; color: rgb(160, 160, 160); font-size: 13px; 
+                            font-weight: bolder; letter-spacing: 0.5px; margin-top: 5px;">Manhattan, New York, USA</p>
+                            
+                          </div>
+                          <div class="each_ticket_item_emogi_and_rating">
+                            <span  class="loading_card_data_element" style="font-size: 14px; padding: 5px 10px;  border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder; max-width: 70px;">
+                              <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                            </span>
+                          </div>
+                          <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px;">
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                                Quantity:</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                                3 Rooms</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkin</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">June 25, 2021</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkout</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160);">
+                                July 5, 2021</p>
+                            </div>
+                          </div>
+                          <p class="loading_card_data_element" style="margin-top: 20px; margin-bottom: 5px; color: rgb(160, 160, 160); font-weight: bolder; font-size: 14px;">Description: </p>
+                          <p class="loading_card_data_element" style="opacity: 0.8; color: rgb(160, 160, 160); margin-bottom: 20px; font-size: 13px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                            Unde nihil atque sapiente temporibus cupiditate consectetur
+                             at exercitationem nobis ad dolorum libero!</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding: 0; width: calc(29% + 20px); background-color: white; border: none; justify-content: space-between;" class="each_ticket_item_main_right hotels_each_ticket_item_main_right">
+                      <div style="padding: 10px;">
+                        <p class="loading_card_data_element" style="color: rgb(160, 160, 160); font-size: 14px; font-weight: bolder;">Contact:</p>
+                        <p class="loading_card_data_element" style="margin-top: 10px; color: rgb(160, 160, 160); font-size: 14px;">
+                          <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>
+                          1-732-799-9546
+                        </p>
+                        <p class="loading_card_data_element" style="margin-bottom: 10px; margin-top: 5px; color: rgb(160, 160, 160); font-size: 14px;">
+                         <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
+                          1-718-898-4955
+                        </p>
+                      </div>
+                      <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
+                      <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                      <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                        American Airlines</p>
+                      <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                        Main Cabin
+                      </div>
+                      <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">View Rates</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="each_ticket_item ticket_item_loader_card">
+                <div class="each_ticket_item_main">
+                  <div class="each_ticket_item_main_left">
+                    <div class="main_ticket_info_area">
+                      <div class="main_ticket_info_area_top">
+                        <div class="hotels_card_pic loading_card_data_element">
+                          
+                        </div>
+                        <div style="justify-content: flex-start;">
+                          <div style="margin: 10px 0;">
+                            <p class="loading_card_data_element" style="color: rgb(160, 160, 160)">
+                              This Part Is The Hotel Name
+                            </p>
+                            <p class="loading_card_data_element" style="margin-top: 2px; color: rgb(160, 160, 160); font-size: 13px; 
+                            font-weight: bolder; letter-spacing: 0.5px; margin-top: 5px;">Manhattan, New York, USA</p>
+                            
+                          </div>
+                          <div class="each_ticket_item_emogi_and_rating">
+                            <span  class="loading_card_data_element" style="font-size: 14px; padding: 5px 10px;  border-radius: 50px; color: rgb(160, 160, 160); font-weight: bolder; max-width: 70px;">
+                              <i style="color: rgb(160, 160, 160)" class="fa fa-smile-o" aria-hidden="true"></i> 5
+                            </span>
+                          </div>
+                          <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px;">
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">
+                                Quantity:</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160)">
+                                3 Rooms</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkin</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px;color: rgb(160, 160, 160)">June 25, 2021</p>
+                            </div>
+                            <div>
+                              <p  class="loading_card_data_element" style="font-weight: bolder; font-size: 14px; margin-bottom: 5px; color: rgb(160, 160, 160)">Checkout</p>
+                              <p  class="loading_card_data_element" style="font-size: 13px; color: rgb(160, 160, 160);">
+                                July 5, 2021</p>
+                            </div>
+                          </div>
+                          <p class="loading_card_data_element" style="margin-top: 20px; margin-bottom: 5px; color: rgb(160, 160, 160); font-weight: bolder; font-size: 14px;">Description: </p>
+                          <p class="loading_card_data_element" style="opacity: 0.8; color: rgb(160, 160, 160); margin-bottom: 20px; font-size: 13px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                            Unde nihil atque sapiente temporibus cupiditate consectetur
+                             at exercitationem nobis ad dolorum libero!</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding: 0; width: calc(29% + 20px); background-color: white; border: none; justify-content: space-between;" class="each_ticket_item_main_right hotels_each_ticket_item_main_right">
+                      <div style="padding: 10px;">
+                        <p class="loading_card_data_element" style="color: rgb(160, 160, 160); font-size: 14px; font-weight: bolder;">Contact:</p>
+                        <p class="loading_card_data_element" style="margin-top: 10px; color: rgb(160, 160, 160); font-size: 14px;">
+                          <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>
+                          1-732-799-9546
+                        </p>
+                        <p class="loading_card_data_element" style="margin-bottom: 10px; margin-top: 5px; color: rgb(160, 160, 160); font-size: 14px;">
+                         <i style="color: rgb(160, 160, 160); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
+                          1-718-898-4955
+                        </p>
+                      </div>
+                      <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
+                      <p class="ticket_item_price_display loading_card_data_element" style="color: rgb(160, 160, 160);">$125</p>
+                      <p  class="loading_card_data_element" style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;color: rgb(160, 160, 160)">
+                        American Airlines</p>
+                      <div class="ticket_item_entitlements_display loading_card_data_element" style="color: rgb(160, 160, 160);">
+                        Main Cabin
+                      </div>
+                      <div style="font-size: 14px;" class="view_deal_button loading_card_data_element">View Rates</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="site_lower_section_right">
+            <div class="site_lower_section_right_top_ad general_adds_card">
+              <div style="display: flex; flex-direction: row !important; justify-content: space-between; padding: 5px;">
+                <div style="display: flex; flex-direction: column !important; justify-content: center;">
+                  <div style="background-color: white; font-size: 11px; font-weight: bolder; text-align: center; letter-spacing: 1px; 
+                    margin-left: 5px; padding: 5px; border-radius: 20px; width: 30px !important; cursor: pointer;">
+                    AD</div>
+                </div>
+                <div style="padding: 5x; width: 30px !important; text-align: center; border-radius: 5px; background-color: #000000a1;">
+                  <i style="color: white; font-size: 11px;" class="fa fa-times" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <div class="site_lower_section_right_bottom_ad general_adds_card">
+              <div style="display: flex; flex-direction: row !important; justify-content: space-between; padding: 5px;">
+                <div style="display: flex; flex-direction: column !important; justify-content: center;">
+                  <div style="background-color: white; font-size: 11px; font-weight: bolder; text-align: center; letter-spacing: 1px; 
+                    margin-left: 5px; padding: 5px; border-radius: 20px; width: 30px !important; cursor: pointer;">
+                    AD</div>
+                </div>
+                <div style="padding: 5x; width: 30px !important; text-align: center; border-radius: 5px; background-color: #000000a1;">
+                  <i style="color: white; font-size: 11px;" class="fa fa-times" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    <footer>
+      <div class="wrapper">
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          "
+        >
+          <div class="footer_row">
+            <div>
+              <p class="footer_section_header">Company</p>
+              <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Mobile</a></li>
+                <li><a href="#">Discover</a></li>
+                <li><a href="#">How we work</a></li>
+                <li><a href="#">Why travelers choose Anidaso</a></li>
+              </ul>
+              <div class="site_logo_container" style="margin-top: 40px">
+                <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                  <p><span>An</span>i<span>d</span>a<span>s</span>o<sup style="font-size: 12px;">&reg;</sup></p>
+                </div>
+              <p
+                style="color: darkgrey; font-weight: initial; font-size: 13px; font-family: 'Roboto' !important;"
+              >Anidaso &copy; 2020
+              </p>
+              <p>
+                <a href="" target="_blank" rel="noopener noreferrer">
+                  <i
+                    style="
+                      padding: 5px 10px;
+                      background-color: #374949;
+                      color: white;
+                      border-radius: 4px;
+                      margin: 5px;
+                      font-size: 15px;
+                      text-shadow: none !important;
+                    "
+                    class="fa fa-facebook"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+                <a href="" target="_blank" rel="noopener noreferrer">
+                  <i
+                    style="
+                      padding: 5px 10px;
+                      background-color: #374949;
+                      color: white;
+                      border-radius: 4px;
+                      margin: 5px;
+                      font-size: 15px;
+                      text-shadow: none !important;
+                    "
+                    class="fa fa-linkedin"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+                <i
+                  style="
+                    padding: 5px 10px;
+                    background-color: #374949;
+                    color: white;
+                    border-radius: 4px;
+                    margin: 5px;
+                    font-size: 15px;
+                    text-shadow: none !important;
+                  "
+                  class="fa fa-instagram"
+                  aria-hidden="true"
+                ></i>
+              </p>
+            </div>
+            </div>
+            <div>
+              <p class="footer_section_header">Contact</p>
+              <ul>
+                <li><a href="#">Help/FAQ</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Afiliates</a></li>
+              </ul>
+              <p
+                class="footer_section_header"
+                style="
+                  margin-top: 40px;
+                  margin-bottom: 5px;
+                  margin-bottom: 15px;
+                "
+              >
+                About TicketSite
+              </p>
+              <p
+                style="
+                  font-size: 12px;
+                  color: darkgrey;
+                  max-width: 200px;
+                  text-align: justify;
+                "
+              >
+              Anidaso is a travel and hospitality retail provider based in the United States of America whose 
+              business operations span multiple countries. In partnership with major providers and players in the 
+              travel industry, our main services focus on helping travelers shop flights, 
+              hotels, and rental cars, at affordable prices.
+              </p>
+            </div>
+            <div>
+              <p class="footer_section_header">More</p>
+              <ul>
+                <li><a href="#">Ticket Fees</a></li>
+                <li><a href="#">Bus Stations</a></li>
+              </ul>
+              <p
+                class="footer_section_header"
+                style="
+                  margin-top: 40px;
+                  margin-bottom: 5px;
+                  margin-bottom: 15px;
+                "
+              >
+                Support
+              </p>
+              <p style="margin-bottom: 5px">
+                <a href="" style="color: white; font-size: 14px">
+                  <i
+                    style="color: #37a0f5; font-size: 20px; margin-right: 5px"
+                    class="fa fa-phone" aria-hidden="true"
+                  ></i>
+                  Call Us
+                </a>
+              </p>
+              <p>
+                <a href="" style="color: white; font-size: 14px">
+                  <i
+                    style="color: #37a0f5; margin-right: 5px"
+                    class="fa fa-envelope" aria-hidden="true"
+                  ></i>
+                  Email Us
+                </a>
+              </p>
+            </div>
+            <div>
+              <p class="footer_section_header">Site/Currency</p>
+              <div class="footer_fld_cntn">
+                <div class="site_language_select">
+                  <div id="site_language_select_options_as_id" class="site_language_select_options">
+                    <p style="color:rgb(0, 127, 177); text-align: center; font-weight: bolder;">Site/Currency</p>
+                    <div class="site_language_select_options_list">
+
+                      <div onclick="set_site_currency('United States', 'USflag2.png', 'USD', 'USD_each_site_language_select_option', '&#x24;');" id="USD_each_site_language_select_option"
+                      class="each_site_language_select_option active" style="flex-direction: row !important;">
+                        <p><img
+                          class="site_currency_flag"
+                          src="images/USflag2.png" alt=""
+                        /></p>
+                        <p>United States</p>
+                        <p class="each_site_language_select_option_currency">USD</p>
+                      </div>
+
+                      <div  onclick="set_site_currency('Europe', 'EuropeFlag.png', 'EUR', 'EUR_each_site_language_select_option', '&#x20AC;');" id="EUR_each_site_language_select_option"
+                       class="each_site_language_select_option" style="flex-direction: row !important;">
+                        <p><img
+                          class="site_currency_flag"
+                          src="images/EuropeFlag.png" alt=""
+                        /></p>
+                        <p>Europe</p>
+                        <p class="each_site_language_select_option_currency">EUR</p>
+                      </div>
+
+                      <div onclick="set_site_currency('Ghana', 'ghFlag.jpg', 'GHC', 'GHC_each_site_language_select_option', '&#x20B5;');" id="GHC_each_site_language_select_option" 
+                      class="each_site_language_select_option" style="flex-direction: row !important;">
+                        <p><img
+                          class="site_currency_flag"
+                          src="images/ghFlag.jpg" alt=""
+                        /></p>
+                        <p>Ghana</p>
+                        <p class="each_site_language_select_option_currency">GHC</p>
+                      </div>
+
+                      <div onclick="set_site_currency('Great Britain', 'GBTNFlag.png', 'GBP', 'GBP_each_site_language_select_option', '&#xa3;');" id="GBP_each_site_language_select_option"
+                       class="each_site_language_select_option" style="flex-direction: row !important;">
+                        <p><img
+                          class="site_currency_flag"
+                          src="images/GBTNFlag.png" alt=""
+                        /></p>
+                        <p>Great Britain</p>
+                        <p class="each_site_language_select_option_currency">GBP</p>
+                      </div>
+
+                      <div onclick="set_site_currency('China', 'china-flag.png', 'CNY', 'CNY_each_site_language_select_option','&#xa5;');" id="CNY_each_site_language_select_option" 
+                      class="each_site_language_select_option" style="flex-direction: row !important;">
+                        <p><img
+                          class="site_currency_flag"
+                          src="images/china-flag.png" alt=""
+                        /></p>
+                        <p>China</p>
+                        <p class="each_site_language_select_option_currency">CNY</p>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div onclick="show_site_currency_list();" style="flex-direction: row !important;" id="active_selected_currency_option_container" class="active_selected_currency_option">
+                    <div id="active_selected_currency_option_flag_and_name" style="display: flex; flex-direction: row !important;">
+                      <p><img
+                        class="site_currency_flag"
+                        src="images/USflag2.png" alt=""
+                      /></p>
+                      <p>United States (USD)</p>
+                    </div>
+                    <div>
+                      <i id="site_currency_chevron_up" class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+              <p
+                class="footer_section_header"
+                style="
+                  margin-top: 40px;
+                  margin-bottom: 5px;
+                  margin-bottom: 15px;
+                "
+              >
+                Site Sponsor
+              </p>
+              <div
+                style="
+                  margin: auto;
+                  width: 100%;
+                  display: flex;
+                  justify-content: flex-end;
+                  flex-direction: column;
+                "
+              >
+                <p>
+                  <image
+                    src="./images/TheomotechLogo.png"
+                    style="width: 80px; height: 40px"
+                  />
+                </p>
+                <p style="color: #37a0f5; font-size: 14px">
+                  Theomotech Inc. ©2020
+                </p>
+                <p style="color: darkgray; font-size: 12px">
+                  All rights reserved
+                </p>
+                <p>
+                  <a
+                    href="https://www.facebook.com/TheoMotech-107976207592401/about/?ref=page_internal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i
+                      style="
+                        padding: 5px 10px;
+                        background-color: #374949;
+                        color: white;
+                        border-radius: 4px;
+                        margin: 5px;
+                        font-size: 15px;
+                      "
+                      class="fa fa-facebook"
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/company/theomotech-inc"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i
+                      style="
+                        padding: 5px 10px;
+                        background-color: #374949;
+                        color: white;
+                        border-radius: 4px;
+                        margin: 5px;
+                        font-size: 15px;
+                      "
+                      class="fa fa-linkedin"
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                  <i
+                    style="
+                      padding: 5px 10px;
+                      background-color: #374949;
+                      color: white;
+                      border-radius: 4px;
+                      margin: 5px;
+                      font-size: 15px;
+                    "
+                    class="fa fa-instagram"
+                    aria-hidden="true"
+                  ></i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="footer_section_header" style="margin-top: 30px; letter-spacing: 1px; padding-top: 20px; text-align: center; color: rgba(255, 255, 255, 0.548); font-weight: initial;">
+            Our Partners/Providers</p>
+          <div class="footer_row" style="border-radius: 10px; padding-bottom: 20px; justify-content: center !important;">
+            <div style="padding: 10px;">
+              <img style="height: 15px; width: auto;" src="./images/KayakLogo.svg.png" alt="Kayak Logo" />
+            </div>
+            <div style="padding: 10px;">
+              <img style="height: 15px; width: auto;" src="./images/MomondoLogo.png" alt="Kayak Logo" />
+            </div>
+            <div style="padding: 0 10px;">
+              <img style="height: 35px; width: auto;" src="./images/ExpediaLogo.png" alt="Kayak Logo" />
+            </div>
+            <div style="padding: 10px;">
+              <img style="height: 15px; width: auto;" src="./images/AmaduesLogo.png" alt="Kayak Logo" />
+            </div>
+            <div style="padding: 10px;">
+              <img style="height: 15px; width: auto;" src="./images/SabreLogo.svg.png" alt="Kayak Logo" />
+            </div>
+            <div style="padding: 10px;">
+              <img style="height: 15px; width: auto;" src="./images/Booking.comLogo.png" alt="Kayak Logo" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <input type="hidden" id="progress_width" value="0">
+
+    <script src="scripts/world_country_codes.js" type="text/javascript"></script>
+    <script src="scripts/city_codes.js"></script>
+    <script src="scripts/Airports.js" type="text/javascript"></script>
+    <script src="scripts/airline_codes.js" type="text/javascript"></script>
+    <script src="scripts/aircraft_codes.js" type="text/javascript"></script>
+    <script src="scripts/airfare_codes.js" type="text/javascript"></script>
+    <script src="scripts/search_page_main_script.js" type="text/javascript"></script>
+    <script src="scripts/hotel_number_of_rooms.js" type="text/javascript"></script>
+    <script src="scripts/search_forms_airports.js" type="text/javascript"></script>
+    <script src="scripts/city_search_fld_autocomplete.js"></script>
+    <script src="scripts/airports_auto_complete.js" type="text/javascript"></script>
+    <script src="scripts/home_page_flight_search_processes.js" type="text/javascript"></script>
+    <script src="scripts/data_charts.js" type="text/javascript"></script>
+    <script src="scripts/site_currency.js" type="text/javascript"></script>
+    <script src="scripts/service_and_markup_fees.js" type="text/javascript"></script>
+    <script src="scripts/airflights_list_functions.js" type="text/javascript"></script>
+    <script src="scripts/render_flights.js" type="text/javascript"></script>
+    <script src="scripts/render_hotels.js" type="text/javascript"></script>
+    <script src="scripts/user_info.js" type="text/javascript"></script>
+    <script src="scripts/login_signup.js" type="text/javascript"></script>
+    <script src="scripts/all_world_cities.js" type="text/javascript"></script>
+    
+  </body>
+</html>
