@@ -200,6 +200,7 @@ function load_more_events(){
 
     let div = document.createElement("div");
     div.style.display = "none";
+    div.style.overflow = "initial";
 
     div.classList.add("events_and_cities_list_container");
     div.id = "events_and_cities_list_container"+each_events_row_number
