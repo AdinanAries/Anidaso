@@ -6,11 +6,33 @@ const bcrypt = require("bcrypt");
 const axios = require('axios');
 const { default: Axios } = require("axios");
 const fetch = require("node-fetch");
+const passport = require('passport');
+const connectEnsureLogin = require('connect-ensure-login');
 var https = require('https');
 var querystring = require('querystring');
 var fs = require('fs');
 var mongoose = require("mongoose");
 require("dotenv").config();
+
+const expressSession = require('express-session')({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+});
+
+//data models
+var cheap_hotel = require("./models/cheap_hotel_model");
+var login_user = require("./models/login_user_model");
+var signup_user = require("./models/signup_user_model");
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(expressSession);
+
+//passport local authentication
+passport.use(login_user.createStrategy());
+passport.serializeUser(login_user.serializeUser());
+passport.deserializeUser(login_user.deserializeUser());
 
 //stripe connection
 const stripe = require("stripe")(process.env.STRIPE_SECRETE_KEY);
@@ -20,11 +42,6 @@ var mongo_db_url = process.env.MONGO_DB_URL;
 mongoose.connect(mongo_db_url, {useNewUrlParser: true, useUnifiedTopology: true}, ()=>{
   console.log("connected to database successfully")
 });
-
-//data models
-var cheap_hotel = require("./models/cheap_hotel_model");
-var login_user = require("./models/login_user_model");
-var signup_user = require("./models/signup_user_model");
 
 //Globals to store endpoint data
 var all_events = [];
@@ -185,7 +202,7 @@ app.get('/airportSearch/', function(req,res,next){
       console.log("error"); 
       console.log(error.response); 
     }); 
-  });
+});
 
 //Amadues - Searching Flight Offers (One-way)
 app.post('/searchflight/', (req, res, next)=>{
@@ -478,19 +495,54 @@ app.post('/finish_room_booking/', (req, res, next)=> {
 
 
 //login and signup routes
+app.get('/ensureLoggedIn',
+  connectEnsureLogin.ensureLoggedIn(),
+  (req, res, next) => {
+    //console.log("slash route");
+    //res.sendFile('public/index.html', {root: __dirname});
+    res.redirect("/");
+  }
+);
+
 app.get("/login/", (req, res, next)=>{
-  res.sendFile(path.join(__dirname + "/public/index.html"))
+  res.sendFile(path.join(__dirname + "/public/index.html"));
 })
 app.get("/signup/", (req, res, next)=>{
-  res.sendFile(path.join(__dirname + "/public/index.html"))
+  res.sendFile(path.join(__dirname + "/public/index.html"));
 })
 
-app.post("/login/", (req, res, next)=>{
+app.post("/login/", async (req, res, next)=>{
+
+  let encrypted_password = await bcrypt.hash(req.body.password, 10);
 
   let user = new login_user({
     email: req.body.email,
-    password: req.body.password
+    password: encrypted_password
   });
+
+  passport.authenticate('local',
+  (err, user, info) => {
+
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      //return res.redirect('/login?info=' + info);
+      return res.redirect('/login');
+    }
+
+    req.logIn(user, function(err) {
+      
+      if (err) {
+        return next(err);
+      }
+
+      return res.redirect('/');
+
+    });
+
+  })(req, res, next);
 
   res.send(req.body);
   //reach database with credentials here
