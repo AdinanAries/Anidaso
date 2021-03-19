@@ -2,11 +2,16 @@ const mongoose = require("mongoose");
 require("mongoose-type-url");
 const passportLocalMongoose = require('passport-local-mongoose');
 
-const login_user_schema = mongoose.Schema({
-    email: {
+const user_login_schema = mongoose.Schema({
+    id: {
+
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    },
+    username: {
         type: String,
         required: true,
-        index: true
+        index: true,
     },
     password: {
         type: String,
@@ -15,8 +20,8 @@ const login_user_schema = mongoose.Schema({
         max: 255,
         min: 8
     }
-})
+});
 
-login_user_schema.plugin(passportLocalMongoose);
+user_login_schema.plugin(passportLocalMongoose);
 
-module.exports = new mongoose.model("login_user", login_user_schema, 'login_user');
+module.exports = new mongoose.model("login_user", user_login_schema, "user_login");

@@ -14,7 +14,7 @@ var page_url = new URL(document.URL);
      "family Visit"
  ];
  var login_user_data = {
-    email: "",
+    username: "",
     password: ""
 };
 //helps personalize user's experience
@@ -51,7 +51,7 @@ function login_function(){
         password_elem.placeholder = "please enter your password";
     }else{
 
-        login_user_data.email = email;
+        login_user_data.username = email;
         login_user_data.password = password;
         //login user here 
         $.ajax({
@@ -65,7 +65,7 @@ function login_function(){
                 login_success_function();
             },
             error: err =>{
-
+                console.log(err);
             }
         });
     }
@@ -121,10 +121,10 @@ function signup_function(){
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         data: JSON.stringify({
-                            email: data.email,
+                            username: data.email,
                             password: data.password
                         }),
-                        success: result =>{
+                        success: result => {
                             console.log(result);
                             login_success_function();
                         },

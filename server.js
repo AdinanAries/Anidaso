@@ -513,12 +513,12 @@ app.get("/signup/", (req, res, next)=>{
 
 app.post("/login/", async (req, res, next)=>{
 
-  let encrypted_password = await bcrypt.hash(req.body.password, 10);
+  /*let encrypted_password = await bcrypt.hash(req.body.password, 10);
 
   let user = new login_user({
-    email: req.body.email,
+    username: req.body.username,
     password: encrypted_password
-  });
+  });*/
 
   passport.authenticate('local',
   (err, user, info) => {
@@ -533,7 +533,7 @@ app.post("/login/", async (req, res, next)=>{
     }
 
     req.logIn(user, function(err) {
-      
+
       if (err) {
         return next(err);
       }
@@ -544,7 +544,7 @@ app.post("/login/", async (req, res, next)=>{
 
   })(req, res, next);
 
-  res.send(req.body);
+  //res.send(req.body);
   //reach database with credentials here
   //I might need some library to provide for session managemet
 });
@@ -552,17 +552,57 @@ app.post("/login/", async (req, res, next)=>{
 app.post("/signup/", async (req, res, next)=> {
 
   try{
+
     let encrypted_password = await bcrypt.hash(req.body.password, 10);
+
     let user = new signup_user({
       first_name: req.body.firstname,
       last_name: req.body.lastname,
-      email: req.body.email,
-      password: encrypted_password
+      email: req.body.email
     });
 
-    user.save().then( result =>{
-      res.send(result)
-    });
+    let existing_user = await signup_user.findOne({
+      first_name: req.body.firstname,
+      last_name: req.body.lastname,
+      email: req.body.email
+    }).exec();
+    //console.log(existing_user);
+
+    if(existing_user){
+      res.send({failed: true, msg: "user already exist"});
+    }else{
+
+      user.save((error, result) =>{
+
+        //res.send(result);
+
+        if(error){
+          res.send({failed: true, err: error, msg: "server side error"});
+        }else{
+
+          let login = new login_user({
+            _id: result._id,
+            username: result.email,
+            password: req.body.password
+          });
+    
+          login.save((err, rslt) =>{
+
+            if(err){
+              res.send({failed: true, error: err, msg: "server side error"});
+            }else{
+              res.send(rslt);
+            }
+
+          });
+
+        }
+  
+      });
+      
+    }
+    
+
   }catch(e){
     res.send({error: e})
   }
