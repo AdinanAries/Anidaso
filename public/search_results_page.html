@@ -37,6 +37,22 @@
   </head>
   <body>
 
+    <div style="display: none;" id="mobile_menu_logged_in_user_info">
+      <div style="display: flex; flex-direction: row !important; padding: 10px; padding-top: 0;">
+        <div class="logged_in_user_nav_profile_picture">
+          <div style="border:rgb(235, 86, 0) 2px solid" class="logged_in_user_nav_profile_picture_container">
+            <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <p style="font-size: 13px; font-weight: bolder; color: rgb(235, 86, 0); letter-spacing: 1px;">Mohammed Adinan</p>
+        </div>
+      </div>
+      <div style="border-radius: 4px; margin: 0 10px; cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; font-size: 14px; text-align: center;">
+        logout
+      </div>
+    </div>
+
     <div id="full_page_loader_container">
       <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
         <p style="letter-spacing: 0.5px; max-width: 300px; margin: auto; text-align: center; font-weight: bolder; color: white;">
@@ -690,7 +706,7 @@
               <input onblur="de_activate_login_fld(199);" onclick="activate_login_fld(199);" id="login_fld_199" class="login_fld" type="password" />
             </div>
 
-            <input style="margin-top: 10px; padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
+            <input id="sign_up_anidaso_user_btn" style="margin-top: 10px; padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
             type="submit" value="Submit" />
           </div>
 
@@ -709,74 +725,77 @@
         <img id="full_page_picture_viewer_img" src="./images/HotelPic2.jpg" alt=""/>
       </div>
     </div>
-    <div id="book_hotel_view_full_profile_info" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: white; z-index: 101; overflow: auto !important;">
-      <div onclick="toggle_show_hide_book_hotel_view_full_profile_info();" class="page_popup_close_button" style="margin-right: 10px;">
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </div>
-      <div id="book_hotel_view_full_profile_header" style="overflow: initial !important; height: 130px; background-color: #023057; display: flex; flex-direction: column !important; justify-content: center;">
-        <div style="margin-left: 20px; height: initial !important; overflow: initial !important;" class="site_logo_container">
-          <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-            <p  style="text-shadow: none;"><span style="text-shadow: none;">An</span style="text-shadow: none;">i<span style="text-shadow: none;">d</span style="text-shadow: none;">a<span style="text-shadow: none;">s</span>o<sup style="font-size: 12px; text-shadow: none;">&reg;</sup></p>
-          </div>
+
+    <div id="book_hotel_view_full_profile_info" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 101; overflow: auto !important; background-color: rgba(0, 0, 0, 0.514);">
+      <div style="max-width: 1400px !important; margin: auto !important; background-color: white; position: relative;">
+        <div onclick="toggle_show_hide_book_hotel_view_full_profile_info();" class="page_popup_close_button" style="margin-right: 10px;">
+          <i class="fa fa-times" aria-hidden="true"></i>
         </div>
-        <p style="overflow: initial !important; margin-left: 20px; font-size: 11px; color: white; letter-spacing: 1px;">
-          View Hotel Full Info.</p>
-        <p id="book_hotel_view_full_profile_hotel_name" style="overflow: initial !important; text-align: center; color: rgb(231, 231, 231); font-size: 14px; margin-top: 25px; font-weight: bolder; letter-spacing: 1px;">
-          Hotel Name Here</p>
-          <p id="book_hotel_view_full_profile_hotel_location" style="font-size: 11px; color:rgb(255, 173, 73); margin-top: 5px; letter-spacing: 1px; text-align: center;">
-            hotel location here
-          </p>
-      </div>
-      <div id="book_hotel_view_full_profile_body">
-        <div class="book_hotel_view_full_profile_infor_row">
-          <div class="book_hotel_view_full_profile_infor_row_set">
-            <div id="book_hotel_view_full_profile_ratings_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+        <div id="book_hotel_view_full_profile_header" style="overflow: initial !important; height: 130px; background-color: #023057; display: flex; flex-direction: column !important; justify-content: center;">
+          <div style="margin-left: 20px; height: initial !important; overflow: initial !important;" class="site_logo_container">
+            <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+              <p  style="text-shadow: none;"><span style="text-shadow: none;">An</span style="text-shadow: none;">i<span style="text-shadow: none;">d</span style="text-shadow: none;">a<span style="text-shadow: none;">s</span>o<sup style="font-size: 12px; text-shadow: none;">&reg;</sup></p>
+            </div>
+          </div>
+          <p style="overflow: initial !important; margin-left: 20px; font-size: 11px; color: white; letter-spacing: 1px;">
+            View Hotel Full Info.</p>
+          <p id="book_hotel_view_full_profile_hotel_name" style="overflow: initial !important; text-align: center; color: rgb(231, 231, 231); font-size: 14px; margin-top: 25px; font-weight: bolder; letter-spacing: 1px;">
+            Hotel Name Here</p>
+            <p id="book_hotel_view_full_profile_hotel_location" style="font-size: 11px; color:rgb(255, 173, 73); margin-top: 5px; letter-spacing: 1px; text-align: center;">
+              hotel location here
+            </p>
+        </div>
+        <div id="book_hotel_view_full_profile_body">
+          <div class="book_hotel_view_full_profile_infor_row">
+            <div class="book_hotel_view_full_profile_infor_row_set">
+              <div id="book_hotel_view_full_profile_ratings_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+                
+              </div>
+              <div id="book_hotel_view_full_profile_amenities_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+                
+              </div>
+            </div>
+            <div class="book_hotel_view_full_profile_infor_row_set">
+              <div id="book_hotel_view_full_profile_sentiments_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+                
+              </div>
+              <div id="book_hotel_view_full_profile_contacts_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+                
+              </div>
+            </div>
+          </div>
+          <div id="book_hotel_view_full_profile_body_content">
+            <div id="book_hotel_view_full_profile_photos">
               
             </div>
-            <div id="book_hotel_view_full_profile_amenities_infor" class="book_hotel_view_full_profile_infor_row_set_item">
-              
+          </div>
+          <div class="book_hotel_view_full_profile_infor_row">
+            <div class="book_hotel_view_full_profile_infor_row_set">
+              <div id="book_hotel_view_full_profile_child_policies_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+              </div>
+              <div id="book_hotel_view_full_profile_whats_nearby_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+              </div>
+            </div>
+            <div class="book_hotel_view_full_profile_infor_row_set">
+              <div id="book_hotel_view_full_profile_public_transit_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+              </div>
+              <div  id="book_hotel_view_full_profile_other_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+
+              </div>
             </div>
           </div>
-          <div class="book_hotel_view_full_profile_infor_row_set">
-            <div id="book_hotel_view_full_profile_sentiments_infor" class="book_hotel_view_full_profile_infor_row_set_item">
-              
-            </div>
-            <div id="book_hotel_view_full_profile_contacts_infor" class="book_hotel_view_full_profile_infor_row_set_item">
-              
-            </div>
-          </div>
-        </div>
-        <div id="book_hotel_view_full_profile_body_content">
-          <div id="book_hotel_view_full_profile_photos">
-            
-          </div>
-        </div>
-        <div class="book_hotel_view_full_profile_infor_row">
-          <div class="book_hotel_view_full_profile_infor_row_set">
-            <div id="book_hotel_view_full_profile_child_policies_infor" class="book_hotel_view_full_profile_infor_row_set_item">
+          <div id="view_full_hotel_profile_reviews">
+            <p style="font-size: 14px; color:rgb(0, 127, 177); text-align: center; font-weight: bolder; letter-spacing: 1px; margin-bottom: 15px;">
+              What Hotel Guests Say</p>
+            <div id="view_full_hotel_profile_reviews_list">
 
             </div>
-            <div id="book_hotel_view_full_profile_whats_nearby_infor" class="book_hotel_view_full_profile_infor_row_set_item">
-
+            <div style="border-radius: 4px; text-align: center; background-color:rgb(0, 60, 83); color: white; padding: 20px; width: 150px; font-size: 14px; margin: auto; margin-top: 10px;">
+              load reviews...
             </div>
-          </div>
-          <div class="book_hotel_view_full_profile_infor_row_set">
-            <div id="book_hotel_view_full_profile_public_transit_infor" class="book_hotel_view_full_profile_infor_row_set_item">
-
-            </div>
-            <div  id="book_hotel_view_full_profile_other_infor" class="book_hotel_view_full_profile_infor_row_set_item">
-
-            </div>
-          </div>
-        </div>
-        <div id="view_full_hotel_profile_reviews">
-          <p style="font-size: 14px; color:rgb(0, 127, 177); text-align: center; font-weight: bolder; letter-spacing: 1px; margin-bottom: 15px;">
-            What Hotel Guests Say</p>
-          <div id="view_full_hotel_profile_reviews_list">
-
-          </div>
-          <div style="border-radius: 4px; text-align: center; background-color:rgb(0, 60, 83); color: white; padding: 20px; width: 150px; font-size: 14px; margin: auto; margin-top: 10px;">
-            load reviews...
           </div>
         </div>
       </div>
@@ -884,6 +903,22 @@
                 </div>
               </li>
             </ul>
+          </div>
+          <div style="display: none;" id="logged_in_user_main_top_nav_info" class="logged_in_user_nav_info">
+            <div class="logged_in_user_nav_profile_picture">
+            <div class="logged_in_user_nav_profile_picture_container">
+              <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+            </div>
+          </div>
+            <div class="logged_in_user_nav_profile_name">
+              <p>Mohammed</p>
+            </div>
+            <div class="logged_in_user_nav_info_drop_down">
+               <p style="padding: 10px; font-size: 13px; color:rgb(0, 26, 43); text-align: center;">Mohammed Adinan</p>
+               <div style="cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-size: 14px; text-align: center; margin: auto;">
+                logout
+              </div>
+            </div>
           </div>
         </div>
       </div>

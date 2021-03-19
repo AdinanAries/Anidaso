@@ -513,40 +513,46 @@ app.get("/signup/", (req, res, next)=>{
 
 app.post("/login/", async (req, res, next)=>{
 
-  /*let encrypted_password = await bcrypt.hash(req.body.password, 10);
+  try{
 
-  let user = new login_user({
-    username: req.body.username,
-    password: encrypted_password
-  });*/
+    /*let encrypted_password = await bcrypt.hash(req.body.password, 10);
 
-  passport.authenticate('local',
-  (err, user, info) => {
+    let user = new login_user({
+      username: req.body.username,
+      password: encrypted_password
+    });*/
 
-    if (err) {
-      return next(err);
-    }
-
-    if (!user) {
-      //return res.redirect('/login?info=' + info);
-      return res.redirect('/login');
-    }
-
-    req.logIn(user, function(err) {
+    passport.authenticate('local',
+    (err, user, info) => {
 
       if (err) {
         return next(err);
       }
 
-      return res.redirect('/');
+      if (!user) {
+        //return res.redirect('/login?info=' + info);
+        return res.redirect('/login');
+      }
 
-    });
+      req.logIn(user, function(err) {
 
-  })(req, res, next);
+        if (err) {
+          return next(err);
+        }
 
-  //res.send(req.body);
-  //reach database with credentials here
-  //I might need some library to provide for session managemet
+        return res.redirect('/');
+
+      });
+
+    })(req, res, next);
+
+    //res.send(req.body);
+    //reach database with credentials here
+    //I might need some library to provide for session managemet
+  }catch(e){
+    res.send({error: e})
+  }
+  
 });
 
 app.post("/signup/", async (req, res, next)=> {

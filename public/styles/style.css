@@ -6,6 +6,20 @@
 }
 
 /*-------------------------------*/
+.todays_hotel_deals_view_deal_picture_section {
+  display: flex; 
+  flex-direction: row !important; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  margin-bottom: 5px;
+}
+.todays_hotel_deals_view_deal_picture_section img {
+  height: 300px; 
+  width: auto !important; 
+  margin-right: 5px; 
+  margin-bottom: 5px;
+}
+
 .logged_in_user_nav_info {
   display: flex;
   flex-direction: row !important;
@@ -2345,6 +2359,15 @@ footer a {
   }
   #book_hotel_view_full_profile_info {
     overflow: auto !important;
+  }
+  .todays_hotel_deals_view_deal_picture_section {
+    display: initial;
+  }
+  .todays_hotel_deals_view_deal_picture_section img {
+    height: auto; 
+    width: 100% !important; 
+    margin-right: 0; 
+    margin-bottom: 5px;
   }
 }
 @media only screen and (max-width: 413px) {
