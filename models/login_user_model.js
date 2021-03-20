@@ -10,15 +10,11 @@ const user_login_schema = mongoose.Schema({
     },
     username: {
         type: String,
-        required: true,
         index: true,
     },
     password: {
         type: String,
-        required: true,
         index: true,
-        max: 255,
-        min: 8
     }
 });
 

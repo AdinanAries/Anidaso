@@ -63,6 +63,7 @@ function login_function(){
             success: data =>{
                 console.log(data);
                 login_success_function();
+                display_login_user_info(data.data)
             },
             error: err =>{
                 console.log(err);
@@ -115,23 +116,7 @@ function signup_function(){
 
                     console.log(data)
                     //login user here 
-                    $.ajax({
-                        type: "POST",
-                        url: "/login",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        data: JSON.stringify({
-                            username: data.email,
-                            password: data.password
-                        }),
-                        success: result => {
-                            console.log(result);
-                            login_success_function();
-                        },
-                        error: er =>{
-                            console.log(er);
-                        }
-                    });
+                    login_with_params_function(data.email, password_input.value)
 
                 },
                 error: err =>{
@@ -143,6 +128,85 @@ function signup_function(){
         });
         
     }
+}
+
+function login_with_params_function(email, password){
+
+    $.ajax({
+        type: "POST",
+        url: "/login",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
+            username: email,
+            password: password
+        }),
+        success: result => {
+            console.log(result);
+            login_success_function();
+            display_login_user_info(result.data)
+        },
+        error: er =>{
+            console.log(er);
+        }
+    });
+
+}
+
+function display_login_user_info(user_obj){
+    //console.log(user_obj);
+    get_user_info_by_id(user_obj._id)
+    window.localStorage.setItem("ANDSUSR", user_obj._id);
+}
+
+function get_user_info_by_id(id){
+    $.ajax({
+        type: "GET",
+        url: `./get_login_user/${id}`,
+        success: data => {
+            console.log(data);
+            document.getElementById("mobile_menu_logged_in_user_info").innerHTML =
+            `
+                <div style="display: flex; flex-direction: row !important; padding: 10px; padding-top: 0;">
+                    <div class="logged_in_user_nav_profile_picture">
+                    <div style="border:rgb(235, 86, 0) 2px solid" class="logged_in_user_nav_profile_picture_container">
+                        <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+                    </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; margin-left: 5px;">
+                        <p style="font-size: 13px; font-weight: bolder; color: rgb(235, 86, 0); letter-spacing: 1px;">${data.first_name} ${data.last_name}</p>
+                        <p style="font-size: 12px; font-weight: bolder; color: rgb(235, 86, 0); letter-spacing: 1px; margin-top: 5px;">${data.email}</p>
+                    </div>
+                </div>
+                <div onclick="logout_func();" style="border-radius: 4px; margin: 0 10px; cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; font-size: 14px; text-align: center;">
+                    logout
+                </div>
+            `;
+
+            document.getElementById("logged_in_user_main_top_nav_info").innerHTML =
+            `
+                <div class="logged_in_user_nav_profile_picture">
+                    <div class="logged_in_user_nav_profile_picture_container">
+                    <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+                    </div>
+                </div>
+                <div class="logged_in_user_nav_profile_name">
+                    <p>${data.first_name}</p>
+                </div>
+                <div class="logged_in_user_nav_info_drop_down">
+                    <p style="margin-top: 10px; font-size: 13px; color:rgb(0, 26, 43); text-align: center;">${data.first_name} ${data.last_name}</p>
+                    <p style="font-size: 12px; color: rgb(0, 26, 43); text-align: center; margin-top: 5px;">${data.email}</p>
+                    <div onclick="logout_func();" style="cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-size: 14px; text-align: center; margin: auto; margin-top: 10px;">
+                        logout
+                    </div>
+                </div>
+            `;
+        },
+        error: err =>{
+            console.log(err);
+        }
+
+    });
 }
 
 async function collect_user_signup_data(){
@@ -212,6 +276,45 @@ function login_success_function(){
 
 }
 
+function ensure_loggedIn_func(){
+    if(window.localStorage.getItem("ANDSUSR")){
+
+        get_user_info_by_id(window.localStorage.getItem("ANDSUSR"));
+
+        document.getElementById("mobile_top_nav_signin_btn").style.display = "none";
+        document.getElementById("mobile_menu_logged_in_user_info").style.display = "block";
+
+        if($(window).width() > 1025){
+            document.getElementById("top_nav_signin_btn").style.display = "none";
+            document.getElementById("logged_in_user_main_top_nav_info").style.display = "flex";
+        }
+    }
+    /*$.ajax({
+        type: "GET",
+        url: "./ensureLoggedIn",
+        sucess: data =>{
+            console.log(data);
+        },
+        error: err =>{
+            console.log(err)
+        }
+    });*/
+}
+
+function logout_func(){
+
+    document.getElementById("mobile_top_nav_signin_btn").style.display = "block";
+    document.getElementById("mobile_menu_logged_in_user_info").style.display = "none";
+    document.getElementById("logged_in_user_main_top_nav_info").style.display = "none";
+
+    if($(window).width() > 1025){
+        document.getElementById("top_nav_signin_btn").style.display = "inline"; 
+    }
+    
+    window.localStorage.removeItem("ANDSUSR");
+    document.getElementById("logged_in_user_main_top_nav_info").innerHTML = '';
+    document.getElementById("mobile_menu_logged_in_user_info").innerHTML = '';
+}
 
 $(document).ready(function(){
     if(page_url.pathname === "/login"){
@@ -221,4 +324,7 @@ $(document).ready(function(){
         toggle_show_login_or_signup_forms();
         toggle_show_login_div();
     }
+    ensure_loggedIn_func();
 });
+
+

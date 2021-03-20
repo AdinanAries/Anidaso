@@ -1,4 +1,4 @@
-function get_user_info(){
+/*function get_user_info(){
     $.ajax({
         type: "GET",
         url: "/user/G10TI2Pskdioekl994",
@@ -12,4 +12,4 @@ function get_user_info(){
     });
 }
 
-get_user_info();
+get_user_info();*/

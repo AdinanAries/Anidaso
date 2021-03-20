@@ -20,6 +20,21 @@ const expressSession = require('express-session')({
   saveUninitialized: false
 });
 
+//instantiating Amandues
+var amadeus = new Amadeus({
+  clientId: 'tMUIuRrYAgk0zLfDy1PCC4GXegGg0rYc',
+  clientSecret: 'PAtVLCWxpRGsYPdU'
+});
+
+//stripe connection
+const stripe = require("stripe")(process.env.STRIPE_SECRETE_KEY);
+
+//mongo db atlass stuff
+var mongo_db_url = process.env.MONGO_DB_URL;
+mongoose.connect(mongo_db_url, {useNewUrlParser: true, useUnifiedTopology: true}, ()=>{
+  console.log("connected to database successfully")
+});
+
 //data models
 var cheap_hotel = require("./models/cheap_hotel_model");
 var login_user = require("./models/login_user_model");
@@ -33,15 +48,6 @@ app.use(expressSession);
 passport.use(login_user.createStrategy());
 passport.serializeUser(login_user.serializeUser());
 passport.deserializeUser(login_user.deserializeUser());
-
-//stripe connection
-const stripe = require("stripe")(process.env.STRIPE_SECRETE_KEY);
-
-//mongo db atlass stuff
-var mongo_db_url = process.env.MONGO_DB_URL;
-mongoose.connect(mongo_db_url, {useNewUrlParser: true, useUnifiedTopology: true}, ()=>{
-  console.log("connected to database successfully")
-});
 
 //Globals to store endpoint data
 var all_events = [];
@@ -62,11 +68,7 @@ const PORT = process.env.PORT || 5000;
 
 
 
-//instantiating Amandues
-var amadeus = new Amadeus({
-  clientId: 'tMUIuRrYAgk0zLfDy1PCC4GXegGg0rYc',
-  clientSecret: 'PAtVLCWxpRGsYPdU'
-});
+
 
 
 //getting Amadues OAuth2 access token
@@ -495,12 +497,12 @@ app.post('/finish_room_booking/', (req, res, next)=> {
 
 
 //login and signup routes
-app.get('/ensureLoggedIn',
+app.get('/ensureLoggedIn/',
   connectEnsureLogin.ensureLoggedIn(),
   (req, res, next) => {
     //console.log("slash route");
     //res.sendFile('public/index.html', {root: __dirname});
-    res.redirect("/");
+    res.send({success: true, msg: "user is logged in"});
   }
 );
 
@@ -531,7 +533,8 @@ app.post("/login/", async (req, res, next)=>{
 
       if (!user) {
         //return res.redirect('/login?info=' + info);
-        return res.redirect('/login');
+        //return res.redirect('/login');
+        return res.send({status: "fail", msg: "login failed", desc: info});
       }
 
       req.logIn(user, function(err) {
@@ -540,7 +543,8 @@ app.post("/login/", async (req, res, next)=>{
           return next(err);
         }
 
-        return res.redirect('/');
+        //return res.redirect('/');
+        return res.send({status: "success", msg: "login successful", data: user});
 
       });
 
@@ -552,7 +556,7 @@ app.post("/login/", async (req, res, next)=>{
   }catch(e){
     res.send({error: e})
   }
-  
+
 });
 
 app.post("/signup/", async (req, res, next)=> {
@@ -586,13 +590,21 @@ app.post("/signup/", async (req, res, next)=> {
           res.send({failed: true, err: error, msg: "server side error"});
         }else{
 
-          let login = new login_user({
+          /*let login = new login_user({
             _id: result._id,
             username: result.email,
             password: req.body.password
-          });
+          });*/
     
-          login.save((err, rslt) =>{
+          login_user.register({
+            _id: result._id,
+            username: result.email, 
+            active: false 
+          }, req.body.password);
+
+          res.send(result);
+
+          /*login.save((err, rslt) =>{
 
             if(err){
               res.send({failed: true, error: err, msg: "server side error"});
@@ -600,7 +612,7 @@ app.post("/signup/", async (req, res, next)=> {
               res.send(rslt);
             }
 
-          });
+          });*/
 
         }
   
@@ -617,8 +629,16 @@ app.post("/signup/", async (req, res, next)=> {
 })
 
 //user info routes
-app.get("/user/:id", (req, res, next) =>{
-  res.send(req.params.id);
+app.get("/get_login_user/:id", async (req, res, next) =>{
+  
+  console.log(req.params.id);
+
+  let the_user = await signup_user.findOne({
+    _id: req.params.id
+  }).exec();
+  
+  res.send(the_user);
+
 });
 
 
