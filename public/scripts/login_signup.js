@@ -223,7 +223,7 @@ function get_user_info_by_id(id){
                         <p>${data.first_name}</p>
                     </div>
                     <div class="logged_in_user_nav_info_drop_down">
-                        <p style="margin-top: 10px; font-size: 13px; color:rgb(0, 26, 43); text-align: center;">${data.first_name} ${data.last_name}</p>
+                        <p style="margin-top: 10px; font-size: 14px; color: rgb(235, 86, 0); font-weight: bolder; text-align: center;">${data.first_name} ${data.last_name}</p>
                         <p style="font-size: 12px; color: rgb(0, 26, 43); text-align: center; margin-top: 5px;">${data.email}</p>
                         <div onclick="logout_func();" style="cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-size: 14px; text-align: center; margin: auto; margin-top: 10px;">
                             logout
