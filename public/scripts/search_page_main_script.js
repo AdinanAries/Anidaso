@@ -1798,3 +1798,13 @@ function show_full_description(number){
 function toggle_show_hide_book_hotel_view_full_profile_info(){
   $("#book_hotel_view_full_profile_info").toggle("up");
 }
+
+function toggle_show_hide_page_full_screen_prompt(){
+  $("#page_full_screen_prompt").toggle("up");
+}
+
+function show_prompt_to_user(title, msg){
+  toggle_show_hide_page_full_screen_prompt();
+  document.getElementById("page_full_screen_prompt_title").innerHTML = title;
+  document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
+}

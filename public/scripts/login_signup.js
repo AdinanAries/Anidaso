@@ -127,7 +127,8 @@ function signup_function(){
 
                     console.log(data)
                     //login user here 
-                    login_with_params_function(data.email, password_input.value)
+                    login_with_params_function(data.email, password_input.value);
+                    show_prompt_to_user("Signup", "You've signed up successfully!");
 
                 },
                 error: err =>{
@@ -154,6 +155,16 @@ function login_with_params_function(email, password){
         }),
         success: result => {
             console.log(result);
+
+            if(data.status){
+                if(data.status === "fail"){
+                    document.getElementById("main_login_status_msg").innerText = `⚠️ ${data.desc.message}`;
+                    document.getElementById("main_login_status_msg").style.display = 'block';
+                    return null;
+                }
+            }
+            document.getElementById("main_login_status_msg").style.display = 'none';
+
             login_success_function();
             display_login_user_info(result.data)
         },
@@ -177,14 +188,7 @@ function get_user_info_by_id(id){
         success: data => {
             console.log(data);
 
-            if(data.status){
-                if(data.status === "fail"){
-                    document.getElementById("main_login_status_msg").innerText = `⚠️ ${data.desc.message}`;
-                    document.getElementById("main_login_status_msg").style.display = 'block';
-                    return null;
-                }
-            }
-            document.getElementById("main_login_status_msg").style.display = 'none';
+            change_page_url("");
 
             if(document.getElementById("mobile_menu_logged_in_user_info")){
                 document.getElementById("mobile_menu_logged_in_user_info").innerHTML =
@@ -204,6 +208,7 @@ function get_user_info_by_id(id){
                         logout
                     </div>
                 `;
+
             }
 
             if(document.getElementById("logged_in_user_main_top_nav_info")){
@@ -308,6 +313,8 @@ function login_success_function(){
             document.getElementById("search_page_mobile_menu_logged_in_user_info").style.display = "block";
     }
 
+    show_prompt_to_user("Login", "You've logged in successfully!");
+
 }
 
 function ensure_loggedIn_func(){
@@ -366,11 +373,23 @@ function logout_func(){
 
 $(document).ready(function(){
     if(page_url.pathname === "/login"){
+
+        if(window.localStorage.getItem("ANDSUSR")){
+            ensure_loggedIn_func();
+            return null
+        }
+
         toggle_show_login_div();
     }
     if(page_url.pathname === "/signup"){
-        toggle_show_login_or_signup_forms();
+
+        if(window.localStorage.getItem("ANDSUSR")){
+            ensure_loggedIn_func();
+            return null
+        }
+
         toggle_show_login_div();
+        toggle_show_login_or_signup_forms();
     }
     ensure_loggedIn_func();
 });

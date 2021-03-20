@@ -2249,3 +2249,13 @@ function toggle_show_hide_todays_hotel_deals_view_deal_container(){
 function todays_hotel_deals_view_deal_func(){
   toggle_show_hide_todays_hotel_deals_view_deal_container();
 }
+
+function toggle_show_hide_page_full_screen_prompt(){
+  $("#page_full_screen_prompt").toggle("up");
+}
+
+function show_prompt_to_user(title, msg){
+  toggle_show_hide_page_full_screen_prompt();
+  document.getElementById("page_full_screen_prompt_title").innerHTML = title;
+  document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
+}
