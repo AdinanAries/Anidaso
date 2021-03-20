@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const hotels_deals_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.ObjectId,
-        reqiured: true,
-        index: true
+        reqiured: true
     },
     hotel_name: {
         type: String,
@@ -17,8 +16,26 @@ const hotels_deals_schema = mongoose.Schema({
     hotel_reviews: {
         type: Array
     },
+    hotel_description: {
+        type: String,
+    },
+    hotel_location: {
+        type: String,
+    },
+    hotel_mobile: {
+        type: String
+    },
+    hotel_email: {
+        type: String
+    },
+    hotel_amenities: {
+        type: Array
+    },
     hotel_number_of_reviews: {
         type: Number
+    },
+    hotel_pictures: {
+        type: Array
     },
     deal_checkin_date: {
         type: Date,
@@ -43,6 +60,15 @@ const hotels_deals_schema = mongoose.Schema({
     deal_room_information: {
         type: Object,
         required: true
+    },
+    deal_number_of_rooms: {
+        type: Number
+    },
+    deal_number_of_guests: {
+        type: Number
+    },
+    deal_tax_amount: {
+        type: Number
     }
 });
 
