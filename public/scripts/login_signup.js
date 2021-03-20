@@ -165,42 +165,47 @@ function get_user_info_by_id(id){
         url: `./get_login_user/${id}`,
         success: data => {
             console.log(data);
-            document.getElementById("mobile_menu_logged_in_user_info").innerHTML =
-            `
-                <div style="display: flex; flex-direction: row !important; padding: 10px; padding-top: 0;">
-                    <div class="logged_in_user_nav_profile_picture">
-                    <div style="border:rgb(235, 86, 0) 2px solid" class="logged_in_user_nav_profile_picture_container">
-                        <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
-                    </div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; justify-content: center; margin-left: 5px;">
-                        <p style="font-size: 13px; font-weight: bolder; color: rgb(235, 86, 0); letter-spacing: 1px;">${data.first_name} ${data.last_name}</p>
-                        <p style="font-size: 12px; font-weight: bolder; color: rgb(235, 86, 0); letter-spacing: 1px; margin-top: 5px;">${data.email}</p>
-                    </div>
-                </div>
-                <div onclick="logout_func();" style="border-radius: 4px; margin: 0 10px; cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; font-size: 14px; text-align: center;">
-                    logout
-                </div>
-            `;
 
-            document.getElementById("logged_in_user_main_top_nav_info").innerHTML =
-            `
-                <div class="logged_in_user_nav_profile_picture">
-                    <div class="logged_in_user_nav_profile_picture_container">
-                    <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+            if(document.getElementById("mobile_menu_logged_in_user_info")){
+                document.getElementById("mobile_menu_logged_in_user_info").innerHTML =
+                `
+                    <div style="display: flex; flex-direction: row !important; padding: 10px; padding-top: 0;">
+                        <div class="logged_in_user_nav_profile_picture">
+                        <div style="border:rgb(235, 86, 0) 2px solid" class="logged_in_user_nav_profile_picture_container">
+                            <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+                        </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; justify-content: center; margin-left: 5px;">
+                            <p style="font-size: 13px; font-weight: bolder; color: rgb(235, 86, 0); letter-spacing: 1px;">${data.first_name} ${data.last_name}</p>
+                            <p style="font-size: 12px; font-weight: bolder; color: rgb(235, 86, 0); letter-spacing: 1px; margin-top: 5px;">${data.email}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="logged_in_user_nav_profile_name">
-                    <p>${data.first_name}</p>
-                </div>
-                <div class="logged_in_user_nav_info_drop_down">
-                    <p style="margin-top: 10px; font-size: 13px; color:rgb(0, 26, 43); text-align: center;">${data.first_name} ${data.last_name}</p>
-                    <p style="font-size: 12px; color: rgb(0, 26, 43); text-align: center; margin-top: 5px;">${data.email}</p>
-                    <div onclick="logout_func();" style="cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-size: 14px; text-align: center; margin: auto; margin-top: 10px;">
+                    <div onclick="logout_func();" style="border-radius: 4px; margin: 0 10px; cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; font-size: 14px; text-align: center;">
                         logout
                     </div>
-                </div>
-            `;
+                `;
+            }
+
+            if(document.getElementById("logged_in_user_main_top_nav_info")){
+                document.getElementById("logged_in_user_main_top_nav_info").innerHTML =
+                `
+                    <div class="logged_in_user_nav_profile_picture">
+                        <div class="logged_in_user_nav_profile_picture_container">
+                        <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+                        </div>
+                    </div>
+                    <div class="logged_in_user_nav_profile_name">
+                        <p>${data.first_name}</p>
+                    </div>
+                    <div class="logged_in_user_nav_info_drop_down">
+                        <p style="margin-top: 10px; font-size: 13px; color:rgb(0, 26, 43); text-align: center;">${data.first_name} ${data.last_name}</p>
+                        <p style="font-size: 12px; color: rgb(0, 26, 43); text-align: center; margin-top: 5px;">${data.email}</p>
+                        <div onclick="logout_func();" style="cursor: pointer; padding: 10px; background-color: rgb(139, 18, 44); color: white; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-size: 14px; text-align: center; margin: auto; margin-top: 10px;">
+                            logout
+                        </div>
+                    </div>
+                `;
+            }
         },
         error: err =>{
             console.log(err);
@@ -266,12 +271,21 @@ function login_success_function(){
 
     toggle_show_login_div();
 
-    document.getElementById("mobile_top_nav_signin_btn").style.display = "none";
-    document.getElementById("mobile_menu_logged_in_user_info").style.display = "block";
-
     if($(window).width() > 1025){
-        document.getElementById("top_nav_signin_btn").style.display = "none";
-        document.getElementById("logged_in_user_main_top_nav_info").style.display = "flex";
+        if(document.getElementById("top_nav_signin_btn"))
+            document.getElementById("top_nav_signin_btn").style.display = "none";
+
+        if(document.getElementById("logged_in_user_main_top_nav_info"))
+            document.getElementById("logged_in_user_main_top_nav_info").style.display = "flex";
+    }else{
+        if(document.getElementById("mobile_top_nav_signin_btn"))
+            document.getElementById("mobile_top_nav_signin_btn").style.display = "none";
+
+        if(document.getElementById("mobile_menu_logged_in_user_info"))
+            document.getElementById("mobile_menu_logged_in_user_info").style.display = "block";
+
+        if(document.getElementById("search_page_mobile_menu_logged_in_user_info"))
+            document.getElementById("search_page_mobile_menu_logged_in_user_info").style.display = "block";
     }
 
 }
@@ -281,12 +295,21 @@ function ensure_loggedIn_func(){
 
         get_user_info_by_id(window.localStorage.getItem("ANDSUSR"));
 
-        document.getElementById("mobile_top_nav_signin_btn").style.display = "none";
-        document.getElementById("mobile_menu_logged_in_user_info").style.display = "block";
-
         if($(window).width() > 1025){
-            document.getElementById("top_nav_signin_btn").style.display = "none";
-            document.getElementById("logged_in_user_main_top_nav_info").style.display = "flex";
+            if(document.getElementById("top_nav_signin_btn"))
+                document.getElementById("top_nav_signin_btn").style.display = "none";
+
+            if(document.getElementById("logged_in_user_main_top_nav_info"))
+                document.getElementById("logged_in_user_main_top_nav_info").style.display = "flex";
+        }else{
+            if(document.getElementById("mobile_top_nav_signin_btn"))
+                document.getElementById("mobile_top_nav_signin_btn").style.display = "none";
+        
+            if(document.getElementById("mobile_menu_logged_in_user_info"))
+                document.getElementById("mobile_menu_logged_in_user_info").style.display = "block";
+
+            if(document.getElementById("search_page_mobile_menu_logged_in_user_info"))
+                document.getElementById("search_page_mobile_menu_logged_in_user_info").style.display = "block";
         }
     }
     /*$.ajax({
@@ -303,17 +326,22 @@ function ensure_loggedIn_func(){
 
 function logout_func(){
 
-    document.getElementById("mobile_top_nav_signin_btn").style.display = "block";
-    document.getElementById("mobile_menu_logged_in_user_info").style.display = "none";
-    document.getElementById("logged_in_user_main_top_nav_info").style.display = "none";
+    if(document.getElementById("mobile_top_nav_signin_btn"))
+        document.getElementById("mobile_top_nav_signin_btn").style.display = "block";
+    if(document.getElementById("mobile_menu_logged_in_user_info"))
+        document.getElementById("mobile_menu_logged_in_user_info").style.display = "none";
+    if(document.getElementById("logged_in_user_main_top_nav_info"))
+        document.getElementById("logged_in_user_main_top_nav_info").style.display = "none";
 
     if($(window).width() > 1025){
         document.getElementById("top_nav_signin_btn").style.display = "inline"; 
     }
     
     window.localStorage.removeItem("ANDSUSR");
-    document.getElementById("logged_in_user_main_top_nav_info").innerHTML = '';
-    document.getElementById("mobile_menu_logged_in_user_info").innerHTML = '';
+    if(document.getElementById("logged_in_user_main_top_nav_info"))
+        document.getElementById("logged_in_user_main_top_nav_info").innerHTML = '';
+    if(document.getElementById("mobile_menu_logged_in_user_info"))
+        document.getElementById("mobile_menu_logged_in_user_info").innerHTML = '';
 }
 
 $(document).ready(function(){
