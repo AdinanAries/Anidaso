@@ -61,7 +61,18 @@ function login_function(){
             dataType: "json",
             data: JSON.stringify(login_user_data),
             success: data =>{
+
                 console.log(data);
+
+                if(data.status){
+                    if(data.status === "fail"){
+                        document.getElementById("main_login_status_msg").innerText = `⚠️ ${data.desc.message}`;
+                        document.getElementById("main_login_status_msg").style.display = 'block';
+                        return null;
+                    }
+                }
+                document.getElementById("main_login_status_msg").style.display = 'none';
+
                 login_success_function();
                 display_login_user_info(data.data)
             },
@@ -165,6 +176,15 @@ function get_user_info_by_id(id){
         url: `./get_login_user/${id}`,
         success: data => {
             console.log(data);
+
+            if(data.status){
+                if(data.status === "fail"){
+                    document.getElementById("main_login_status_msg").innerText = `⚠️ ${data.desc.message}`;
+                    document.getElementById("main_login_status_msg").style.display = 'block';
+                    return null;
+                }
+            }
+            document.getElementById("main_login_status_msg").style.display = 'none';
 
             if(document.getElementById("mobile_menu_logged_in_user_info")){
                 document.getElementById("mobile_menu_logged_in_user_info").innerHTML =

@@ -45,3 +45,5 @@ const hotels_deals_schema = mongoose.Schema({
         required: true
     }
 });
+
+module.exports = new mongoose.model("hotel_deals", hotels_deals_schema, "hotel_deals")

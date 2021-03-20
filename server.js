@@ -39,6 +39,7 @@ mongoose.connect(mongo_db_url, {useNewUrlParser: true, useUnifiedTopology: true}
 var cheap_hotel = require("./models/cheap_hotel_model");
 var login_user = require("./models/login_user_model");
 var signup_user = require("./models/signup_user_model");
+var hotel_deals = require("./models/hotel_deals_model");
 
 app.use(passport.initialize());
 app.use(passport.session());
