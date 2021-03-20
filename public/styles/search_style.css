@@ -375,7 +375,8 @@
 #sign_in_container,
 #full_page_loader_container,
 #order_ticket_form_container,
-#order_room_form_container {
+#order_room_form_container,
+.page_cover_for_popups {
   display: none;
   position: fixed;
   top: 0;

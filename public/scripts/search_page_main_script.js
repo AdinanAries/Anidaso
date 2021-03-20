@@ -1808,3 +1808,10 @@ function show_prompt_to_user(title, msg){
   document.getElementById("page_full_screen_prompt_title").innerHTML = title;
   document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
 }
+
+function change_page_url(path){
+  let url = new URL(document.URL);
+  console.log(url)
+  let signup_url = url.origin + "/"+ path;
+  history.pushState("Anidaso " + path, path, signup_url);
+ }

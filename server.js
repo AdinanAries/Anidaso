@@ -569,7 +569,8 @@ app.post("/signup/", async (req, res, next)=> {
     let user = new signup_user({
       first_name: req.body.firstname,
       last_name: req.body.lastname,
-      email: req.body.email
+      email: req.body.email,
+      profile_picture: ""
     });
 
     let existing_user = await signup_user.findOne({

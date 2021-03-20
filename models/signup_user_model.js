@@ -17,6 +17,10 @@ let signup_user_schema = mongoose.Schema({
     email: {
         type: String,
         required: true,
+    },
+    profile_picture: {
+        type: String,
+        required: true
     }
 });
 
