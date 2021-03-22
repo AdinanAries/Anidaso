@@ -2396,7 +2396,9 @@ footer a {
   .each_review_info,
   .todays_hotel_deals_view_deal_each_section,
   .book_hotel_view_full_profile_infor_row_set_item,
-  .book_hotel_view_full_profile_each_photo img{
+  .book_hotel_view_full_profile_each_photo img,
+  #home_page_display_pictures_desc,
+  .fast_easy_cheap_info_section_container{
     border-radius: 0 !important;
   }
   #todays_hotel_deals_view_deal_reviews{
@@ -2404,6 +2406,9 @@ footer a {
   }
   .book_hotel_view_full_profile_each_photo{
     margin: 2px 0 !important;
+  }
+  .footer_row{
+    padding: 0 10px;
   }
 }
 @media only screen and (max-width: 413px) {
