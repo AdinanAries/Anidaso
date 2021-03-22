@@ -2370,6 +2370,42 @@ footer a {
     margin-bottom: 5px;
   }
 }
+@media only screen and (max-width: 700px){
+  .wrapper{
+    padding: 0;
+    margin: 0;
+  }
+  .favorite_bus_company_info{
+    margin: 0;
+  }
+  .header_content_container{
+    padding-left: 5px;
+  }
+  .ads_upper_title{
+    margin-left: 10px;
+  }
+  .todays_hotel_deals_view_deal_section_set,
+  .book_hotel_view_full_profile_infor_row,
+  #book_hotel_view_full_profile_photos{
+    padding: 0;
+  }
+  .each_set_off_additional_options,
+  .each_popular_city, 
+  .each_popular_city img,
+  .wide_screen_ads_card,
+  .each_review_info,
+  .todays_hotel_deals_view_deal_each_section,
+  .book_hotel_view_full_profile_infor_row_set_item,
+  .book_hotel_view_full_profile_each_photo img{
+    border-radius: 0 !important;
+  }
+  #todays_hotel_deals_view_deal_reviews{
+    padding: 20px 0 !important;
+  }
+  .book_hotel_view_full_profile_each_photo{
+    margin: 2px 0 !important;
+  }
+}
 @media only screen and (max-width: 413px) {
   .ui-datepicker {
     margin-left: -1.5em !important;
