@@ -696,6 +696,26 @@
             <input id="main_login_submit_btn" style="margin-top: 10px; padding: 10px; border-radius: 4px; color: white; 
             border: none; background-color: rgb(245, 151, 37); width: 100%;" 
             type="submit" value="Login" />
+
+            <div id="main_login_submit_loader" style="padding-top: 10px; display: none; ">
+              <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                      width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                      <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                          <animateTransform attributeType="xml"
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 25 25"
+                          to="360 25 25"
+                          dur="0.6s"
+                          repeatCount="indefinite"/>
+                      </path>
+                  </svg>
+                  <p style="text-align: center; font-size: 12px; color:rgb(0, 26, 43);">
+                      logging in...
+                  </p>
+              </div>
+            </div>
           </div>
 
           <div id="sign_up_form_container" style="padding: 20px; display: none;">
@@ -732,8 +752,31 @@
               <input onblur="de_activate_login_fld(199);" onclick="activate_login_fld(199);" id="login_fld_199" class="login_fld" type="password" />
             </div>
 
+            <p id="main_signup_status_msg" style="display: none; font-size: 13px; margin-top: 20px; margin-bottom: 5px; font-weight: bolder; text-align: center; color:rgb(0, 127, 177); letter-spacing: 1px;"></p>
+
             <input style="margin-top: 10px; padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
               id="sign_up_anidaso_user_btn" type="submit" value="Submit" />
+
+            <div id="main_signup_submit_loader" style="padding-top: 10px; display: none; ">
+              <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                      width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                      <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                          <animateTransform attributeType="xml"
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 25 25"
+                          to="360 25 25"
+                          dur="0.6s"
+                          repeatCount="indefinite"/>
+                      </path>
+                  </svg>
+                  <p style="text-align: center; font-size: 12px; color:rgb(0, 26, 43);">
+                    signing up...
+                  </p>
+              </div>
+            </div>
+
           </div>
 
           <p id="toggle_show_login_or_signup_formsbtn" onclick="toggle_show_login_or_signup_forms()">

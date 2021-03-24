@@ -51,6 +51,9 @@ function login_function(){
         password_elem.placeholder = "please enter your password";
     }else{
 
+        document.getElementById("main_login_submit_loader").style.display = "block";
+        document.getElementById("main_login_submit_btn").style.display = "none";
+
         login_user_data.username = email;
         login_user_data.password = password;
         //login user here 
@@ -66,6 +69,8 @@ function login_function(){
 
                 if(data.status){
                     if(data.status === "fail"){
+                        document.getElementById("main_login_submit_loader").style.display = "none";
+                        document.getElementById("main_login_submit_btn").style.display = "block";
                         document.getElementById("main_login_status_msg").innerText = `⚠️ ${data.desc.message}`;
                         document.getElementById("main_login_status_msg").style.display = 'block';
                         return null;
@@ -73,10 +78,18 @@ function login_function(){
                 }
                 document.getElementById("main_login_status_msg").style.display = 'none';
 
+                document.getElementById("main_login_submit_loader").style.display = "none";
+                document.getElementById("main_login_submit_btn").style.display = "block";
+                email_elem.value = "";
+                password_elem.value = "";
                 login_success_function();
                 display_login_user_info(data.data)
             },
             error: err =>{
+                document.getElementById("main_login_submit_loader").style.display = "none";
+                document.getElementById("main_login_submit_btn").style.display = "block";
+                document.getElementById("main_login_status_msg").innerText = `⚠️ An error occured. Please try again.`;
+                document.getElementById("main_login_status_msg").style.display = 'block';
                 console.log(err);
             }
         });
@@ -117,6 +130,10 @@ function signup_function(){
         collect_user_signup_data().then(()=>{
             //do ajax here after collecting post data into post object
             //console.log(signup_user_data)
+            
+            document.getElementById("main_signup_submit_loader").style.display = "block";
+            document.getElementById("sign_up_anidaso_user_btn").style.display = "none";
+
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(signup_user_data),
@@ -125,10 +142,22 @@ function signup_function(){
                 dataType: "json",
                 success: data =>{
 
-                    console.log(data)
-                    //login user here 
-                    login_with_params_function(data.email, password_input.value);
-                    show_prompt_to_user("Signup", "You've signed up successfully!");
+                    console.log(data);
+
+                    if(data.failed){
+                        document.getElementById("main_signup_status_msg").innerText = `⚠️ ${data.msg}`;
+                        document.getElementById("main_signup_status_msg").style.display = 'block';
+                        document.getElementById("main_signup_submit_loader").style.display = "none";
+                        document.getElementById("sign_up_anidaso_user_btn").style.display = "block";
+                    }else{
+                        //login user here 
+                        login_with_params_function(data.email, password_input.value);
+                        show_prompt_to_user("Signup", "You've signed up successfully!");
+                        clear_user_data_from_signup_form();
+                        document.getElementById("main_signup_submit_loader").style.display = "none";
+                        document.getElementById("sign_up_anidaso_user_btn").style.display = "block";
+                    }
+
 
                 },
                 error: err =>{
@@ -244,6 +273,14 @@ async function collect_user_signup_data(){
     signup_user_data.lastname = last_name_input.value;
     signup_user_data.email = email_input.value;
     signup_user_data.password = password_input.value;
+}
+
+function clear_user_data_from_signup_form(){
+    first_name_input.value = "";
+    last_name_input.value = "";
+    email_input.value = "";
+    password_input.value = "";
+    confirm_password_input.value = "";
 }
 
 
