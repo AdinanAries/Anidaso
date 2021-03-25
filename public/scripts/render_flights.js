@@ -959,12 +959,18 @@ function render_flights(){
                                     segment_cabin = segment_cabin[(segment_cabin.length - 1)].cabin + " " + segment_cabin[0].class;
                                     
                                     let airfare = airfare_codes.filter(each => each.code.toLowerCase() === a_cabin[0].class.toLowerCase())[0];
+                                    
+                                    let the_fare = "unavailable";
+                                    if(airfare){
+                                        the_fare = airfare.fare;
+                                    }
+
                                     all_segment_cabins += `
                                         <li style="padding: 5px 10px;">
                                             <p style="color: white; font-weight: bolder; letter-spacing: 0.5px; font-size: 10px; margin-bottom: 2px;">
                                             ${data[w].itineraries[last_flights_itinerary_index].segments[j].departure.iataCode} - 
                                             ${data[w].itineraries[last_flights_itinerary_index].segments[j].arrival.iataCode}</p>
-                                            <p style="color: rgb(255, 23, 166); font-size: 12px; letter-spacing: 0.5px; font-weight: bolder; margin-left: 5px;">${airfare.fare}</p>
+                                            <p style="color: rgb(255, 23, 166); font-size: 12px; letter-spacing: 0.5px; font-weight: bolder; margin-left: 5px;">${the_fare}</p>
                                         </li>`;
                                 }else{
                                     segment_cabin = "";
