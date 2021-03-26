@@ -759,6 +759,15 @@ app.post('/stripe-webhook/', async (req, res) => {
   }
 );
 
+app.post('/register_cheap_hotel_create_customer/', async(req, res, next) => {
+  const customer = await stripe.customers.create({
+    name: req.body.name,
+    email: req.body.email,
+    description: 'Anidaso cheap hotel client',
+  });
+  res.send({customer: customer});
+})
+
 app.post('/register_cheap_hotel_create_subscription/', async (req, res) => {
   // Attach the payment method to the customer
   try {
@@ -782,7 +791,7 @@ app.post('/register_cheap_hotel_create_subscription/', async (req, res) => {
   // Create the subscription
   const subscription = await stripe.subscriptions.create({
     customer: req.body.customerId,
-    items: [{ price: 'price_HGd7M3DV3IMXkC' }],
+    items: [{ price: req.body.priceId }],
     expand: ['latest_invoice.payment_intent'],
   });
 
@@ -841,10 +850,11 @@ app.post('/register_cheap_hotel/', async (req, res, next) =>{
   try{
 
     let new_cheap_hotel = new cheap_hotel(cheap_hotel_post_data);
-    await new_cheap_hotel.save();
+    let new_saved_hotel = await new_cheap_hotel.save();
+    res.send({success: true, data: new_saved_hotel, msg: "Hotel registration finished successfully!"})
 
   }catch(e){
-    res.status(400).send({success: false, data: e, msg: "input data validation failed"});
+    res.status(400).send({success: false, data: e, msg: "Registration failed at the final stage"});
   }
 
 });

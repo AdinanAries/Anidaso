@@ -619,7 +619,11 @@ function show_book_cheap_book_direct_payments_form_subscription(){
     document.getElementById("book_cheap_book_direct_payments_form_container_subscription").style.display = "block";
     document.getElementById("book_cheap_book_direct_payments_form_container_inputs").style.display = "none";
 }
-function show_book_cheap_book_direct_payments_form_inputs(){
+function show_book_cheap_book_direct_payments_form_inputs(price_id, price, recurrence_period){
+    console.log(price_id);
+    document.getElementById('book_cheap_book_direct_subscription_price_id').innerText = price_id;
+    document.getElementById('book_cheap_book_direct_subscription_price').innerText = price;
+    document.getElementById('book_cheap_book_direct_subscription_period').innerText = recurrence_period;
     document.getElementById("book_cheap_book_direct_payments_form_container_subscription").style.display = "none";
     document.getElementById("book_cheap_book_direct_payments_form_container_inputs").style.display = "block";
 }

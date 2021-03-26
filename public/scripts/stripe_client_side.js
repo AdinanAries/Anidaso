@@ -1,6 +1,7 @@
 let stripe = Stripe('pk_test_0etJCeBvPiJRDEEzxSLVXgBW009YQmsWbU');
 let elements = stripe.elements();
 
+//Step 1. Create Card with payment details----------------------------------------
 let card = elements.create('card');
 card.mount('#card-element');
 
@@ -24,52 +25,60 @@ var form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function (ev) {
   ev.preventDefault();
+  createCustomer().then(()=>{
+    //All subsequent steps in this promise callback
+  });
 });
 
-function createCustomer() {
+//step 2. Create customer using email credentials----------------------------------------
+async function createCustomer() {
 
-    let billingEmail = document.querySelector('#email').value;
-    return fetch('/create-customer', {
+    let billingEmail = document.getElementById("book_cheap_book_direct_register_hotel_email_input_fld").value;
+    return fetch('/register_cheap_hotel_create_customer', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         email: billingEmail,
+        name: document.getElementById("book_cheap_book_direct_register_hotel_name_input_fld").value
       }),
     }).then((response) => {
         return response.json();
     }).then((result) => {
-    // result.customer.id is used to map back to the customer object
-    return result;
+        // result.customer.id is used to map back to the customer object
+        //step 3. Create payment method with card and customer_id-----------------------------------------
+        createPaymentMethod(card, result.customer.id)
+        return result;
     });
 
 }
 
-function createPaymentMethod({card}) {
+function createPaymentMethod(card_param, customer_id) {
 
-const customerId = {CUSTOMER_ID};
+const customerId = customer_id;
+
 // Set up payment method for recurring usage
-let billingName = document.querySelector('#name').value;
+let billingName = document.getElementById("book_cheap_book_direct_register_hotel_name_input_fld").value;
 
-let priceId = document.getElementById('priceId').innerHTML.toUpperCase();
+let priceId = document.getElementById('book_cheap_book_direct_subscription_price_id').innerText;
 
-stripe
-    .createPaymentMethod({
-    type: 'card',
-    card: card,
-    billing_details: {
-        name: billingName,
-    },
+stripe.createPaymentMethod({
+        type: 'card',
+        card: card_param,
+        billing_details: {
+            name: billingName,
+        },
     })
     .then((result) => {
     if (result.error) {
         displayError(result);
     } else {
+        //step 4. Create subscription with customer_id payment_method_Id and price_id-----------------------------------------------------
         createSubscription({
-        customerId: customerId,
-        paymentMethodId: result.paymentMethod.id,
-        priceId: priceId,
+            customerId: customerId,
+            paymentMethodId: result.paymentMethod.id,
+            priceId: priceId,
         });
     }
     });
@@ -121,7 +130,7 @@ return (
     .catch((error) => {
         // An error has happened. Display the failure to the user here.
         // We utilize the HTML element we created.
-        showCardError(error);
+        displayError(error);
     })
 );
 }
@@ -129,6 +138,13 @@ return (
 function onSubscriptionComplete(result) {
     // Payment was successful.
     if (result.subscription.status === 'active') {
+        show_prompt_to_user("Subscription Payment", "Your payment was made successfully!");
+        console.log(result);
+        toggle_hide_show_cheap_hotel_payments_prompt();
+        
+        //time to upload photos
+        //then save cheap hotel data to database
+
         // Change your UI to show a success message to your customer.
         // Call your backend to grant access to your service based on
         // `result.subscription.items.data[0].price.product` the customer subscribed to.
