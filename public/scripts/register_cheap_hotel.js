@@ -261,4 +261,22 @@ function register_cheap_hotel_remove_city_from_operating_cities(index, city, cou
     console.log(register_cheap_hotel_post_data.cities_operating);
 }
 
+async function upload_photo_cloud_bucket(){
+    return {
+        success: true
+    }
+}
+
+function save_cheap_hotel_information_to_db(){
+    $.ajax({
+        type: "POST",
+        url: "./register_cheap_hotel",
+        data: JSON.stringify(register_cheap_hotel_post_data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: res =>{
+            console.log(res);
+        }
+    });
+}
 //toggle_hide_show_cheap_hotel_payments_prompt();

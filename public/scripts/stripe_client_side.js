@@ -141,9 +141,15 @@ function onSubscriptionComplete(result) {
         show_prompt_to_user("Subscription Payment", "Your payment was made successfully!");
         console.log(result);
         toggle_hide_show_cheap_hotel_payments_prompt();
-        
+
         //time to upload photos
         //then save cheap hotel data to database
+        upload_photo_cloud_bucket().then(data =>{
+            if(data.success){
+                save_cheap_hotel_information_to_db();
+            }
+        });
+        
 
         // Change your UI to show a success message to your customer.
         // Call your backend to grant access to your service based on
