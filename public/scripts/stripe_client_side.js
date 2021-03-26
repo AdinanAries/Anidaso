@@ -33,6 +33,9 @@ form.addEventListener('submit', function (ev) {
 //step 2. Create customer using email credentials----------------------------------------
 async function createCustomer() {
 
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation").style.display = "block";
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_submit_btn").style.display = "none";
+
     let billingEmail = document.getElementById("book_cheap_book_direct_register_hotel_email_input_fld").value;
     return fetch('/register_cheap_hotel_create_customer', {
       method: 'post',
@@ -130,16 +133,25 @@ return (
     .catch((error) => {
         // An error has happened. Display the failure to the user here.
         // We utilize the HTML element we created.
+        document.getElementById("book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation").style.display = "none";
+        document.getElementById("book_cheap_hotel_register_new_hotel_subscription_submit_btn").style.display = "block";
+
         displayError(error);
     })
 );
 }
   
 function onSubscriptionComplete(result) {
+
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation").style.display = "none";
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_submit_btn").style.display = "block";
+
+
     // Payment was successful.
     if (result.subscription.status === 'active') {
         show_prompt_to_user("Subscription Payment", "Your payment was made successfully!");
         console.log(result);
+
         toggle_hide_show_cheap_hotel_payments_prompt();
 
         //time to upload photos
@@ -158,6 +170,10 @@ function onSubscriptionComplete(result) {
 }
 
 function handlePaymentThatRequiresCustomerAction({subscription, invoice, priceId, paymentMethodId, isRetry,}) {
+
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation").style.display = "none";
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_submit_btn").style.display = "block";
+
     if (subscription && subscription.status === 'active') {
         // Subscription is active, no customer actions required.
         return { subscription, priceId, paymentMethodId };
@@ -205,6 +221,9 @@ function handlePaymentThatRequiresCustomerAction({subscription, invoice, priceId
 }
 
 function handleRequiresPaymentMethod({subscription, paymentMethodId, priceId}) {
+
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation").style.display = "none";
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_submit_btn").style.display = "block";
 
     if (subscription.status === 'active') {
         // subscription is active, no customer actions required.

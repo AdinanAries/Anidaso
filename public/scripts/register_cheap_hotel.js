@@ -142,6 +142,9 @@ book_cheap_hotel_register_new_hotel_button.addEventListener("click", evnt => {
         //collecting value from input into post data object
         collect_register_cheap_hotel_data().then(()=>{
 
+            document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "block";
+            book_cheap_hotel_register_new_hotel_button.style.display = "none";
+
             validate_register_cheap_hotel_data().then((validation_res)=>{
 
                 console.log(validation_res);
@@ -152,6 +155,9 @@ book_cheap_hotel_register_new_hotel_button.addEventListener("click", evnt => {
                     //setting post data to validated data from server
                     register_cheap_hotel_post_data = validation_res.data;
                 }else{
+                    document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
+                    book_cheap_hotel_register_new_hotel_button.style.display = "block";
+                    
                     book_cheap_hotel_register_new_hotel_button.innerText = validation_res.responseJSON.msg;
                     book_cheap_hotel_register_new_hotel_button.style.backgroundColor = "orangered";
                     book_cheap_hotel_register_new_hotel_button.style.borderColor = "orange";
@@ -276,7 +282,31 @@ function save_cheap_hotel_information_to_db(){
         dataType: "json",
         success: res =>{
             console.log(res);
+        },
+        error: err =>{
+            console.log(err);
         }
     });
+}
+
+function reset_register_hotel_form(){
+
+    document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
+    book_cheap_hotel_register_new_hotel_button.style.display = "block";
+
+    //clearing all inputs
+    book_cheap_book_direct_register_hotel_name_input_fld.value = "";
+    book_cheap_book_direct_register_hotel_avg_price_input_fld.value = "";
+    book_cheap_book_direct_register_hotel_url_input_fld.value = "";
+    book_cheap_book_direct_register_main_location_input_fld.value = "";
+    book_cheap_book_direct_register_hotel_email_input_fld.value = "";
+    book_cheap_book_direct_register_hotel_phone_input_fld.value = "";
+    book_cheap_book_direct_register_hotel_description_input.value = "";
+    register_cheap_hotels_location_text_field.value = "";
+    book_cheap_book_direct_add_hotel_add_pic_input_1.value = "";
+    book_cheap_book_direct_add_hotel_add_pic_input_2.value = "";
+    book_cheap_book_direct_add_hotel_add_pic_input_3.value = "";
+    book_cheap_book_direct_add_hotel_add_pic_input_4.value = "";
+
 }
 //toggle_hide_show_cheap_hotel_payments_prompt();

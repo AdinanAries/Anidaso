@@ -1648,7 +1648,7 @@ function activate_login_fld(number){
   let signup_url = url.origin + "/"+ path;
   history.pushState("Anidaso " + path, path, signup_url);
  }
- 
+
  var most_searched_for_cities = [
     [
       {name: "Abuja", img: "./images/Nigerian-abuja-city.jpg", quote: "You cannot come to a Nigerian restaurant without having pepper soup.", quote_author: "Ben Okri", input_city_name: "Nnamdi Azikiwe Intl - Abuja", iata_code: "ABV"},
@@ -1811,7 +1811,7 @@ function activate_login_fld(number){
  }
 
  if($(window).width() > 1000){
-  load_more_popular_cities();
+  //load_more_popular_cities();
  }
 
 function select_popular_city_for_flight_search(iata_code, city_name){

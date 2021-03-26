@@ -556,10 +556,32 @@
                       </div>
                     </div>
                   </div>
+
                   <div id="book_cheap_hotel_register_new_hotel_button" style="padding: 20px; text-align: center; font-size: 14px; color: white; border: 1px solid rgb(48, 199, 166);
                   background-color: rgb(5, 146, 116); border-radius: 4px; cursor: pointer;">
                     Register
                   </div>
+
+                  <div id="book_cheap_hotel_register_new_hotel_loader_animation" style="padding-top: 10px; display: none; ">
+                    <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                <animateTransform attributeType="xml"
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 25 25"
+                                to="360 25 25"
+                                dur="0.6s"
+                                repeatCount="indefinite"/>
+                            </path>
+                        </svg>
+                        <p style="text-align: center; font-size: 12px; color:rgb(0, 26, 43);">
+                            registering...
+                        </p>
+                    </div>
+                  </div>
+
                   <input id="book_cheap_book_direct_add_hotel_add_pic_input_1" 
                     onchange="cheap_hotel_preview_image(event,'book_cheap_book_direct_add_hotel_add_pic_btn_1')" 
                     type="file" style="display: none;" />
@@ -662,9 +684,30 @@
               <!-- We'll put the error messages in this element -->
               <div style="font-size: 14px; text-align: center; color:rgb(65, 24, 0); 
                 letter-spacing: 1px; margin: 5px;" id="card-element-errors" role="alert"></div>
-              <button style="color:rgb(0, 127, 177); margin: auto; width: 100%; border: none; padding: 20px 0; cursor: pointer; 
+              <button id="book_cheap_hotel_register_new_hotel_subscription_submit_btn" style="color:rgb(0, 127, 177); margin: auto; width: 100%; border: none; padding: 20px 0; cursor: pointer; 
               border-radius: 4px; background-color:rgb(5, 57, 99); color: white;" type="submit">
                 Subscribe</button>
+
+                <div id="book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation" style="padding-top: 10px; display: none; ">
+                  <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                      <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                          width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                          <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                              <animateTransform attributeType="xml"
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 25 25"
+                              to="360 25 25"
+                              dur="0.6s"
+                              repeatCount="indefinite"/>
+                          </path>
+                      </svg>
+                      <p style="text-align: center; font-size: 12px; color:rgb(0, 26, 43);">
+                          registering...
+                      </p>
+                  </div>
+                </div>
+
             </form>
           </div>
           <div onclick="toggle_hide_show_cheap_hotel_payments_prompt();" style="cursor: pointer; margin: auto; width: 300px; font-size: 14px; margin-top: 20px; text-align: center; color: white; background-color:rgb(197, 0, 0); padding: 10px; border-radius: 4px;">

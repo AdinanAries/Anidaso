@@ -18,7 +18,7 @@ function getEvents(){
 
             display_events(each_loop_start, each_loop_limit, 0);
             if($(window).width() > 1000){
-                load_more_events();
+                //load_more_events();
             }
         }
     });
