@@ -8,11 +8,17 @@ const { default: Axios } = require("axios");
 const fetch = require("node-fetch");
 const passport = require('passport');
 const connectEnsureLogin = require('connect-ensure-login');
+const aws = require("aws-sdk");
 var https = require('https');
 var querystring = require('querystring');
 var fs = require('fs');
 var mongoose = require("mongoose");
 require("dotenv").config();
+
+//aws sdk configurations
+const S3_BUCKET = process.env.S3_BUCKET;
+//aws.config.region = 'eu-west-1';
+aws.config.region = 'us-east-2';
 
 const expressSession = require('express-session')({
   secret: 'secret',
@@ -675,32 +681,32 @@ app.post("/cheap_hotels/", (req, res, next) =>{
 
 });
 
-//validating cheap hotels
-app.post('/validate_cheap_hotel_data/', (req, res, next) => {
+//check if cheap hotel is already registered
+app.post('/check_if_cheap_hotel_is_already_registered/', async (req, res, next) => {
 
-  console.log(req.body)
+  //console.log(req.body)
 
   try{
 
-    let new_cheap_hotel = new cheap_hotel({
-      name: req.body.name,
-      location: req.body.location,
-      url: req.body.url,
-      price: req.body.price,
-      currency: req.body.currency,
-      photos: req.body.photos,
-      cities_operating: req.body.cities_operating,
-      email: req.body.email,
-      mobile: req.body.mobile,
-      description: req.body.description,
-      rating: req.body.rating,
-      reviews: req.body.reviews,
-    });
+    let hotel_name = req.body.name;
+    let req_email = req.body.email;
+    let req_location = req.body.location;
 
-    res.send({success: true, data: new_cheap_hotel, msg: "input data validation succeeded"});
+    let existing_cheap_hotel = await cheap_hotel.findOne({
+      name: hotel_name,
+      email: req_email,
+      location: req_location
+    }).exec();
+
+    if(existing_cheap_hotel){
+      res.send({success: false, data: existing_cheap_hotel, msg: "this hotel is already registered."});
+    }else{
+      res.send({success: true});
+    }
+    
 
   }catch(e){
-    res.status(400).send({success: false, data: e, msg: "input data validation failed"});
+    res.send({success: false, data: e, msg: "server error"});
   }
   //res.send(req.body);
 });
@@ -842,19 +848,67 @@ app.post("/register_cheap_hotel_upload_photo/", (req, res, next)=> {
     //this endpoint should return the photo url from aws s3 buckets to be collected on the clientside
 });
 
+//sign url for uploading photo to s3
+app.get("/upload_picture_sign_s3/", (req, res, next) =>{
+
+  const s3 = new aws.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    signatureVersion: 'v4'
+  });
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+    res.send(returnData);
+  });
+});
+
 //registering new cheap hotel
 app.post('/register_cheap_hotel/', async (req, res, next) =>{
   
-  let cheap_hotel_post_data = req.body;
-  
   try{
 
-    let new_cheap_hotel = new cheap_hotel(cheap_hotel_post_data);
+    let new_cheap_hotel = new cheap_hotel({
+      name: req.body.name,
+      location: req.body.location,
+      url: req.body.url,
+      price: req.body.price,
+      currency: req.body.currency,
+      photos: req.body.photos,
+      cities_operating: req.body.cities_operating,
+      email: req.body.email,
+      mobile: req.body.mobile,
+      description: req.body.description,
+      rating: req.body.rating,
+      reviews: req.body.reviews,
+      approved: false,
+      subscribed: true,
+      number_of_ratings: 1,
+      number_of_reviews: 1,
+      subscription_id: req.body.subscription_id 
+    });
+
     let new_saved_hotel = await new_cheap_hotel.save();
     res.send({success: true, data: new_saved_hotel, msg: "Hotel registration finished successfully!"})
 
   }catch(e){
-    res.status(400).send({success: false, data: e, msg: "Registration failed at the final stage"});
+    res.send({success: false, data: e, msg: "Registration failed at the final stage"});
   }
 
 });

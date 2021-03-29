@@ -19,6 +19,9 @@ function displayError(event) {
         displayErrorElement.textContent = '';
     }
 
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation").style.display = "none";
+    document.getElementById("book_cheap_hotel_register_new_hotel_subscription_submit_btn").style.display = "block";
+
 }
 
 var form = document.getElementById('payment-form');
@@ -146,17 +149,20 @@ function onSubscriptionComplete(result) {
     document.getElementById("book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation").style.display = "none";
     document.getElementById("book_cheap_hotel_register_new_hotel_subscription_submit_btn").style.display = "block";
 
-
     // Payment was successful.
     if (result.subscription.status === 'active') {
-        show_prompt_to_user("Subscription Payment", "Your payment was made successfully!");
+
+        register_cheap_hotel_post_data.subscription_id = result.subscription.id
+
+        show_prompt_to_user("Payment", "Your payment was made successfully!");
         console.log(result);
 
         toggle_hide_show_cheap_hotel_payments_prompt();
 
         //time to upload photos
         //then save cheap hotel data to database
-        upload_photo_cloud_bucket().then(data =>{
+        upload_photos_to_cloud_bucket().then(data => {
+            console.log(data);
             if(data.success){
                 save_cheap_hotel_information_to_db();
             }

@@ -1,6 +1,7 @@
 var register_cheap_hotel_post_data = {
     approved: false,
     subscribed: false,
+    subscription_id: "",
     name: "",
     location: "",
     url: "",
@@ -78,11 +79,11 @@ async function collect_register_cheap_hotel_data(){
 
 }
 
-async function validate_register_cheap_hotel_data(){
+async function check_if_cheap_hotel_is_already_registered(){
 
     return $.ajax({
         type: "POST",
-        url: "/validate_cheap_hotel_data",
+        url: "/check_if_cheap_hotel_is_already_registered",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: JSON.stringify(register_cheap_hotel_post_data),
@@ -140,36 +141,28 @@ book_cheap_hotel_register_new_hotel_button.addEventListener("click", evnt => {
     }else{
 
         //collecting value from input into post data object
-        collect_register_cheap_hotel_data().then(()=>{
+        collect_register_cheap_hotel_data().then(() => {
 
             document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "block";
             book_cheap_hotel_register_new_hotel_button.style.display = "none";
 
-            validate_register_cheap_hotel_data().then((validation_res)=>{
+            check_if_cheap_hotel_is_already_registered().then(data =>{
 
-                console.log(validation_res);
-
-                if(validation_res.success){
+                if(data.success){
                     toggle_hide_show_cheap_hotel_payments_prompt();
-
-                    //setting post data to validated data from server
-                    register_cheap_hotel_post_data = validation_res.data;
                 }else{
                     document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
                     book_cheap_hotel_register_new_hotel_button.style.display = "block";
-                    
-                    book_cheap_hotel_register_new_hotel_button.innerText = validation_res.responseJSON.msg;
+                    book_cheap_hotel_register_new_hotel_button.innerText = data.msg;
                     book_cheap_hotel_register_new_hotel_button.style.backgroundColor = "orangered";
                     book_cheap_hotel_register_new_hotel_button.style.borderColor = "orange";
                 }
-    
-
+                
             }).catch(err=>{
-                console.log(err)
+                console.log(err);
             });
-
             
-        }).catch(err =>{
+        }).catch(err => {
             console.log(err);
         });
 
@@ -267,10 +260,138 @@ function register_cheap_hotel_remove_city_from_operating_cities(index, city, cou
     console.log(register_cheap_hotel_post_data.cities_operating);
 }
 
-async function upload_photo_cloud_bucket(){
-    return {
-        success: true
+async function upload_photos_to_cloud_bucket(){
+
+    //first photo
+    return upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_1", 0).then(res =>{
+
+        //second photo
+        return upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_2", 1).then( res1 => {
+
+            //third photo
+            return upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_3", 2).then( res2 => {
+                //fourth photo
+                return upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_4", 3).then( res3 => {
+                    return {
+                        success: true
+                    }
+
+                }).catch(err1 => {
+                    console.log(err1);
+                    return err1
+                });
+            }).catch(err2 => {
+                console.log(err2);
+                return err2
+            });
+        }).catch(err3 => {
+            console.log(err3);
+            return err3
+        });
+    }).catch(err4 => {
+        console.log(err4);
+        return err4
+    });
+    
+}
+
+async function upload_photo_to_s3(file_input_Id, file_index){
+    //call this function 4 times in main function for uploads
+
+    const files = document.getElementById(file_input_Id).files;
+    const file = files[0];
+
+    if(file == null){
+
+        console.log('no file selected.');
+        return {
+            success: false,
+            msg: "no file selected."
+        }
+        
     }
+    //getSignedRequest(file);
+
+    return $.ajax({
+        type: "GET",
+        url: `/upload_picture_sign_s3?file-name=${register_cheap_hotel_post_data.name.replaceAll(" ", "").trim()}_${file.name}_${file_index}&file-type=${file.type}`,
+        success: res_data => {
+
+            //const response = JSON.parse(xhr.responseText);
+            const response = res_data;
+            console.log(res_data);
+
+            register_cheap_hotel_post_data.photos[file_index] = response.url;
+            console.log(register_cheap_hotel_post_data);
+
+            uploadFile(file, response.signedRequest).then(res_data2 => {
+                 console.log(res_data2);
+                 return res_data2;
+
+             }).catch(err => {
+                 console.log(err);
+                 return err
+             });
+        },
+        error: err => {
+            console.log('could not get signed URL.');
+            return {
+                success: false,
+                error: err
+            }
+        }
+    });
+    
+}
+
+//this function uploads image file to AWS s3
+async function uploadFile(file, signedRequest){
+    return $.ajax({
+        type: "PUT",
+        url: signedRequest,
+        contentType: file.type,
+        processData: false,
+        data: file,
+        success: res => {
+
+            //console.log(res);
+            
+            return {
+                success: true
+            }
+        },
+        error: err => {
+            console.log('could not upload file.');
+
+            document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
+            book_cheap_hotel_register_new_hotel_button.style.display = "block";
+
+            return {
+                success: false,
+                error: err
+            }
+        }
+
+    });
+    /*const xhr = new XMLHttpRequest();
+    xhr.open('PUT', signedRequest);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+
+            //document.getElementById('preview').src = url;
+            //document.getElementById('avatar-url').value = url;
+            register_cheap_hotel_post_data.photos[array_index] = url;
+
+        }else{
+
+            console.log('could not upload file.');
+            register_cheap_hotel_post_data.photos[array_index] = url;
+          
+        }
+      }
+    };
+    xhr.send(file);*/
 }
 
 function save_cheap_hotel_information_to_db(){
@@ -281,7 +402,17 @@ function save_cheap_hotel_information_to_db(){
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: res =>{
+
             console.log(res);
+
+            if(res.success){
+
+                reset_register_hotel_form();
+                toggle_show_hide_book_cheap_book_direct_register_hotel_div();
+                show_prompt_to_user("Hotel Registration", "Your property has been registered successfully!");
+            
+            }
+
         },
         error: err =>{
             console.log(err);

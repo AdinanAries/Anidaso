@@ -17,6 +17,10 @@ const cheap_hotel_schema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    subscription_id: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true,
