@@ -185,6 +185,12 @@ function cheap_hotel_preview_image(event, elem) {
     var reader = new FileReader();
     reader.onload = function()
     {
+
+        if(book_cheap_book_direct_register_hotel_name_input_fld.value === ""){
+            alert("you must enter hotel name first in order to upload photos");
+            return null;
+        }
+
         var output = document.getElementById(elem);
         output.style.backgroundImage = `url('${reader.result}')`;
     }
@@ -260,9 +266,88 @@ function register_cheap_hotel_remove_city_from_operating_cities(index, city, cou
     console.log(register_cheap_hotel_post_data.cities_operating);
 }
 
+document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_1").addEventListener("change", ()=>{
+
+    if(book_cheap_book_direct_register_hotel_name_input_fld.value === ""){
+        return null;
+    }
+
+    set_current_selected_file_input(1);
+    upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_1", 0).then(()=>{
+        
+    });
+
+});
+
+document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_2").addEventListener("change", ()=>{
+
+    if(book_cheap_book_direct_register_hotel_name_input_fld.value === ""){
+        return null;
+    }
+
+    set_current_selected_file_input(2);
+    upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_2", 1).then(()=>{
+        
+    });
+
+});
+
+document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_3").addEventListener("change", ()=>{
+
+    if(book_cheap_book_direct_register_hotel_name_input_fld.value === ""){
+        return null;
+    }
+
+    set_current_selected_file_input(3);
+    upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_3", 2).then(()=>{
+        
+    });
+
+});
+
+document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_4").addEventListener("change", ()=>{
+
+    if(book_cheap_book_direct_register_hotel_name_input_fld.value === ""){
+        return null;
+    }
+    
+    set_current_selected_file_input(4);
+    upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_4", 3).then(()=>{
+        
+    });
+
+});
+
+function set_current_selected_file_input(number){
+    Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_btn")).forEach(each => {
+        each.style.opacity = 0;
+        each.disabled = true;
+    });
+
+    Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_input_label")).forEach(each => {
+        each.style.display = "none";
+    });
+    document.getElementById("book_cheap_book_direct_add_hotel_add_pic_upload_loader_"+number).style.display = "block";
+    document.getElementById("book_cheap_book_direct_add_hotel_add_pic_btn_"+number).style.opacity = 1;
+    document.getElementById("book_cheap_book_direct_add_hotel_add_pic_btn_"+number).disabled = false;
+}
+
+function reset_all_cheap_hotels_file_input(){
+    Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_btn")).forEach(each => {
+        each.style.opacity = 1;
+        each.disabled = false;
+    });
+    Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_input_label")).forEach(each => {
+        each.style.display = "flex";
+    });
+    Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_upload_loader")).forEach(each => {
+        each.style.display = "none";
+    })
+}
+
 async function upload_photos_to_cloud_bucket(){
 
-    //first photo
+    /*/first photo
     return upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_1", 0).then(res =>{
 
         //second photo
@@ -291,7 +376,7 @@ async function upload_photos_to_cloud_bucket(){
     }).catch(err4 => {
         console.log(err4);
         return err4
-    });
+    });*/
     
 }
 
@@ -314,7 +399,7 @@ async function upload_photo_to_s3(file_input_Id, file_index){
 
     return $.ajax({
         type: "GET",
-        url: `/upload_picture_sign_s3?file-name=${register_cheap_hotel_post_data.name.replaceAll(" ", "").trim()}_${file.name}_${file_index}&file-type=${file.type}`,
+        url: `/upload_picture_sign_s3?file-name=${book_cheap_book_direct_register_hotel_name_input_fld.value.replaceAll(" ", "").trim()}_${file.name}_${file_index}&file-type=${file.type}`,
         success: res_data => {
 
             //const response = JSON.parse(xhr.responseText);
@@ -355,7 +440,9 @@ async function uploadFile(file, signedRequest){
         success: res => {
 
             //console.log(res);
-            
+            console.log("file upload completed")
+            reset_all_cheap_hotels_file_input();
+
             return {
                 success: true
             }
@@ -365,6 +452,8 @@ async function uploadFile(file, signedRequest){
 
             document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
             book_cheap_hotel_register_new_hotel_button.style.display = "block";
+
+            reset_all_cheap_hotels_file_input();
 
             return {
                 success: false,
@@ -439,5 +528,14 @@ function reset_register_hotel_form(){
     book_cheap_book_direct_add_hotel_add_pic_input_3.value = "";
     book_cheap_book_direct_add_hotel_add_pic_input_4.value = "";
 
+    //resetting photo backgrounds
+    reset_all_cheap_hotel_upload_photo_btn_bgs();
+
+}
+
+function reset_all_cheap_hotel_upload_photo_btn_bgs(){
+    Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_btn")).forEach(each =>{
+        each.style.backgroundImage = "none";
+    });
 }
 //toggle_hide_show_cheap_hotel_payments_prompt();

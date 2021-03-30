@@ -218,7 +218,7 @@ function get_book_cheap_book_direct_hotels(){
             if(data.length > 0){
                 load_more_cheap_hotels();
             }else{
-                alert("no cheap hotel was found");
+                show_no_cheap_hotels_found_msg();
             }
         },
         error: err =>{
@@ -227,6 +227,25 @@ function get_book_cheap_book_direct_hotels(){
         }
     });
 
+}
+
+function show_no_cheap_hotels_found_msg(){
+
+    book_cheap_book_direct_hotels_load_more_btn.style.display = "none";
+    no_more_cheap_hotels_status_msg.style.display = "none";
+    book_cheap_book_direct_hotels_loader.style.display = "none";
+
+    document.getElementById("book_cheap_book_direct_hotels_list").innerHTML = `
+        <div style=" background-color: white; border-radius: 4px; margin: 15px 10px;
+            padding: 50px 0; animation: display_anim 1000ms ease-out;">
+            <p style="text-align: center;">
+                <img src="/images/search_not_found.png" style="width: 60px; height: 60px;" alt=""/>
+            </p>
+            <p style="color: #00284e; font-weight: bolder; font-size: 13px; text-align: center;">
+                Oops! no cheap hotels found.
+            </p>
+        </div>
+    `;
 }
 
 search_cheap_hotels_by_location_button.addEventListener("click", evnt =>{
@@ -355,7 +374,7 @@ function render_a_cheap_hotels(name, pic_url, location, rating, hotel_site_url, 
                         <p style="color: white; margin-top: 5px; font-size: 14px;">
                             <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
                             ${location}</p>
-                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
+                            <div style="margin-top: 15px;" class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
                                 ${rate_stars}
                             </div>
                         </div>
@@ -412,8 +431,15 @@ function load_more_cheap_hotels(){
 
                 let each_cheap_hotel = cheap_hotels_list[global_cheap_hotels_index];
                 let hotel_name = each_cheap_hotel.name;
-                let hotel_image = each_cheap_hotel.images[0];
+                let hotel_image = each_cheap_hotel.photos[0];
                 let hotel_location = each_cheap_hotel.location;
+                let hotel_loc_arr = [];
+
+                if(hotel_location){
+                    hotel_loc_arr = hotel_location.split(",");
+                    hotel_location = hotel_loc_arr[1];
+                }
+
                 let hotel_rating = each_cheap_hotel.rating;
                 let hotel_site_url = each_cheap_hotel.url;
                 let hotel_description = each_cheap_hotel.description;
@@ -531,7 +557,7 @@ function cheap_hotels_show_full_pic(index, number){
 
     //decrement number so that it matches index value
     let pic_index = (number - 1);
-    let pic_url = cheap_hotel.images[pic_index];
+    let pic_url = cheap_hotel.photos[pic_index];
     pic_tag.src = pic_url;
     main_pic_tag.style.backgroundImage = `url(${pic_url})`;
     

@@ -652,7 +652,7 @@ app.get("/get_login_user/:id", async (req, res, next) =>{
 
 //book cheap/book direct routes
 //getting cheap hotels by city or name
-app.post("/cheap_hotels/", (req, res, next) =>{
+app.post("/cheap_hotels/", async (req, res, next) =>{
 
   let search_type = req.body.search_type; //values = ["by_city", "by_name", "by_city_and_name"]
   let city = req.body.city;
@@ -669,7 +669,10 @@ app.post("/cheap_hotels/", (req, res, next) =>{
     //search by name, city and country
   }
 
-  //this code should be replaced with that to read data from DB
+  let hotels = await cheap_hotel.find();
+
+  res.send(hotels);
+  /*/this code should be replaced with that to read data from DB
   fs.readFile('./book_cheap_hotels_data.json', 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
@@ -677,7 +680,7 @@ app.post("/cheap_hotels/", (req, res, next) =>{
     //this line of code is important
     res.send(data);
     //console.log(data);
-  });
+  });*/
 
 });
 
