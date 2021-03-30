@@ -310,7 +310,7 @@ document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_4").addE
     if(book_cheap_book_direct_register_hotel_name_input_fld.value === ""){
         return null;
     }
-    
+
     set_current_selected_file_input(4);
     upload_photo_to_s3("book_cheap_book_direct_add_hotel_add_pic_input_4", 3).then(()=>{
         
@@ -320,8 +320,7 @@ document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_4").addE
 
 function set_current_selected_file_input(number){
     Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_btn")).forEach(each => {
-        each.style.opacity = 0;
-        each.disabled = true;
+        each.style.opacity = 0.4;
     });
 
     Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_input_label")).forEach(each => {
@@ -329,13 +328,11 @@ function set_current_selected_file_input(number){
     });
     document.getElementById("book_cheap_book_direct_add_hotel_add_pic_upload_loader_"+number).style.display = "block";
     document.getElementById("book_cheap_book_direct_add_hotel_add_pic_btn_"+number).style.opacity = 1;
-    document.getElementById("book_cheap_book_direct_add_hotel_add_pic_btn_"+number).disabled = false;
 }
 
 function reset_all_cheap_hotels_file_input(){
     Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_btn")).forEach(each => {
         each.style.opacity = 1;
-        each.disabled = false;
     });
     Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_input_label")).forEach(each => {
         each.style.display = "flex";
