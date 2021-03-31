@@ -20,6 +20,13 @@ const S3_BUCKET = process.env.S3_BUCKET;
 //aws.config.region = 'eu-west-1';
 aws.config.region = 'us-east-2';
 
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  signatureVersion: 'v4'
+});
+
+
 const expressSession = require('express-session')({
   secret: 'secret',
   resave: false,
@@ -854,13 +861,9 @@ app.post("/register_cheap_hotel_upload_photo/", (req, res, next)=> {
 //sign url for uploading photo to s3
 app.get("/upload_picture_sign_s3/", (req, res, next) =>{
 
-  const s3 = new aws.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    signatureVersion: 'v4'
-  });
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
+  
   const s3Params = {
     Bucket: S3_BUCKET,
     Key: fileName,
@@ -880,6 +883,30 @@ app.get("/upload_picture_sign_s3/", (req, res, next) =>{
     };
     res.send(returnData);
   });
+});
+
+app.delete("/delete_file_from_s3/", async (req, res, next) => {
+
+  let file_name = req.query.file_name;
+
+  const params = {
+    Bucket: S3_BUCKET,  /* required # Put your bucket name*/
+    Key: file_name         /* required # Put your file name*/
+  };
+
+  //The code below deletes file from s3 bucket
+  s3.createBucket({ Bucket: S3_BUCKET }, function () {
+    s3.deleteObject(params, function (err, data) {
+        if (err) {
+          console.log(err);
+        }
+        else{
+            console.log("Successfully deleted file from bucket");
+        }
+        console.log(data);
+    });
+  });
+
 });
 
 //registering new cheap hotel

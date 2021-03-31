@@ -181,7 +181,22 @@ function on_input_reset_func(){
     book_cheap_hotel_register_new_hotel_button.innerText = "Register";
 }
 
-function cheap_hotel_preview_image(event, elem) {
+function cheap_hotel_preview_image(event, elem, index) {
+
+    if(event.target.value !== ""){
+        //file url looks like "https://anidaso-img.s3.amazonaws.com/HotelEfyaSplending_hotel_one_seed2.jpg_0"
+                            //"protocol://bucket_name.s3.amazonaws.com/file_name"
+        try{
+            let s3_photo_url = register_cheap_hotel_post_data.photos[index].split("/");
+            let s3_photot_file_name = s3_photo_url[s3_photo_url.length - 1];
+            console.log(s3_photot_file_name);
+            delete_s3_file(s3_photot_file_name);
+        }catch(e){
+            console.log("aws s3 photo url from post data can't be read or its file deletion from s3 bucket failed")
+            console.log(e);
+        }
+    }
+
     var reader = new FileReader();
     reader.onload = function()
     {
@@ -396,7 +411,7 @@ async function upload_photo_to_s3(file_input_Id, file_index){
 
     return $.ajax({
         type: "GET",
-        url: `/upload_picture_sign_s3?file-name=${book_cheap_book_direct_register_hotel_name_input_fld.value.replaceAll(" ", "").trim()}_${file.name}_${file_index}&file-type=${file.type}`,
+        url: `/upload_picture_sign_s3?file-name=${book_cheap_book_direct_register_hotel_name_input_fld.value.replaceAll(" ", "").trim()}_${file_index}_${file.name}&file-type=${file.type}`,
         success: res_data => {
 
             //const response = JSON.parse(xhr.responseText);
@@ -533,6 +548,19 @@ function reset_register_hotel_form(){
 function reset_all_cheap_hotel_upload_photo_btn_bgs(){
     Array.from(document.getElementsByClassName("book_cheap_book_direct_add_hotel_add_pic_btn")).forEach(each =>{
         each.style.backgroundImage = "none";
+    });
+}
+
+function delete_s3_file(s3_file_name){
+    $.ajax({
+        type: "DELETE",
+        url: `./delete_file_from_s3?file_name=${s3_file_name}`,
+        success: res =>{
+            console.log(res)
+        },
+        error: err =>{
+            console.log(err);
+        }
     });
 }
 //toggle_hide_show_cheap_hotel_payments_prompt();
