@@ -342,7 +342,7 @@ search_cheap_hotels_by_location_button.addEventListener("click", evnt =>{
     }
 });
 
-function render_a_cheap_hotels(name, pic_url, location, rating, hotel_site_url, hotel_description, recent_reviewer, reviewer_image, reviewer_rated, reviewer_message, current_price){
+function render_a_cheap_hotels(name, pic_url, location, rating, hotel_site_url, hotel_description, recent_reviewer, reviewer_image, reviewer_rated, reviewer_message, current_price, cities_operating_in){
     
     let rate_stars = get_rating_stars(rating);
     let reviewer_rated_stars = get_rating_stars(reviewer_rated);
@@ -370,11 +370,8 @@ function render_a_cheap_hotels(name, pic_url, location, rating, hotel_site_url, 
                     <div style="overflow: hidden;">
                     <div style="background-color:#094470; padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div>
-                        <p style="color: white; font-weight: bolder;">${name}</p>
-                        <p style="color: white; margin-top: 5px; font-size: 14px;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
-                            ${location}</p>
-                            <div style="margin-top: 15px;" class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
+                            <p style="color: white; font-weight: bolder;">${name}</p>
+                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
                                 ${rate_stars}
                             </div>
                         </div>
@@ -385,6 +382,14 @@ function render_a_cheap_hotels(name, pic_url, location, rating, hotel_site_url, 
                     </div>
                     <div style="padding: 0 10px;">
                         <div style="margin-top: 15px; color: rgb(90, 90, 90);">
+                            <p style="margin-top: 5px; font-size: 14px; font-weight: bolder;">
+                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color: orangered;"></i>Main branch:
+                                ${location}
+                            </p>
+                            <p style="margin-top: 5px; font-size: 14px; color: darkblue; margin-bottom: 10px;">
+                                Operating in 
+                                ${cities_operating_in}
+                            </p>
                         <p>${hotel_description}</p>
                         </div>
                     </div>
@@ -449,10 +454,14 @@ function load_more_cheap_hotels(){
                 let reviewer_message = each_cheap_hotel.reviews[0].message;
                 let price = site_currency_coverter(each_cheap_hotel.currency, current_currency.currency, each_cheap_hotel.price)
                 let current_price = `${current_currency.sign}${price}`;
+                let cities_operating_in_arr = each_cheap_hotel.cities_operating.map(each => {
+                    return each.city + "(" + each.country +")";
+                });
+                let cities_operating_in = cities_operating_in_arr.join(", ");
 
                 
                 book_cheap_book_direct_hotels_list.innerHTML += render_a_cheap_hotels(hotel_name, hotel_image, hotel_location, hotel_rating,
-                    hotel_site_url, hotel_description, recent_reviewer, reviewer_image, reviewer_rated, reviewer_message, current_price);
+                    hotel_site_url, hotel_description, recent_reviewer, reviewer_image, reviewer_rated, reviewer_message, current_price, cities_operating_in);
                 
                 book_cheap_book_direct_hotels_load_more_btn.style.display = "block";
                 book_cheap_book_direct_hotels_loader.style.display = "none";
