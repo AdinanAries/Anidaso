@@ -376,18 +376,18 @@ function render_a_cheap_hotels(name, pic_url, location, rating, hotel_site_url, 
                             </div>
                         </div>
                         <div onclick='go_to_cheap_hotel_book_page("${hotel_site_url}");' style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
-                        display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
-                        View Hotel
+                            display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
+                            View Hotel
                         </div>
                     </div>
                     <div style="padding: 0 10px;">
                         <div style="margin-top: 15px; color: rgb(90, 90, 90);">
                             <p style="margin-top: 5px; font-size: 14px; font-weight: bolder;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color: orangered;"></i>Main branch:
+                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color: orangered;"></i>Office:
                                 ${location}
                             </p>
                             <p style="margin-top: 5px; font-size: 14px; color: darkblue; margin-bottom: 10px;">
-                                Operating in 
+                                <span style="font-size: 14px; font-weight: bolder; color: darkslateblue;">Operating in</span> 
                                 ${cities_operating_in}
                             </p>
                         <p>${hotel_description}</p>
@@ -440,10 +440,10 @@ function load_more_cheap_hotels(){
                 let hotel_location = each_cheap_hotel.location;
                 let hotel_loc_arr = [];
 
-                if(hotel_location){
+                /*if(hotel_location){
                     hotel_loc_arr = hotel_location.split(",");
                     hotel_location = hotel_loc_arr[1];
-                }
+                }*/
 
                 let hotel_rating = each_cheap_hotel.rating;
                 let hotel_site_url = each_cheap_hotel.url;
@@ -455,7 +455,7 @@ function load_more_cheap_hotels(){
                 let price = site_currency_coverter(each_cheap_hotel.currency, current_currency.currency, each_cheap_hotel.price)
                 let current_price = `${current_currency.sign}${price}`;
                 let cities_operating_in_arr = each_cheap_hotel.cities_operating.map(each => {
-                    return each.city + "(" + each.country +")";
+                    return each.city + " (" + each.country +")";
                 });
                 let cities_operating_in = cities_operating_in_arr.join(", ");
 
