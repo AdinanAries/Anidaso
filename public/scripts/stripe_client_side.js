@@ -162,10 +162,9 @@ function onSubscriptionComplete(result) {
         //time to upload photos
         //then save cheap hotel data to database
         upload_photos_to_cloud_bucket().then(data => {
-            console.log(data);
-            if(data.success){
-                save_cheap_hotel_information_to_db();
-            }
+            
+            save_cheap_hotel_information_to_db();
+            
         });
         
 
