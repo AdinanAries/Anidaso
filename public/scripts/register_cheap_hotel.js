@@ -400,7 +400,19 @@ async function upload_photo_to_s3(file_input_Id, file_index){
 
     if(file == null){
 
+        try{
+            let s3_photo_url = register_cheap_hotel_post_data.photos[file_index].split("/");
+            let s3_photot_file_name = s3_photo_url[s3_photo_url.length - 1];
+            console.log(s3_photot_file_name);
+            delete_s3_file(s3_photot_file_name);
+        }catch(e){
+            console.log("aws s3 photo url from post data can't be read or its file deletion from s3 bucket failed")
+            console.log(e);
+        }
+
+        reset_all_cheap_hotels_file_input();
         console.log('no file selected.');
+        document.getElementById("book_cheap_book_direct_add_hotel_add_pic_btn_"+(file_index+1)).style.backgroundImage = "none";
         return {
             success: false,
             msg: "no file selected."
@@ -421,7 +433,7 @@ async function upload_photo_to_s3(file_input_Id, file_index){
             register_cheap_hotel_post_data.photos[file_index] = response.url;
             console.log(register_cheap_hotel_post_data);
 
-            uploadFile(file, response.signedRequest).then(res_data2 => {
+            uploadFile(file, response.signedRequest, file_index).then(res_data2 => {
                  console.log(res_data2);
                  return res_data2;
 
@@ -442,7 +454,7 @@ async function upload_photo_to_s3(file_input_Id, file_index){
 }
 
 //this function uploads image file to AWS s3
-async function uploadFile(file, signedRequest){
+async function uploadFile(file, signedRequest, file_index){
     return $.ajax({
         type: "PUT",
         url: signedRequest,
@@ -465,6 +477,7 @@ async function uploadFile(file, signedRequest){
             document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
             book_cheap_hotel_register_new_hotel_button.style.display = "block";
 
+            document.getElementById("book_cheap_book_direct_add_hotel_add_pic_btn_"+(file_index+1)).style.backgroundImage = "none";
             reset_all_cheap_hotels_file_input();
 
             return {
