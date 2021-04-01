@@ -1,8 +1,10 @@
 var logged_in_hotel_ratings_area = document.getElementById("logged_in_hotel_ratings_area");
+var logged_in_hotel_description_input = document.getElementById("logged_in_hotel_description_input");
 
 var current_misc_edit_elem_id;
 var current_contact_edit_elem_id;
 var current_amenity_edit_elem_id;
+var current_op_cities_edit_elem_id;
 
 function return_cheap_hotel_rating_markup(rating_number = 1){
 
@@ -143,6 +145,31 @@ function start_edit_amenity_info(elem_id, info, title){
 
 }
 
+//for operating cities info
+function toggle_show_edit_op_cities_info_form(elem_id){
+    $("#logged_in_hotel_edit_op_cities_info_form").toggle("up");
+    $("#"+elem_id).toggle("up")
+}
+
+function toggle_hide_edit_op_cities_info_form(){
+    toggle_show_edit_op_cities_info_form(current_op_cities_edit_elem_id)
+}
+
+function start_edit_op_cities_info(elem_id, info, title){
+    if(document.getElementById("logged_in_hotel_edit_op_cities_info_form").style.display === "none"){
+        toggle_show_edit_op_cities_info_form(elem_id)
+    }else{
+        $("#"+elem_id).toggle("up");
+        if(current_op_cities_edit_elem_id){
+            $("#"+current_op_cities_edit_elem_id).toggle("up");
+        }
+    }
+    current_op_cities_edit_elem_id = elem_id;
+    document.getElementById("logged_in_hotel_edit_op_cities_form_title").innerText = title;
+    document.getElementById("register_cheap_hotels_location_text_field").value = info;
+
+}
+
 function render_each_loggin_hotel_info_item(info_elem_item_id, title, info, func_name){
     document.getElementById(info_elem_item_id).innerHTML = `
         <p style="color: white; font-size: 14px;">
@@ -157,3 +184,21 @@ render_each_loggin_hotel_info_item("logged_in_hotel_email_infor_item", "Email", 
 render_each_loggin_hotel_info_item("logged_in_hotel_url_infor_item", "URL", "https://hotelefyasplending.com", "start_edit_misc_info")
 
 logged_in_hotel_ratings_area.innerHTML = return_cheap_hotel_rating_markup(4);
+
+//description infor funcs
+var heightLimit = 200;
+
+logged_in_hotel_description_input.oninput = function() {
+    logged_in_hotel_description_input.style.height = ""; /* Reset the height*/
+    logged_in_hotel_description_input.style.height = Math.min(logged_in_hotel_description_input.scrollHeight, heightLimit) + "px";
+};
+
+function toggle_show_edit_desc_info_form(){
+    $("#logged_in_hotel_edit_desc_info_form").toggle("up");
+    $("#logged_in_hotel_desc_info_txt_and_btn").toggle("up")
+
+    setTimeout(()=>{
+        logged_in_hotel_description_input.style.height = ""; /* Reset the height*/
+        logged_in_hotel_description_input.style.height = Math.min(logged_in_hotel_description_input.scrollHeight, heightLimit) + "px";
+    }, 500);
+}

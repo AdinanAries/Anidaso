@@ -4,6 +4,10 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+input:focus,
+textarea:focus {
+  outline: none;
+}
 body {
   background-color: rgb(13, 28, 51);
 }
@@ -111,14 +115,136 @@ header {
 .logged_in_hotel_infor_item:hover i {
   display: inline;
 }
-@media only screen and (max-width: 700px) {
+.book_cheap_book_direct_location_input_autocomplete_section {
+  display: none;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: white;
+  padding: 10px 0;
+  box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3),
+    0px 0px 2.9px rgba(0, 0, 0, 0.23);
+  width: 100% !important;
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 0;
+}
+.gallery_photos_display_container {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  margin: auto;
+}
+.gallery_photos_display_main_section {
+  width: 50%;
+  height: 300px;
+  overflow: hidden;
+}
+.gallery_photos_display_section {
+  width: 50%;
+  overflow: hidden;
+}
+.gallery_photos_display_section_part {
+  display: flex;
+  flex-direction: row !important;
+}
+footer {
+  background-color: #140028;
+  padding: 30px 0;
+  font-size: 13px;
+}
+.footer_row {
+  display: flex;
+  justify-content: space-between;
+}
+.footer_section_header {
+  margin-bottom: 15px;
+  color: orange;
+  font-weight: bolder;
+  font-size: 13px;
+}
+footer li {
+  list-style-type: none;
+  color: white;
+  font-size: 13px;
+}
+.footer_fld_cntn {
+  border: 1px solid white;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.footer_fld_cntn input,
+.footer_fld_cntn select {
+  font-size: 13px;
+  border: none;
+  color: white;
+  background-color: #140028;
+  width: 200px;
+}
+.footer_ivorycoast_flag,
+.header_ivorycoast_flag {
+  width: 15px;
+  height: 10px;
+}
+.header_ivorycoast_flag {
+  margin-left: 5px;
+}
+footer a {
+  text-decoration: none;
+  color: white;
+  font-size: 13px;
+}
+@media only screen and (max-width: 1300px) {
+  .wrapper {
+    margin: 0 10px;
+  }
+}
+@media only screen and (max-width: 1000px) {
   .logged_in_hotel_infor_item i {
     display: inline;
+  }
+  .logged_in_hotel_amenity_edit_btns {
+    display: block;
   }
   .logged_in_hotel_details_section_content {
     display: block; /*resetting flex*/
   }
   .logged_in_hotel_details_each_section_content {
     width: calc(100% - 20px);
+  }
+  .gallery_photos_display_container {
+    padding: 0;
+    padding-top: 20px;
+    flex-direction: column;
+  }
+  .gallery_photos_display_main_section {
+    width: 100%;
+    height: 300px;
+  }
+  .gallery_photos_display_section {
+    width: 100%;
+  }
+  footer .wrapper div {
+    flex-direction: column;
+    text-align: center !important;
+    height: initial !important;
+  }
+  footer p {
+    max-width: 100% !important;
+  }
+  .footer_section_header {
+    margin: 0 !important;
+    margin-top: 30px !important;
+    margin-bottom: 10px !important;
+  }
+  .favorite_bus_company_list_row {
+    margin: 0 !important;
+  }
+  .favorite_bus_company_list_column {
+    margin: 3px 0 !important;
+  }
+  .footer_fld_cntn {
+    width: 250px;
+    margin: auto !important;
   }
 }
