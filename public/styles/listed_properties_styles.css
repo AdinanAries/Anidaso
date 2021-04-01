@@ -4,9 +4,41 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+body {
+  background-color: rgb(13, 28, 51);
+}
 header {
-  background-color: darkcyan;
-  padding: 20px;
+  background-color: rgb(3, 31, 53);
+  border-bottom: rgb(212, 113, 0) 4px solid;
+  padding: 0 20px;
+}
+.header_content {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between;
+}
+.wrapper {
+  max-width: 1300px;
+  margin: auto;
+}
+.top_nav_hotel_name_display,
+.top_nav_login_btn {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: center;
+}
+.top_nav_hotel_name_display p,
+.top_nav_login_btn p {
+  letter-spacing: 1px;
+  font-weight: bolder;
+  color: white;
+  font-size: 13px;
+}
+.top_nav_hotel_name_display i,
+.top_nav_login_btn i {
+  font-size: 18px;
+  color: rgb(212, 113, 0);
+  margin-right: 5px;
 }
 .site_logo_container {
   height: 59px;
@@ -29,7 +61,64 @@ header {
 .site_logo_container span {
   color: rgb(233, 128, 0);
 }
-.wrapper {
-  max-width: 1300px;
-  margin: auto;
+.hero_section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(3, 31, 53)),
+    url("../images/HotelPic.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 50vh;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logged_in_hotel_details_section_content {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.logged_in_hotel_details_each_section_content {
+  padding: 10px;
+  width: 33%;
+}
+.logged_in_hotel_amenity p,
+.logged_in_hotel_invoice p {
+  color: aqua;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between;
+}
+.logged_in_hotel_amenity:hover .logged_in_hotel_amenity_edit_btns {
+  display: block;
+}
+.logged_in_hotel_amenity_edit_btns {
+  display: none;
+}
+.logged_in_hotel_amenity_edit_btns i,
+.logged_in_hotel_invoice_view_btn i {
+  font-size: 18px;
+  cursor: pointer;
+}
+.logged_in_hotel_infor_item i {
+  margin-left: 20px;
+  display: none;
+  cursor: pointer;
+  color: rgb(114, 147, 197);
+  font-size: 18px;
+}
+.logged_in_hotel_infor_item:hover i {
+  display: inline;
+}
+@media only screen and (max-width: 700px) {
+  .logged_in_hotel_infor_item i {
+    display: inline;
+  }
+  .logged_in_hotel_details_section_content {
+    display: block; /*resetting flex*/
+  }
+  .logged_in_hotel_details_each_section_content {
+    width: calc(100% - 20px);
+  }
 }

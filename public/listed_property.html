@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="./scripts/jquery-ui-1.12.1.custom/jquery-ui.min.css"/>
 
     <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet'>
-    
+    <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
+
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
@@ -27,23 +28,380 @@
                     <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
                       <p><span>An</span>i<span>d</span>a<span>s</span>o<sup style="font-size: 12px;">&reg;</sup></p>
                     </div>
-                  </div>
+                </div>
+                <div class="top_nav_hotel_name_display">
+                    <p>
+                        <i class="fa fa-building" aria-hidden="true"></i>Hotel Efya Plen...
+                    </p>
+                </div>
+                <div style="display: none;" class="top_nav_login_btn">
+                    <p>
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>login
+                    </p>
+                </div>
             </div>
         </div>
     </header>
     <main>
         <div class="hero_section">
-            <div class="wrapper"></div>
+            <div class="wrapper">
+                <h1 style="font-family: 'Courgette'; color: white; text-align: center; font-size: 24px; letter-spacing: 1px;">
+                    Reach the global market</h1>
+                <p style="font-family: 'Courgette'; color: white; text-align: center; letter-spacing: 1px; font-size: 15px;">
+                    Sell your brand world-wide
+                </p>
+            </div>
         </div>
         <div class="logged_in_hotel_details_section">
-            <div class="wrapper"></div>
+            <div class="wrapper">
+                <div class="logged_in_hotel_details_section_content">
+                    <div class="logged_in_hotel_details_each_section_content">
+                        <p style="color: turquoise; font-size: 18px; margin-bottom: 5px; font-weight: bolder;">
+                            Hotel Efya Splending</p>
+                        <p style="color: white; font-size: 14px;">
+                            <span style="color:aqua; font-size: 14px;">Status:</span>
+                            subscribed <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
+                        </p>
+                        <p style="color: white; font-size: 14px;">
+                            <span style="color:aqua; font-size: 14px;">Profile:</span>
+                            verified <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
+                        </p>
+                        <div id="logged_in_hotel_ratings_area">
+                        
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <p style="font-size: 14px; font-weight: bolder; color: white; padding: 10px;">
+                                Contacts
+                            </p>
+                            <div id="logged_in_hotel_email_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
+                                
+                            </div>
+                            <div id="logged_in_hotel_mobile_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
+                                <p style="color: white; font-size: 14px;">
+                                    <span style="color:aqua; font-size: 14px;">Mobile:</span>
+                                    +1 348 498 4940
+                                    <i onclick="start_edit_contact_info('logged_in_hotel_mobile_infor_item', '+1 348 498 4940', 'Edit Mobile');" class="fa fa-pencil" aria-hidden="true"></i>
+                                </p>
+                            </div>
+                            <div id="logged_in_hotel_Fax_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
+                                <p style="color: white; font-size: 14px;">
+                                    <span style="color:aqua; font-size: 14px;">Fax:</span>
+                                    +1 348 293 4440
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </p>
+                            </div>
+                            <div id="logged_in_hotel_edit_contact_info_form" style="margin-top: 10px; display: none;">
+                                <p id="logged_in_hotel_edit_contact_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                                </p>
+                                <input id="logged_in_hotel_edit_contact_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="enter your email" value="" />
+                                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Save
+                                    </div>
+                                    <div onclick="toggle_hide_edit_contact_info_form()" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 10px;">
+                            <p style="font-size: 14px; font-weight: bolder; color: white; padding: 10px;">
+                                Misc.
+                            </p>
+                            <div id="logged_in_hotel_url_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
+                                
+                            </div>
+                            <div id="logged_in_hotel_office_location_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
+                                <p style="color: white; font-size: 14px;">
+                                    <span style="color:aqua; font-size: 14px;">Main Branch:</span>
+                                    12 Grands St. Manhattan, NY, USA 1933
+                                    <i onclick="start_edit_misc_info('logged_in_hotel_office_location_infor_item', '12 Grands St. Manhattan, NY, USA 1933', 'Edit Office Location');" class="fa fa-pencil" aria-hidden="true"></i>
+                                </p>
+                            </div>
+                            <div id="logged_in_hotel_avg_price_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
+                                <p style="color: white; font-size: 14px;">
+                                    <span style="color:aqua; font-size: 14px;">Average Room Price:</span>
+                                    $123.00
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </p>
+                            </div>
+                            <div id="logged_in_hotel_edit_misc_info_form" style="margin-top: 10px; display: none;">
+                                <p id="logged_in_hotel_edit_misc_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                                </p>
+                                <input id="logged_in_hotel_edit_misc_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="enter your email" value="" />
+                                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Save
+                                    </div>
+                                    <div onclick="toggle_hide_edit_mis_info_form()" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="logged_in_hotel_details_each_section_content">
+                        <p style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                            About Your Brand</p>
+                        <p style="color: white;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis dolorum quam, 
+                            quisquam reiciendis quis molestias dolores officiis sint consequatur pariatur doloribus omnis. 
+                            Libero similique animi consectetur deserunt neque. Numquam, iure.
+                        </p>
+                        <p style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: teal;">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                        </p>
+                        <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
+                            <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
+                                Amenities</p>
+                            <div id="logged_in_hotel_amenities_list">
+                                <div id="logged_in_hotel_swm_pool_amenity" class="logged_in_hotel_amenity">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                            Swimming pool
+                                        </span>
+                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                                            <i onclick="start_edit_amenity_info('logged_in_hotel_swm_pool_amenity', 'Swimming pool', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="logged_in_hotel_amenity">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                            Free Wifi
+                                        </span>
+                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                                            <i style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="logged_in_hotel_amenity">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                            First Aid Kits
+                                        </span>
+                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                                            <i style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                
+                            </div>
+                            <p style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">load more...</p>
+                            <p id="logged_in_hotel_add_amenity_btn" onclick="start_edit_amenity_info('logged_in_hotel_add_amenity_btn', '', 'Add Amenity');" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add
+                            </p>
+                            <div id="logged_in_hotel_edit_amenity_info_form" style="margin-top: 10px; display: none;">
+                                <p id="logged_in_hotel_edit_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                                </p>
+                                <input id="logged_in_hotel_edit_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" value="Swimmin pool" />
+                                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Save
+                                    </div>
+                                    <div onclick="toggle_hide_edit_amenity_info_form();" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logged_in_hotel_details_each_section_content">
+                        <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
+                            Payments</p>
+                        <p style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">Card Number:</span>
+                             ****1342</p>
+                        <p style="color: white; font-size: 14px; margin-top: 5px;">
+                            <span style="color:aqua; font-size: 14px;">Status:</span>
+                            verified <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
+                        </p>
+                        <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
+                            <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
+                                Invoices</p>
+                            <div id="logged_in_hotel_invoices_list">
+                                <div class="logged_in_hotel_invoice">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-file-text-o" aria-hidden="true"></i>
+                                            3423 on 21 Jan, 2022 <span style="font-size: 13px; color:rgb(224, 174, 174);">($23.00)</span>
+                                        </span>
+                                        <span class="logged_in_hotel_invoice_view_btn" style="cursor: pointer; font-size: 14px; color: white; padding-left: 20px;">
+                                            see<i style="color: rgb(137, 204, 235); font-size: 14px; margin-left: 5px;" class="fa fa-eye" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="logged_in_hotel_invoice">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-file-text-o" aria-hidden="true"></i>
+                                            3423 on 21 Feb, 2022 <span style="font-size: 13px; color:rgb(224, 174, 174);">($23.00)</span>
+                                        </span>
+                                        <span class="logged_in_hotel_invoice_view_btn" style="cursor: pointer; font-size: 14px; color: white; padding-left: 20px;">
+                                            see<i style="color: rgb(137, 204, 235); font-size: 14px; margin-left: 5px;" class="fa fa-eye" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
+                            <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
+                                Operating Cities</p>
+                            <div id="logged_in_hotel_amenities_list">
+                                <div class="logged_in_hotel_amenity">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                            Liverpool, Great Britain
+                                        </span>
+                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                                            <i style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="logged_in_hotel_amenity">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                            Accra, Ghana
+                                        </span>
+                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                                            <i style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="logged_in_hotel_amenity">
+                                    <p>
+                                        <span style="font-size: 14px;">
+                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                            New York, USA
+                                        </span>
+                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                                            <i style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                
+                            </div>
+                            <p style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">load more...</p>
+                            <p style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add
+                            </p>
+                            <div style="margin-top: 10px; display: none;">
+                                <p style="cursor: pointer; color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                                    Add city</p>
+                                <input style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" value="Swimmin pool" />
+                                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Save
+                                    </div>
+                                    <div style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                        Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="other_section">
-            <div class="wrapper"></div>
+        <div class="other_section" style="margin-top: 20px;">
+            <div class="wrapper">
+                <div class="logged_in_hotel_gallery">
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder;">
+                        Photos
+                    </p>
+                    <div style="display: flex; flex-direction: row !important; padding: 20px; margin: auto;">
+                        <div style="width: 50%; height: 300px; overflow: hidden;">
+                            <img style="height: auto; min-height: 300px; width: 100%;" src="images/HotelPic2.jpg" alt="" />
+                        </div>
+                        <div style="width: 50%; overflow: hidden;">
+                            <div style="display: flex; flex-direction: row !important;">
+                                <div style="width: 50%; overflow: hidden;">
+                                    <img style="height: 150px; width: auto; min-width: 100%;" src="images/HotelPic3.jpg" alt="" />
+                                </div>
+                                <div style="width: 50%; overflow: hidden;">
+                                    <img style="height: 150px; width: auto; min-width: 100%;" src="images/lHotelPic2.jpg" alt="" />
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: row !important;">
+                                <div style="width: 50%; overflow: hidden;">
+                                    <img style="height: 150px; width: auto; min-width: 100%;" src="images/hotelsBackground.jpg" alt="" />
+                                </div>
+                                <div style="width: 50%; overflow: hidden;">
+                                    <img style="height: 150px; width: auto; min-width: 100%;" src="images/hotelsBackground2.jpg" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 20px; margin-top: 10px; border-radius: 4px; background-color: rgb(127, 144, 175);">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add Photo
+                    </p>
+                </div>
+                <div class="logged_in_hotel_reviews" style="margin-top: 20px;">
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder;">
+                        Last review <span style="color:rgb(127, 144, 175); font-size: 12px;">- January 21, 2022</span>
+                    </p>
+                    <div style="padding: 20px; background-color: rgba(0,0,0,0.4); margin: 20px 0;">
+                        <div style="border-radius: 100%; overflow: hidden; width: 60px; height: 60px; margin: auto;">
+                            <img src="./images/Anonymous_person3.jpg" style="width: 60px; height: auto; min-height: 60px;" alt="">
+                        </div>
+                        <p style="color:rgb(137, 204, 235); text-align: center; margin-top: 10px; margin-bottom: 15px; font-weight: bolder">
+                            Mohammed Adinan</p>
+                        <p style="font-size: 14px; letter-spacing: 1px; color: white; max-width: 300px; margin: auto; text-align: center;">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo ab sa
+                            epe quo atque aperiam dolorem. Eligendi dignissimos sequi quos perferendis cum? Blanditiis
+                        </p>
+                        <div style="width: fit-content; margin: auto;">
+                            <p style="margin-top: 10px; margin-bottom: 5px; color: aliceblue; font-weight: bolder; font-size: 13px; letter-spacing: 1px;">
+                                Rated <span style="font-size: 12px; color: rgb(137, 204, 235); margin-left: 10px;">
+                                    <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>(Bad)</span></p>
+                            <div style="width: 250px; background-color: aliceblue;">
+                                <div style="padding: 3px; background-color: tomato; width: 40%; border-top-right-radius: 20px; border-bottom-right-radius: 20px;">
+                                    <p style="color: white; font-size: 12px; font-weight: bolder; text-align: right;">40%</p>
+                                </div>
+                            </div>
+                            <div style="width: 250px; height: 40px; display: flex; flex-direction: row !important; margin: 10px 0;">
+                                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                                    <div style="background-color: rgb(201, 43, 15);  height: 20%;"></div>
+                                </div>
+                                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                                    <div style="background-color: tomato; height: 40%;"></div>
+                                </div>
+                                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                                    <div style="background-color: rgb(206, 255, 71); height: 60%;"></div>
+                                </div>
+                                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                                    <div style="background-color: rgb(88, 236, 51); height: 80%;"></div>
+                                </div>
+                                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                                    <div style="background-color: rgb(6, 175, 14); height: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="cursor: pointer; text-align: center; font-size: 14px; color: white; padding: 20px; margin-top: 10px;">
+                        see all reviews...
+                    </p>
+                </div>
+            </div>
         </div>
     </main>
     <footer>
         <div class="wrapper"></div>
     </footer>
+    <script src="scripts/listed_property_main_script.js" type="text/javascript"></script>
 </body>
 </html>
