@@ -200,6 +200,9 @@ footer a {
   }
 }
 @media only screen and (max-width: 1000px) {
+  .wrapper {
+    margin: 0;
+  }
   .logged_in_hotel_infor_item i {
     display: inline;
   }
