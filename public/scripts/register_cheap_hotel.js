@@ -13,6 +13,7 @@ var register_cheap_hotel_post_data = {
     mobile: "",
     description: "",
     rating: 5,
+    password: "",
     reviews: [
         {
             person: "Anidaso Team",
@@ -60,6 +61,8 @@ var book_cheap_book_direct_add_hotel_add_pic_input_1 = document.getElementById("
 var book_cheap_book_direct_add_hotel_add_pic_input_2 = document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_2");
 var book_cheap_book_direct_add_hotel_add_pic_input_3 = document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_3");
 var book_cheap_book_direct_add_hotel_add_pic_input_4 = document.getElementById("book_cheap_book_direct_add_hotel_add_pic_input_4");
+var book_cheap_book_direct_register_hotel_password_input_fld = document.getElementById("book_cheap_book_direct_register_hotel_password_input_fld");
+var book_cheap_book_direct_register_hotel_confirm_password_input_fld = document.getElementById("book_cheap_book_direct_register_hotel_confirm_password_input_fld");
 
 
 async function collect_register_cheap_hotel_data(){
@@ -136,6 +139,14 @@ book_cheap_hotel_register_new_hotel_button.addEventListener("click", evnt => {
         book_cheap_hotel_register_new_hotel_button.style.borderColor = "orange";
     }else if(register_cheap_hotel_post_data.cities_operating.length < 1){
         book_cheap_hotel_register_new_hotel_button.innerText = "add atleast one city"
+        book_cheap_hotel_register_new_hotel_button.style.backgroundColor = "orangered";
+        book_cheap_hotel_register_new_hotel_button.style.borderColor = "orange";
+    }else if(book_cheap_book_direct_register_hotel_password_input_fld.value === ""){
+        book_cheap_hotel_register_new_hotel_button.innerText = "password is required"
+        book_cheap_hotel_register_new_hotel_button.style.backgroundColor = "orangered";
+        book_cheap_hotel_register_new_hotel_button.style.borderColor = "orange";
+    }else if(book_cheap_book_direct_register_hotel_confirm_password_input_fld.value !== book_cheap_book_direct_register_hotel_password_input_fld.value){
+        book_cheap_hotel_register_new_hotel_button.innerText = "passwords don't match"
         book_cheap_hotel_register_new_hotel_button.style.backgroundColor = "orangered";
         book_cheap_hotel_register_new_hotel_button.style.borderColor = "orange";
     }else{

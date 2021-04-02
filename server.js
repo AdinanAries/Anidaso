@@ -50,6 +50,7 @@ mongoose.connect(mongo_db_url, {useNewUrlParser: true, useUnifiedTopology: true}
 
 //data models
 var cheap_hotel = require("./models/cheap_hotel_model");
+var cheap_hotel_login = require("./models/cheap_hotel_login_model");
 var login_user = require("./models/login_user_model");
 var signup_user = require("./models/signup_user_model");
 var hotel_deals = require("./models/hotel_deals_model");
@@ -863,7 +864,7 @@ app.get("/upload_picture_sign_s3/", (req, res, next) =>{
 
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
-  
+
   const s3Params = {
     Bucket: S3_BUCKET,
     Key: fileName,

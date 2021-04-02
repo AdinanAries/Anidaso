@@ -89,11 +89,11 @@ const cheap_hotel_schema = new mongoose.Schema({
     },
     sentiments: {
         type: Array,
-        reqiured: true
+        required: true
     },
     policies_and_restrictions: {  //An array of objects, each object representing some type of policy and its information
         type: Array,
-        reqiured: true
+        required: true
     }
 });
 
