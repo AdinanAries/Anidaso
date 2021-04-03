@@ -2073,8 +2073,320 @@
       </div>
     </section>
     <section id="site_lower_section">
-      <!--Begin Events Interested In-->
       <div class="wrapper">
+        <h1 class="ads_upper_title">Book Cheap Hotels</h1>
+        <h1 class="ads_upper_title" style="font-size: 13px; margin-left: 10px; margin-top: 0;">Book Cheap/Book Direct</h1>
+        <p style="color:rgb(194, 194, 194); font-size: 16px; margin: 10px; max-width: 400px; text-align: justify;">
+          Being cheap is the new rich. Anidaso helps you find unpopular hospitality brands which
+          are just as good but only cheaper than the popular brands and book directly on their sites.
+        </p>
+        <div style="padding: 10px; margin: 10px; margin-bottom: 0; width: fit-content !important; border-radius: 4px;">
+          <p style="margin-bottom: 11px; color:rgb(233, 128, 0); font-weight: bolder; letter-spacing: 1px; font-size: 14px;">
+            Select search type:</p>
+          <div style="border: none; border-radius: 4px; background: none; color: white; font-size: 14px;">
+            <div style="color: #37a0f5;">
+              <input onclick="cheap_hotels_search_pick_search_type('by_city');" id="main_cheap_hotel_by_city_search_type" style="margin-right: 5px;" type="radio" name="main_cheap_hotel_search_type" checked/>
+              <label for="main_cheap_hotel_by_city_search_type">By city, country</label></div>
+            <div style="color: #37a0f5; margin-top: 5px;">
+              <input onclick="cheap_hotels_search_pick_search_type('by_name');" id="main_cheap_hotel_by_name_search_type" style="margin-right: 5px;" type="radio" name="main_cheap_hotel_search_type" />
+              <label for="main_cheap_hotel_by_name_search_type">By hotel/brand name</label></div>
+            <div style="color: #37a0f5; margin-top: 5px;">
+              <input onclick="cheap_hotels_search_pick_search_type('by_city_and_name');" id="main_cheap_hotel_by_city_and_name_search_type" style="margin-right: 5px;" type="radio" name="main_cheap_hotel_search_type" />
+              <label for="main_cheap_hotel_by_city_and_name_search_type">By city and hotel name</label></div>
+          </div>
+        </div>
+        <div style="overflow: initial !important;" class="book_direct_location_form_container">
+          <p style="color: white; font-size: 14px; margin-bottom: 10px;">Enter city/country to find cheapest hotels</p>
+          <div class="book_direct_form_inputs">
+            <div class="book_cheap_book_direct_all_inputs_container">
+              <p id="book_cheap_book_direct_search_form_name_input_title" style="display: none; opacity: 0; color:rgb(74, 101, 112); font-weight: bolder; letter-spacing: 1px; font-size: 12px; padding: 10px; padding-bottom: 0; margin-top: 10px;">
+                Hotel name:</p>
+              <input style="display: none;" id="search_cheap_hotels_by_name_text_field" type="text" autocomplete="off" placeholder="Please enter hotel name here"/>
+              <p id="book_cheap_book_direct_search_form_city_input_title" style="display: none; opacity: 0; color:rgb(74, 101, 112); font-weight: bolder; letter-spacing: 1px; font-size: 12px; padding: 10px; padding-bottom: 0;">
+                Hotel city, country:</p>
+              <input id="search_cheap_hotels_by_location_text_field" type="text" autocomplete="off" placeholder="Please enter city/country here"/>
+            </div>
+            <button id="search_cheap_hotels_by_location_button"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <div id="main_book_cheap_book_direct_location_input_autocomplete_section" class="book_cheap_book_direct_location_input_autocomplete_section">
+              <ul id="book_cheap_book_direct_location_input_autocomplete_list" style="overflow: initial !important; list-style-type: none;">
+                
+              </ul>
+              <p style="text-align: right; margin: 10px; color:rgb(90, 90, 90); font-size: 12px; margin-bottom: 0;">
+                powered by <span style="font-size: 12px; color:rgb(235, 86, 0); font-weight: bolder;">Anidaso</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="book_cheap_book_direct_hotels_list">
+          <!--sdiv class="wide_screen_ads_card">
+            <p class="wide_screen_ads_card_corder_ads_indicator">$20.00</p>
+            <div class="wide_screen_ads_main_content">
+              <div class="left_Side" style="overflow: initial !important;">
+                <div class="book_cheap_book_direct_hotels_full_pic">
+                  <img id="book_cheap_book_direct_hotels_full_pic_img_1" src="images/HotelPic.jpg" alt="hotels full pic"/>
+                </div>
+                <div class="hotels_card_pic_items_points">
+                  <div id="hotels_card_pic_each_item_point_11" onclick="cheap_hotels_show_full_pic('_1', 1);"
+                    class="hotels_card_pic_each_item_point selected hotels_card_pic_each_item_point_1"><p>1</p></div>
+                  <div id="hotels_card_pic_each_item_point_12" onclick="cheap_hotels_show_full_pic('_1', 2);" 
+                    class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_1"><p>2</p></div>
+                  <div id="hotels_card_pic_each_item_point_13" onclick="cheap_hotels_show_full_pic('_1', 3);"
+                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_1"><p>3</p></div>
+                </div>
+              </div>
+              <div class="right_Side">
+                  <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: space-between;">
+                    <div style="overflow: hidden;">
+                      <div style="background-color:#094470; padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div>
+                          <p style="color: white; font-weight: bolder;">Despite Properties</p>
+                          <p style="color: white; margin-top: 5px; font-size: 14px;">
+                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
+                            Accra Ghana</p>
+                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
+                              <div style="display: flex; flex-direction: row !important; justify-content: center;">
+                                <p>&#9733;</p> 
+                                <p>&#9733;</p>
+                                <p>&#9733;</p>
+                                <p class="unrated">&#9733;</p>
+                                <p class="unrated">&#9733;</p>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
+                          display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
+                          Book Room(s)
+                        </div>
+                      </div>
+                      <div style="padding: 0 10px;">
+                        <div style="margin-top: 15px; color: rgb(90, 90, 90);">
+                          <p>Lorem ipsum dolo adipisicing elit. Corrupti  animi modi sint! Similique doloem quis, 
+                            voluptas necessitatib Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex ipsa temporibus eum voluptas error culpa n
+                            atus molestias in praesentium aut, tenetur r...</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wide_screen_ads_extra_content" style="overflow: hidden;">
+                      <p style="font-size: 14px; color:rgb(0, 26, 43); margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px; text-align: center;">
+                        Reviews</p>
+                      <div class="wide_screen_ads_card_reviews_list">
+                        <div class="each_wide_screen_ads_card_review">
+                          <div class="each_wide_screen_ads_card_reviewer_pic">
+                            <img src="./images/Anonymous_person3.jpg" alt="review image">
+                          </div>
+                          <p style="color:rgb(5, 94, 129); font-size: 13px; font-weight: bolder; margin-bottom: 10px; 
+                          letter-spacing: 1px; text-align: center; margin-top: 10px;">Mohammed Adinan</p>
+                          <div class="each_wide_screen_ads_card_reviewer_stars">
+                            <div style="display: flex; flex-direction: row !important; justify-content: center;">
+                              <p>&#9733;</p> 
+                              <p>&#9733;</p>
+                              <p>&#9733;</p>
+                              <p class="unrated">&#9733;</p>
+                              <p class="unrated">&#9733;</p>
+                            </div>
+                          </div>
+                          <div class="each_wide_screen_ads_card_reviewer_msg">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, 
+                              quam eum repellendus eligendi ipsum ac</p>
+                          </div>
+                          <p onclick="book_cheap_book_direct_show_all_review(0, 'NYC Suites Inc', 'NY, USA', 4);" style="cursor: pointer; color:rgb(235, 86, 0); text-align: center; cursor: pointer;">see more...</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="wide_screen_ads_card">
+            <p class="wide_screen_ads_card_corder_ads_indicator">$24.00</p>
+            <div class="wide_screen_ads_main_content">
+              <div class="left_Side" style="background-image: url('./images/lHotelPic2.jpg'); overflow: initial !important;">
+                <div class="book_cheap_book_direct_hotels_full_pic">
+                  <img  id="book_cheap_book_direct_hotels_full_pic_img_2" src="images/lHotelPic2.jpg" alt="hotels full pic"/>
+                </div>
+                <div class="hotels_card_pic_items_points">
+                  <div id="hotels_card_pic_each_item_point_21" onclick="cheap_hotels_show_full_pic('_2', 1);"
+                  class="hotels_card_pic_each_item_point selected hotels_card_pic_each_item_point_2"><p>1</p></div>
+                  <div id="hotels_card_pic_each_item_point_22" onclick="cheap_hotels_show_full_pic('_2', 2);"
+                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_2"><p>2</p></div>
+                  <div id="hotels_card_pic_each_item_point_23" onclick="cheap_hotels_show_full_pic('_2', 2);"
+                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_2"><p>3</p></div>
+                </div>
+              </div>
+              <div class="right_Side">
+                  <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: space-between;">
+                    <div style="overflow: hidden;">
+                      <div style="background-color:#094470; padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div>
+                          <p style="color: white; font-weight: bolder;">Despite Properties</p>
+                          <p style="color: white; margin-top: 5px; font-size: 14px;">
+                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
+                            Accra Ghana</p>
+                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
+                              <div style="display: flex; flex-direction: row !important; justify-content: center;">
+                                <p>&#9733;</p> 
+                                <p>&#9733;</p>
+                                <p>&#9733;</p>
+                                <p class="unrated">&#9733;</p>
+                                <p class="unrated">&#9733;</p>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
+                          display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
+                          Book Room(s)
+                        </div>
+                      </div>
+                      <div style="padding: 0 10px;">
+                        <div style="margin-top: 15px; color: rgb(90, 90, 90);">
+                          <p>Lorem ipsum dolo adipisicing elit. Corrupti  animi modi sint! Similique doloem quis, 
+                            voluptas necessitatib Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex ipsa temporibus eum voluptas error culpa n
+                            atus molestias in praesentium aut, tenetur r...</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wide_screen_ads_extra_content" style="overflow: hidden;">
+                      <p style="font-size: 14px; color:rgb(0, 26, 43); margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px; text-align: center;">
+                        Reviews</p>
+                      <div class="wide_screen_ads_card_reviews_list">
+                        <div class="each_wide_screen_ads_card_review">
+                          <div class="each_wide_screen_ads_card_reviewer_pic">
+                            <img src="./images/Anonymous_person3.jpg" alt="review image">
+                          </div>
+                          <p style="color:rgb(5, 94, 129); font-size: 13px; font-weight: bolder; margin-bottom: 10px; 
+                          letter-spacing: 1px; text-align: center; margin-top: 10px;">Mohammed Adinan</p>
+                          <div class="each_wide_screen_ads_card_reviewer_stars">
+                            <div style="display: flex; flex-direction: row !important; justify-content: center;">
+                              <p>&#9733;</p> 
+                              <p>&#9733;</p>
+                              <p>&#9733;</p>
+                              <p class="unrated">&#9733;</p>
+                              <p class="unrated">&#9733;</p>
+                            </div>
+                          </div>
+                          <div class="each_wide_screen_ads_card_reviewer_msg">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, 
+                              quam eum repellendus eligendi ipsum ac</p>
+                          </div>
+                          <p  onclick="book_cheap_book_direct_show_all_review(0, 'NYC Suites Inc', 'NY, USA', 4);" style="cursor: pointer; color:rgb(235, 86, 0); text-align: center; cursor: pointer;">see more...</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="wide_screen_ads_card">
+            <p class="wide_screen_ads_card_corder_ads_indicator">$19.99</p>
+            <div class="wide_screen_ads_main_content">
+              <div class="left_Side" style="background-image: url('./images/HotelPic3.jpg'); overflow: initial !important;">
+                <div class="book_cheap_book_direct_hotels_full_pic">
+                  <img  id="book_cheap_book_direct_hotels_full_pic_img_3" src="images/HotelPic3.jpg" alt="hotels full pic"/>
+                </div>
+                <div class="hotels_card_pic_items_points">
+                  <div id="hotels_card_pic_each_item_point_31" onclick="cheap_hotels_show_full_pic('_3', 1);"
+                  class="hotels_card_pic_each_item_point selected hotels_card_pic_each_item_point_3"><p>1</p></div>
+                  <div id="hotels_card_pic_each_item_point_32" onclick="cheap_hotels_show_full_pic('_3', 2);"
+                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_3"><p>2</p></div>
+                  <div id="hotels_card_pic_each_item_point_33" onclick="cheap_hotels_show_full_pic('_3', 3);"
+                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_3"><p>3</p></div>
+                </div>
+              </div>
+              <div class="right_Side">
+                  <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: space-between;">
+                    <div style="overflow: hidden;">
+                      <div style="background-color:#094470; padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div>
+                          <p style="color: white; font-weight: bolder;">Despite Properties</p>
+                          <p style="color: white; margin-top: 5px; font-size: 14px;">
+                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
+                            Accra Ghana</p>
+                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
+                              <div style="display: flex; flex-direction: row !important; justify-content: center;">
+                                <p>&#9733;</p> 
+                                <p>&#9733;</p>
+                                <p>&#9733;</p>
+                                <p class="unrated">&#9733;</p>
+                                <p class="unrated">&#9733;</p>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
+                          display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
+                          Book Room(s)
+                        </div>
+                      </div>
+                      <div style="padding: 0 10px;">
+                        <div style="margin-top: 15px; color: rgb(90, 90, 90);">
+                          <p>Lorem ipsum dolo adipisicing elit. Corrupti  animi modi sint! Similique doloem quis, 
+                            voluptas necessitatib Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex ipsa temporibus eum voluptas error culpa n
+                            atus molestias in praesentium aut, tenetur r...</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wide_screen_ads_extra_content" style="overflow: hidden;">
+                      <p style="font-size: 14px; color:rgb(0, 26, 43); margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px; text-align: center;">
+                        Reviews</p>
+                      <div class="wide_screen_ads_card_reviews_list">
+                        <div class="each_wide_screen_ads_card_review">
+                          <div class="each_wide_screen_ads_card_reviewer_pic">
+                            <img src="./images/Anonymous_person3.jpg" alt="review image">
+                          </div>
+                          <p style="color:rgb(5, 94, 129); font-size: 13px; font-weight: bolder; margin-bottom: 10px; 
+                          letter-spacing: 1px; text-align: center; margin-top: 10px;">Mohammed Adinan</p>
+                          <div class="each_wide_screen_ads_card_reviewer_stars">
+                            <div style="display: flex; flex-direction: row !important; justify-content: center;">
+                              <p>&#9733;</p> 
+                              <p>&#9733;</p>
+                              <p>&#9733;</p>
+                              <p class="unrated">&#9733;</p>
+                              <p class="unrated">&#9733;</p>
+                            </div>
+                          </div>
+                          <div class="each_wide_screen_ads_card_reviewer_msg">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, 
+                              quam eum repellendus eligendi ipsum ac</p>
+                          </div>
+                          <p  onclick="book_cheap_book_direct_show_all_review(0, 'NYC Suites Inc', 'NY, USA', 4);" style="cursor: pointer; color:rgb(235, 86, 0); text-align: center; cursor: pointer;">see more...</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div-->
+        </div>
+        <div id="book_cheap_book_direct_hotels_loader" style="padding: 20px; display: none; flex-direction: row !important; justify-content: center;">
+          <div style="width: 100%; text-align: center;" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+              <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+              </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+              loading...
+            </p>
+          </div>
+        </div>
+        <div id="book_cheap_book_direct_hotels_load_more_btn" onclick="load_more_cheap_hotels();" style="cursor: pointer; padding-bottom: 10px; padding-top: 15px;">
+          <p style="color:rgb(0, 177, 139); text-align: center; letter-spacing: 1px;">
+            load more hotels...</p>
+        </div>
+        <div id="no_more_cheap_hotels_status_msg" style="display: none; padding-bottom: 10px; padding-top: 15px;">
+          <p style="color: white; font-size: 14px; text-align: center; letter-spacing: 1px;">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="margin-right: 0; color: orangered;"></i>
+            no more hotels to show</p>
+        </div>
+
+        <!--Begin Events Interested In-->
+      
         <h1 class="sections_title_h1">
           Popular Events
         </h1>
@@ -2375,317 +2687,8 @@
         <div id="load_more_public_events_button" onclick="load_more_events();">
           <p style="cursor: pointer; font-size: 16px; margin-top: 20px; text-align: center; color: rgb(228, 190, 190);">more event...</p>
         </div>
-      <!--End Events Interested In-->
-      <h1 class="ads_upper_title">Book Cheap Hotels</h1>
-      <h1 class="ads_upper_title" style="font-size: 13px; margin-left: 10px; margin-top: 0;">Book Cheap/Book Direct</h1>
-        <p style="color:rgb(194, 194, 194); font-size: 16px; margin: 10px; max-width: 400px; text-align: justify;">
-          Being cheap is the new rich. Anidaso helps you find unpopular hospitality brands which
-          are just as good but only cheaper than the popular brands and book directly on their sites.
-        </p>
-        <div style="padding: 10px; margin: 10px; margin-bottom: 0; width: fit-content !important; border-radius: 4px;">
-          <p style="margin-bottom: 11px; color:rgb(233, 128, 0); font-weight: bolder; letter-spacing: 1px; font-size: 14px;">
-            Select search type:</p>
-          <div style="border: none; border-radius: 4px; background: none; color: white; font-size: 14px;">
-            <div style="color: #37a0f5;">
-              <input onclick="cheap_hotels_search_pick_search_type('by_city');" id="main_cheap_hotel_by_city_search_type" style="margin-right: 5px;" type="radio" name="main_cheap_hotel_search_type" checked/>
-              <label for="main_cheap_hotel_by_city_search_type">By city, country</label></div>
-            <div style="color: #37a0f5; margin-top: 5px;">
-              <input onclick="cheap_hotels_search_pick_search_type('by_name');" id="main_cheap_hotel_by_name_search_type" style="margin-right: 5px;" type="radio" name="main_cheap_hotel_search_type" />
-              <label for="main_cheap_hotel_by_name_search_type">By hotel/brand name</label></div>
-            <div style="color: #37a0f5; margin-top: 5px;">
-              <input onclick="cheap_hotels_search_pick_search_type('by_city_and_name');" id="main_cheap_hotel_by_city_and_name_search_type" style="margin-right: 5px;" type="radio" name="main_cheap_hotel_search_type" />
-              <label for="main_cheap_hotel_by_city_and_name_search_type">By city and hotel name</label></div>
-          </div>
-        </div>
-        <div style="overflow: initial !important;" class="book_direct_location_form_container">
-          <p style="color: white; font-size: 14px; margin-bottom: 10px;">Enter city/country to find cheapest hotels</p>
-          <div class="book_direct_form_inputs">
-            <div class="book_cheap_book_direct_all_inputs_container">
-              <p id="book_cheap_book_direct_search_form_name_input_title" style="display: none; opacity: 0; color:rgb(74, 101, 112); font-weight: bolder; letter-spacing: 1px; font-size: 12px; padding: 10px; padding-bottom: 0; margin-top: 10px;">
-                Hotel name:</p>
-              <input style="display: none;" id="search_cheap_hotels_by_name_text_field" type="text" autocomplete="off" placeholder="Please enter hotel name here"/>
-              <p id="book_cheap_book_direct_search_form_city_input_title" style="display: none; opacity: 0; color:rgb(74, 101, 112); font-weight: bolder; letter-spacing: 1px; font-size: 12px; padding: 10px; padding-bottom: 0;">
-                Hotel city, country:</p>
-              <input id="search_cheap_hotels_by_location_text_field" type="text" autocomplete="off" placeholder="Please enter city/country here"/>
-            </div>
-            <button id="search_cheap_hotels_by_location_button"><i class="fa fa-search" aria-hidden="true"></i></button>
-            <div id="main_book_cheap_book_direct_location_input_autocomplete_section" class="book_cheap_book_direct_location_input_autocomplete_section">
-              <ul id="book_cheap_book_direct_location_input_autocomplete_list" style="overflow: initial !important; list-style-type: none;">
-                
-              </ul>
-              <p style="text-align: right; margin: 10px; color:rgb(90, 90, 90); font-size: 12px; margin-bottom: 0;">
-                powered by <span style="font-size: 12px; color:rgb(235, 86, 0); font-weight: bolder;">Anidaso</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div id="book_cheap_book_direct_hotels_list">
-          <!--sdiv class="wide_screen_ads_card">
-            <p class="wide_screen_ads_card_corder_ads_indicator">$20.00</p>
-            <div class="wide_screen_ads_main_content">
-              <div class="left_Side" style="overflow: initial !important;">
-                <div class="book_cheap_book_direct_hotels_full_pic">
-                  <img id="book_cheap_book_direct_hotels_full_pic_img_1" src="images/HotelPic.jpg" alt="hotels full pic"/>
-                </div>
-                <div class="hotels_card_pic_items_points">
-                  <div id="hotels_card_pic_each_item_point_11" onclick="cheap_hotels_show_full_pic('_1', 1);"
-                    class="hotels_card_pic_each_item_point selected hotels_card_pic_each_item_point_1"><p>1</p></div>
-                  <div id="hotels_card_pic_each_item_point_12" onclick="cheap_hotels_show_full_pic('_1', 2);" 
-                    class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_1"><p>2</p></div>
-                  <div id="hotels_card_pic_each_item_point_13" onclick="cheap_hotels_show_full_pic('_1', 3);"
-                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_1"><p>3</p></div>
-                </div>
-              </div>
-              <div class="right_Side">
-                  <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: space-between;">
-                    <div style="overflow: hidden;">
-                      <div style="background-color:#094470; padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div>
-                          <p style="color: white; font-weight: bolder;">Despite Properties</p>
-                          <p style="color: white; margin-top: 5px; font-size: 14px;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
-                            Accra Ghana</p>
-                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
-                              <div style="display: flex; flex-direction: row !important; justify-content: center;">
-                                <p>&#9733;</p> 
-                                <p>&#9733;</p>
-                                <p>&#9733;</p>
-                                <p class="unrated">&#9733;</p>
-                                <p class="unrated">&#9733;</p>
-                              </div>
-                            </div>
-                        </div>
-                        <div style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
-                          display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
-                          Book Room(s)
-                        </div>
-                      </div>
-                      <div style="padding: 0 10px;">
-                        <div style="margin-top: 15px; color: rgb(90, 90, 90);">
-                          <p>Lorem ipsum dolo adipisicing elit. Corrupti  animi modi sint! Similique doloem quis, 
-                            voluptas necessitatib Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex ipsa temporibus eum voluptas error culpa n
-                            atus molestias in praesentium aut, tenetur r...</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="wide_screen_ads_extra_content" style="overflow: hidden;">
-                      <p style="font-size: 14px; color:rgb(0, 26, 43); margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px; text-align: center;">
-                        Reviews</p>
-                      <div class="wide_screen_ads_card_reviews_list">
-                        <div class="each_wide_screen_ads_card_review">
-                          <div class="each_wide_screen_ads_card_reviewer_pic">
-                            <img src="./images/Anonymous_person3.jpg" alt="review image">
-                          </div>
-                          <p style="color:rgb(5, 94, 129); font-size: 13px; font-weight: bolder; margin-bottom: 10px; 
-                          letter-spacing: 1px; text-align: center; margin-top: 10px;">Mohammed Adinan</p>
-                          <div class="each_wide_screen_ads_card_reviewer_stars">
-                            <div style="display: flex; flex-direction: row !important; justify-content: center;">
-                              <p>&#9733;</p> 
-                              <p>&#9733;</p>
-                              <p>&#9733;</p>
-                              <p class="unrated">&#9733;</p>
-                              <p class="unrated">&#9733;</p>
-                            </div>
-                          </div>
-                          <div class="each_wide_screen_ads_card_reviewer_msg">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, 
-                              quam eum repellendus eligendi ipsum ac</p>
-                          </div>
-                          <p onclick="book_cheap_book_direct_show_all_review(0, 'NYC Suites Inc', 'NY, USA', 4);" style="cursor: pointer; color:rgb(235, 86, 0); text-align: center; cursor: pointer;">see more...</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="wide_screen_ads_card">
-            <p class="wide_screen_ads_card_corder_ads_indicator">$24.00</p>
-            <div class="wide_screen_ads_main_content">
-              <div class="left_Side" style="background-image: url('./images/lHotelPic2.jpg'); overflow: initial !important;">
-                <div class="book_cheap_book_direct_hotels_full_pic">
-                  <img  id="book_cheap_book_direct_hotels_full_pic_img_2" src="images/lHotelPic2.jpg" alt="hotels full pic"/>
-                </div>
-                <div class="hotels_card_pic_items_points">
-                  <div id="hotels_card_pic_each_item_point_21" onclick="cheap_hotels_show_full_pic('_2', 1);"
-                  class="hotels_card_pic_each_item_point selected hotels_card_pic_each_item_point_2"><p>1</p></div>
-                  <div id="hotels_card_pic_each_item_point_22" onclick="cheap_hotels_show_full_pic('_2', 2);"
-                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_2"><p>2</p></div>
-                  <div id="hotels_card_pic_each_item_point_23" onclick="cheap_hotels_show_full_pic('_2', 2);"
-                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_2"><p>3</p></div>
-                </div>
-              </div>
-              <div class="right_Side">
-                  <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: space-between;">
-                    <div style="overflow: hidden;">
-                      <div style="background-color:#094470; padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div>
-                          <p style="color: white; font-weight: bolder;">Despite Properties</p>
-                          <p style="color: white; margin-top: 5px; font-size: 14px;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
-                            Accra Ghana</p>
-                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
-                              <div style="display: flex; flex-direction: row !important; justify-content: center;">
-                                <p>&#9733;</p> 
-                                <p>&#9733;</p>
-                                <p>&#9733;</p>
-                                <p class="unrated">&#9733;</p>
-                                <p class="unrated">&#9733;</p>
-                              </div>
-                            </div>
-                        </div>
-                        <div style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
-                          display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
-                          Book Room(s)
-                        </div>
-                      </div>
-                      <div style="padding: 0 10px;">
-                        <div style="margin-top: 15px; color: rgb(90, 90, 90);">
-                          <p>Lorem ipsum dolo adipisicing elit. Corrupti  animi modi sint! Similique doloem quis, 
-                            voluptas necessitatib Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex ipsa temporibus eum voluptas error culpa n
-                            atus molestias in praesentium aut, tenetur r...</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="wide_screen_ads_extra_content" style="overflow: hidden;">
-                      <p style="font-size: 14px; color:rgb(0, 26, 43); margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px; text-align: center;">
-                        Reviews</p>
-                      <div class="wide_screen_ads_card_reviews_list">
-                        <div class="each_wide_screen_ads_card_review">
-                          <div class="each_wide_screen_ads_card_reviewer_pic">
-                            <img src="./images/Anonymous_person3.jpg" alt="review image">
-                          </div>
-                          <p style="color:rgb(5, 94, 129); font-size: 13px; font-weight: bolder; margin-bottom: 10px; 
-                          letter-spacing: 1px; text-align: center; margin-top: 10px;">Mohammed Adinan</p>
-                          <div class="each_wide_screen_ads_card_reviewer_stars">
-                            <div style="display: flex; flex-direction: row !important; justify-content: center;">
-                              <p>&#9733;</p> 
-                              <p>&#9733;</p>
-                              <p>&#9733;</p>
-                              <p class="unrated">&#9733;</p>
-                              <p class="unrated">&#9733;</p>
-                            </div>
-                          </div>
-                          <div class="each_wide_screen_ads_card_reviewer_msg">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, 
-                              quam eum repellendus eligendi ipsum ac</p>
-                          </div>
-                          <p  onclick="book_cheap_book_direct_show_all_review(0, 'NYC Suites Inc', 'NY, USA', 4);" style="cursor: pointer; color:rgb(235, 86, 0); text-align: center; cursor: pointer;">see more...</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="wide_screen_ads_card">
-            <p class="wide_screen_ads_card_corder_ads_indicator">$19.99</p>
-            <div class="wide_screen_ads_main_content">
-              <div class="left_Side" style="background-image: url('./images/HotelPic3.jpg'); overflow: initial !important;">
-                <div class="book_cheap_book_direct_hotels_full_pic">
-                  <img  id="book_cheap_book_direct_hotels_full_pic_img_3" src="images/HotelPic3.jpg" alt="hotels full pic"/>
-                </div>
-                <div class="hotels_card_pic_items_points">
-                  <div id="hotels_card_pic_each_item_point_31" onclick="cheap_hotels_show_full_pic('_3', 1);"
-                  class="hotels_card_pic_each_item_point selected hotels_card_pic_each_item_point_3"><p>1</p></div>
-                  <div id="hotels_card_pic_each_item_point_32" onclick="cheap_hotels_show_full_pic('_3', 2);"
-                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_3"><p>2</p></div>
-                  <div id="hotels_card_pic_each_item_point_33" onclick="cheap_hotels_show_full_pic('_3', 3);"
-                  class="hotels_card_pic_each_item_point hotels_card_pic_each_item_point_3"><p>3</p></div>
-                </div>
-              </div>
-              <div class="right_Side">
-                  <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: space-between;">
-                    <div style="overflow: hidden;">
-                      <div style="background-color:#094470; padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div>
-                          <p style="color: white; font-weight: bolder;">Despite Properties</p>
-                          <p style="color: white; margin-top: 5px; font-size: 14px;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color:aliceblue;"></i>
-                            Accra Ghana</p>
-                            <div class="each_wide_screen_ads_card_reviewer_stars book_cheap_hotels_main_ratings">
-                              <div style="display: flex; flex-direction: row !important; justify-content: center;">
-                                <p>&#9733;</p> 
-                                <p>&#9733;</p>
-                                <p>&#9733;</p>
-                                <p class="unrated">&#9733;</p>
-                                <p class="unrated">&#9733;</p>
-                              </div>
-                            </div>
-                        </div>
-                        <div style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
-                          display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
-                          Book Room(s)
-                        </div>
-                      </div>
-                      <div style="padding: 0 10px;">
-                        <div style="margin-top: 15px; color: rgb(90, 90, 90);">
-                          <p>Lorem ipsum dolo adipisicing elit. Corrupti  animi modi sint! Similique doloem quis, 
-                            voluptas necessitatib Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex ipsa temporibus eum voluptas error culpa n
-                            atus molestias in praesentium aut, tenetur r...</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="wide_screen_ads_extra_content" style="overflow: hidden;">
-                      <p style="font-size: 14px; color:rgb(0, 26, 43); margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px; text-align: center;">
-                        Reviews</p>
-                      <div class="wide_screen_ads_card_reviews_list">
-                        <div class="each_wide_screen_ads_card_review">
-                          <div class="each_wide_screen_ads_card_reviewer_pic">
-                            <img src="./images/Anonymous_person3.jpg" alt="review image">
-                          </div>
-                          <p style="color:rgb(5, 94, 129); font-size: 13px; font-weight: bolder; margin-bottom: 10px; 
-                          letter-spacing: 1px; text-align: center; margin-top: 10px;">Mohammed Adinan</p>
-                          <div class="each_wide_screen_ads_card_reviewer_stars">
-                            <div style="display: flex; flex-direction: row !important; justify-content: center;">
-                              <p>&#9733;</p> 
-                              <p>&#9733;</p>
-                              <p>&#9733;</p>
-                              <p class="unrated">&#9733;</p>
-                              <p class="unrated">&#9733;</p>
-                            </div>
-                          </div>
-                          <div class="each_wide_screen_ads_card_reviewer_msg">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, 
-                              quam eum repellendus eligendi ipsum ac</p>
-                          </div>
-                          <p  onclick="book_cheap_book_direct_show_all_review(0, 'NYC Suites Inc', 'NY, USA', 4);" style="cursor: pointer; color:rgb(235, 86, 0); text-align: center; cursor: pointer;">see more...</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div-->
-        </div>
-        <div id="book_cheap_book_direct_hotels_loader" style="padding: 20px; display: none; flex-direction: row !important; justify-content: center;">
-          <div style="width: 100%; text-align: center;" class="loader loader--style2" title="1">
-            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-               width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-              <animateTransform attributeType="xml"
-                attributeName="transform"
-                type="rotate"
-                from="0 25 25"
-                to="360 25 25"
-                dur="0.6s"
-                repeatCount="indefinite"/>
-              </path>
-            </svg>
-            <p style="text-align: center; font-size: 14px; color:white;">
-              loading...
-            </p>
-          </div>
-        </div>
-        <div id="book_cheap_book_direct_hotels_load_more_btn" onclick="load_more_cheap_hotels();" style="cursor: pointer; padding-bottom: 10px; padding-top: 15px;">
-          <p style="color:rgb(0, 177, 139); text-align: center; letter-spacing: 1px;">
-            load more hotels...</p>
-        </div>
-        <div id="no_more_cheap_hotels_status_msg" style="display: none; padding-bottom: 10px; padding-top: 15px;">
-          <p style="color: white; font-size: 14px; text-align: center; letter-spacing: 1px;">
-            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="margin-right: 0; color: orangered;"></i>
-            no more hotels to show</p>
-        </div>
+        <!--End Events Interested In-->
+
         <h1 class="sections_title_h1">
           Popular Cities
         </h1>
