@@ -4,7 +4,6 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 const user_login_schema = mongoose.Schema({
     id: {
-
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     },

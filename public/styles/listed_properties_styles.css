@@ -97,7 +97,8 @@ header {
 .logged_in_hotel_amenity:hover .logged_in_hotel_amenity_edit_btns {
   display: block;
 }
-.logged_in_hotel_amenity_edit_btns {
+.logged_in_hotel_amenity_edit_btns,
+.logged_in_payments_card_display i {
   display: none;
 }
 .logged_in_hotel_amenity_edit_btns i,
@@ -112,9 +113,11 @@ header {
   color: rgb(114, 147, 197);
   font-size: 18px;
 }
-.logged_in_hotel_infor_item:hover i {
+.logged_in_hotel_infor_item:hover i,
+.logged_in_payments_card_display:hover i {
   display: inline;
 }
+
 .book_cheap_book_direct_location_input_autocomplete_section {
   display: none;
   border-bottom-left-radius: 4px;
@@ -146,6 +149,37 @@ header {
 .gallery_photos_display_section_part {
   display: flex;
   flex-direction: row !important;
+}
+.about_anidaso_cheap_hotels_content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.about_anidaso_cheap_hotels_section {
+  margin-top: 20px;
+  width: 33%;
+}
+.all_rooms_list_table {
+  border-spacing: 5px;
+  margin: auto;
+}
+.all_rooms_list_table tr td {
+  padding: 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.all_rooms_list_table tr:nth-child(1) td {
+  background: none;
+  color: rgb(212, 113, 0);
+  font-weight: bolder;
+}
+.rooms_list_edit_room_icon {
+  cursor: pointer;
+  color: rgb(114, 147, 197) !important;
 }
 footer {
   background-color: #140028;
@@ -203,7 +237,11 @@ footer a {
   .wrapper {
     margin: 0;
   }
-  .logged_in_hotel_infor_item i {
+  .mobile_hidden_elem {
+    display: none !important;
+  }
+  .logged_in_hotel_infor_item i,
+  .logged_in_payments_card_display i {
     display: inline;
   }
   .logged_in_hotel_amenity_edit_btns {
@@ -225,6 +263,12 @@ footer a {
     height: 300px;
   }
   .gallery_photos_display_section {
+    width: 100%;
+  }
+  .about_anidaso_cheap_hotels_content {
+    display: block;
+  }
+  .about_anidaso_cheap_hotels_section {
     width: 100%;
   }
   footer .wrapper div {

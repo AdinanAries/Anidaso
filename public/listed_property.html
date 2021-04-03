@@ -219,7 +219,11 @@
                             <div id="logged_in_hotel_edit_amenity_info_form" style="margin-top: 10px; display: none;">
                                 <p id="logged_in_hotel_edit_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
                                 </p>
-                                <input id="logged_in_hotel_edit_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" value="Swimmin pool" />
+                                <p style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
+                                    select amenities from list
+                                    <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                                </p>
+                                <input id="logged_in_hotel_edit_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
                                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                                     <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                         Save
@@ -234,8 +238,10 @@
                     <div class="logged_in_hotel_details_each_section_content">
                         <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                             Payments</p>
-                        <p style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">Card Number:</span>
-                             ****1342</p>
+                        <p class="logged_in_payments_card_display" style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">Card Number:</span>
+                             ****1342
+                             <i style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
+                        </p>
                         <p style="color: white; font-size: 14px; margin-top: 5px;">
                             <span style="color:aqua; font-size: 14px;">Status:</span>
                             verified <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
@@ -342,8 +348,161 @@
                 </div>
             </div>
         </div>
-        <div class="other_section" style="margin-top: 20px;">
+        <div class="other_section">
             <div class="wrapper">
+                <div style="padding: 10px; margin-bottom: 20px;">
+                    <p style="font-size: 14px; margin-top: 10px; letter-spacing: 1px; text-align: center; color: white; font-weight: bolder;">
+                        Your Rooms</p>
+                    <p style="text-align: center; color: white; letter-spacing: 1px; font-size: 13px; margin-top: 5px; margin-bottom: 15px;">view and manage your rooms' availability</p>
+                    <div id="logged_in_hotel_recently_booked_rooms_list">
+                        <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); max-width: 500px; margin: auto;">
+                            <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Booked recently</p>
+                            <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                                Room 5D:
+                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                                    Booked
+                                    <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
+                                </span>
+                            </p>
+                            <p style="margin-top: 5px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
+                                New York 
+                                <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                                    - 1223 Mont Gomery
+                                </span>
+                            </p>
+                            <div style="margin-top: 20px;">
+                                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                    Checkin:
+                                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                                        March 23, 2022</span>
+                                </p>
+                                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                    Checkout:
+                                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                                        March 25, 2022</span>
+                                </p>
+                                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                    Price paid:
+                                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                                        $90.00</span>
+                                </p>
+                                <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                                    Room Guest(s)</p>
+                                <div>
+                                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                        Name:
+                                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                                            Adam Aldavis</span>
+                                    </p>
+                                    <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">25yrs, Male</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <div style="padding: 10px;">
+                            <div>
+                                <p style="margin-top: 15px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
+                                    New York,
+                                    <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                                        1223 Mont Gomery, United States
+                                    </span>
+                                </p>
+                                <table class="all_rooms_list_table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Room</td>
+                                            <td class="mobile_hidden_elem">Checkin</td>
+                                            <td class="mobile_hidden_elem">Checkout</td>
+                                            <td>Price</td>
+                                            <td>Status</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1D</td>
+                                            <td class="mobile_hidden_elem">unbooked</td>
+                                            <td class="mobile_hidden_elem">unbooked</td>
+                                            <td>$90.00</td>
+                                            <td>
+                                                <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 5px;"></i> 
+                                                Available
+                                            </td>
+                                            <td class="rooms_list_edit_room_icon">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2D</td>
+                                            <td class="mobile_hidden_elem">23-03-2022</td>
+                                            <td class="mobile_hidden_elem">25-03-2022</td>
+                                            <td>$90.00</td>
+                                            <td>
+                                                <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 5px;"></i> 
+                                                Booked
+                                            </td>
+                                            <td class="rooms_list_edit_room_icon">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+                                    view all rooms</p>
+                            </div>
+                            <div>
+                                <p style="margin-top: 15px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
+                                    Kumasi,
+                                    <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                                        1223 Anloga Juction, Ghana
+                                    </span>
+                                </p>
+                                <table class="all_rooms_list_table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Room</td>
+                                            <td class="mobile_hidden_elem">Checkin</td>
+                                            <td class="mobile_hidden_elem">Checkout</td>
+                                            <td>Price</td>
+                                            <td>Status</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1D</td>
+                                            <td class="mobile_hidden_elem">unbooked</td>
+                                            <td class="mobile_hidden_elem">unbooked</td>
+                                            <td>$90.00</td>
+                                            <td>
+                                                <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 5px;"></i> 
+                                                Available
+                                            </td>
+                                            <td class="rooms_list_edit_room_icon">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2D</td>
+                                            <td class="mobile_hidden_elem">23-03-2022</td>
+                                            <td class="mobile_hidden_elem">25-03-2022</td>
+                                            <td>$90.00</td>
+                                            <td>
+                                                <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 5px;"></i> 
+                                                Booked
+                                            </td>
+                                            <td class="rooms_list_edit_room_icon">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+                                    view all rooms</p>
+                            </div>
+                            <p style="padding: 10px; width: 150px; margin: auto; margin-top: 10px; cursor: pointer; background-color:rgb(209, 84, 0); border-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add room</p>
+                            <!--p style=" width: 150px; margin: auto; cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add room
+                            </p-->
+                        </div>
+                    </div>
+                </div>
                 <div class="logged_in_hotel_gallery">
                     <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder;">
                         Photos
@@ -371,15 +530,15 @@
                             </div>
                         </div>
                     </div>
-                    <p style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 20px; margin-top: 10px; border-radius: 4px; background-color: rgb(127, 144, 175);">
+                    <p style="cursor: pointer; text-align: center; font-size: 13px; color: white; max-width: 150px; padding: 10px; margin: auto; margin-top: 10px; margin-bottom: 10px; border-radius: 4px; background-color: rgb(127, 144, 175);">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add Photo
                     </p>
                 </div>
-                <div class="logged_in_hotel_reviews" style="margin-top: 20px;">
-                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder;">
+                <div class="logged_in_hotel_reviews" style="padding-top: 20px;">
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-bottom: 10px;">
                         Your last review <span style="color:rgb(127, 144, 175); font-size: 12px;">- January 21, 2022</span>
                     </p>
-                    <div style="padding: 20px; background-color: rgba(0,0,0,0.4); margin: 20px 0;">
+                    <div style="padding: 20px; background-color: rgba(0,0,0,0.4); margin-bottom: 20px;">
                         <div style="border-radius: 100%; overflow: hidden; width: 60px; height: 60px; margin: auto;">
                             <img src="./images/Anonymous_person3.jpg" style="width: 60px; height: auto; min-height: 60px;" alt="">
                         </div>
@@ -416,10 +575,56 @@
                                 </div>
                             </div>
                         </div>
+                        <p style="cursor: pointer; text-align: center; font-size: 14px; color: white; padding: 10px;">
+                            see all reviews...
+                        </p>
                     </div>
-                    <p style="cursor: pointer; text-align: center; font-size: 14px; color: white; padding: 20px; margin-top: 10px;">
-                        see all reviews...
+                    
+                </div>
+                <div class="about_anidaso_cheap_hotels">
+                    <p style="font-family: 'Courgette'; font-size: 20px; letter-spacing: 1px; color: white; text-align: center; padding-top: 20px; font-weight: bolder;">
+                        Why Anidaso</p>
+                    <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(168, 195, 218); margin-top: 5px;">
+                        Your brand recognition is our main goal
                     </p>
+                    <div class="about_anidaso_cheap_hotels_content">
+                        <div class="about_anidaso_cheap_hotels_section">
+                            <p style="font-size: 14px; color:rgb(137, 204, 235); font-weight: bolder; margin-bottom: 10px; text-align: center;">
+                                Section Title Here</p>
+                            <div style="padding: 10px;">
+                                <div style="margin: auto; padding: 20px; background-color: white; border-radius: 4px;">
+                                    <p style="text-align: center; margin-bottom: 20px;"><img src="images/BizGroup.png" style="width: 100px; height: 100px;" alt="" /></p>
+                                    <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(8, 40, 66);">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit doloremque, expedita non officiis itaque veritatis, ipsum nisi, minima quae impedit consequatur.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about_anidaso_cheap_hotels_section">
+                            <p style="font-size: 14px; color:rgb(137, 204, 235); font-weight: bolder; margin-bottom: 10px; text-align: center;">
+                                Section Title Here</p>
+                            <div style="padding: 10px;">
+                                <div style="margin: auto; padding: 20px; background-color: white; border-radius: 4px;">
+                                    <p style="text-align: center; margin-bottom: 20px;"><img src="images/BizGroup.png" style="width: 100px; height: 100px;" alt="" /></p>
+                                    <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(8, 40, 66);">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit doloremque, expedita non officiis itaque veritatis, ipsum nisi, minima quae impedit consequatur.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about_anidaso_cheap_hotels_section">
+                            <p style="font-size: 14px; color:rgb(137, 204, 235); font-weight: bolder; margin-bottom: 10px; text-align: center;">
+                                Section Title Here</p>
+                            <div style="padding: 10px;">
+                                <div style="margin: auto; padding: 20px; background-color: white; border-radius: 4px;">
+                                    <p style="text-align: center; margin-bottom: 20px;"><img src="images/BizGroup.png" style="width: 100px; height: 100px;" alt="" /></p>
+                                    <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(8, 40, 66);">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit doloremque, expedita non officiis itaque veritatis, ipsum nisi, minima quae impedit consequatur.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
