@@ -202,3 +202,25 @@ function toggle_show_edit_desc_info_form(){
         logged_in_hotel_description_input.style.height = Math.min(logged_in_hotel_description_input.scrollHeight, heightLimit) + "px";
     }, 500);
 }
+
+function toggle_show_search_room_pane(){
+    document.getElementById("add_room_form_panel").style.display = "none";
+    $("#search_room_panel").toggle("up");
+}
+
+function toggle_show_add_room_pane(){
+    document.getElementById("search_room_panel").style.display = "none";
+    $("#add_room_form_panel").toggle("up");
+}
+
+function add_new_hotel_room_func(){
+    toggle_show_add_room_pane();
+}
+
+function edit_hotel_room_func(){
+    toggle_show_add_room_pane();
+}
+
+function toggle_show_add_hotel_property_pane(){
+    $("#add_hotel_property_form_panel").toggle("up");
+}

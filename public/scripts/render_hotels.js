@@ -494,48 +494,50 @@ function get_hotel_rates(url, is_going_back_from_final_price){
             let RR_hotel_address = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_hotel_amenities = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
 
-            if(data.data.hotel.rating){
-                if(data.data.hotel.rating === "5"){
-                    RR_hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9733;";
-                }else if(data.data.hotel.rating === "4"){
-                    RR_hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9734;";
-                }else if(data.data.hotel.rating === "3"){
-                    RR_hotel_rating = "&#9733; &#9733; &#9733; &#9734; &#9734;";
-                }else if(data.data.hotel.rating === "2"){
-                    RR_hotel_rating = "&#9733; &#9733; &#9734; &#9734; &#9734;";
-                }else {
-                    RR_hotel_rating = "&#9733; &#9734; &#9734; &#9734; &#9734;";
-                }
-            }
-            if(data.data.hotel.name){
-                RR_hotel_name = data.data.hotel.name;
-            }
-            if(data.data.hotel.address){
+            if(data.data){
+                if(data.data.hotel){
+                    if(data.data.hotel.rating){
+                        if(data.data.hotel.rating === "5"){
+                            RR_hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9733;";
+                        }else if(data.data.hotel.rating === "4"){
+                            RR_hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9734;";
+                        }else if(data.data.hotel.rating === "3"){
+                            RR_hotel_rating = "&#9733; &#9733; &#9733; &#9734; &#9734;";
+                        }else if(data.data.hotel.rating === "2"){
+                            RR_hotel_rating = "&#9733; &#9733; &#9734; &#9734; &#9734;";
+                        }else {
+                            RR_hotel_rating = "&#9733; &#9734; &#9734; &#9734; &#9734;";
+                        }
+                    }
+                    if(data.data.hotel.name){
+                        RR_hotel_name = data.data.hotel.name;
+                    }
+                    if(data.data.hotel.address){
 
-                let country = return_country_from_code(data.data.hotel.address.countryCode)[0].country;
+                        let country = return_country_from_code(data.data.hotel.address.countryCode)[0].country;
 
-                RR_hotel_address = data.data.hotel.address.cityName + ", " + country.toUpperCase();
-                if(data.data.hotel.address.lines[0]){
-                    RR_hotel_address = data.data.hotel.address.lines[0] + ", " + RR_hotel_address;
-                }
-            }
-
-            if(data.data.hotel.contact){
-                if(data.data.hotel.contact.phone){
-                    RR_hotel_phone = data.data.hotel.contact.phone;
-                }
-                if(data.data.hotel.contact.email){
-                    RR_hotel_email = data.data.hotel.contact.email;
-                }
-                if(data.data.hotel.contact.fax){
-                    RR_hotel_fax = data.data.hotel.contact.fax;
-                }
-            }
-
-            if(data.data.hotel.amenities){
-                RR_hotel_amenities = data.data.hotel.amenities.toString().replaceAll("_", " ").toLowerCase().replaceAll(",", ", ");
-                if(RR_hotel_amenities.length > 250){
-                    RR_hotel_amenities = RR_hotel_amenities.substring(0, 250) + " ...";
+                        RR_hotel_address = data.data.hotel.address.cityName + ", " + country.toUpperCase();
+                        if(data.data.hotel.address.lines[0]){
+                            RR_hotel_address = data.data.hotel.address.lines[0] + ", " + RR_hotel_address;
+                        }
+                    }
+                    if(data.data.hotel.contact){
+                        if(data.data.hotel.contact.phone){
+                            RR_hotel_phone = data.data.hotel.contact.phone;
+                        }
+                        if(data.data.hotel.contact.email){
+                            RR_hotel_email = data.data.hotel.contact.email;
+                        }
+                        if(data.data.hotel.contact.fax){
+                            RR_hotel_fax = data.data.hotel.contact.fax;
+                        }
+                    }
+                    if(data.data.hotel.amenities){
+                        RR_hotel_amenities = data.data.hotel.amenities.toString().replaceAll("_", " ").toLowerCase().replaceAll(",", ", ");
+                        if(RR_hotel_amenities.length > 250){
+                            RR_hotel_amenities = RR_hotel_amenities.substring(0, 250) + " ...";
+                        }
+                    }
                 }
             }
             
@@ -547,50 +549,52 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                 }
             }
 
-            if(data.data.hotel){
-                document.getElementById("order_room_form_hotel_infor_container").innerHTML = `
-                    <div style="height: 300px; width: 100%; margin: auto; position: relative;
-                    background-image: url('./images/HotelPic2.jpg'); background-size: cover; background-repeat: no-repeat; ">
-                        <div style="background-color: rgba(0, 0, 0, 0.575); padding: 20px;">
-                            <h1 style="font-weight: bolder; letter-spacing: 1px; color: white;">
-                            ${RR_hotel_name}
-                            </h1>
-                            <p style="color: white; font-size: 11px; letter-spacing: 0.7px;">
-                                ${RR_hotel_address}
+            if(data.data){
+                if(data.data.hotel){
+                    document.getElementById("order_room_form_hotel_infor_container").innerHTML = `
+                        <div style="height: 300px; width: 100%; margin: auto; position: relative;
+                        background-image: url('./images/HotelPic2.jpg'); background-size: cover; background-repeat: no-repeat; ">
+                            <div style="background-color: rgba(0, 0, 0, 0.575); padding: 20px;">
+                                <h1 style="font-weight: bolder; letter-spacing: 1px; color: white;">
+                                ${RR_hotel_name}
+                                </h1>
+                                <p style="color: white; font-size: 11px; letter-spacing: 0.7px;">
+                                    ${RR_hotel_address}
+                                </p>
+                                <p style="color:rgb(0, 188, 235);">${RR_hotel_rating}</p>
+                            </div>
+                            <div class="hotels_card_pic_items_points">
+                                <div class="hotels_card_pic_each_item_point selected"><p>1</p></div>
+                                <div class="hotels_card_pic_each_item_point"><p>2</p></div>
+                                <div class="hotels_card_pic_each_item_point"><p>3</p></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px; margin-top: 20px;">Contacts:</p>
+                            <p style="margin-top: 10px; color:rgb(117, 117, 117); font-size: 14px;">
+                            <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>
+                            ${RR_hotel_phone}
                             </p>
-                            <p style="color:rgb(0, 188, 235);">${RR_hotel_rating}</p>
+                            <p style="margin-bottom: 10px; margin-top: 5px; color:rgb(117, 117, 117); font-size: 14px;">
+                            <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
+                            ${RR_hotel_fax}
+                            </p>
+                            <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 12px;">
+                            <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>
+                            ${RR_hotel_email}
+                            </p>
                         </div>
-                        <div class="hotels_card_pic_items_points">
-                            <div class="hotels_card_pic_each_item_point selected"><p>1</p></div>
-                            <div class="hotels_card_pic_each_item_point"><p>2</p></div>
-                            <div class="hotels_card_pic_each_item_point"><p>3</p></div>
+                        <div>
+                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px; margin-top: 20px;">Amenities</p>
+                            <p style="margin-top: 10px; color:rgb(117, 117, 117); font-size: 14px;">
+                                ${RR_hotel_amenities}
+                            </p>
                         </div>
-                    </div>
-                    <div>
-                        <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px; margin-top: 20px;">Contacts:</p>
-                        <p style="margin-top: 10px; color:rgb(117, 117, 117); font-size: 14px;">
-                        <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>
-                        ${RR_hotel_phone}
-                        </p>
-                        <p style="margin-bottom: 10px; margin-top: 5px; color:rgb(117, 117, 117); font-size: 14px;">
-                        <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
-                        ${RR_hotel_fax}
-                        </p>
-                        <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 12px;">
-                        <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>
-                        ${RR_hotel_email}
-                        </p>
-                    </div>
-                    <div>
-                        <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px; margin-top: 20px;">Amenities</p>
-                        <p style="margin-top: 10px; color:rgb(117, 117, 117); font-size: 14px;">
-                            ${RR_hotel_amenities}
-                        </p>
-                    </div>
-                    <div onclick="view_hotels_full_profile_info('${view_full_profile_hotel_info_json}');" style="font-size: 14px; color: white; background-color: rgb(76, 127, 237); border-radius: 4px; cursor: pointer; padding: 10px; width: 150px; text-align: center; margin: auto; margin-top: 20px;">
-                        View Full Hotel Profile
-                    </div>
-                `;
+                        <div onclick="view_hotels_full_profile_info('${view_full_profile_hotel_info_json}');" style="font-size: 14px; color: white; background-color: rgb(76, 127, 237); border-radius: 4px; cursor: pointer; padding: 10px; width: 150px; text-align: center; margin: auto; margin-top: 20px;">
+                            View Full Hotel Profile
+                        </div>
+                    `;
+                }
             }
 
             document.getElementById("order_room_form_hotel_rates_list_container").innerHTML = "";
@@ -890,266 +894,268 @@ function get_final_price(url, first_url){
                     `;
             }
 
-            for(let rr = 0; rr < data.data.offers.length; rr++){
+            if(data.data.offers){
+                for(let rr = 0; rr < data.data.offers.length; rr++){
 
-                if(data.data.offers[rr].self){
-                    RR_booking_self = data.data.offers[rr].self;
-                }
-
-                if(data.data.offers[rr].guests){
-                    if(data.data.offers[rr].guests.adults){
-                        RR_guest_num = data.data.offers[rr].guests.adults > 1 ?
-                             `${data.data.offers[rr].guests.adults} adults` :`${data.data.offers[rr].guests.adults} adult`;
+                    if(data.data.offers[rr].self){
+                        RR_booking_self = data.data.offers[rr].self;
                     }
-                }
 
-                if(data.data.offers[rr].checkInDate){
-                    RR_checkin_date = data.data.offers[rr].checkInDate;
-                }
-                if(data.data.offers[rr].checkOutDate){
-                    RR_checkout_date = data.data.offers[rr].checkOutDate;
-                }
-                if(data.data.offers[rr].price){
-                    RR_booking_price = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].price.total);
-                    RR_booking_price = current_currency.sign + " " + RR_booking_price
-                }
-                if(data.data.offers[rr].policies){
-                    if(data.data.offers[rr].policies.cancellation){
-                        RR_policy_type = "Cancellation"
-                        if(data.data.offers[rr].policies.cancellation.deadline){
-                            RR_cancel_deadline = data.data.offers[rr].policies.cancellation.deadline.split("T")[0] + ", ";
-                            RR_cancel_deadline += data.data.offers[rr].policies.cancellation.deadline.split("T")[1].substring(0,5);
-                        }
-                        if(data.data.offers[rr].policies.cancellation.amount){
-                            RR_cancl_amount = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].policies.cancellation.amount);
-                            RR_cancl_amount = current_currency.sign + " " + RR_cancl_amount;
+                    if(data.data.offers[rr].guests){
+                        if(data.data.offers[rr].guests.adults){
+                            RR_guest_num = data.data.offers[rr].guests.adults > 1 ?
+                                `${data.data.offers[rr].guests.adults} adults` :`${data.data.offers[rr].guests.adults} adult`;
                         }
                     }
-                }
-                if(data.data.offers[rr].room.typeEstimated){
-                    if(data.data.offers[rr].room.typeEstimated.category){
-                        RR_room_type = data.data.offers[rr].room.typeEstimated.category.toString().replaceAll("_", " ").toLowerCase();
+
+                    if(data.data.offers[rr].checkInDate){
+                        RR_checkin_date = data.data.offers[rr].checkInDate;
                     }
-                    if(data.data.offers[rr].room.typeEstimated.bedType){
-                        RR_bed_type = data.data.offers[rr].room.typeEstimated.bedType.toString().replaceAll("_", " ").toLowerCase();
+                    if(data.data.offers[rr].checkOutDate){
+                        RR_checkout_date = data.data.offers[rr].checkOutDate;
                     }
-                }
-                if(data.data.offers[rr].room.description){
-                    RR_room_desc = data.data.offers[rr].room.description.text;
-                }
-
-                if(data.data.offers[rr].roomQuantity){
-                    RR_rooms_num = data.data.offers[rr].roomQuantity > 1 ?
-                        `${data.data.offers[rr].roomQuantity} rooms` : `${data.data.offers[rr].roomQuantity} room`
-                }
-
-                if(data.data.offers[rr].price.base){
-                    RR_booking_base_price = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].price.base);
-                    RR_booking_base_price = current_currency.sign + " " + RR_booking_base_price;
-                }
-
-                if(data.data.offers[rr].price.taxes){
-
-                    all_taxes = '';
-
-                    for(let txes = 0; txes < data.data.offers[rr].price.taxes.length; txes++){
-
-                        let margin_top = "20px";
-
-                        if(txes < 1){
-                            margin_top = "0"
-                        }
-
-                        let tax_price = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
-                        let taxCode = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
-                        let pricingFrequency = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
-                        let pricingMode = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
-
-                        if(data.data.offers[rr].price.taxes[txes].amount){
-                            tax_price = site_currency_coverter(data.data.offers[rr].price.taxes[txes].currency, current_currency.currency, data.data.offers[rr].price.taxes[txes].amount);
-                            tax_price = current_currency.sign + " " + tax_price;
-                        }
-                        if(data.data.offers[rr].price.taxes[txes].code){
-                            taxCode = data.data.offers[rr].price.taxes[txes].code.toString().replaceAll("_", " ").toLowerCase();
-                        }
-                        if(data.data.offers[rr].price.taxes[txes].pricingFrequency){
-                            pricingFrequency = data.data.offers[rr].price.taxes[txes].pricingFrequency.toString().replaceAll("_", " ").toLowerCase();
-                        }
-                        if(data.data.offers[rr].price.taxes[txes].pricingMode){
-                            pricingMode = data.data.offers[rr].price.taxes[txes].pricingMode.toString().replaceAll("_", " ").toLowerCase()
-                        }
-
-                        all_taxes += `
-                            <div style="display: flex; flex-direction: row !important; margin-top: ${margin_top};">
-                                <div style="margin-right: 20px;">
-                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type of tax:</p>
-                                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
-                                        ${taxCode}
-                                    </p>
-                                </div>
-                                <div style="margin-right: 20px;">
-                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Frequency:</p>
-                                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
-                                        ${pricingFrequency}
-                                    </p>
-                                </div>
-                                <div style="margin-right: 20px;">
-                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Mode:</p>
-                                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
-                                        ${pricingMode}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount:</p>
-                                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
-                                        ${tax_price}
-                                    </p>
-                                </div>
-                            </div>
-                        `;
+                    if(data.data.offers[rr].price){
+                        RR_booking_price = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].price.total);
+                        RR_booking_price = current_currency.sign + " " + RR_booking_price
                     }
-                }
-
-                if(data.data.offers[rr].price.variations.changes){
-
-                    all_changes = '';
-
-                    for(let chnes = 0; chnes < data.data.offers[rr].price.variations.changes.length; chnes++){
-
-                        let margin_top = "20px";
-
-                        if(chnes < 1){
-                            margin_top = "0"
+                    if(data.data.offers[rr].policies){
+                        if(data.data.offers[rr].policies.cancellation){
+                            RR_policy_type = "Cancellation"
+                            if(data.data.offers[rr].policies.cancellation.deadline){
+                                RR_cancel_deadline = data.data.offers[rr].policies.cancellation.deadline.split("T")[0] + ", ";
+                                RR_cancel_deadline += data.data.offers[rr].policies.cancellation.deadline.split("T")[1].substring(0,5);
+                            }
+                            if(data.data.offers[rr].policies.cancellation.amount){
+                                RR_cancl_amount = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].policies.cancellation.amount);
+                                RR_cancl_amount = current_currency.sign + " " + RR_cancl_amount;
+                            }
                         }
-
-                        let change_price = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].price.variations.changes[chnes].base);
-                        change_price = current_currency.sign + " " + change_price;
-
-                        all_changes += `
-                            <div style="display: flex; flex-direction: row !important; margin-top: ${margin_top}">
-                                <div style="margin-right: 20px;">
-                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Start Date:</p>
-                                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
-                                        ${data.data.offers[rr].price.variations.changes[chnes].startDate}
-                                    </p>
-                                </div>
-                                <div style="margin-right: 20px;">
-                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">End Date:</p>
-                                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
-                                        ${data.data.offers[rr].price.variations.changes[chnes].endDate}
-                                    </p>
-                                </div>
-                                <div style="margin-right: 20px;">
-                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Base Price:</p>
-                                    <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
-                                        ${change_price}
-                                    </p>
-                                </div>
-                            </div>
-                        `;
                     }
-                }
+                    if(data.data.offers[rr].room.typeEstimated){
+                        if(data.data.offers[rr].room.typeEstimated.category){
+                            RR_room_type = data.data.offers[rr].room.typeEstimated.category.toString().replaceAll("_", " ").toLowerCase();
+                        }
+                        if(data.data.offers[rr].room.typeEstimated.bedType){
+                            RR_bed_type = data.data.offers[rr].room.typeEstimated.bedType.toString().replaceAll("_", " ").toLowerCase();
+                        }
+                    }
+                    if(data.data.offers[rr].room.description){
+                        RR_room_desc = data.data.offers[rr].room.description.text;
+                    }
 
-                document.getElementById("order_room_form_final_price_container").innerHTML += `
-                        <div>
-                        <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 20px;">Room Status:
-                            ${RR_room_availability}
-                        </p>
+                    if(data.data.offers[rr].roomQuantity){
+                        RR_rooms_num = data.data.offers[rr].roomQuantity > 1 ?
+                            `${data.data.offers[rr].roomQuantity} rooms` : `${data.data.offers[rr].roomQuantity} room`
+                    }
 
-                        <div>
-                        <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Details</p>
-                        <div style="display: flex; flex-direction: row !important;">
-                            <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Room Type:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
-                                ${RR_room_type}
-                            </p>
-                            </div>
+                    if(data.data.offers[rr].price.base){
+                        RR_booking_base_price = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].price.base);
+                        RR_booking_base_price = current_currency.sign + " " + RR_booking_base_price;
+                    }
+
+                    if(data.data.offers[rr].price.taxes){
+
+                        all_taxes = '';
+
+                        for(let txes = 0; txes < data.data.offers[rr].price.taxes.length; txes++){
+
+                            let margin_top = "20px";
+
+                            if(txes < 1){
+                                margin_top = "0"
+                            }
+
+                            let tax_price = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
+                            let taxCode = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
+                            let pricingFrequency = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
+                            let pricingMode = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
+
+                            if(data.data.offers[rr].price.taxes[txes].amount){
+                                tax_price = site_currency_coverter(data.data.offers[rr].price.taxes[txes].currency, current_currency.currency, data.data.offers[rr].price.taxes[txes].amount);
+                                tax_price = current_currency.sign + " " + tax_price;
+                            }
+                            if(data.data.offers[rr].price.taxes[txes].code){
+                                taxCode = data.data.offers[rr].price.taxes[txes].code.toString().replaceAll("_", " ").toLowerCase();
+                            }
+                            if(data.data.offers[rr].price.taxes[txes].pricingFrequency){
+                                pricingFrequency = data.data.offers[rr].price.taxes[txes].pricingFrequency.toString().replaceAll("_", " ").toLowerCase();
+                            }
+                            if(data.data.offers[rr].price.taxes[txes].pricingMode){
+                                pricingMode = data.data.offers[rr].price.taxes[txes].pricingMode.toString().replaceAll("_", " ").toLowerCase()
+                            }
+
+                            all_taxes += `
+                                <div style="display: flex; flex-direction: row !important; margin-top: ${margin_top};">
+                                    <div style="margin-right: 20px;">
+                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type of tax:</p>
+                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                                            ${taxCode}
+                                        </p>
+                                    </div>
+                                    <div style="margin-right: 20px;">
+                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Frequency:</p>
+                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                            ${pricingFrequency}
+                                        </p>
+                                    </div>
+                                    <div style="margin-right: 20px;">
+                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Mode:</p>
+                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                            ${pricingMode}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount:</p>
+                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                            ${tax_price}
+                                        </p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+
+                    if(data.data.offers[rr].price.variations.changes){
+
+                        all_changes = '';
+
+                        for(let chnes = 0; chnes < data.data.offers[rr].price.variations.changes.length; chnes++){
+
+                            let margin_top = "20px";
+
+                            if(chnes < 1){
+                                margin_top = "0"
+                            }
+
+                            let change_price = site_currency_coverter(data.data.offers[rr].price.currency, current_currency.currency, data.data.offers[rr].price.variations.changes[chnes].base);
+                            change_price = current_currency.sign + " " + change_price;
+
+                            all_changes += `
+                                <div style="display: flex; flex-direction: row !important; margin-top: ${margin_top}">
+                                    <div style="margin-right: 20px;">
+                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Start Date:</p>
+                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                                            ${data.data.offers[rr].price.variations.changes[chnes].startDate}
+                                        </p>
+                                    </div>
+                                    <div style="margin-right: 20px;">
+                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">End Date:</p>
+                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                            ${data.data.offers[rr].price.variations.changes[chnes].endDate}
+                                        </p>
+                                    </div>
+                                    <div style="margin-right: 20px;">
+                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Base Price:</p>
+                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                            ${change_price}
+                                        </p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+
+                    document.getElementById("order_room_form_final_price_container").innerHTML += `
                             <div>
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Bed Type:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_bed_type}</p>
-                            </div>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Description:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
-                            ${RR_room_desc}
+                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 20px;">Room Status:
+                                ${RR_room_availability}
                             </p>
-                        </div>
-                        </div>
 
-                        <div style="margin-top: 20px;">
-                        <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Details</p>
-                        <div style="display: flex; flex-direction: row !important;">
-                            <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checkin:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_checkin_date}</p>
-                            </div>
-                            <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checout:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_checkout_date}</p>
-                            </div>
-                            <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Guests:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_guest_num}</p>
-                            </div>
                             <div>
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Rooms</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_rooms_num}</p>
-                            </div>
-                        </div>
-                        </div>
-
-                        <div style="margin-top: 20px;">
-                        <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Hotel Policies</p>
-                        <div style="display: flex; flex-direction: row !important;">
-                            <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_policy_type}</p>
-                            </div>
-                            <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Deadline:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancel_deadline}</p>
-                            </div>
-                            <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount: </p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancl_amount}</p>
-                            </div>
-                        </div>
-                        </div>
-
-                        <div style="margin-top: 20px;">
-                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Changes</p>
-                            ${all_changes}
-                        </div>
-
-                        <div style="margin-top: 20px; padding: 10px; background-color: #d1d1d1; border-top: 1px solid #d3d2d2;">
-                            <p style="font-size: 12px; margin-bottom: 20px; font-weight: bolder; color:rgb(0, 60, 83);">
-                                Room Price And Taxes</p>
-
-                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Base Price</p>
-                            <span style="opacity: 0.8; font-size: 14px;">${RR_booking_base_price}</span>
-
-                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px; margin-top: 20px;">Taxes</p>
-                            ${all_taxes}
-
-                            <div style="display: flex; flex-direction: row !important; margin-top: 20px;">
-                                <div style="margin-right: 50px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Total:</p>
-                                <p style="color: rgb(17, 95, 126); font-size: 17px; font-weight: bolder; margin-top: 10px; margin-left: 10px;">
-                                    ${RR_booking_price}
+                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Details</p>
+                            <div style="display: flex; flex-direction: row !important;">
+                                <div style="margin-right: 20px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Room Type:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                                    ${RR_room_type}
                                 </p>
                                 </div>
-                                <div onclick="room_booking_get_user_information('${url}', '${first_url}');" style="cursor: pointer; background-color: rgb(0, 127, 177); padding: 20px;">
-                                <p style="font-size: 13px; font-weight: bolder; color: white;">Book Room</p>
+                                <div>
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Bed Type:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_bed_type}</p>
                                 </div>
                             </div>
-                        </div>
-                        </div>
+                            <div style="margin-top: 10px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Description:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                ${RR_room_desc}
+                                </p>
+                            </div>
+                            </div>
 
-                    </div>
-                `;
+                            <div style="margin-top: 20px;">
+                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Details</p>
+                            <div style="display: flex; flex-direction: row !important;">
+                                <div style="margin-right: 20px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checkin:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_checkin_date}</p>
+                                </div>
+                                <div style="margin-right: 20px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checout:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_checkout_date}</p>
+                                </div>
+                                <div style="margin-right: 20px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Guests:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_guest_num}</p>
+                                </div>
+                                <div>
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Rooms</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_rooms_num}</p>
+                                </div>
+                            </div>
+                            </div>
 
+                            <div style="margin-top: 20px;">
+                            <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Hotel Policies</p>
+                            <div style="display: flex; flex-direction: row !important;">
+                                <div style="margin-right: 20px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_policy_type}</p>
+                                </div>
+                                <div style="margin-right: 20px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Deadline:</p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancel_deadline}</p>
+                                </div>
+                                <div style="margin-right: 20px;">
+                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount: </p>
+                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancl_amount}</p>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Changes</p>
+                                ${all_changes}
+                            </div>
+
+                            <div style="margin-top: 20px; padding: 10px; background-color: #d1d1d1; border-top: 1px solid #d3d2d2;">
+                                <p style="font-size: 12px; margin-bottom: 20px; font-weight: bolder; color:rgb(0, 60, 83);">
+                                    Room Price And Taxes</p>
+
+                                <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Base Price</p>
+                                <span style="opacity: 0.8; font-size: 14px;">${RR_booking_base_price}</span>
+
+                                <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px; margin-top: 20px;">Taxes</p>
+                                ${all_taxes}
+
+                                <div style="display: flex; flex-direction: row !important; margin-top: 20px;">
+                                    <div style="margin-right: 50px;">
+                                    <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Total:</p>
+                                    <p style="color: rgb(17, 95, 126); font-size: 17px; font-weight: bolder; margin-top: 10px; margin-left: 10px;">
+                                        ${RR_booking_price}
+                                    </p>
+                                    </div>
+                                    <div onclick="room_booking_get_user_information('${url}', '${first_url}');" style="cursor: pointer; background-color: rgb(0, 127, 177); padding: 20px;">
+                                    <p style="font-size: 13px; font-weight: bolder; color: white;">Book Room</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                    `;
+
+                }
             }
 
             book_hotel_forms_scroll_helper();

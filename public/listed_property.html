@@ -21,6 +21,313 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+    <div id="search_room_panel" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <p onclick="toggle_show_search_room_pane();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <div style="height: 100%;">
+                <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
+                    Search Room</p>
+                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                    <div class="flex_child_of_two">
+                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
+                        <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                            <option>
+                                New York, 1223 Mont Gomery, United States
+                            </option>
+                            <option>
+                                New York, 1223 Mont Gomery, United States
+                            </option>
+                        </select>
+                    </div>
+                    <div class="flex_child_of_two flex_non_first_child">
+                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Enter Room Number</p>
+                        <input style="width: calc(70% - 10px);padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="room number"/>
+                        <button style="width: calc(30% - 15px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button>
+                    </div>
+                </div>
+                <div id="page_popup_content_body">
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">See room details here</p>
+                    <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
+                        <div class="flex_child_of_two">
+                            <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                Room 5D 
+                                <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
+                                    <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
+                                    (available)
+                                </span>
+                            </p>
+                            <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
+                                <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add room
+                                </div>
+                                <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit room
+                                </div>
+                            </div>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Room type: 
+                                <span style="font-size: 13px; color: white;">
+                                    Deluxe</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Bed type: 
+                                <span style="font-size: 13px; color: white;">
+                                    King size</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Amenities: 
+                                <span style="font-size: 13px; color: white;">
+                                    Wifi, Cable, others...</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Price: 
+                                <span style="font-size: 13px; color: white;">
+                                    $90.00</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Description: 
+                                <span style="font-size: 13px; color: white;">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas soluta eum ipsum quaerat doloribus fugit obcaecati non a aperiam ex omnis dolorem veniam eve.
+                                </span></p>
+                        </div>
+                        <div class="flex_child_of_two flex_non_first_child">
+                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Last Booked</p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Checkin: 
+                                <span style="font-size: 13px; color: white;">
+                                    March 23, 2022</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Checkout: 
+                                <span style="font-size: 13px; color: white;">
+                                    March 25, 2022</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Guest: 
+                                <span style="font-size: 13px; color: white;">
+                                    Adam, 25yrs, Male</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Paid: 
+                                <span style="font-size: 13px; color: white;">
+                                    $75.00</span></p>
+                            <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; ">
+                                view room guests history
+                                <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex_row_default_flex_column_mobile">
+                          <div class="flex_child_of_two" style="margin-top: 20px;">
+                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Misc</p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Number of Guests: 
+                                <span style="font-size: 13px; color: white;">
+                                    1 adult, 4 children
+                                </span>
+                            </p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Cancellation: 
+                                <span style="font-size: 13px; color: white;">
+                                    1 week, $90.00 
+                                    <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                                </span>
+                            </p>
+                          </div>
+                          <div class="flex_child_of_two flex_non_first_child"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="add_room_form_panel" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <p onclick="toggle_show_add_room_pane();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <div style="height: 100%;">
+                <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
+                    Add Room</p>
+                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                    <div class="flex_child_of_two">
+                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
+                        <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                            <option>
+                                New York, 1223 Mont Gomery, United States
+                            </option>
+                            <option>
+                                New York, 1223 Mont Gomery, United States
+                            </option>
+                        </select>
+                    </div>
+                    <div class="flex_child_of_two flex_non_first_child">
+                        <p style="font-size: 13px; color:rgb(8, 40, 66);">Click button below to add new hotel</p>
+                        <div onclick="toggle_show_add_hotel_property_pane();" style="cursor: pointer; width: calc(100% - 15px); padding: 10px; font-weight: bolder; color:rgb(8, 40, 66); font-size: 13px;">
+                            Add New Property
+                            <i style="margin-left: 5px; color:rgb(165, 0, 0);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="page_popup_content_body">
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">Add room details here</p>
+                    <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
+                        <div class="flex_child_of_two">
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Enter Room Number</p>
+                                <input style="width: calc(100% - 20px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="room number"/>
+                            </div>
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Room Type</p>
+                                <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                                    <option>
+                                        Single
+                                    </option>
+                                    <option>
+                                        Queen
+                                    </option>
+                                </select>
+                            </div>
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Bed Type</p>
+                                <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                                    <option>
+                                        Single
+                                    </option>
+                                    <option>
+                                        Double
+                                    </option>
+                                </select>
+                            </div>
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Amenities</p>
+                                <div>
+                                    <input id="add_room_wifi_amen_check" type="checkbox" />
+                                    <label for="add_room_wifi_amen_check" style="font-size: 14px; font-weight: initial;">Free Wifi</label>
+                                    <input style="margin-left: 20px;" id="add_room_wifi_amen_check" type="checkbox" />
+                                    <label for="add_room_wifi_amen_check" style="font-size: 14px; font-weight: initial;">Cable</label>
+                                    <input style="margin-left: 20px;" id="add_room_wifi_amen_check" type="checkbox" />
+                                    <label for="add_room_wifi_amen_check" style="font-size: 14px; font-weight: initial;">Others</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex_child_of_two flex_non_first_child">
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Enter Room Price</p>
+                                <input style="width: calc(100% - 20px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="room price"/>
+                            </div>
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Enter Room Description</p>
+                                <textarea style="border: none; width: calc(100% - 20px); padding: 10px;"></textarea>
+                            </div>
+                            <p style="color: rgb(255, 97, 6); margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Cancellation Policy</p>
+                            <div style="margin-left: 10px; margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Period</p>
+                                <input style="width: calc(100% - 20px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="eg. for two weeks, enter 14"/>
+                            </div>
+                            <div style="margin-left: 10px; margin-bottom: 30px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Charge Percentage</p>
+                                <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                                    <option>
+                                        10%
+                                    </option>
+                                    <option>
+                                        20%
+                                    </option>
+                                    <option>
+                                        25%
+                                    </option>
+                                    <option>
+                                        30%
+                                    </option>
+                                    <option>
+                                        50%
+                                    </option>
+                                    <option>
+                                        75%
+                                    </option>
+                                    <option>
+                                        90%
+                                    </option>
+                                    <option>
+                                        100%
+                                    </option>
+                                </select>
+                            </div>
+                            <div style="font-size: 13px; cursor: pointer; letter-spacing: 1px; text-align: center; font-weight: bolder; color: white; background-color:rgb(55, 107, 75); border-radius: 4px; padding: 10px;">
+                                Save
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="add_hotel_property_form_panel" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <p onclick="toggle_show_add_hotel_property_pane();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <div style="height: 100%;">
+                <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
+                    Add Property</p>
+                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                    <div class="flex_child_of_two">
+                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select City</p>
+                        <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                            <option>
+                                New York, United States
+                            </option>
+                            <option>
+                                Kumasi, Ghana
+                            </option>
+                        </select>
+                    </div>
+                    <div class="flex_child_of_two flex_non_first_child">
+                        <p style="font-size: 13px; color:rgb(8, 40, 66);">Click below to see all your hotels</p>
+                        <div style="width: calc(100% - 15px); padding: 10px; cursor: pointer; font-weight: bolder; color:rgb(8, 40, 66); font-size: 13px;">
+                            See All Properties
+                            <i style="margin-left: 5px; color:rgb(165, 0, 0);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="page_popup_content_body">
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">Add property details here</p>
+                    <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
+                        <div class="flex_child_of_two">
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Street Address</p>
+                                <input style="width: calc(100% - 20px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="eg. 2134 Rector Street"/>
+                            </div>
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Add ZipCode</p>
+                                <input style="width: calc(100% - 20px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="eg. 10456"/>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Amenities</p>
+                                <div>
+                                    <input id="add_property_wifi_amen_check" type="checkbox" />
+                                    <label for="add_property_wifi_amen_check" style="font-size: 14px; font-weight: initial;">Free Wifi</label>
+                                    <input style="margin-left: 20px;" id="add_property_cable_amen_check" type="checkbox" />
+                                    <label for="add_property_cable_amen_check" style="font-size: 14px; font-weight: initial;">Cable</label>
+                                    <input style="margin-left: 20px;" id="add_property_other_amen_check" type="checkbox" />
+                                    <label for="add_property_other_amen_check" style="font-size: 14px; font-weight: initial;">Others</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex_child_of_two flex_non_first_child">
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Enter Property Description</p>
+                                <textarea style="border: none; width: calc(100% - 20px); padding: 10px;"></textarea>
+                            </div>
+                            <div style="font-size: 13px; cursor: pointer; letter-spacing: 1px; text-align: center; font-weight: bolder; color: white; background-color:rgb(55, 107, 75); border-radius: 4px; padding: 10px;">
+                                Save
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--div class="page_pop_up_cover">
+        <div class="page_popup_content_container">
+            <p class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+        </div>
+    </div-->
     <p style="display: none;" id="search_cheap_hotels_by_location_text_field"></p>
     <header>
         <div class="wrapper">
@@ -397,6 +704,9 @@
                                     <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">25yrs, Male</p>
                                 </div>
                             </div>
+                            <p style="text-align: center; color: white; font-size: 13px; font-weight: bolder; padding: 10px; border-radius: 14px; background-color: cadetblue; cursor: pointer; margin: 10px 0;">
+                                See all bookings
+                            </p>
                         </div>
                     </div>
                     <div style="margin-top: 10px;">
@@ -500,10 +810,10 @@
                                 </p>
                             </div>
                             <div style="display: flex; flex-direction: row !important; width: 250px; margin: auto; margin-top: 20px;">
-                                <div style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                <div onclick="toggle_show_add_room_pane();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                                     <i class="fa fa-plus" aria-hidden="true"></i> Add room
                                 </div>
-                                <div style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                <div onclick="toggle_show_search_room_pane();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                                     <i class="fa fa-search" aria-hidden="true"></i> search room
                                 </div>
                             </div>
