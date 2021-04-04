@@ -224,3 +224,7 @@ function edit_hotel_room_func(){
 function toggle_show_add_hotel_property_pane(){
     $("#add_hotel_property_form_panel").toggle("up");
 }
+
+function view_and_edit_room(){
+    toggle_show_search_room_pane();
+}
