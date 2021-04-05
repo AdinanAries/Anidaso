@@ -264,3 +264,30 @@ function show_all_cities(){
 function toggle_hide_show_anything(elem_id){
     $("#"+elem_id).toggle("up");
 }
+
+function hotel_manager_logout(){
+    document.location.href = "/listed_property_login.html"
+}
+
+
+//function to get all hotel information
+function get_logged_in_hotel_infor(){
+
+    let ANDSBZID = window.localStorage.getItem("ANDSBZID");
+
+    $.ajax({
+        type: "GET",
+        url: `/get_logged_in_hotel_info/${ANDSBZID}`,
+        success: data => {
+            console.log(data);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+
+}
+
+$(document).ready(()=>{
+    get_logged_in_hotel_infor();
+});

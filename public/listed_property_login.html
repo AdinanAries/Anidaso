@@ -38,6 +38,7 @@
         </div>
     </header>
     <main>
+        
         <div class="hero_section">
             <div class="wrapper">
                 <h1 style="font-family: 'Courgette'; color: white; text-align: center; font-size: 24px; letter-spacing: 1px;">
@@ -47,36 +48,82 @@
                 </p>
             </div>
         </div>
-        <div style="min-height: 300px; padding: 20px 0;">
-            <h1 style="color: white; font-size: 18px; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">Login</h1>
-            <p style="font-size: 14px; text-align: center; color: white; letter-spacing: 1px;">Login and manage your properties</p>
-            <div style="width: fit-content; margin: auto; margin-top: 20px;">
-                <form>
-                    <div style="margin-bottom: 20px; min-width: 250px;">
-                        <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
-                            Email</p>
-                        <input style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="email" placeholder="please enter email" />
-                    </div>
-                    <div style="margin-bottom: 20px; min-width: 250px;">
-                        <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
-                            Password</p>
-                        <input style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="password" placeholder="please enter password" />
-                    </div>
-                    <div style="margin-bottom: 20px; min-width: 250px;">
-                        <button style="background-color: #37a0f5; color: white; font-size: 14px; padding: 10px; width: calc(100% + 20px); border: none;">
-                            Login
-                        </button>
-                    </div>
-                </form>
+        <div class="wrapper">
+            <div style="min-height: 300px; padding: 20px 0;">
+                <h1 style="color: white; font-size: 18px; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">Login</h1>
+                <p style="font-size: 14px; text-align: center; color: white; letter-spacing: 1px;">Login and manage your properties</p>
+                <div style="width: fit-content; margin: auto; margin-top: 20px;">
+                    <!--form-->
+                        <div style="margin-bottom: 20px; min-width: 250px;">
+                            <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
+                                Email</p>
+                            <input id="listed_property_login_email_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="email" placeholder="please enter email" />
+                        </div>
+                        <div style="margin-bottom: 20px; min-width: 250px;">
+                            <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
+                                Password</p>
+                            <input id="listed_property_login_password_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="password" placeholder="please enter password" />
+                        </div>
+                        <div style="margin-bottom: 20px; min-width: 250px;">
+                            <button id="listed_property_login_btn" style="background-color: #37a0f5; color: white; font-size: 14px; padding: 10px; width: calc(100% + 20px); border: none;">
+                                Login
+                            </button>
+                        </div>
+                    <!--/form-->
+                </div>
+                <p style="padding: 10px; text-align: center;">
+                    <a  href="/register_hotel_brand" style="letter-spacing: 1px; color: white; text-decoration: none; font-size: 14px;">
+                        Register your brand here
+                        <i style="margin-left: 5px; color: rgb(235, 78, 78);" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </p>
             </div>
-            <p style="padding: 10px; text-align: center;">
-                <a  href="/register_hotel_brand" style="letter-spacing: 1px; color: white; text-decoration: none; font-size: 14px;">
-                    Register your brand here
-                    <i style="margin-left: 5px; color: rgb(235, 78, 78);" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                </a>
-            </p>
+            <div class="about_anidaso_cheap_hotels">
+                <p style="font-family: 'Courgette'; font-size: 20px; letter-spacing: 1px; color: white; text-align: center; padding-top: 20px; font-weight: bolder;">
+                    Why Anidaso</p>
+                <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(168, 195, 218); margin-top: 5px;">
+                    Your global recognition is our main goal
+                </p>
+                <div class="about_anidaso_cheap_hotels_content">
+                    <div class="about_anidaso_cheap_hotels_section">
+                        <p style="font-size: 14px; color:rgb(137, 204, 235); font-weight: bolder; margin-bottom: 10px; text-align: center;">
+                            Section Title Here</p>
+                        <div style="padding: 10px;">
+                            <div style="margin: auto; padding: 20px; background-color: white; border-radius: 4px;">
+                                <p style="text-align: center; margin-bottom: 20px;"><img src="images/BizGroup.png" style="width: 100px; height: 100px;" alt="" /></p>
+                                <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(8, 40, 66);">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit doloremque, expedita non officiis itaque veritatis, ipsum nisi, minima quae impedit consequatur.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about_anidaso_cheap_hotels_section">
+                        <p style="font-size: 14px; color:rgb(137, 204, 235); font-weight: bolder; margin-bottom: 10px; text-align: center;">
+                            Section Title Here</p>
+                        <div style="padding: 10px;">
+                            <div style="margin: auto; padding: 20px; background-color: white; border-radius: 4px;">
+                                <p style="text-align: center; margin-bottom: 20px;"><img src="images/BizGroup.png" style="width: 100px; height: 100px;" alt="" /></p>
+                                <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(8, 40, 66);">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit doloremque, expedita non officiis itaque veritatis, ipsum nisi, minima quae impedit consequatur.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about_anidaso_cheap_hotels_section">
+                        <p style="font-size: 14px; color:rgb(137, 204, 235); font-weight: bolder; margin-bottom: 10px; text-align: center;">
+                            Section Title Here</p>
+                        <div style="padding: 10px;">
+                            <div style="margin: auto; padding: 20px; background-color: white; border-radius: 4px;">
+                                <p style="text-align: center; margin-bottom: 20px;"><img src="images/BizGroup.png" style="width: 100px; height: 100px;" alt="" /></p>
+                                <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(8, 40, 66);">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit doloremque, expedita non officiis itaque veritatis, ipsum nisi, minima quae impedit consequatur.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
     </main>
     <footer>
         <div class="wrapper">

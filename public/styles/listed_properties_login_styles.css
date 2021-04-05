@@ -23,7 +23,8 @@
   width: 48%;
 }
 input:focus,
-textarea:focus {
+textarea:focus,
+button:focus {
   outline: none;
 }
 .page_pop_up_cover {

@@ -662,6 +662,25 @@ app.get("/get_login_user/:id", async (req, res, next) =>{
 
 });
 
+//cheap_hotels_login (listed property login)
+app.post("/listed_property_login/", async (req, res, next) => {
+
+  console.log(req.body);
+
+  let hotel = await cheap_hotel.findById("6063dd3fb6dfe50bc800dd5f");
+
+  res.send(hotel);
+
+});
+
+app.get("/get_logged_in_hotel_info/:id", async (req, res, next) => {
+
+  console.log(req.params.id);
+
+  let hotel = await cheap_hotel.findById(req.params.id);
+
+  res.send(hotel);
+});
 
 //book cheap/book direct routes
 //getting cheap hotels by city or name

@@ -80,6 +80,22 @@ header {
   flex-direction: column !important;
   justify-content: center;
 }
+#top_nav_hotel_name_display_drop_down {
+  background-color: rgb(6, 54, 73);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: calc(100% - 20px);
+  display: none;
+  flex-direction: row !important;
+  justify-content: center;
+}
+#main_top_nav_hotel_name_display:hover #top_nav_hotel_name_display_drop_down {
+  display: flex;
+}
 .top_nav_hotel_name_display p,
 .top_nav_login_btn p {
   letter-spacing: 1px;
