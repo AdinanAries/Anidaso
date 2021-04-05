@@ -228,3 +228,39 @@ function toggle_show_add_hotel_property_pane(){
 function view_and_edit_room(){
     toggle_show_search_room_pane();
 }
+
+function toggle_show_booked_rooms(){
+    $("#booked_rooms_container").toggle("up");
+}
+
+function toggle_show_all_hotel_properties(){
+    $("#all_hotel_properties_container").toggle("up");
+}
+
+function toggle_show_all_hotel_property_rooms(){
+    $("#hotel_property_all_rooms_container").toggle("up");
+}
+
+function show_all_hotel_property_rooms(property_id){
+    toggle_show_all_hotel_property_rooms();
+}
+
+function toggle_show_all_amenities(){
+    $("#all_amenities_list_container").toggle("up");
+}
+
+function show_all_amenities(){
+    toggle_show_all_amenities();
+}
+
+function toggle_show_all_cities(){
+    $("#all_cities_list_container").toggle("up");
+}
+
+function show_all_cities(){
+    toggle_show_all_cities();
+}
+
+function toggle_hide_show_anything(elem_id){
+    $("#"+elem_id).toggle("up");
+}

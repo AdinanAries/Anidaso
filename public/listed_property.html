@@ -323,6 +323,68 @@
             </div>
         </div>
     </div>
+    <div id="booked_rooms_container" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container">
+            <p onclick="toggle_show_booked_rooms();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                Your Bookings</p>
+            <div id="bookings_content_container" style="padding: 10px;">
+                <div id="booked_rooms_list">
+                    <div class="each_booked_room" style="background-color:rgb(8, 40, 66); border-radius: 4px; min-height: 200px;">
+                        checkin, checkout, room, property, guest
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="all_hotel_properties_container" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container">
+            <p onclick="toggle_show_all_hotel_properties();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                Your Properties</p>
+            <div id="hotel_properties_list_content_container" style="padding: 10px;">
+                <div id="hotel_properties_list">
+                    <div class="each_property_info" style="background-color:rgb(8, 40, 66); border-radius: 4px; min-height: 200px;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="hotel_property_all_rooms_container" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container">
+            <p onclick="toggle_show_all_hotel_property_rooms();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                All Rooms</p>
+            <div id="hotel_property_all_room_list_content_container" style="padding: 10px;">
+                <div id="hotel_property_all_rooms_list">
+                    <div class="each_property_info" style="background-color:rgb(8, 40, 66); border-radius: 4px; min-height: 200px;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="all_amenities_list_container" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container">
+            <p onclick="toggle_show_all_amenities();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                All Amenities</p>
+            <div id="all_hotel_amenities_list" style="padding: 10px;">
+
+            </div>
+        </div>
+    </div>
+    <div id="all_cities_list_container" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container">
+            <p onclick="toggle_show_all_cities();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                All Cities</p>
+            <div id="all_cities_list" style="padding: 10px;">
+
+            </div>
+        </div>
+    </div>
     <!--div class="page_pop_up_cover">
         <div class="page_popup_content_container">
             <p class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
@@ -488,9 +550,21 @@
                                         </span>
                                         <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                                             <i onclick="start_edit_amenity_info('logged_in_hotel_swm_pool_amenity', 'Swimming pool', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                                            <i  onclick="toggle_hide_show_anything('delete_swimmin_pool_aminties_confirm_dialog')" style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
                                         </span>
                                     </p>
+                                    <div id="delete_swimmin_pool_aminties_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
+                                        <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                                            Are you sure</p>
+                                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                                                Delete
+                                            </div>
+                                            <div onclick="toggle_hide_show_anything('delete_swimmin_pool_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                                                Cancel
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="logged_in_hotel_amenity">
@@ -519,7 +593,7 @@
                                 </div>
                                 
                             </div>
-                            <p style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">load more...</p>
+                            <p onclick="show_all_amenities();" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">see all amenities
                             <p id="logged_in_hotel_add_amenity_btn" onclick="start_edit_amenity_info('logged_in_hotel_add_amenity_btn', '', 'Add Amenity');" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Add
                             </p>
@@ -591,10 +665,22 @@
                                             <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                                             Liverpool, Great Britain
                                         </span>
-                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                                        <span onclick="toggle_hide_show_anything('delete_liverpool_city_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                                             <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
                                         </span>
                                     </p>
+                                    <div id="delete_liverpool_city_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
+                                        <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                                            Are you sure</p>
+                                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                                                Delete
+                                            </div>
+                                            <div onclick="toggle_hide_show_anything('delete_liverpool_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                                                Cancel
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="logged_in_hotel_amenity">
@@ -621,7 +707,7 @@
                                 </div>
                                 
                             </div>
-                            <p style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">load more...</p>
+                            <p onclick="show_all_cities();" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">see all cities</p>
                             <p id="logged_in_hotel_add_op_city_btn" onclick="start_edit_op_cities_info('logged_in_hotel_add_op_city_btn', '', 'Add City')" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Add
                             </p>
@@ -704,7 +790,7 @@
                                     <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">25yrs, Male</p>
                                 </div>
                             </div>
-                            <p style="text-align: center; color: white; font-size: 13px; font-weight: bolder; padding: 10px; border-radius: 14px; background-color: cadetblue; cursor: pointer; margin: 10px 0;">
+                            <p onclick="toggle_show_booked_rooms();" style="text-align: center; color: white; font-size: 13px; font-weight: bolder; padding: 10px; border-radius: 14px; background-color: cadetblue; cursor: pointer; margin: 10px 0;">
                                 See all bookings
                             </p>
                         </div>
@@ -755,7 +841,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <p style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+                                <p onclick="show_all_hotel_property_rooms('property_id')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
                                     view all rooms
                                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                                 </p>
@@ -804,7 +890,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <p style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                <p onclick="show_all_hotel_property_rooms('property_id')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                                     view all rooms
                                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                                 </p>
@@ -817,7 +903,7 @@
                                     <i class="fa fa-search" aria-hidden="true"></i> search room
                                 </div>
                             </div>
-                            <div style="cursor: pointer; font-size: 13px; letter-spacing: 1px; text-align: center; background-color: rgb(1, 110, 160); color: white; padding: 10px 0; width: 250px; margin: auto; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
+                            <div onclick="toggle_show_all_hotel_properties();" style="cursor: pointer; font-size: 13px; letter-spacing: 1px; text-align: center; background-color: rgb(1, 110, 160); color: white; padding: 10px 0; width: 250px; margin: auto; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
                                 view all properties
                             </div>
                         </div>
@@ -829,22 +915,49 @@
                     </p>
                     <div class="gallery_photos_display_container">
                         <div class="gallery_photos_display_main_section">
+                            <p class="gallery_photos_action_buttons" >
+                                <i style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+                            </p>
                             <img style="height: auto; min-height: 300px; width: 100%;" src="images/HotelPic2.jpg" alt="" />
                         </div>
                         <div class="gallery_photos_display_section">
                             <div class="gallery_photos_display_section_part">
-                                <div style="width: 50%; overflow: hidden;">
+                                <div class="gallery_photos_display_section_part_item">
+                                    <p class="gallery_photos_action_buttons" >
+                                        <i style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+                                    </p>
                                     <img style="height: 150px; width: auto; min-width: 100%;" src="images/HotelPic3.jpg" alt="" />
+                                    <div class="confirm_delete_dialog">
+                                        <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                                            Are you sure</p>
+                                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                                                Delete
+                                            </div>
+                                            <div style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                                                Cancel
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div style="width: 50%; overflow: hidden;">
+                                <div class="gallery_photos_display_section_part_item">
+                                    <p class="gallery_photos_action_buttons" >
+                                        <i style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+                                    </p>
                                     <img style="height: 150px; width: auto; min-width: 100%;" src="images/lHotelPic2.jpg" alt="" />
                                 </div>
                             </div>
                             <div class="gallery_photos_display_section_part">
-                                <div style="width: 50%; overflow: hidden;">
+                                <div class="gallery_photos_display_section_part_item">
+                                    <p class="gallery_photos_action_buttons" >
+                                        <i style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+                                    </p>
                                     <img style="height: 150px; width: auto; min-width: 100%;" src="images/hotelsBackground.jpg" alt="" />
                                 </div>
-                                <div style="width: 50%; overflow: hidden;">
+                                <div class="gallery_photos_display_section_part_item">
+                                    <p class="gallery_photos_action_buttons" >
+                                        <i style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+                                    </p>
                                     <img style="height: 150px; width: auto; min-width: 100%;" src="images/hotelsBackground2.jpg" alt="" />
                                 </div>
                             </div>

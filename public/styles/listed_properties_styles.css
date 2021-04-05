@@ -134,6 +134,10 @@ header {
   padding: 10px;
   width: 33%;
 }
+.logged_in_hotel_amenity,
+.logged_in_hotel_invoice {
+  position: relative;
+}
 .logged_in_hotel_amenity p,
 .logged_in_hotel_invoice p {
   color: aqua;
@@ -186,17 +190,42 @@ header {
   margin: auto;
 }
 .gallery_photos_display_main_section {
+  position: relative;
   width: 50%;
   height: 300px;
   overflow: hidden;
 }
 .gallery_photos_display_section {
+  position: relative;
   width: 50%;
   overflow: hidden;
 }
 .gallery_photos_display_section_part {
+  position: relative;
   display: flex;
   flex-direction: row !important;
+}
+.gallery_photos_display_section_part_item {
+  position: relative;
+  width: 50%;
+  overflow: hidden;
+}
+.confirm_delete_dialog {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: calc(100% - 20px);
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.gallery_photos_action_buttons {
+  position: absolute;
+  width: fit-content;
+  right: 0;
+  top: 0;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .about_anidaso_cheap_hotels_content {
   display: flex;
