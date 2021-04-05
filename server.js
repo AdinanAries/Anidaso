@@ -642,7 +642,12 @@ app.post("/signup/", async (req, res, next)=> {
   }
   //res.send(req.body);
 
-})
+});
+
+//showing register cheap hotels on home page
+app.get("/register_hotel_brand/", (req, res, next) =>{
+  res.sendFile(path.join(__dirname + "/public/index.html"));
+}) 
 
 //user info routes
 app.get("/get_login_user/:id", async (req, res, next) =>{

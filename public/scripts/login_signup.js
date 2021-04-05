@@ -461,6 +461,9 @@ function logout_func(){
 }
 
 $(document).ready(function(){
+    if(page_url.pathname === "/register_hotel_brand"){
+        toggle_show_hide_book_cheap_book_direct_register_hotel_div();
+    }
     if(page_url.pathname === "/login"){
 
         if(window.localStorage.getItem("ANDSUSR")){
