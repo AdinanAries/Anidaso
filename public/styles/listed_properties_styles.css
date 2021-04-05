@@ -170,7 +170,14 @@ header {
 .logged_in_payments_card_display:hover i {
   display: inline;
 }
-
+#loggedin_hotel_edit_payments_forms {
+  display: none;
+  position: relative;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgb(127, 144, 175);
+  border-radius: 14px;
+}
 .book_cheap_book_direct_location_input_autocomplete_section {
   display: none;
   border-bottom-left-radius: 4px;

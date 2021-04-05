@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listed Properties | Anidaso</title>
 
+    <script src="https://js.stripe.com/v3/"></script>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -154,7 +156,7 @@
                         </select>
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
-                        <p style="font-size: 13px; color:rgb(8, 40, 66);">Click button below to add new hotel</p>
+                        <p style="font-size: 13px; color:rgb(8, 40, 66);">Click below to add new hotel</p>
                         <div onclick="toggle_show_add_hotel_property_pane();" style="cursor: pointer; width: calc(100% - 15px); padding: 10px; font-weight: bolder; color:rgb(8, 40, 66); font-size: 13px;">
                             Add New Property
                             <i style="margin-left: 5px; color:rgb(165, 0, 0);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
@@ -277,7 +279,7 @@
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
                         <p style="font-size: 13px; color:rgb(8, 40, 66);">Click below to see all your hotels</p>
-                        <div style="width: calc(100% - 15px); padding: 10px; cursor: pointer; font-weight: bolder; color:rgb(8, 40, 66); font-size: 13px;">
+                        <div onclick="toggle_show_all_hotel_properties();" style="width: calc(100% - 15px); padding: 10px; cursor: pointer; font-weight: bolder; color:rgb(8, 40, 66); font-size: 13px;">
                             See All Properties
                             <i style="margin-left: 5px; color:rgb(165, 0, 0);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                         </div>
@@ -290,6 +292,10 @@
                             <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
                                 <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Street Address</p>
                                 <input style="width: calc(100% - 20px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="eg. 2134 Rector Street"/>
+                            </div>
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Town</p>
+                                <input style="width: calc(100% - 20px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;" value="" placeholder="enter county/town"/>
                             </div>
                             <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
                                 <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Add ZipCode</p>
@@ -326,12 +332,57 @@
     <div id="booked_rooms_container" style="display: none;" class="page_pop_up_cover">
         <div class="page_popup_content_container">
             <p onclick="toggle_show_booked_rooms();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+            <div style="padding: 10px; background-color:rgb(7, 60, 85);">
+                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
                 Your Bookings</p>
+                <div style="border: none; border-radius: 4px; border: rgb(5, 44, 59) 1px solid; background-color: white; width: fit-content;">
+                    <i style="margin-left: 10px;" class="fa fa-calendar" aria-hidden="true"></i>
+                    <input readonly="true" style="border: none; cursor: pointer; font-size: 13px; font-weight: bolder; padding: 10px;" value="04/04/2021 - 04/04/2021" type="text" />
+                </div>
+            </div>
             <div id="bookings_content_container" style="padding: 10px;">
                 <div id="booked_rooms_list">
                     <div class="each_booked_room" style="background-color:rgb(8, 40, 66); border-radius: 4px; min-height: 200px;">
-                        checkin, checkout, room, property, guest
+                        <div style="padding: 10px;">
+                            <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                                Room 5D:
+                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                                    Booked
+                                    <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
+                                </span>
+                            </p>
+                            <p style="margin-top: 5px; margin-bottom: 20px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px;">
+                                New York 
+                                <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                                    - 1223 Mont Gomery
+                                </span>
+                            </p>
+                            <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                Checkin:
+                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                                    March 23, 2022</span>
+                            </p>
+                            <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                Checkout:
+                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                                    March 25, 2022</span>
+                            </p>
+                            <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                Price paid:
+                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                                    $90.00</span>
+                            </p>
+                            <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                                Room Guest(s)</p>
+                            <div>
+                                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                                    Name:
+                                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                                        Adam Aldavis</span>
+                                </p>
+                                <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">25yrs, Male</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -401,7 +452,7 @@
                 </div>
                 <div class="top_nav_hotel_name_display">
                     <p>
-                        <i class="fa fa-building" aria-hidden="true"></i>Hotel Efya Plen...
+                        <i class="fa fa-building" aria-hidden="true"></i>Hotel Efya Splen...
                     </p>
                 </div>
                 <div style="display: none;" class="top_nav_login_btn">
@@ -621,12 +672,55 @@
                             Payments</p>
                         <p class="logged_in_payments_card_display" style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">Card Number:</span>
                              ****1342
-                             <i style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
+                             <i onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
                         </p>
                         <p style="color: white; font-size: 14px; margin-top: 5px;">
                             <span style="color:aqua; font-size: 14px;">Status:</span>
                             verified <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
                         </p>
+                        <div id="loggedin_hotel_edit_payments_forms" >
+                            <p style="color: rgb(82, 14, 14);" onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                            <p style="font-weight: bolder; color:rgb(7, 60, 85); font-size: 13px; text-align: center; margin-bottom: 10px;">
+                                Payments</p>
+                            <p style="color:rgb(4, 20, 32); font-size: 13px; letter-spacing: 1px; margin-bottom: 10px; text-align: center;">
+                                Change your payments card below</p>
+                            <div>
+                                <form id="payment-form">
+                                    <div style="padding: 10px; background-color: white; border-radius: 4px;" id="card-element">
+                                      <!-- Elements will create input elements here -->
+                                    </div>
+                                
+                                    <!-- We'll put the error messages in this element -->
+                                    <div style="font-size: 14px; text-align: center; color:rgb(65, 24, 0); 
+                                      letter-spacing: 1px; margin: 5px;" id="card-element-errors" role="alert"></div>
+                                    <button style="color:rgb(0, 127, 177); margin: auto; width: 100%; font-size: 13px; border: none; padding: 10px 0; cursor: pointer; 
+                                      border-radius: 4px; background-color:rgb(5, 57, 99); color: white;" type="submit">
+                                      Update
+                                    </button>
+                      
+                                      <!--div id="book_cheap_hotel_register_new_hotel_subscription_payment_loader_animation" style="padding-top: 10px; display: none; ">
+                                        <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                                <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                                    <animateTransform attributeType="xml"
+                                                    attributeName="transform"
+                                                    type="rotate"
+                                                    from="0 25 25"
+                                                    to="360 25 25"
+                                                    dur="0.6s"
+                                                    repeatCount="indefinite"/>
+                                                </path>
+                                            </svg>
+                                            <p style="text-align: center; font-size: 12px; color: rgb(0, 26, 43);">
+                                                processing payment...
+                                            </p>
+                                        </div>
+                                      </div-->
+                      
+                                  </form>
+                            </div>
+                        </div>
                         <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                                 Invoices</p>
@@ -1018,7 +1112,7 @@
                     <p style="font-family: 'Courgette'; font-size: 20px; letter-spacing: 1px; color: white; text-align: center; padding-top: 20px; font-weight: bolder;">
                         Why Anidaso</p>
                     <p style="font-family: 'Courgette'; text-align: center; font-size: 14px; letter-spacing: 1px; color: rgb(168, 195, 218); margin-top: 5px;">
-                        Your brand recognition is our main goal
+                        Your global recognition is our main goal
                     </p>
                     <div class="about_anidaso_cheap_hotels_content">
                         <div class="about_anidaso_cheap_hotels_section">
@@ -1389,5 +1483,6 @@
       </footer>
     <script src="scripts/listed_property_main_script.js" type="text/javascript"></script>
     <script src="scripts/all_world_cities.js" type="text/javascript"></script>
+    <script src="scripts/listed_property_stripe.js" type="text/javascript"></script>
 </body>
 </html>
