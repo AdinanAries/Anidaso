@@ -180,11 +180,6 @@ function render_each_loggin_hotel_info_item(info_elem_item_id, title, info, func
     `;
 }
 
-render_each_loggin_hotel_info_item("logged_in_hotel_email_infor_item", "Email", "hotelsplending@gmail.com", "start_edit_contact_info")
-render_each_loggin_hotel_info_item("logged_in_hotel_url_infor_item", "URL", "https://hotelefyasplending.com", "start_edit_misc_info")
-
-logged_in_hotel_ratings_area.innerHTML = return_cheap_hotel_rating_markup(4);
-
 //description infor funcs
 var heightLimit = 200;
 
@@ -269,6 +264,144 @@ function hotel_manager_logout(){
     document.location.href = "/listed_property_login.html"
 }
 
+//function to render logged_hotel name
+function display_logged_in_hotel_name(name, subs_status, prof_status){
+
+    let top_nav_disp_name = name;
+    let desc_disp_name = name;
+    
+    if(name.length > 18){
+        top_nav_disp_name = name.substring(0, 15) + "...";
+    }
+
+    if(name.length > 22){
+        desc_disp_name = name.substring(0, 19) + "...";
+    }
+
+    let subscription_status = `
+        <span style="color:aqua; font-size: 14px;">Status:</span>
+            not subscribed <i style="color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+    `;
+
+    if(subs_status){
+        subscription_status = `
+            <span style="color:aqua; font-size: 14px;">Status:</span>
+                subscribed <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
+        `;
+    }
+
+    let profile_status = `
+        <span style="color:aqua; font-size: 14px;">Profile:</span>
+            not verified <i style="color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+    `;
+
+    if(prof_status){
+        profile_status = `
+            <span style="color:aqua; font-size: 14px;">Profile:</span>
+                verified <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
+        `;
+    }
+
+    document.getElementById("main_top_nav_hotel_name_display").innerHTML = `
+        <p style="cursor: pointer;">
+        <i class="fa fa-building" aria-hidden="true"></i>${top_nav_disp_name}
+        </p>
+        <div id="top_nav_hotel_name_display_drop_down">
+            <p onclick="hotel_manager_logout()" style="cursor: pointer; font-weight: initial; padding: 10px 0; font-size: 13px !important; text-align: center; width: 100%; border-radius: 4px; color: white; background-color: rgb(128, 0, 0);">
+                <i style="margin-right: 5px; color:rgb(252, 26, 26);" class="fa fa-sign-in" aria-hidden="true"></i>
+                Logout</p>
+        </div>
+    `;
+
+    document.getElementById("logged_in_hotel_details_section_name_disp").innerText = desc_disp_name;
+    document.getElementById("logged_in_hotel_details_section_subscription_status_disp").innerHTML = subscription_status;
+    document.getElementById("logged_in_hotel_details_section_profile_status_disp").innerHTML = profile_status;
+}
+
+//function to render contacts information
+function display_logged_in_hotel_description(desc){
+    document.getElementById("logged_in_hotel_desc_info_txt").innerText = desc;
+    document.getElementById("logged_in_hotel_description_input").innerText = desc;
+}
+
+function display_logged_in_hotel_last_review_rating(rating_number = 1){
+
+    let rating_remark;
+    let bar_color;
+
+    if(rating_number === 1){
+        rating_remark = `
+            <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            (Worst)
+        `;
+        bar_color = "rgb(201, 43, 15)";
+    }else if(rating_number === 2){
+        rating_remark = `
+            <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            (Bad)
+        `;
+        bar_color = "tomato";
+    }else if(rating_number === 3){
+        rating_remark = `
+            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-check" aria-hidden="true"></i>
+            (Average)
+        `;
+        rgb(206, 255, 71)
+    }else if(rating_number === 4){
+        rating_remark = `
+            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-check" aria-hidden="true"></i>
+            (Good)
+        `;
+        bar_color = "rgb(88, 236, 51)";
+    }else if(rating_number === 5){
+        rating_remark = `
+            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-check" aria-hidden="true"></i>
+            (Excellent)
+        `;
+        bar_color = "rgb(6, 175, 14)";
+    }
+
+    let rating_percentage = (rating_number * 20)
+
+    document.getElementById("logged_in_hotel_last_review_rating").innerHTML = `
+        <p style="margin-top: 10px; margin-bottom: 5px; color: aliceblue; font-weight: bolder; font-size: 13px; letter-spacing: 1px;">
+        Rated <span style="font-size: 12px; color: rgb(137, 204, 235); margin-left: 10px;">
+            ${rating_remark}
+        </p>
+        <div style="width: 250px; background-color: aliceblue;">
+            <div style="padding: 3px; background-color: ${bar_color}; width: ${rating_percentage}%; border-top-right-radius: 20px; border-bottom-right-radius: 20px;">
+                <p style="color: white; font-size: 12px; font-weight: bolder; text-align: right;">${rating_percentage}%</p>
+            </div>
+        </div>
+        <div style="width: 250px; height: 40px; display: flex; flex-direction: row !important; margin: 10px 0;">
+            <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                <div style="background-color: rgb(201, 43, 15);  height: 20%;"></div>
+            </div>
+            <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                <div style="background-color: tomato; height: 40%;"></div>
+            </div>
+            <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                <div style="background-color: rgb(206, 255, 71); height: 60%;"></div>
+            </div>
+            <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                <div style="background-color: rgb(88, 236, 51); height: 80%;"></div>
+            </div>
+            <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                <div style="background-color: rgb(6, 175, 14); height: 100%;"></div>
+            </div>
+        </div>
+    `;
+}
+
+//function to render last review
+function display_logged_in_hotel_description_last_review(name, msg, pic_url, rating){
+
+    document.getElementById("logged_in_hotel_last_reviewer_img").src = pic_url;
+    document.getElementById("logged_in_hotel_last_reviewer_name").innerText = name;
+    document.getElementById("logged_in_hotel_last_reviewer_msg").innerText = msg;
+
+    display_logged_in_hotel_last_review_rating(rating);
+}
 
 //function to get all hotel information
 function get_logged_in_hotel_infor(){
@@ -279,7 +412,30 @@ function get_logged_in_hotel_infor(){
         type: "GET",
         url: `/get_logged_in_hotel_info/${ANDSBZID}`,
         success: data => {
+            
             console.log(data);
+            let avg_room_price = `$${data.price}`;
+
+            let reviewer_name = data.reviews[data.reviews.length - 1].person;
+            let reviewer_img = data.reviews[data.reviews.length - 1].image;
+            let reviewer_rated = data.reviews[data.reviews.length - 1].rated;
+            let reviewer_msg = data.reviews[data.reviews.length - 1].message;
+
+            //basic info
+            display_logged_in_hotel_name(data.name, data.subscribed ,data.approved);
+            logged_in_hotel_ratings_area.innerHTML = return_cheap_hotel_rating_markup(data.rating);
+            //contact info
+            render_each_loggin_hotel_info_item("logged_in_hotel_email_infor_item", "Email", data.email, "start_edit_contact_info");
+            render_each_loggin_hotel_info_item("logged_in_hotel_mobile_infor_item", "Mobile", data.mobile, "start_edit_contact_info");
+            render_each_loggin_hotel_info_item("logged_in_hotel_Fax_infor_item", "Fax", data.email, "start_edit_contact_info");
+            //misc info
+            render_each_loggin_hotel_info_item("logged_in_hotel_url_infor_item", "URL", data.url, "start_edit_misc_info");
+            render_each_loggin_hotel_info_item("logged_in_hotel_office_location_infor_item", "Office", data.location, "start_edit_misc_info");
+            render_each_loggin_hotel_info_item("logged_in_hotel_avg_price_infor_item", "Avg. Room Price", avg_room_price, "start_edit_misc_info");
+            //description info
+            display_logged_in_hotel_description(data.description);
+            //last review
+            display_logged_in_hotel_description_last_review(reviewer_name, reviewer_msg, reviewer_img, reviewer_rated)
         },
         error: err => {
             console.log(err);
@@ -287,6 +443,8 @@ function get_logged_in_hotel_infor(){
     });
 
 }
+
+
 
 $(document).ready(()=>{
     get_logged_in_hotel_infor();
