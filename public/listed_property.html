@@ -579,58 +579,10 @@
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                                 Amenities</p>
                             <div id="logged_in_hotel_amenities_list">
-                                <div id="logged_in_hotel_swm_pool_amenity" class="logged_in_hotel_amenity">
-                                    <p>
-                                        <span style="font-size: 14px;">
-                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                                            Swimming pool
-                                        </span>
-                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                                            <i onclick="start_edit_amenity_info('logged_in_hotel_swm_pool_amenity', 'Swimming pool', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                                            <i  onclick="toggle_hide_show_anything('delete_swimmin_pool_aminties_confirm_dialog')" style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
-                                        </span>
-                                    </p>
-                                    <div id="delete_swimmin_pool_aminties_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
-                                        <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
-                                            Are you sure</p>
-                                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                                Delete
-                                            </div>
-                                            <div onclick="toggle_hide_show_anything('delete_swimmin_pool_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                                Cancel
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="logged_in_hotel_amenity">
-                                    <p>
-                                        <span style="font-size: 14px;">
-                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                                            Free Wifi
-                                        </span>
-                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                                            <i style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
-                                        </span>
-                                    </p>
-                                </div>
-                                <div class="logged_in_hotel_amenity">
-                                    <p>
-                                        <span style="font-size: 14px;">
-                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                                            First Aid Kits
-                                        </span>
-                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                                            <i style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
-                                        </span>
-                                    </p>
-                                </div>
                                 
                             </div>
-                            <p onclick="show_all_amenities();" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">see all amenities
+                            <p id="logged_in_hotel_amenities_see_all_amenities_btn" onclick="show_all_amenities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
+                                see all amenities
                             <p id="logged_in_hotel_add_amenity_btn" onclick="start_edit_amenity_info('logged_in_hotel_add_amenity_btn', '', 'Add Amenity');" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Add
                             </p>
@@ -738,56 +690,10 @@
                         <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                                 Operating Cities</p>
-                            <div id="logged_in_hotel_amenities_list">
-                                <div id="" class="logged_in_hotel_amenity">
-                                    <p>
-                                        <span style="font-size: 14px;">
-                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                                            Liverpool, Great Britain
-                                        </span>
-                                        <span onclick="toggle_hide_show_anything('delete_liverpool_city_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
-                                        </span>
-                                    </p>
-                                    <div id="delete_liverpool_city_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
-                                        <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
-                                            Are you sure</p>
-                                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                                Delete
-                                            </div>
-                                            <div onclick="toggle_hide_show_anything('delete_liverpool_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                                Cancel
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="logged_in_hotel_amenity">
-                                    <p>
-                                        <span style="font-size: 14px;">
-                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                                            Accra, Ghana
-                                        </span>
-                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
-                                        </span>
-                                    </p>
-                                </div>
-                                <div class="logged_in_hotel_amenity">
-                                    <p>
-                                        <span style="font-size: 14px;">
-                                            <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                                            New York, USA
-                                        </span>
-                                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                                            <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
-                                        </span>
-                                    </p>
-                                </div>
+                            <div id="logged_in_hotel_cities_op_list">
                                 
                             </div>
-                            <p onclick="show_all_cities();" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">see all cities</p>
+                            <p id="logged_in_hotel_cities_op_see_all_cities_btn" onclick="show_all_cities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">see all cities</p>
                             <p id="logged_in_hotel_add_op_city_btn" onclick="start_edit_op_cities_info('logged_in_hotel_add_op_city_btn', '', 'Add City')" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Add
                             </p>

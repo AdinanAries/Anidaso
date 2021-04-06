@@ -324,6 +324,64 @@ function display_logged_in_hotel_description(desc){
     document.getElementById("logged_in_hotel_description_input").innerText = desc;
 }
 
+//function to render each amenity
+function render_each_hotel_amenity(amenity){
+    return `
+        <div id="logged_in_hotel_${amenity.replaceAll(" ","_")}_amenity" class="logged_in_hotel_amenity">
+            <p>
+                <span style="font-size: 14px;">
+                    <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    ${amenity}
+                </span>
+                <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i onclick="start_edit_amenity_info('logged_in_hotel_${amenity.replaceAll(" ","_")}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i  onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ","_")}_aminties_confirm_dialog')" style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </p>
+            <div id="delete_${amenity.replaceAll(" ","_")}_aminties_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
+                <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ","_")}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+//function to render each city operating in
+function render_each_operation_city(city, country){
+    return `
+        <div id="logged_in_hote_${city}_${country}_city_Op" class="logged_in_hotel_amenity">
+            <p>
+                <span style="font-size: 14px;">
+                    <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    ${city}, ${country}
+                </span>
+                <span onclick="toggle_hide_show_anything('delete_${city}_${country}_city_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </p>
+            <div id="delete_${city}_${country}_city_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
+                <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('delete_${city}_${country}_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function display_logged_in_hotel_last_review_rating(rating_number = 1){
 
     let rating_remark;
@@ -435,7 +493,43 @@ function get_logged_in_hotel_infor(){
             //description info
             display_logged_in_hotel_description(data.description);
             //last review
-            display_logged_in_hotel_description_last_review(reviewer_name, reviewer_msg, reviewer_img, reviewer_rated)
+            display_logged_in_hotel_description_last_review(reviewer_name, reviewer_msg, reviewer_img, reviewer_rated);
+            //amenities
+            document.getElementById("logged_in_hotel_amenities_list").innerHTML = `
+            <p style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+                You have not added any amenity<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </p>
+            `
+            if(data.amenities.length > 0){
+
+                document.getElementById("logged_in_hotel_amenities_see_all_amenities_btn").style.display = "block";
+                document.getElementById("logged_in_hotel_amenities_list").innerHTML = "";
+                for(let i=0; i < data.amenities.length; i++){
+
+                    let amenity = data.amenities[i];
+
+                    document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(amenity);
+                }
+            }
+
+            //cities operating
+            document.getElementById("logged_in_hotel_cities_op_list").innerHTML = `
+            <p style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+                You have not added any city<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </p>
+            `
+            if(data.cities_operating.length > 0){
+
+                document.getElementById("logged_in_hotel_cities_op_see_all_cities_btn").style.display = "block";
+                document.getElementById("logged_in_hotel_cities_op_list").innerHTML = "";
+                for(let i=0; i < data.cities_operating.length; i++){
+
+                    let city = data.cities_operating[i].city;
+                    let country = data.cities_operating[i].country;
+
+                    document.getElementById("logged_in_hotel_cities_op_list").innerHTML += render_each_operation_city(city, country);
+                }
+            }
         },
         error: err => {
             console.log(err);
