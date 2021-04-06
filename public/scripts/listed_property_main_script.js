@@ -265,6 +265,102 @@ function hotel_manager_logout(){
     document.location.href = "/listed_property_login.html"
 }
 
+//function to render hotel pictures
+function display_logged_in_hotel_photos(pic1, pic2, pic3, pic4){
+
+    document.getElementById("logged_in_hotel_main_photo_display").innerHTML = `
+        <p class="gallery_photos_action_buttons" >
+            <i  onclick="toggle_hide_show_anything('delete_main_photo_confirm_dialog');" style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+        </p>
+        <img style="height: auto; min-height: 300px; width: 100%;" src="${pic4}" alt="" />
+        <div id="delete_main_photo_confirm_dialog" class="confirm_delete_dialog">
+            <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                Are you sure</p>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Delete
+                </div>
+                <div onclick="toggle_hide_show_anything('delete_main_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById("logged_in_hotel_first_photo_display").innerHTML = `
+        <p class="gallery_photos_action_buttons" >
+            <i onclick="toggle_hide_show_anything('delete_first_photo_confirm_dialog');" style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+        </p>
+        <img style="height: 150px; width: auto; min-width: 100%;" src="${pic1}" alt="" />
+        <div id="delete_first_photo_confirm_dialog" class="confirm_delete_dialog">
+            <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                Are you sure</p>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Delete
+                </div>
+                <div onclick="toggle_hide_show_anything('delete_first_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById("logged_in_hotel_second_photo_display").innerHTML = `
+        <p class="gallery_photos_action_buttons" >
+            <i onclick="toggle_hide_show_anything('delete_second_photo_confirm_dialog');" style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+        </p>
+        <img style="height: 150px; width: auto; min-width: 100%;" src="${pic2}" alt="" />
+        <div id="delete_second_photo_confirm_dialog" class="confirm_delete_dialog">
+            <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                Are you sure</p>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Delete
+                </div>
+                <div onclick="toggle_hide_show_anything('delete_second_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById("logged_in_hotel_third_photo_display").innerHTML = `
+        <p class="gallery_photos_action_buttons" >
+            <i onclick="toggle_hide_show_anything('delete_third_photo_confirm_dialog');" style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+        </p>
+        <img style="height: 150px; width: auto; min-width: 100%;" src="${pic3}" alt="" />
+        <div id="delete_third_photo_confirm_dialog" class="confirm_delete_dialog">
+            <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                Are you sure</p>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Delete
+                </div>
+                <div onclick="toggle_hide_show_anything('delete_third_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById("logged_in_hotel_fourth_photo_display").innerHTML = `
+        <p class="gallery_photos_action_buttons" >
+            <i onclick="toggle_hide_show_anything('delete_fourth_photo_confirm_dialog');" style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
+        </p>
+        <img style="height: 150px; width: auto; min-width: 100%;" src="${pic4}" alt="" />
+        <div id="delete_fourth_photo_confirm_dialog" class="confirm_delete_dialog">
+            <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                Are you sure</p>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Delete
+                </div>
+                <div onclick="toggle_hide_show_anything('delete_fourth_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    `;
+    
+}
+
 //function to render logged_hotel name
 function display_logged_in_hotel_name(name, subs_status, prof_status){
 
@@ -531,6 +627,9 @@ function get_logged_in_hotel_infor(){
                     document.getElementById("logged_in_hotel_cities_op_list").innerHTML += render_each_operation_city(city, country);
                 }
             }
+
+            //photos 
+            display_logged_in_hotel_photos(data.photos[0], data.photos[1], data.photos[2], data.photos[3]);
         },
         error: err => {
             console.log(err);

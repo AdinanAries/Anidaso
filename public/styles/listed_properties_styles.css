@@ -386,6 +386,17 @@ footer a {
   .gallery_photos_display_section {
     width: 100%;
   }
+  .gallery_photos_display_section_part {
+    flex-direction: column !important;
+  }
+  .gallery_photos_display_section_part_item {
+    width: 100%;
+    height: 250px;
+  }
+  .gallery_photos_display_section_part_item img {
+    width: 100% !important;
+    height: auto !important;
+  }
   .about_anidaso_cheap_hotels_content {
     display: block;
   }
