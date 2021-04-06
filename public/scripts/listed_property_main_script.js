@@ -261,6 +261,7 @@ function toggle_hide_show_anything(elem_id){
 }
 
 function hotel_manager_logout(){
+    window.localStorage.removeItem("ANDSBZID");
     document.location.href = "/listed_property_login.html"
 }
 
