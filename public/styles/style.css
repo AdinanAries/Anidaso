@@ -6,6 +6,16 @@
 }
 
 /*-------------------------------*/
+.about_anidaso_cheap_hotels_content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.about_anidaso_cheap_hotels_section {
+  margin-top: 20px;
+  width: 33%;
+}
 .todays_hotel_deals_view_deal_picture_section {
   display: flex;
   flex-direction: row !important;
@@ -2002,6 +2012,12 @@ footer a {
 }
 
 @media only screen and (max-width: 1025px) {
+  .about_anidaso_cheap_hotels_content {
+    display: block;
+  }
+  .about_anidaso_cheap_hotels_section {
+    width: 100%;
+  }
   #logged_in_user_main_top_nav_info {
     display: none;
   }
