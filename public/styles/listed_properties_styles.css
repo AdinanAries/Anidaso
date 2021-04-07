@@ -191,7 +191,7 @@ header {
   position: relative;
   margin-top: 10px;
   padding: 10px;
-  background-color: rgb(127, 144, 175);
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 14px;
 }
 .book_cheap_book_direct_location_input_autocomplete_section {
