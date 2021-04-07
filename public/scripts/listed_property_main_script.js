@@ -145,6 +145,12 @@ function start_edit_amenity_info(elem_id, info, title){
 
 }
 
+function all_amenities_start_edit_amenity_info(elem_id, info, title){
+    toggle_hide_show_anything("logged_in_hotel_edit_"+info.replaceAll(" ", "_")+"_amenity_info_form");
+    document.getElementById("logged_in_hotel_edit_"+info.replaceAll(" ", "_")+"_amenity_form_title").innerText = title;
+    document.getElementById("logged_in_hotel_edit_"+info.replaceAll(" ", "_")+"_amenity_form_input").value = info;
+}
+
 //for operating cities info
 function toggle_show_edit_op_cities_info_form(elem_id){
     $("#logged_in_hotel_edit_op_cities_info_form").toggle("up");
