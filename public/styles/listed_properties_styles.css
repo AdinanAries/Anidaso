@@ -86,7 +86,7 @@ header {
   border-bottom-right-radius: 4px;
   padding: 10px;
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% - 10px);
   left: 0;
   width: calc(100% - 20px);
   display: none;
