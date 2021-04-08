@@ -4,6 +4,30 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+.room_sharing_link {
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: rgb(255, 136, 0);
+  cursor: pointer;
+  position: relative;
+}
+.room_sharing_link:hover .tooltip {
+  display: inline;
+}
+.tooltip {
+  display: none;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: bolder;
+  position: absolute;
+  top: -25px;
+  left: 10px;
+  padding: 5px;
+  background-color: white;
+  color: rgb(5, 44, 59);
+  border-radius: 3px;
+}
 #page_popup_content_header {
   padding: 10px;
   height: 70px;
