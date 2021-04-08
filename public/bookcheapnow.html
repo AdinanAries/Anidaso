@@ -50,33 +50,120 @@
         </div>
         <div class="wrapper">
             <div style="min-height: 300px; padding: 20px 0;">
-                <h1 style="color: white; font-size: 18px; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">Login</h1>
-                <p style="font-size: 14px; text-align: center; color: white; letter-spacing: 1px;">Login and manage your properties</p>
+                <h1 style="color: white; font-size: 18px; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">Hotel Katanga</h1>
+                <p style="font-size: 14px; text-align: center; color: white; letter-spacing: 1px;">hotelkatanga@yahoo.com</p>
                 <div style="width: fit-content; margin: auto; margin-top: 20px;">
-                    <!--form-->
-                        <div style="margin-bottom: 20px; min-width: 250px;">
-                            <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
-                                Email</p>
-                            <input id="listed_property_login_email_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="email" placeholder="please enter email" />
+                  <div id="page_popup_content_body">
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">See room details here</p>
+                    <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
+                        <div class="flex_child_of_two">
+                            <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                Room 5D 
+                                <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
+                                    <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
+                                    (available)
+                                </span>
+                            </p>
+                            <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
+                                <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                    <i class="fa fa-ticket" aria-hidden="true"></i> Book room
+                                </div>
+                                <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                    <i class="fa fa-share" aria-hidden="true"></i> Share room
+                                </div>
+                            </div>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Room type: 
+                                <span style="font-size: 13px; color: white;">
+                                    Deluxe</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Bed type: 
+                                <span style="font-size: 13px; color: white;">
+                                    King size</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Amenities: 
+                                <span style="font-size: 13px; color: white;">
+                                    Wifi, Cable, others...</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Price: 
+                                <span style="font-size: 13px; color: white;">
+                                    $90.00</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Description: 
+                                <span style="font-size: 13px; color: white;">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas soluta eum ipsum quaerat 
+                                    doloribus fugit obcaecati non a aperiam ex omnis dolorem veniam eve...
+                                </span></p>
                         </div>
-                        <div style="margin-bottom: 20px; min-width: 250px;">
-                            <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
-                                Password</p>
-                            <input id="listed_property_login_password_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="password" placeholder="please enter password" />
+                        <div class="flex_child_of_two flex_non_first_child">
+                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Hotel Information</p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Rated: 
+                                <span style="font-size: 13px; color: white;">
+                                    5 star(s)</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Telephone: 
+                                <span style="font-size: 13px; color: white;">
+                                    +1 732 799 7546</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                              Fax: 
+                              <span style="font-size: 13px; color: white;">
+                                  +1 342 232 2224</span></p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Location: 
+                                <span style="font-size: 13px; color: white;">
+                                    1228 Monte Gomery, New York</span></p>
+                            <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                                see more hotel info
+                                <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                            </p>
                         </div>
-                        <div style="margin-bottom: 20px; min-width: 250px;">
-                            <button id="listed_property_login_btn" style="background-color: #37a0f5; color: white; font-size: 14px; padding: 10px; width: calc(100% + 20px); border: none;">
-                                Login
-                            </button>
-                        </div>
-                    <!--/form-->
+                    </div>
+                    <div class="flex_row_default_flex_column_mobile">
+                          <div class="flex_child_of_two" style="margin-top: 20px;">
+                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Misc</p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Number of Guests: 
+                                <span style="font-size: 13px; color: white;">
+                                    1 adult, 4 children
+                                </span>
+                            </p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                Cancellation: 
+                                <span style="font-size: 13px; color: white;">
+                                    1 week, $90.00 
+                                    <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                                </span>
+                            </p>
+                            <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                                view room thumbnail
+                                <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                            </p>
+                            <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                                <i style="margin-right: 5px; color:rgb(255, 78, 78);" aria-hidden="true" class="fa fa-trash"></i>
+                                delete this room
+                            </p>
+                          </div>
+                          <div class="flex_child_of_two flex_non_first_child">
+                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Room Link</p>
+                            <p style="margin: 10px; font-size: 13px; letter-spacing: 1px; color: rgb(121, 223, 252);">
+                                The link below can be directly used to book this room. You may share to customers so that they find and book 
+                                this room.</p>
+                            <p class="room_sharing_link">
+                                <i class="fa fa-copy" aria-hidden="true"></i> 
+                                <span style="font-size: 13px; color: white;">
+                                    anidaso.com/bookcheapnow.html?id=eidjE33skjdoieDgi3433k&room=5D
+                                </span>
+                                <span class="tooltip">
+                                    Click to copy link</span>
+                            </p>
+                          </div>
+                    </div>
                 </div>
-                <p style="padding: 10px; text-align: center;">
-                    <a  href="/register_hotel_brand" style="letter-spacing: 1px; color: white; text-decoration: none; font-size: 14px;">
-                        Register your brand here
-                        <i style="margin-left: 5px; color: rgb(235, 78, 78);" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </p>
+                </div>
             </div>
             <div class="about_anidaso_cheap_hotels">
                 <p style="font-family: 'Courgette'; font-size: 20px; letter-spacing: 1px; color: white; text-align: center; padding-top: 20px; font-weight: bolder;">
