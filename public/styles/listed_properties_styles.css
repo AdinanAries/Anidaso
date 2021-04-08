@@ -4,6 +4,39 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+#room_status_switch_toggle {
+  position: relative;
+  appearance: none;
+  outline: none;
+  width: 30px;
+  height: 13px;
+  background-color: #726281;
+  border: 1px solid #4a3c5a;
+  border-radius: 50px;
+  box-shadow: inset -20px 0 0 0 #726281;
+  transition-duration: 200ms;
+}
+#room_status_switch_toggle:after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -2px;
+  width: 11px;
+  height: 11px;
+  background-color: transparent;
+  border: 1px solid #493e53;
+  background-color: #b0a4be;
+  border-radius: 50%;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+#room_status_switch_toggle:checked {
+  border-color: #11521d;
+  box-shadow: inset 30px 0 0 0 #227a31;
+}
+#room_status_switch_toggle:checked:after {
+  left: 17px;
+  box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.05);
+}
 .room_sharing_link {
   letter-spacing: 1px;
   margin-bottom: 5px;

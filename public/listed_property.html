@@ -70,6 +70,12 @@
                                     (available)
                                 </span>
                             </p>
+                            
+                            <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px;">
+                                <input style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
+                                <label for="room_status_switch_toggle" style="font-size: 12px;">
+                                    Close Room</label>
+                            </p>
                             <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
                                 <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                                     <i class="fa fa-plus" aria-hidden="true"></i> Add room
@@ -124,6 +130,25 @@
                                 view room guests history
                                 <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                             </p>
+                            <p style="color: white; margin-bottom: 10px; margin-top: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Room Link</p>
+                            <p style="margin: 10px; font-size: 13px; letter-spacing: 1px; color: rgb(121, 223, 252);">
+                                The link below can be directly used to book this room. You may share to customers so that they find and book 
+                                this room.</p>
+                            <p class="room_sharing_link">
+                                <i class="fa fa-copy" aria-hidden="true"></i> 
+                                <span style="font-size: 13px; color: white;">
+                                    anidaso.com/bookcheapnow.html?id=eidjE33skjdoieDgi3433k&room=5D
+                                </span>
+                                <span class="tooltip">
+                                    Click to copy link</span>
+                            </p>
+                            <p style="margin-top: 20px; color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                Next Availability</p>
+                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                March 23, 2022 
+                                <span style="font-size: 13px; color: white;">
+                                   - 12:30PM</span></p>
                         </div>
                     </div>
                     <div class="flex_row_default_flex_column_mobile">
@@ -131,7 +156,7 @@
                             <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
                                 Misc</p>
                             <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Number of Guests: 
+                                Guests Capacitance: 
                                 <span style="font-size: 13px; color: white;">
                                     1 adult, 4 children
                                 </span>
@@ -152,20 +177,17 @@
                                 delete this room
                             </p>
                           </div>
-                          <div class="flex_child_of_two flex_non_first_child">
+                          <div style="margin-bottom: 20px; margin-top: 20px;" class="flex_child_of_two flex_non_first_child">
                             <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                                Room Link</p>
-                            <p style="margin: 10px; font-size: 13px; letter-spacing: 1px; color: rgb(121, 223, 252);">
-                                The link below can be directly used to book this room. You may share to customers so that they find and book 
-                                this room.</p>
-                            <p class="room_sharing_link">
-                                <i class="fa fa-copy" aria-hidden="true"></i> 
-                                <span style="font-size: 13px; color: white;">
-                                    anidaso.com/bookcheapnow.html?id=eidjE33skjdoieDgi3433k&room=5D
-                                </span>
-                                <span class="tooltip">
-                                    Click to copy link</span>
-                            </p>
+                                Cancellation Request</p>
+                                <p style="color: whitesmoke; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px;">
+                                    Guest requested booking cancellation. Click on the button below to cancel booking
+                                    <span style="color:rgb(255, 97, 6); font-size: 13px;">
+                                        with cancellation fee of $90.00</span>
+                                </p>
+                                <p style="background-color: steelblue; color: white; border-radius: 4px; padding: 10px; margin-bottom: 20px; text-align: center; width: 160px; font-size: 13px; letter-spacing: 1px;">
+                                    Cancel Booking
+                                </p>
                           </div>
                     </div>
                 </div>
@@ -857,6 +879,23 @@
                                     </p>
                                 </div>
                             </div>
+                        </div>
+                        <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
+                            <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
+                                Payouts</p>
+                            <p class="logged_in_payments_card_display" style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">
+                                Account:</span>
+                                ****3241
+                                <i onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
+                            </p>
+                            <p style="color: white; font-size: 14px; margin-top: 5px;">
+                                <span style="color:aqua; font-size: 14px;">Sold:</span>
+                                $140.00
+                            </p>
+                            <p style="color: white; font-size: 14px; margin-top: 5px;">
+                                <span style="color:aqua; font-size: 14px;">Next Date:</span>
+                                Feb 4, 2022
+                            </p>
                         </div>
                         <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
