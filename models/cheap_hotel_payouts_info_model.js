@@ -3,7 +3,7 @@ require("mongoose-type-url");
 
 let signup_user_schema = mongoose.Schema({
     id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.ObjectId,
         reqiured: true,
     },
     first_name: {

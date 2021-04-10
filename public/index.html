@@ -89,6 +89,15 @@
     <div id="cheap_hotel_view_full_profile_info" class="page_cover_for_popups" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 101; overflow: auto !important;">
       
       <div style="max-width: 1400px !important; margin: auto !important; background-color: white; position: relative;">
+        <div style="cursor: pointer; position: fixed; bottom: 0; left: 0; border-radius: 4px; width: 100%; padding: 10px 0; background-color: rgb(230, 255, 245); box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3),
+        0px 0px 2.9px rgba(0, 0, 0, 0.23); margin: 10px; z-index: 11; max-width: 300px;">
+          <p style="letter-spacing: 1px; font-size: 13px; color: rgb(0, 60, 83); padding: 0 10px; font-weight: bolder;">
+            <i style="margin-right: 5px; color:rgb(255, 0, 0);" class="fa fa-shopping-cart" aria-hidden="true"></i>
+            2 rooms added - 
+            <span style="color:rgb(247, 0, 0); font-size: 13px;">
+              click here to finish</span>
+          </p>
+        </div>
         <div onclick="toggle_show_hide_cheap_hotel_view_full_profile_info();" class="page_popup_close_button" style="margin-right: 10px;">
           <i class="fa fa-times" aria-hidden="true"></i>
         </div>
@@ -102,14 +111,89 @@
             View Hotel Full Info.</p>
           <p style="overflow: initial !important; text-align: center; color: rgb(231, 231, 231); font-size: 14px; margin-top: 25px; font-weight: bolder; letter-spacing: 1px;">
             Hotel Name Here</p>
-            <p style="font-size: 11px; color:rgb(255, 173, 73); margin-top: 5px; letter-spacing: 1px; text-align: center;">
+            <p style="font-size: 11px; color:rgb(255, 173, 73); margin-top: 5px; margin-bottom: 10px; letter-spacing: 1px; text-align: center;">
               hotel location here
             </p>
-            <div style="cursor: pointer; width: 150px; margin: auto; padding: 10px 0; border-radius: 4px; text-align: center; font-size: 14px; color: white; background-color:rgb(5, 146, 116); margin-top: 10px;">
-              Book Hotel
-            </div>
+            <!--div style="cursor: pointer; width: 150px; margin: auto; padding: 10px 0; border-radius: 4px; text-align: center; font-size: 14px; color: white; background-color:rgb(5, 146, 116); margin-top: 10px;">
+              Goto Website
+            </div-->
         </div>
         <div id="book_hotel_view_full_profile_body">
+          <div id="cheap_hotel_rooms_list">
+            <p style="text-align: center; font-size: 13px; font-weight: bolder; color:rgb(0, 60, 83); margin: 20px 0;">
+              Rooms List</p>
+            <div style="background-color: #023057; padding: 10px; margin: 5px; border-radius: 4px;">
+              <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
+                  <div class="flex_child_of_two">
+                      <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                          Room 5D 
+                          <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
+                              <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
+                              (available)
+                          </span>
+                      </p>
+                      <p style="margin-top: 20px; color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                        Next Availability</p>
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        This room is open and  
+                        <span style="font-size: 13px; color: white;">
+                          available now</span></p>
+                      <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
+                          <label for="cheap_hotel_select_room_5D_1" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                              <input id="cheap_hotel_select_room_5D_1" type="checkbox" style="background-color: #855600; margin-right: 5px;"/>
+                              Select room
+                          </label>
+                          <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                              <i class="fa fa-share" aria-hidden="true"></i> Share room
+                          </div>
+                      </div>
+                      <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                          Room type: 
+                          <span style="font-size: 13px; color: white;">
+                              Deluxe</span></p>
+                      <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                          Bed type: 
+                          <span style="font-size: 13px; color: white;">
+                              King size</span></p>
+                      <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                          Amenities: 
+                          <span style="font-size: 13px; color: white;">
+                              Wifi, Cable, others...</span></p>
+                      <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                          Price: 
+                          <span style="font-size: 13px; color: white;">
+                              $90.00</span></p>
+                      <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                          Description: 
+                          <span style="font-size: 13px; color: white;">
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas soluta eum ipsum quaerat 
+                              doloribus fugit obcaecati non a aperiam ex omnis dolorem veniam eve...
+                          </span></p>
+                  </div>
+                  <div class="flex_child_of_two flex_non_first_child">
+                      <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                          Misc</p>
+                      <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                          Guests Capacitance: 
+                          <span style="font-size: 13px; color: white;">
+                              1 adult, 4 children
+                          </span>
+                      </p>
+                      <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                          Cancellation: 
+                          <span style="font-size: 13px; color: white;">
+                              1 week, $90.00 
+                              <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                          </span>
+                      </p>
+                      <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                          see added photo
+                          <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                      </p>
+                  </div>
+              </div>
+            </div>
+          </div>
           <div class="book_hotel_view_full_profile_infor_row">
             <div class="book_hotel_view_full_profile_infor_row_set">
               <div id="book_hotel_view_full_profile_ratings_infor" class="book_hotel_view_full_profile_infor_row_set_item">
@@ -2139,7 +2223,7 @@
           </div>
         </div>
         <div style="overflow: initial !important;" class="book_direct_location_form_container">
-          <p style="color: white; font-size: 14px; margin-bottom: 10px;">Enter city/country to find cheapest hotels</p>
+          <p style="color: white; font-size: 14px; margin-bottom: 10px;">Enter city/country to find cheapest rooms</p>
           <div class="book_direct_form_inputs">
             <div class="book_cheap_book_direct_all_inputs_container">
               <p id="book_cheap_book_direct_search_form_name_input_title" style="display: none; opacity: 0; color:rgb(74, 101, 112); font-weight: bolder; letter-spacing: 1px; font-size: 12px; padding: 10px; padding-bottom: 0; margin-top: 10px;">

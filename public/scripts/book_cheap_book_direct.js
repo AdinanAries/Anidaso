@@ -377,13 +377,23 @@ function render_a_cheap_hotels(name, pic_url, location, rating, hotel_site_url, 
                         </div>
                         <div onclick='go_to_cheap_hotel_book_page("${hotel_site_url}");' style="cursor: pointer; background-color:rgb(0, 127, 177); color: white; padding: 10px 20px; text-align: center;
                             display: flex; flex-direction: column; justify-content: center; font-size: 14px; border-radius: 4px;">
-                            View Hotel
+                            View Rooms
                         </div>
                     </div>
                     <div style="padding: 0 10px;">
                         <div style="margin-top: 15px; color: rgb(90, 90, 90);">
+                            <p style="margin: 5px 0; font-weight: bolder; font-size: 14px;">
+                                <i class="fa fa-user" aria-hidden="true" style="margin-right: 5px; color: orangered;"></i>
+                                1 adult, 4 children 
+                                <span style="font-weight: initial; font-size: 13px; color: rgb(206, 31, 0);">
+                                (in one room)</span>
+                            </p>
+                            <p style="margin: 5px 0; font-weight: bolder; font-size: 14px;">
+                                <i class="fa fa-dot-circle-o" aria-hidden="true" style="margin-right: 5px; color: orangered;"></i>
+                                4 rooms found
+                            </p>
                             <p style="margin-top: 5px; font-size: 14px; font-weight: bolder;">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color: orangered;"></i>Office:
+                                <i class="fa fa-map-marker" aria-hidden="true" style="margin-right: 5px; color: orangered;"></i>
                                 ${location}
                             </p>
                             <p style="margin-top: 5px; font-size: 14px; color: darkblue; margin-bottom: 10px;">
