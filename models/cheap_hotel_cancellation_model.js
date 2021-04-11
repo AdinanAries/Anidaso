@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("mongoose-type-url");
 
-let cheap_hotel_cancellation_history_schema = mongoose.Schema({
+let cheap_hotel_cancellation_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
         reqiured: true,
@@ -26,4 +26,4 @@ let cheap_hotel_cancellation_history_schema = mongoose.Schema({
 
 });
 
-module.exports = new mongoose.model("cheap_hotel_booking_cancellation_history", cheap_hotel_cancellation_history_schema);
+module.exports = new mongoose.model("cheap_hotel_booking_cancellations", cheap_hotel_cancellation_schema);

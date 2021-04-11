@@ -3,11 +3,11 @@ require("mongoose-type-url");
 
 const cheap_hotel_property_schema = mongoose.Schema({
     id: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User'
+        type: mongoose.Schema.Types.ObjectId,
     },
     hotel_brand_id: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "cheap_hotel"
     },
     full_location_address: {
         type: String
@@ -35,4 +35,4 @@ const cheap_hotel_property_schema = mongoose.Schema({
     }
 });
 
-module.exports = new mongoose.model("login_user", cheap_hotel_property_schema, "user_login");
+module.exports = new mongoose.model("cheap_hotel_property", cheap_hotel_property_schema, "cheap_hotel_property");

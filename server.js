@@ -51,6 +51,9 @@ mongoose.connect(mongo_db_url, {useNewUrlParser: true, useUnifiedTopology: true}
 //data models
 var cheap_hotel = require("./models/cheap_hotel_model");
 var cheap_hotel_login = require("./models/cheap_hotel_login_model");
+var cheap_hotel_booking = require("./models/cheap_hotel_bookings_model");
+var cheap_hotel_property = require("./models/each_cheap_hotel_building_model");
+var cheap_hotel_room = require("./models/cheap_hotel_rooms_model");
 var login_user = require("./models/login_user_model");
 var signup_user = require("./models/signup_user_model");
 var hotel_deals = require("./models/hotel_deals_model");
@@ -960,10 +963,118 @@ app.post('/register_cheap_hotel/', async (req, res, next) =>{
     });
 
     let new_saved_hotel = await new_cheap_hotel.save();
-    res.send({success: true, data: new_saved_hotel, msg: "Hotel registration finished successfully!"})
+    res.send({success: true, data: new_saved_hotel, msg: "Hotel registration finished successfully!"});
 
   }catch(e){
     res.send({success: false, data: e, msg: "Registration failed at the final stage"});
+  }
+
+});
+
+//create new hotel property
+app.post("/create_new_hotel_property/", async (req, res, next) => {
+
+  try{
+
+    let new_property_obj = new cheap_hotel_property({
+      hotel_brand_id: req.body.hotel_brand_id,
+      full_location_address: req.body.full_location_address,
+      city: req.body.city,
+      country: req.body.country,
+      zipcode: req.body.zipcode,
+      street_address: req.body.street_address,
+      town: req.body.town,
+      description: req.body.description,
+      amenities: req.body.amenities
+    });
+
+    let saved_property = await new_property_obj.save();
+    res.send({success: true, data: saved_property, msg: "Hotel property added successfully!"});
+
+  }catch(e){
+    res.send({success: false, data: e, msg: "Registration failed at the final stage"});
+  }
+
+});
+
+//create new hotel room
+app.post("/create_new_hotel_room/", async (req, res, next) =>{
+
+  /**
+   * cancellation_request: {
+        request_status: req.body,
+        booking_id: req.body,
+        date_requested: req.body,
+      }
+   */
+
+  try{
+
+    let room_obj = new cheap_hotel_room({
+      property_id: req.body.property_id,
+      hotel_brand_id: req.body.hotel_brand_id,
+      room_number: req.body.room_number,
+      closed: req.body.closed,
+      booked: req.body.booked,
+      room_type: req.body.room_type,
+      room_link: req.body.room_link,
+      guest_capacitance: {
+        adults: req.body.guest_capacitance.adults,
+        children: req.body.guest_capacitance.children
+      },
+      price: req.body.price,
+      description: req.body.description,
+      amenities: req.body.amenities,
+      next_available_date: req.body.next_available_date,
+      next_available_time:  req.body.next_available_time,
+      cancellation_policy: {
+        time_period: req.body.cancellation_policy.time_period,
+        percentage:  req.body.cancellation_policy.percentage
+      },
+      photo_url: req.body.photo_url,
+      cancellation_requests: req.body.cancellation_requests
+    });
+
+    let saved_room = await room_obj.save();
+    res.send({success: true, data: saved_room, msg: "Hotel registration finished successfully!"});
+
+  }catch(e){
+    res.send({success: false, data: e, msg: "Server Error!"});
+  }
+})
+
+//getting cheap hotel rooms
+app.get("/get_cheap_hotel_rooms/:id", async (req, res, next) =>{
+
+  let room = await cheap_hotel_room.find({
+    hotel_brand_id: req.params.id
+  }).exec();
+
+  res.send(room);
+
+});
+
+//booking a room
+app.post("/book_a_room/", async (req, res, next) => {
+
+  try{
+
+    let booking_obj = new cheap_hotel_booking({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      room_id: req.body.room_id,
+      checkin_date: req.body.checkin_date,
+      checkout_date: req.body.checkout_date,
+      checkin_time: req.body.checkin_time,
+      checkout_time: req.body.checkout_time,
+      guests: req.body.guests
+    });
+
+    let save_booking_res = await booking_obj.save();
+    res.send({success: true, data: save_booking_res, msg: "Your booking finished successfully!"});
+
+  }catch(e){
+    res.send({success: false, data: e, msg: "Server Error!"});
   }
 
 });

@@ -733,3 +733,8 @@ function cheap_hotels_search_pick_search_type(search_type){
         search_cheap_hotels_post_data.search_type = "by_city_and_name";
     }
 }
+
+
+function add_cheap_room_booking(){
+
+}

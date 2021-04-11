@@ -23,8 +23,11 @@ const cheap_hotel_rooms_schema = new mongoose.Schema({
     booked: {
         type: Boolean
     },
+    room_number: {
+        type: String
+    },
     room_type: {
-        type: Array
+        type: String
     },
     room_link: {
         type: String
@@ -42,7 +45,7 @@ const cheap_hotel_rooms_schema = new mongoose.Schema({
         type: Array
     },
     next_available_date: {
-        type: Date
+        type: String
     },
     next_available_time: {
         type: String
@@ -50,11 +53,11 @@ const cheap_hotel_rooms_schema = new mongoose.Schema({
     cancellation_policy: {
         type: Object
     },
-    thumbnail_url: {
+    photo_url: {
         type: String
     },
-    cancellation_request: {
-        type: Object
+    cancellation_requests: {
+        type: Array
     }
 
 });

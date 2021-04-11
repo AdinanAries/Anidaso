@@ -6,6 +6,47 @@ var current_contact_edit_elem_id;
 var current_amenity_edit_elem_id;
 var current_op_cities_edit_elem_id;
 
+var cheap_hotel_building = {
+    hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
+      full_location_address: "2122 Estate Junc, Sepe Tinpom, Kumasi, Ghana",
+      city: "Kumasi",
+      country: "Ghana",
+      zipcode: "1121",
+      street_address: "2122 Estate Junc",
+      town: "Sepe Tinpom",
+      description: "This branch is one of our main focul points when serving international clientell. It has all the needed services to ensure QOS for our clients.",
+      amenities: [
+          "Free Wifi", "Cable", "Other"
+      ]
+};
+
+var cheap_hotel_room = {
+    property_id: "607304a562a84645bccdf40b",
+    hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
+    room_number: "5D",
+    closed: "false",
+    booked: "false",
+    room_type: "Delux",
+    room_link: "https://anidaso.com/p=607304a562a84645bccdf40b&b=6063dd3fb6dfe50bc800dd5f&r=5D",
+    guest_capacitance: {
+    adults: 2,
+    children: 4
+    },
+    price: 78.00,
+    description: "This branch is one of our main focul points when serving international clientell. It has all the needed services to ensure QOS for our clients.",
+    amenities: [
+        "Free Wifi", "Cable", "Other"
+    ],
+    next_available_date: "3-5-2020",
+    next_available_time:  "10:15",
+    cancellation_policy: {
+    time_period: 14,
+    percentage: 50,
+    },
+    photo_url: "./images/hotel_pic.png",
+    cancellation_requests: []
+};
+
 function return_cheap_hotel_rating_markup(rating_number = 1){
 
     let rating_remark;
@@ -636,6 +677,9 @@ function get_logged_in_hotel_infor(){
 
             //photos 
             display_logged_in_hotel_photos(data.photos[0], data.photos[1], data.photos[2], data.photos[3]);
+
+            //getting hotel rooms
+            get_hotel_rooms(data._id);
         },
         error: err => {
             console.log(err);
@@ -644,6 +688,54 @@ function get_logged_in_hotel_infor(){
 
 }
 
+function add_new_hotel_building(){
+    $.ajax({
+        type: "POST",
+        url: "/create_new_hotel_property",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(cheap_hotel_building),
+        success: res => {
+            console.log(res);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
+//add_new_hotel_building();
+
+function add_new_cheap_room(){
+    
+    $.ajax({
+        type: "POST",
+        url: "/create_new_hotel_room",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(cheap_hotel_room),
+        success: res => {
+            console.log(res);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
+//add_new_cheap_room();
+
+//functions after loading hotel
+function get_hotel_rooms(hotel_id){
+    $.ajax({
+        type: "GET",
+        url: "/get_cheap_hotel_rooms/"+hotel_id,
+        success: res =>{
+            console.log(res);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
 
 
 $(document).ready(()=>{
