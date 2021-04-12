@@ -680,6 +680,9 @@ function get_logged_in_hotel_infor(){
 
             //getting hotel rooms
             get_hotel_rooms(data._id);
+
+            //getting hotel buildings
+            get_hotel_buildings(data._id);
         },
         error: err => {
             console.log(err);
@@ -737,6 +740,32 @@ function get_hotel_rooms(hotel_id){
     });
 }
 
+//getting cheap hotel properties
+function get_hotel_buildings(hotel_id){
+    $.ajax({
+        type: "GET",
+        url: "/get_cheap_hotel_properties/"+hotel_id,
+        success: res =>{
+            console.log(res);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
+
+function get_hotel_bookings(hotel_id){
+    $.ajax({
+        type: "GET",
+        url: "/get_listed_property_room_bookings/"+hotel_id,
+        success: res => {
+            console.log(res);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
 
 $(document).ready(()=>{
     get_logged_in_hotel_infor();

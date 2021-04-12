@@ -1054,8 +1054,19 @@ app.get("/get_cheap_hotel_rooms/:id", async (req, res, next) =>{
 
 });
 
+//getting cheap hotel properties
+app.get("/get_cheap_hotel_properties/:id", async (req, res, next) =>{
+
+  let property = await cheap_hotel_property.find({
+    hotel_brand_id: req.params.id
+  }).exec();
+
+  res.send(property);
+
+});
+
 //booking a room
-app.post("/book_a_room/", async (req, res, next) => {
+app.post("/book_a_cheap_room/", async (req, res, next) => {
 
   try{
 
@@ -1076,6 +1087,16 @@ app.post("/book_a_room/", async (req, res, next) => {
   }catch(e){
     res.send({success: false, data: e, msg: "Server Error!"});
   }
+
+});
+
+app.get("/get_listed_property_room_bookings/:hotel_id", async (req, res, next) => {
+
+  let bookings = cheap_hotel_booking.find({
+    hotel_brand_id: req.params.hotel_id
+  }).exec();
+
+  res.send(bookings);
 
 });
 

@@ -734,7 +734,40 @@ function cheap_hotels_search_pick_search_type(search_type){
     }
 }
 
-
-function add_cheap_room_booking(){
-
+var cheap_room_booking_obj = {
+    hotel_brand_id: "",
+      property_id: "",
+      room_id: "",
+      checkin_date: "03-24-2022",
+      checkout_date: "03-30-2022",
+      checkin_time: "14:00",
+      checkout_time: "15:00",
+      guests: [
+            {
+                first_name: "Adam",
+                last_name: "Aldavis",
+                age: 25,
+                gender: Male,
+                price_paid: 69.00,
+            }
+        ]
 }
+
+function book_a_cheap_room(){
+
+    $.ajax({
+        type: "POST",
+        url: "/book_a_cheap_room",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(cheap_room_booking_obj),
+        success: data => {
+            console.log(data);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
+
+//book_a_cheap_room();

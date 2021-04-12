@@ -954,7 +954,8 @@
                 <div style="padding: 10px; margin-bottom: 20px;">
                     <p style="font-size: 14px; margin-top: 10px; letter-spacing: 1px; text-align: center; color: white; font-weight: bolder;">
                         Your Rooms</p>
-                    <p style="text-align: center; color: white; letter-spacing: 1px; font-size: 13px; margin-top: 5px; margin-bottom: 15px;">view and manage your rooms' availability</p>
+                    <p style="text-align: center; color: white; letter-spacing: 1px; font-size: 13px; margin-top: 5px; margin-bottom: 15px;">
+                        view and manage your rooms' availability</p>
                     <div id="logged_in_hotel_recently_booked_rooms_list">
                         <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); max-width: 500px; margin: auto;">
                             <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Booked recently</p>
@@ -1035,6 +1036,19 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>1D</td>
+                                            <td class="mobile_hidden_elem">unbooked</td>
+                                            <td class="mobile_hidden_elem">unbooked</td>
+                                            <td>$90.00</td>
+                                            <td>
+                                                <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 5px;"></i> 
+                                                Available
+                                            </td>
+                                            <td onclick="view_and_edit_room();" class="rooms_list_edit_room_icon">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>2D</td>
                                             <td class="mobile_hidden_elem">23-03-2022</td>
                                             <td class="mobile_hidden_elem">25-03-2022</td>
@@ -1054,7 +1068,7 @@
                                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                                 </p>
                             </div>
-                            <div>
+                            <div style="display: none;">
                                 <p style="margin-top: 20px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
                                     Kumasi,
                                     <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
@@ -1115,6 +1129,33 @@
                                 view all properties
                             </div>
                         </div>
+                    </div>
+                    <div style="width: fit-content; margin: auto;">
+                        <p style="color: white; font-size: 14px; font-weight: bolder; text-align: center; margin: 20px 0;">Make Reservation</p>
+                        <div class="flex_child_of_two flex_non_first_child" style="padding: 10px; margin: 10px; margin-bottom: 0; width: fit-content !important; border-radius: 4px;">
+                            <p style="margin-bottom: 11px; color:rgb(233, 128, 0); font-weight: bolder; letter-spacing: 1px; font-size: 14px;">
+                              Add date and guests:</p>
+                              <input style="padding: 10px; border-radius: 4px; border: none; font-size: 14px; width: calc(100% - 20px);" type="text" readonly="true" placeholder="add date here"/>
+                              
+                              <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                <div style="width: calc(50% - 20px);">
+                                  <p style="font-size: 14px; color: white; margin-bottom: 5px;">
+                                    Adults:
+                                  </p>
+                                  <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
+                                </div>
+                                <div style="width: calc(50% - 20px); margin-left: 10px;">
+                                  <p style="font-size: 14px; color: white; margin-bottom: 5px;">
+                                    Children: <span style="font-size: 12px; color: rgb(137, 204, 235);">
+                                      (below 17)</span>
+                                  </p>
+                                  <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
+                                </div>
+                              </div>
+                          </div>
+                          <div style="font-size: 13px; text-align: center; color: white; padding: 10px; font-weight: bolder; border-radius: 4px; background-color:rgb(9, 70, 67); width: 150px; margin: auto; margin-top: 10px; cursor: pointer;">
+                              continue reservation
+                          </div>
                     </div>
                 </div>
                 <div class="logged_in_hotel_gallery">

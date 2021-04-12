@@ -19,10 +19,10 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
         ref: ""
     },
     checkin_date: {
-        type: Date
+        type: String
     },
     checkout_date: {
-        type: Date
+        type: String
     },
     checkin_time: {
         type: String
