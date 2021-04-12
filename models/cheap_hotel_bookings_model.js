@@ -18,6 +18,12 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ""
     },
+    room_number: {
+        type: String
+    },
+    full_property_location: {
+        type: String
+    },
     checkin_date: {
         type: String
     },
@@ -29,6 +35,9 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
     },
     checkout_time: {
         type: String
+    },
+    price_paid: {
+        type: Number
     },
     guests: {
       type: Array

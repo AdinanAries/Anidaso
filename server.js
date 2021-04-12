@@ -1074,6 +1074,9 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
       room_id: req.body.room_id,
+      room_number: req.body.room_number,
+      full_property_location: req.body.full_property_location,
+      price_paid: req.body.price_paid,
       checkin_date: req.body.checkin_date,
       checkout_date: req.body.checkout_date,
       checkin_time: req.body.checkin_time,
@@ -1092,7 +1095,7 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
 
 app.get("/get_listed_property_room_bookings/:hotel_id", async (req, res, next) => {
 
-  let bookings = cheap_hotel_booking.find({
+  let bookings = await cheap_hotel_booking.find({
     hotel_brand_id: req.params.hotel_id
   }).exec();
 

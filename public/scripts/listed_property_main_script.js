@@ -683,6 +683,9 @@ function get_logged_in_hotel_infor(){
 
             //getting hotel buildings
             get_hotel_buildings(data._id);
+
+            //getting hotel bookings
+            get_hotel_bookings(data._id)
         },
         error: err => {
             console.log(err);
@@ -754,12 +757,73 @@ function get_hotel_buildings(hotel_id){
     });
 }
 
+function render_recent_hotel_booking(room_number, property_location, booking_checkin_date, booking_checkout_date, price_paid, room_guests){
+
+    let room_guests_markup = "";
+
+    for(let g=0; g < room_guests.length; g++){
+        room_guests_markup = `
+            <div>
+                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                    Name:
+                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                        Adam Aldavis</span>
+                </p>
+                <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">25yrs, Male</p>
+            </div>
+        `
+    }
+
+    document.getElementById("logged_in_hotel_recently_booked_rooms_list").innerHTML = `
+        <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); max-width: 500px; margin: auto;">
+            <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Booked recently</p>
+            <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                ${room_number}:
+                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                    Booked
+                    <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
+                </span>
+            </p>
+            <p style="margin-top: 5px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
+                ${property_location.split(",")[0]}
+                <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                    - ${property_location.split(",")[1]}
+                </span>
+            </p>
+            <div style="margin-top: 20px;">
+                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                    Checkin:
+                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                        ${booking_checkin_date}</span>
+                </p>
+                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                    Checkout:
+                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                        ${booking_checkout_date}</span>
+                </p>
+                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                    Price paid:
+                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                        $${parseFloat(price_paid).toFixed(2)}</span>
+                </p>
+                <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                    Room Guest(s)</p>
+                    ${room_guests_markup}
+            </div>
+            <p onclick="toggle_show_booked_rooms();" style="text-align: center; color: white; font-size: 13px; font-weight: bolder; padding: 10px; border-radius: 14px; background-color: cadetblue; cursor: pointer; margin: 10px 0;">
+                See all bookings
+            </p>
+        </div>
+    `;
+}
+
 function get_hotel_bookings(hotel_id){
     $.ajax({
         type: "GET",
         url: "/get_listed_property_room_bookings/"+hotel_id,
         success: res => {
             console.log(res);
+            render_recent_hotel_booking(res[0].room_number, res[0].full_property_location, res[0].checkin_date, res[0].checkout_date, res[0].price_paid, res[0].guests)
         },
         error: err => {
             console.log(err);
