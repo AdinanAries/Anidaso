@@ -1103,6 +1103,21 @@ app.get("/get_listed_property_room_bookings/:hotel_id", async (req, res, next) =
 
 });
 
+app.get("/get_bookings_by_room_id/:room_id", async (req, res, next) => {
+    let bookings = await cheap_hotel_booking.find({
+      room_id: req.params.room_id
+    }).exec();
+
+    res.send(bookings);
+});
+
+app.get("/get_property_by_id/:property_id", async (req, res, next) => {
+  let building = await cheap_hotel_property.findById(req.params.property_id).exec();
+
+  res.send(building);
+  
+});
+
 //Spinning the server here
 app.listen(PORT, () => {
   console.log("Server started on " + PORT);

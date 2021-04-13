@@ -267,6 +267,14 @@ function toggle_show_add_hotel_property_pane(){
     $("#add_hotel_property_form_panel").toggle("up");
 }
 
+function toggle_show_make_room_reservation_div(){
+    $("#make_reservation_pane").toggle("up");
+}
+
+function continue_room_reservation(){
+    toggle_show_make_room_reservation_div();
+}
+
 function view_and_edit_room(){
     toggle_show_search_room_pane();
 }
@@ -729,6 +737,92 @@ function add_new_cheap_room(){
 }
 //add_new_cheap_room();
 
+async function render_hotel_rooms(rooms_list){
+
+    let property = await get_and_return_hotel_property_by_id(rooms_list[0].property_id);
+    
+    console.log(property)
+
+    let property_city = "";
+    let property_address_tail = "";
+
+    if(property){
+        property_city = property.city;
+        property_address_tail = `${property.street_address}, ${property.country}`;
+    }
+
+    let rooms_sublist = rooms_list.filter( each => {
+        return each.property_id === rooms_list[0].property_id
+    });
+
+    //console.log(rooms_sublist);
+
+    document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
+        <p style="margin-top: 15px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
+            ${property_city},
+            <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                ${property_address_tail}
+            </span>
+        </p>
+        <table class="all_rooms_list_table">
+            <tbody id="dashboard_onload_displayed_rooms_list">
+                <tr>
+                    <td>Room</td>
+                    <td class="mobile_hidden_elem">Checkin</td>
+                    <td class="mobile_hidden_elem">Checkout</td>
+                    <td>Price</td>
+                    <td>Status</td>
+                </tr>
+            </tbody>
+        </table>
+        <p onclick="show_all_hotel_property_rooms('property_id')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+            view all rooms
+            <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+        </p>
+    `;
+
+
+    for(let r=0; r < rooms_sublist.length; r++){
+
+        let checkin = "unbooked";
+        let checkout = "unbooked";
+
+        let room_number = rooms_sublist[r].room_number;
+
+        let room_booked = `
+            <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 5px;"></i> 
+            Available
+        `;
+
+        if(rooms_sublist[r].booked){
+            room_booked = `
+                <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 5px;"></i> 
+                Booked
+            `;
+            
+            let booking = await get_and_return_current_booking_by_room_id(rooms_sublist[r]._id);
+            checkin = booking[0].checkin_date;
+            checkout = booking[0].checkout_date;
+        }
+
+        document.getElementById("dashboard_onload_displayed_rooms_list").innerHTML += `
+            <tr>
+                <td>${room_number}</td>
+                <td class="mobile_hidden_elem">${checkin}</td>
+                <td class="mobile_hidden_elem">${checkout}</td>
+                <td>$90.00</td>
+                <td>
+                    ${room_booked}
+                </td>
+                <td onclick="view_and_edit_room();" class="rooms_list_edit_room_icon">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </td>
+            </tr>
+        `;
+    }
+
+}
+
 //functions after loading hotel
 function get_hotel_rooms(hotel_id){
     $.ajax({
@@ -736,6 +830,7 @@ function get_hotel_rooms(hotel_id){
         url: "/get_cheap_hotel_rooms/"+hotel_id,
         success: res =>{
             console.log(res);
+            render_hotel_rooms(res)
         },
         error: err => {
             console.log(err);
@@ -827,6 +922,37 @@ function get_hotel_bookings(hotel_id){
         },
         error: err => {
             console.log(err);
+        }
+    });
+}
+
+function get_and_return_current_booking_by_room_id(room_id){
+
+    return $.ajax({
+        type: "GET",
+        url: "/get_bookings_by_room_id/"+room_id,
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+
+}
+
+function get_and_return_hotel_property_by_id(property_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_property_by_id/"+property_id,
+        success: res => {
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
         }
     });
 }
