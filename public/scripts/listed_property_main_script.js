@@ -677,7 +677,7 @@ function get_logged_in_hotel_infor(){
             display_logged_in_hotel_description_last_review(reviewer_name, reviewer_msg, reviewer_img, reviewer_rated);
             //amenities
             document.getElementById("logged_in_hotel_amenities_list").innerHTML = `
-            <p style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+            <p id="no_amenities_to_display_msg" style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
                 You have not added any amenity<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             </p>
             `
@@ -695,7 +695,7 @@ function get_logged_in_hotel_infor(){
 
             //cities operating
             document.getElementById("logged_in_hotel_cities_op_list").innerHTML = `
-            <p style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+            <p id="no_cities_to_display_msg" style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
                 You have not added any city<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             </p>
             `
@@ -1015,6 +1015,7 @@ function add_new_amenity(amenity, hotel_id){
         url: "/add_new_amenity/"+hotel_id+"?amenity="+amenity,
         success: res => {
             console.log(res);
+            document.getElementById("no_amenities_to_display_msg").style.display = "none";
             document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(res[res.length - 1]);  
         },
         error: err => {
@@ -1029,6 +1030,7 @@ function add_new_cities_op(city, hotel_id){
         url: "/add_new_city/"+hotel_id+"?new_city="+city,
         success: res => {
             console.log(res);
+            document.getElementById("no_cities_to_display_msg").style.display = "none";
             document.getElementById("logged_in_hotel_cities_op_list").innerHTML += render_each_operation_city(res[res.length - 1].city, res[res.length - 1].country);
         },
         error: err => {
