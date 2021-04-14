@@ -737,8 +737,12 @@ function cheap_hotels_search_pick_search_type(search_type){
 var cheap_room_booking_obj = {
     hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
       property_id: "607304a562a84645bccdf40b",
-      room_id: "607314d60fd9d9659846e1c6",
-      room_number: "5D",
+      rooms: [
+        {
+            id: "607314d60fd9d9659846e1c6",
+            number: "5D"
+        }
+      ],
       full_property_location: "New York, 1223 Mont Gomery, United States",
       price_paid: 69.00,
       checkin_date: "03-24-2022",

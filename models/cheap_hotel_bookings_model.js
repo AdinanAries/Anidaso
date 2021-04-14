@@ -14,12 +14,8 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ""
     },
-    room_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: ""
-    },
-    room_number: {
-        type: String
+    rooms: {
+        type: Array
     },
     full_property_location: {
         type: String

@@ -1073,8 +1073,7 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
     let booking_obj = new cheap_hotel_booking({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      room_id: req.body.room_id,
-      room_number: req.body.room_number,
+      rooms: req.body.rooms,
       full_property_location: req.body.full_property_location,
       price_paid: req.body.price_paid,
       checkin_date: req.body.checkin_date,
@@ -1103,9 +1102,14 @@ app.get("/get_listed_property_room_bookings/:hotel_id", async (req, res, next) =
 
 });
 
-app.get("/get_bookings_by_room_id/:room_id", async (req, res, next) => {
+app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next) => {
     let bookings = await cheap_hotel_booking.find({
-      room_id: req.params.room_id
+      rooms: {
+        "$all": {
+          id: req.params.room_id,
+          number: req.params.room_number
+        }
+      }
     }).exec();
 
     res.send(bookings);
@@ -1115,9 +1119,76 @@ app.get("/get_property_by_id/:property_id", async (req, res, next) => {
   let building = await cheap_hotel_property.findById(req.params.property_id).exec();
 
   res.send(building);
-  
+
 });
 
+//update routes
+app.post("/update_amenity/:hotel_brand_id", async (req, res, next) => {
+  let amenity = req.query.amenity;
+  let brand_id = req.params.hotel_brand_id;
+
+  
+
+});
+
+//add new routes
+app.post("/add_new_amenity/:hotel_brand_id", async (req, res, next) => {
+
+  let amenity = req.query.amenity;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  hotel.amenities.push(amenity);
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.amenities);
+
+});
+
+//add new city
+app.post("/add_new_city/:hotel_brand_id", async (req, res, next) => {
+
+  let the_city = req.query.new_city.split(",")[0];
+  let the_country = req.query.new_city.split(",")[1];
+
+  let city_obj = {
+    city: the_city.trim(),
+    country: the_country.trim()
+  }
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  hotel.cities_operating.push(city_obj);
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.cities_operating);
+
+});
+
+app.delete("/remove_city_op/:hotel_brand_id", async(req, res, next) => {
+
+  let the_city = req.query.q_city.split(",")[0];
+  let the_country = req.query.q_city.split(",")[1];
+
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.cities_operating = hotel.cities_operating.filter( each => {
+    return (each.city !== the_city &&
+            each.country !== the_country);
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.cities_operating);
+
+})
 //Spinning the server here
 app.listen(PORT, () => {
   console.log("Server started on " + PORT);

@@ -93,8 +93,9 @@
                                             <option>Female</option>
                                         </select>
                                         <div style="margin-top: 20px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Age:</p>
-                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add guest age here"/>
+                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
+                                            <input id="mk_reservationS_adult_age_input_1" onchange="room_booking_enforce_adult_age_input('mk_reservationS_adult_age_input_1');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
                                         </div>
                                     </div>
                                 </div>
@@ -122,8 +123,9 @@
                                             <option>Female</option>
                                         </select>
                                         <div style="margin-top: 20px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Age:</p>
-                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add guest age here"/>
+                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
+                                            <input id="mk_reservationS_child_age_input_1" oninput="room_booking_enforce_child_age_input('mk_reservationS_child_age_input_1')" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
                                         </div>
                                     </div>
                                 </div>
@@ -905,7 +907,7 @@
                                 </p>
                                 <input id="logged_in_hotel_edit_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
                                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                    <div onclick="add_new_amenity_onclick();" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                         Save
                                     </div>
                                     <div onclick="toggle_hide_edit_amenity_info_form();" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
@@ -1041,7 +1043,7 @@
                                     </div>
                                 </div>
                                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                    <div onclick="add_new_cities_op_onclick();" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                         Save
                                     </div>
                                     <div onclick="toggle_hide_edit_op_cities_info_form();" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
@@ -1143,14 +1145,15 @@
                               <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                                 <div style="width: calc(50% - 20px);">
                                   <p style="font-size: 14px; color: white; margin-bottom: 5px;">
-                                    Adults:
+                                    Adults: <span style="font-size: 12px; color: rgb(137, 204, 235);">
+                                        (above 17)</span>
                                   </p>
                                   <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
                                 </div>
                                 <div style="width: calc(50% - 20px); margin-left: 10px;">
                                   <p style="font-size: 14px; color: white; margin-bottom: 5px;">
                                     Children: <span style="font-size: 12px; color: rgb(137, 204, 235);">
-                                      (below 17)</span>
+                                      (below 18)</span>
                                   </p>
                                   <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
                                 </div>
