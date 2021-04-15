@@ -1124,10 +1124,24 @@ app.get("/get_property_by_id/:property_id", async (req, res, next) => {
 
 //update routes
 app.post("/update_amenity/:hotel_brand_id", async (req, res, next) => {
-  let amenity = req.query.amenity;
+  
+  let new_amenity = req.query.new_amenity;
+  let old_amenity = req.query.old_amenity;
   let brand_id = req.params.hotel_brand_id;
 
-  
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.amenities = hotel.amenities.map( each => {
+    if(each === old_amenity){
+      return new_amenity;
+    }else
+      return each;
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(new_amenity);
 
 });
 
@@ -1188,7 +1202,26 @@ app.delete("/remove_city_op/:hotel_brand_id", async(req, res, next) => {
 
   res.send(update_hotel.cities_operating);
 
-})
+});
+
+app.delete("/remove_amenity/:hotel_brand_id", async(req, res, next) => {
+
+  let amenity = req.query.q_amenity;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.amenities = hotel.amenities.filter( each => {
+    return each !== amenity;
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.cities_operating);
+
+});
+
 //Spinning the server here
 app.listen(PORT, () => {
   console.log("Server started on " + PORT);

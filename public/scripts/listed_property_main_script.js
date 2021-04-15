@@ -4,6 +4,7 @@ var logged_in_hotel_description_input = document.getElementById("logged_in_hotel
 var current_misc_edit_elem_id;
 var current_contact_edit_elem_id;
 var current_amenity_edit_elem_id;
+var current_edited_amenity_obj;
 var current_op_cities_edit_elem_id;
 
 var cheap_hotel_building = {
@@ -171,7 +172,7 @@ function toggle_hide_edit_amenity_info_form(){
     toggle_show_edit_amenity_info_form(current_amenity_edit_elem_id)
 }
 
-function start_edit_amenity_info(elem_id, info, title){
+function start_edit_amenity_info(elem_id, txt_span_elem_id, info, title){
 
     if(document.getElementById("logged_in_hotel_edit_amenity_info_form").style.display === "none"){
         toggle_show_edit_amenity_info_form(elem_id)
@@ -185,9 +186,27 @@ function start_edit_amenity_info(elem_id, info, title){
     document.getElementById("logged_in_hotel_edit_amenity_form_title").innerText = title;
     document.getElementById("logged_in_hotel_edit_amenity_form_input").value = info;
 
+    if(info === ""){
+        current_edited_amenity_obj = {
+            edit_type: "add new",
+            old_amenity: "",
+            text_span_elem_id: ""
+        }
+    }else{
+        current_edited_amenity_obj = {
+            edit_type: "edit old",
+            old_amenity: info,
+            text_span_elem_id: txt_span_elem_id
+        }
+    }
+
 }
 
-function add_new_amenity_onclick(){
+function delete_amenity_submit(elem_id, amenity){
+    remove_amenity(elem_id, amenity, window.localStorage.getItem("ANDSBZID"));
+}
+
+async function add_new_amenity_onclick(){
 
     if(document.getElementById("logged_in_hotel_edit_amenity_form_input").value === ""){
         document.getElementById("logged_in_hotel_edit_amenity_form_input").placeholder = "please enter new amenity";
@@ -195,8 +214,25 @@ function add_new_amenity_onclick(){
         return null;
     }
 
-    let amenity = document.getElementById("logged_in_hotel_edit_amenity_form_input").value;
-    add_new_amenity(amenity, window.localStorage.getItem("ANDSBZID"));
+    let new_amenity = document.getElementById("logged_in_hotel_edit_amenity_form_input").value;
+    if(current_edited_amenity_obj.edit_type === "add new"){
+        let returned_amenities = await add_new_amenity(new_amenity, window.localStorage.getItem("ANDSBZID"));
+
+        if(document.getElementById("no_amenities_to_display_msg"))
+            document.getElementById("no_amenities_to_display_msg").style.display = "none";
+        document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(returned_amenities[returned_amenities.length - 1]); 
+        toggle_hide_show_anything("logged_in_hotel_edit_amenity_info_form"); 
+        
+    }else{
+        let returned_amenity = await update_existing_amenity(current_edited_amenity_obj.old_amenity, new_amenity, window.localStorage.getItem("ANDSBZID"));
+        /*document.getElementById(current_edited_amenity_obj.text_span_elem_id).innerText = returned_amenity;
+        if(current_amenity_edit_elem_id){
+            $("#"+current_amenity_edit_elem_id).toggle("up");
+            document.getElementById(current_amenity_edit_elem_id).id = `logged_in_hotel_${returned_amenity.replaceAll(" ","_")}_amenity`;
+        }*/
+        document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(returned_amenity);
+        toggle_hide_show_anything("logged_in_hotel_edit_amenity_info_form");
+    }
 }
 
 function all_amenities_start_edit_amenity_info(elem_id, info, title){
@@ -230,7 +266,7 @@ function start_edit_op_cities_info(elem_id, info, title){
 
 }
 
-function add_new_cities_op_onclick(){
+async function add_new_cities_op_onclick(){
 
     if(document.getElementById("register_cheap_hotels_location_text_field").value === ""){
         document.getElementById("register_cheap_hotels_location_text_field").placeholder = "please enter new city";
@@ -239,7 +275,12 @@ function add_new_cities_op_onclick(){
     }
 
     let city = document.getElementById("register_cheap_hotels_location_text_field").value;
-    add_new_cities_op(city, window.localStorage.getItem("ANDSBZID"));
+    let returned_cities = await add_new_cities_op(city, window.localStorage.getItem("ANDSBZID"));
+    if(document.getElementById("no_cities_to_display_msg"))
+        document.getElementById("no_cities_to_display_msg").style.display = "none";
+    document.getElementById("logged_in_hotel_cities_op_list").innerHTML += render_each_operation_city(returned_cities[returned_cities.length - 1].city, returned_cities[returned_cities.length - 1].country);
+        
+    toggle_hide_show_anything("logged_in_hotel_edit_op_cities_info_form");
 }
 
 function delete_city_op_submit(elem_id, city){
@@ -512,10 +553,11 @@ function render_each_hotel_amenity(amenity){
             <p>
                 <span style="font-size: 14px;">
                     <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                    ${amenity}
+                    <span id="logged_in_hotel_${amenity.replaceAll(" ","_")}_amenity_txt_span_elem" style="font-size: 14px;">
+                    ${amenity}</span>
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                    <i onclick="start_edit_amenity_info('logged_in_hotel_${amenity.replaceAll(" ","_")}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i onclick="start_edit_amenity_info('logged_in_hotel_${amenity.replaceAll(" ","_")}_amenity', 'logged_in_hotel_${amenity.replaceAll(" ","_")}_amenity_txt_span_elem','${amenity}', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
                     <i  onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ","_")}_aminties_confirm_dialog')" style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </p>
@@ -523,7 +565,7 @@ function render_each_hotel_amenity(amenity){
                 <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
                     Are you sure</p>
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="delete_amenity_submit('logged_in_hotel_${amenity.replaceAll(" ","_")}_amenity', '${amenity}')" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Delete
                     </div>
                     <div onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ","_")}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1010,13 +1052,29 @@ function get_and_return_hotel_property_by_id(property_id){
 }
 
 function add_new_amenity(amenity, hotel_id){
-    $.ajax({
+    return $.ajax({
         type: "POST",
         url: "/add_new_amenity/"+hotel_id+"?amenity="+amenity,
         success: res => {
             console.log(res);
-            document.getElementById("no_amenities_to_display_msg").style.display = "none";
-            document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(res[res.length - 1]);  
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+}
+
+function update_existing_amenity(old_amenity, new_amenity, hotel_id){
+    return $.ajax({
+        type: "POST",
+        url: "/update_amenity/"+hotel_id+"?new_amenity="+new_amenity+"&old_amenity="+old_amenity,
+        success: res => {
+            console.log(res);
+            if(document.getElementById("no_amenities_to_display_msg"))
+                document.getElementById("no_amenities_to_display_msg").style.display = "none";  
+            return res;
         },
         error: err => {
             console.log(err);
@@ -1024,17 +1082,18 @@ function add_new_amenity(amenity, hotel_id){
     });
 }
 
+
 function add_new_cities_op(city, hotel_id){
-    $.ajax({
+    return $.ajax({
         type: "POST",
         url: "/add_new_city/"+hotel_id+"?new_city="+city,
         success: res => {
             console.log(res);
-            document.getElementById("no_cities_to_display_msg").style.display = "none";
-            document.getElementById("logged_in_hotel_cities_op_list").innerHTML += render_each_operation_city(res[res.length - 1].city, res[res.length - 1].country);
+            return res;
         },
         error: err => {
             console.log(err);
+            return err;
         }
     });
 }
@@ -1043,6 +1102,20 @@ function remove_city_op(elem_id, city, hotel_id){
     $.ajax({
         type: "DELETE",
         url: "/remove_city_op/"+hotel_id+"?q_city="+city,
+        success: res => {
+            console.log(res);
+            toggle_hide_show_anything(elem_id);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
+
+function remove_amenity(elem_id, city, hotel_id){
+    $.ajax({
+        type: "DELETE",
+        url: "/remove_amenity/"+hotel_id+"?q_amenity="+city,
         success: res => {
             console.log(res);
             toggle_hide_show_anything(elem_id);
