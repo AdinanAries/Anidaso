@@ -952,6 +952,7 @@ app.post('/register_cheap_hotel/', async (req, res, next) =>{
       cities_operating: req.body.cities_operating,
       email: req.body.email,
       mobile: req.body.mobile,
+      fax: "+0 000 000 0000",
       description: req.body.description,
       rating: req.body.rating,
       reviews: req.body.reviews,
@@ -1123,8 +1124,136 @@ app.get("/get_property_by_id/:property_id", async (req, res, next) => {
 });
 
 //update routes
+app.post("/update_cheap_hotel_email/:hotel_brand_id", async (req, res, next) => {
+
+  let new_email = req.query.new_email;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.email = new_email;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.email);
+
+});
+
+app.post("/update_cheap_hotel_mobile/:hotel_brand_id", async (req, res, next) => {
+
+  let new_mobile = req.query.new_mobile;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.mobile = new_mobile;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.mobile);
+
+});
+
+app.post("/update_cheap_hotel_fax/:hotel_brand_id", async (req, res, next) => {
+
+  let new_fax = req.query.new_fax;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.fax = new_fax;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.fax);
+
+});
+
+app.post("/update_cheap_hotel_avg_price/:hotel_brand_id", async (req, res, next) => {
+
+  let new_avg_price = req.query.new_avg_price;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.price = new_avg_price;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.price);
+
+});
+
+app.post("/update_cheap_hotel_web_url/:hotel_brand_id", async (req, res, next) => {
+
+  let new_url = req.query.new_url;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.url = new_url;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.url);
+
+});
+
+app.post("/update_cheap_hotel_main_office_location/:hotel_brand_id", async (req, res, next) => {
+  console.log("called");
+  let new_location = req.query.new_office_location;
+  let brand_id = req.params.hotel_brand_id;
+  console.log(new_location)
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.location = new_location;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.location);
+
+});
+
+app.post("/update_cheap_hotel_description/:hotel_brand_id", async (req, res, next) => {
+
+  let new_description = req.query.new_description;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.description = new_description;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.description);
+
+});
+
+app.post("/update_cheap_hotel_name/:hotel_brand_id", async (req, res, next) => {
+
+  let new_name = req.query.new_name;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.name = new_name;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.name);
+
+});
+
 app.post("/update_amenity/:hotel_brand_id", async (req, res, next) => {
-  
+
   let new_amenity = req.query.new_amenity;
   let old_amenity = req.query.old_amenity;
   let brand_id = req.params.hotel_brand_id;
@@ -1180,6 +1309,28 @@ app.post("/add_new_city/:hotel_brand_id", async (req, res, next) => {
   let update_hotel = await new_hotel.save();
 
   res.send(update_hotel.cities_operating);
+
+});
+
+//get all cheap hotel cities
+app.get("/get_all_cities/:hotel_brand_id", async (req, res, next) => {
+
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  res.send(hotel.cities_operating);
+
+});
+
+//get all cheap hotel amenities
+app.get("/get_all_amenities/:hotel_brand_id", async (req, res, next) => {
+
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  res.send(hotel.amenities);
 
 });
 

@@ -28,6 +28,28 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+    <div id="add_amenities_from_list_div" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="padding: 10px;">
+                <p onclick="toggle_show_select_all_amenities_from_list_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
+                    Select Your Amenities
+                </p>
+                <div class="flex_row_default_flex_column_mobile">
+                    <div class="flex_child_of_two">
+                        <div>
+                            <input style="margin-right: 5px;" id="free_wifi_amenity_from_add_from_list" type="checkbox" />
+                            <label style="font-size: 14px;" for="free_wifi_amenity_from_add_from_list">Free Wifi</label>
+                        </div>
+                    </div>
+                    <div class="flex_child_of_two flex_non_first_child">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="make_reservation_pane" style="display: none;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <p onclick="toggle_show_make_room_reservation_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
@@ -661,43 +683,7 @@
             <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
                 All Amenities</p>
             <div id="all_hotel_amenities_list" style="padding: 10px;">
-                <div id="logged_in_hotel_all_amenities_free_wifi_amenity" class="logged_in_hotel_amenity">
-                    <p>
-                        <span style="font-size: 14px; color: rgb(33, 80, 82); font-weight: bolder;">
-                            <i style="color: rgb(7, 59, 61); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                            Free Wifi
-                        </span>
-                        <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                            <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_free_wifi_amenity', 'Free Wifi', 'Edit Amenity');" style="color: rgb(5, 88, 126); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                            <i  onclick="toggle_hide_show_anything('delete__all_amenities_free_wifi_aminties_confirm_dialog')" style="color: rgb(150, 22, 22);" class="fa fa-trash" aria-hidden="true"></i>
-                        </span>
-                    </p>
-                    <div id="logged_in_hotel_edit_Free_Wifi_amenity_info_form" style="margin-top: 10px; display: none;">
-                        <p id="logged_in_hotel_edit_Free_Wifi_amenity_form_title" style="color: rgb(5, 44, 59); display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
-                        </p>
-                        <input id="logged_in_hotel_edit_Free_Wifi_amenity_form_input" style="background-color:rgb(30, 78, 117); color: white; padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
-                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
-                                Save
-                            </div>
-                            <div onclick="toggle_hide_show_anything('logged_in_hotel_edit_Free_Wifi_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
-                                Cancel
-                            </div>
-                        </div>
-                    </div>
-                    <div id="delete__all_amenities_free_wifi_aminties_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
-                        <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: rgb(5, 44, 59);">
-                            Are you sure</p>
-                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                Delete
-                            </div>
-                            <div onclick="toggle_hide_show_anything('delete__all_amenities_free_wifi_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                Cancel
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -719,29 +705,7 @@
             <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
                 All Cities</p>
             <div id="all_cities_list" style="padding: 10px;">
-                <div id="all_cities_logged_in_hote_Kumasi_Ghana_city_Op" class="logged_in_hotel_amenity">
-                    <p>
-                        <span style="font-size: 14px; color:rgb(33, 80, 82); font-weight: bolder;">
-                            <i style="color: rgb(9, 70, 67); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                            Kumasi, Ghana
-                        </span>
-                        <span onclick="toggle_hide_show_anything('all_cities_delete_Kumasi_Ghana_city_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                            <i style="color: rgb(158, 12, 12);" class="fa fa-trash" aria-hidden="true"></i>
-                        </span>
-                    </p>
-                    <div id="all_cities_delete_Kumasi_Ghana_city_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; background: none; width: 100%;" class="confirm_delete_dialog">
-                        <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px;">
-                            Are you sure</p>
-                        <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                            <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                Delete
-                            </div>
-                            <div onclick="toggle_hide_show_anything('all_cities_delete_Kumasi_Ghana_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                                Cancel
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -813,7 +777,7 @@
                                 </p>
                                 <input id="logged_in_hotel_edit_contact_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="enter your email" value="" />
                                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                    <div onclick="update_contact_info_onsubmit();" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                         Save
                                     </div>
                                     <div onclick="toggle_hide_edit_contact_info_form()" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
@@ -841,7 +805,7 @@
                                 </p>
                                 <input id="logged_in_hotel_edit_misc_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="enter your email" value="" />
                                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                    <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                    <div onclick="update_misc_info_onsubmit();" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                         Save
                                     </div>
                                     <div onclick="toggle_hide_edit_mis_info_form()" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
@@ -869,7 +833,7 @@
                             <textarea style="padding: 10px; width: calc(100% - 20px); border: none; height: fit-content;" id="logged_in_hotel_description_input">
                             </textarea>
                             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                <div onclick="update_description_info_onsubmit();" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                     Save
                                 </div>
                                 <div onclick="toggle_show_edit_desc_info_form();" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
@@ -901,7 +865,7 @@
                             <div id="logged_in_hotel_edit_amenity_info_form" style="margin-top: 10px; display: none;">
                                 <p id="logged_in_hotel_edit_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
                                 </p>
-                                <p style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
+                                <p onclick="toggle_show_select_all_amenities_from_list_div();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
                                     select amenities from list
                                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                                 </p>

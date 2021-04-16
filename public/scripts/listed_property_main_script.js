@@ -1,6 +1,7 @@
 var logged_in_hotel_ratings_area = document.getElementById("logged_in_hotel_ratings_area");
 var logged_in_hotel_description_input = document.getElementById("logged_in_hotel_description_input");
 
+var current_info_update_type = "name"; //[name, email, mobile, web_url, fax, avg_price, description, office_location]
 var current_misc_edit_elem_id;
 var current_contact_edit_elem_id;
 var current_amenity_edit_elem_id;
@@ -113,6 +114,19 @@ function return_cheap_hotel_rating_markup(rating_number = 1){
     `;
 }
 
+async function update_description_info_onsubmit(){
+    let elem = document.getElementById("logged_in_hotel_description_input");
+
+    if(elem.value === ""){
+        elem.focus();
+        elem.placeholder = "please enter description";
+    }else{
+        let returned_description = await update_info_item("description", elem.value, window.localStorage.getItem("ANDSBZID"));
+        display_logged_in_hotel_description(returned_description);
+        toggle_show_edit_desc_info_form();
+    }
+}
+
 //for misc info
 function toggle_show_edit_mis_info_form(elem_id){
     $("#logged_in_hotel_edit_misc_info_form").toggle("up");
@@ -135,6 +149,42 @@ function start_edit_misc_info(elem_id, info, title){
     current_misc_edit_elem_id = elem_id;
     document.getElementById("logged_in_hotel_edit_misc_form_title").innerText = title;
     document.getElementById("logged_in_hotel_edit_misc_form_input").value = info;
+    
+    if(title === "Edit URL"){
+        current_info_update_type = "web_url"; //[name, email, mobile, web_url, fax, avg_price, description, office_location]
+    }else if(title === "Edit Office"){
+        current_info_update_type = "office_location";
+    }else if(title === "Edit Avg. Room Price"){
+        current_info_update_type = "avg_price";
+    }
+}
+
+async function update_misc_info_onsubmit(){
+    let elem = document.getElementById("logged_in_hotel_edit_misc_form_input");
+
+    if(elem.value === ""){
+        elem.focus();
+        elem.placeholder = "please enter information";
+    }else{
+
+        let returned_misc = await update_info_item(current_info_update_type, elem.value, window.localStorage.getItem("ANDSBZID"));
+
+        if(current_info_update_type === "web_url"){
+            render_each_loggin_hotel_info_item("logged_in_hotel_url_infor_item", "URL", returned_misc, "start_edit_misc_info");
+        }
+        if(current_info_update_type === "office_location"){
+            render_each_loggin_hotel_info_item("logged_in_hotel_office_location_infor_item", "Office", returned_misc, "start_edit_misc_info");
+        }
+        if(current_info_update_type === "Avg. Room Price"){
+            let avg_room_price = `$${returned_misc}`;
+            render_each_loggin_hotel_info_item("logged_in_hotel_avg_price_infor_item", "Avg. Room Price", avg_room_price, "start_edit_misc_info");
+        }
+
+        if(current_misc_edit_elem_id){
+            $("#"+current_misc_edit_elem_id).toggle("up");
+        }
+        $("#logged_in_hotel_edit_misc_info_form").toggle("up");
+    }
 }
 
 //for contacts info
@@ -160,6 +210,40 @@ function start_edit_contact_info(elem_id, info, title){
     document.getElementById("logged_in_hotel_edit_contact_form_title").innerText = title;
     document.getElementById("logged_in_hotel_edit_contact_form_input").value = info;
 
+    if(title === "Edit Email"){
+        current_info_update_type = "email"; //[name, email, mobile, web_url, fax, avg_price, description, office_location]
+    }else if(title === "Edit Mobile"){
+        current_info_update_type = "mobile";
+    }else if(title === "Edit Fax"){
+        current_info_update_type = "fax";
+    }
+
+}
+
+async function update_contact_info_onsubmit(){
+    let elem = document.getElementById("logged_in_hotel_edit_contact_form_input");
+
+    if(elem.value === ""){
+        elem.focus();
+        elem.placeholder = "please enter contact information";
+    }else{
+        let returned_contact = await update_info_item(current_info_update_type, elem.value, window.localStorage.getItem("ANDSBZID"));
+
+        if(current_info_update_type === "email"){
+            render_each_loggin_hotel_info_item("logged_in_hotel_email_infor_item", "Email", returned_contact, "start_edit_contact_info");
+        }
+        if(current_info_update_type === "mobile"){
+            render_each_loggin_hotel_info_item("logged_in_hotel_mobile_infor_item", "Mobile", returned_contact, "start_edit_contact_info");
+        }
+        if(current_info_update_type === "fax"){
+            render_each_loggin_hotel_info_item("logged_in_hotel_Fax_infor_item", "Fax", returned_contact, "start_edit_contact_info");
+        }
+
+        if(current_contact_edit_elem_id){
+            $("#"+current_contact_edit_elem_id).toggle("up");
+        }
+        $("#logged_in_hotel_edit_contact_info_form").toggle("up");
+    }
 }
 
 //for amenities info
@@ -222,6 +306,7 @@ async function add_new_amenity_onclick(){
             document.getElementById("no_amenities_to_display_msg").style.display = "none";
         document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(returned_amenities[returned_amenities.length - 1]); 
         toggle_hide_show_anything("logged_in_hotel_edit_amenity_info_form"); 
+        toggle_hide_show_anything("logged_in_hotel_add_amenity_btn");
         
     }else{
         let returned_amenity = await update_existing_amenity(current_edited_amenity_obj.old_amenity, new_amenity, window.localStorage.getItem("ANDSBZID"));
@@ -235,10 +320,17 @@ async function add_new_amenity_onclick(){
     }
 }
 
+async function all_amenities_update_existing_amenity(all_amenities_each_amenity_elem_id, amenity_input_id, old_amenity){
+    let new_amenity = document.getElementById(amenity_input_id).value;
+    let returned_amenity = await update_existing_amenity(old_amenity, new_amenity, window.localStorage.getItem("ANDSBZID"));
+    document.getElementById(all_amenities_each_amenity_elem_id).innerHTML = all_amenities_return_each_amenity_markup_after_update(returned_amenity);
+    document.getElementById(all_amenities_each_amenity_elem_id).id = `logged_in_hotel_all_amenities_${returned_amenity.replaceAll(" ", "_").trim()}_amenity`;
+}
+
 function all_amenities_start_edit_amenity_info(elem_id, info, title){
-    toggle_hide_show_anything("logged_in_hotel_edit_"+info.replaceAll(" ", "_")+"_amenity_info_form");
-    document.getElementById("logged_in_hotel_edit_"+info.replaceAll(" ", "_")+"_amenity_form_title").innerText = title;
-    document.getElementById("logged_in_hotel_edit_"+info.replaceAll(" ", "_")+"_amenity_form_input").value = info;
+    toggle_hide_show_anything("logged_in_hotel_all_amenities_edit_"+info.replaceAll(" ", "_")+"_amenity_info_form");
+    document.getElementById("logged_in_hotel_all_amenities_edit_"+info.replaceAll(" ", "_")+"_amenity_form_title").innerText = title;
+    document.getElementById("logged_in_hotel_all_amenities_edit_"+info.replaceAll(" ", "_")+"_amenity_form_input").value = info;
 }
 
 //for operating cities info
@@ -281,6 +373,7 @@ async function add_new_cities_op_onclick(){
     document.getElementById("logged_in_hotel_cities_op_list").innerHTML += render_each_operation_city(returned_cities[returned_cities.length - 1].city, returned_cities[returned_cities.length - 1].country);
         
     toggle_hide_show_anything("logged_in_hotel_edit_op_cities_info_form");
+    toggle_hide_show_anything("logged_in_hotel_add_op_city_btn");
 }
 
 function delete_city_op_submit(elem_id, city){
@@ -371,6 +464,11 @@ function toggle_show_all_amenities(){
 
 function show_all_amenities(){
     toggle_show_all_amenities();
+    render_all_logged_in_hotel_amenities();
+}
+
+function toggle_show_select_all_amenities_from_list_div(){
+    $("#add_amenities_from_list_div").toggle("up");
 }
 
 function toggle_show_all_cities(){
@@ -379,6 +477,7 @@ function toggle_show_all_cities(){
 
 function show_all_cities(){
     toggle_show_all_cities();
+    render_all_logged_in_hotel_cities();
 }
 
 function toggle_hide_show_anything(elem_id){
@@ -708,7 +807,7 @@ function get_logged_in_hotel_infor(){
             //contact info
             render_each_loggin_hotel_info_item("logged_in_hotel_email_infor_item", "Email", data.email, "start_edit_contact_info");
             render_each_loggin_hotel_info_item("logged_in_hotel_mobile_infor_item", "Mobile", data.mobile, "start_edit_contact_info");
-            render_each_loggin_hotel_info_item("logged_in_hotel_Fax_infor_item", "Fax", data.email, "start_edit_contact_info");
+            render_each_loggin_hotel_info_item("logged_in_hotel_Fax_infor_item", "Fax", data.fax, "start_edit_contact_info");
             //misc info
             render_each_loggin_hotel_info_item("logged_in_hotel_url_infor_item", "URL", data.url, "start_edit_misc_info");
             render_each_loggin_hotel_info_item("logged_in_hotel_office_location_infor_item", "Office", data.location, "start_edit_misc_info");
@@ -729,6 +828,9 @@ function get_logged_in_hotel_infor(){
                 document.getElementById("logged_in_hotel_amenities_list").innerHTML = "";
                 for(let i=0; i < data.amenities.length; i++){
 
+                    if(i > 2)
+                        break;
+
                     let amenity = data.amenities[i];
 
                     document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(amenity);
@@ -746,6 +848,9 @@ function get_logged_in_hotel_infor(){
                 document.getElementById("logged_in_hotel_cities_op_see_all_cities_btn").style.display = "block";
                 document.getElementById("logged_in_hotel_cities_op_list").innerHTML = "";
                 for(let i=0; i < data.cities_operating.length; i++){
+
+                    if(i > 2)
+                        break;
 
                     let city = data.cities_operating[i].city;
                     let country = data.cities_operating[i].country;
@@ -1078,6 +1183,7 @@ function update_existing_amenity(old_amenity, new_amenity, hotel_id){
         },
         error: err => {
             console.log(err);
+            return err;
         }
     });
 }
@@ -1112,10 +1218,14 @@ function remove_city_op(elem_id, city, hotel_id){
     });
 }
 
-function remove_amenity(elem_id, city, hotel_id){
+function all_cities_op_remove_each_city_op(elem_id_param, city_param){
+    remove_city_op(elem_id_param, city_param, window.localStorage.getItem("ANDSBZID"));
+}
+
+function remove_amenity(elem_id, amenity, hotel_id){
     $.ajax({
         type: "DELETE",
-        url: "/remove_amenity/"+hotel_id+"?q_amenity="+city,
+        url: "/remove_amenity/"+hotel_id+"?q_amenity="+amenity,
         success: res => {
             console.log(res);
             toggle_hide_show_anything(elem_id);
@@ -1124,6 +1234,175 @@ function remove_amenity(elem_id, city, hotel_id){
             console.log(err);
         }
     });
+}
+
+function all_amenities_remove_each_amenity(elem_id_param, amenity_param){
+    remove_amenity(elem_id_param, amenity_param, window.localStorage.getItem("ANDSBZID"));
+}
+
+function get_all_amenities(hotel_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_all_amenities/"+hotel_id,
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+}
+
+async function render_all_logged_in_hotel_amenities(){
+
+    document.getElementById("all_hotel_amenities_list").innerHTML = ``;
+    let all_amenities = await get_all_amenities(window.localStorage.getItem("ANDSBZID"));
+
+    for(let i=0; i < all_amenities.length; i++){
+        document.getElementById("all_hotel_amenities_list").innerHTML += all_amenities_return_each_amenity_markup(all_amenities[i]);
+    }
+    
+}
+
+function all_amenities_return_each_amenity_markup(amenity){
+    return `
+        <div id="logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity" class="logged_in_hotel_amenity">
+            <p>
+                <span style="font-size: 14px; color: rgb(33, 80, 82); font-weight: bolder;">
+                    <i style="color: rgb(7, 59, 61); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    ${amenity}
+                </span>
+                <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(5, 88, 126); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i  onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="color: rgb(150, 22, 22);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </p>
+            <div id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
+                <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="color: rgb(5, 44, 59); display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                </p>
+                <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="background-color:rgb(30, 78, 117); color: white; padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                        Save
+                    </div>
+                    <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+            <div id="delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
+                <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: rgb(5, 44, 59);">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function all_amenities_return_each_amenity_markup_after_update(amenity){
+    return `
+        <p>
+            <span style="font-size: 14px; color: rgb(33, 80, 82); font-weight: bolder;">
+                <i style="color: rgb(7, 59, 61); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                ${amenity}
+            </span>
+            <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(5, 88, 126); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                <i  onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="color: rgb(150, 22, 22);" class="fa fa-trash" aria-hidden="true"></i>
+            </span>
+        </p>
+        <div id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
+            <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="color: rgb(5, 44, 59); display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+            </p>
+            <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="background-color:rgb(30, 78, 117); color: white; padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                    Save
+                </div>
+                <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+        <div id="delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
+            <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: rgb(5, 44, 59);">
+                Are you sure</p>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Delete
+                </div>
+                <div onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function get_all_cities(hotel_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_all_cities/"+hotel_id,
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+}
+
+async function render_all_logged_in_hotel_cities(){
+
+    document.getElementById("all_cities_list").innerHTML = ``;
+    let all_cities = await get_all_cities(window.localStorage.getItem("ANDSBZID"));
+
+    for(let i=0; i < all_cities.length; i++){
+        document.getElementById("all_cities_list").innerHTML += all_cities_return_each_city_markup(all_cities[i]);
+    }
+    
+}
+
+function all_cities_return_each_city_markup(city_param){
+
+    let city_for_ids = city_param.city.replaceAll(" ", "_").trim();
+    let country_for_ids = city_param.country.replaceAll(" ", "_").trim();
+
+    return `
+        <div id="all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op" class="logged_in_hotel_amenity">
+            <p>
+                <span style="font-size: 14px; color:rgb(33, 80, 82); font-weight: bolder;">
+                    <i style="color: rgb(9, 70, 67); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    ${city_param.city}, ${city_param.country}
+                </span>
+                <span onclick="toggle_hide_show_anything('all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i style="color: rgb(158, 12, 12);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </p>
+            <div id="all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; background: none; width: 100%;" class="confirm_delete_dialog">
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px;">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div onclick="all_cities_op_remove_each_city_op('all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op', '${city_param.city}, ${city_param.country}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>`;
 }
 
 function room_booking_enforce_child_age_input(input_id){
@@ -1136,6 +1415,64 @@ function room_booking_enforce_adult_age_input(input_id){
     if(document.getElementById(input_id).value < 18){
         document.getElementById(input_id).value = 18;
     }
+}
+
+function update_info_item(update_type, new_info, hotel_brand_id){
+
+    let endpoint_url = '';
+    let q_param = '';
+
+    switch(update_type){
+        case "email":
+            endpoint_url = "/update_cheap_hotel_email/";
+            q_param = "new_email";
+            break;
+        case "mobile":
+            endpoint_url = "/update_cheap_hotel_mobile/";
+            q_param = "new_mobile";
+            break;
+        case "web_url":
+            endpoint_url = "/update_cheap_hotel_web_url/";
+            q_param = "new_url";
+            break;
+        case "fax":
+            endpoint_url = "/update_cheap_hotel_fax/";
+            q_param = "new_fax";
+            break;
+        case "avg_price":
+            endpoint_url = "/update_cheap_hotel_avg_price/";
+            q_param = "new_avg_price";
+            break;
+        case "description":
+            endpoint_url = "/update_cheap_hotel_description/";
+            q_param = "new_description";
+            break;
+        case "office_location":
+            endpoint_url = "/update_cheap_hotel_main_office_location/";
+            q_param = "new_office_location";
+            break;
+        case "name":
+            endpoint_url = "/update_cheap_hotel_name/";
+            q_param = "new_name";
+            break;
+        default:
+            endpoint_url = "/update_cheap_hotel_name/";
+            q_param = "new_name";
+    }
+    console.log(endpoint_url + hotel_brand_id + "?" + q_param + "=" + new_info)
+    return $.ajax({
+        type: "POST",
+        url: (endpoint_url + hotel_brand_id + "?" + q_param + "=" + new_info),
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+
 }
 
 $(document).ready(()=>{
