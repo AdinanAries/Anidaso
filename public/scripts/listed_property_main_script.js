@@ -8,6 +8,63 @@ var current_amenity_edit_elem_id;
 var current_edited_amenity_obj;
 var current_op_cities_edit_elem_id;
 
+var all_hotel_amenity_options = [
+    "Business Center",
+    "Coffee Shop",
+    "Disabled Facilities",
+    "Wheelchair Accessible Elevators",
+    "Handrails Bathroom",
+    "Adapt Room Doors",
+    "Wheelchair Accessible Room",
+    "Wheelchair Accessible Public Area",
+    "Baby-Sitting",
+    "Internet Hotspots",
+    "Free Internet",
+    "Laundry Service",
+    "Air Conditioning",
+    "Hair Dryer",
+    "Non Smoking Rooms",
+    "Direct Dial Phone",
+    "Television",
+    "Wi-fi in Room",
+    "First Aid Staf",
+    "Interior Room Entry",
+    "Emergency Lighting",
+    "Fire Detectors",
+    "Extinguishers",
+    "Fire Safety",
+    "Restricted Public Access",
+    "Safe Deposit Box",
+    "Smoke Detector",
+    "Sprinklers",
+    "Video Surveilance",
+    "Fitness Center",
+]
+
+function add_all_amenity_options_to_select_from_list(){
+    for(let i=0; i < all_hotel_amenity_options.length; i++){
+        if(i > (all_hotel_amenity_options.length/2)){
+            document.getElementById("select_amenities_list2").innerHTML += 
+            `
+                <div style="padding: 5px;">
+                    <input style="margin-right: 5px;" id="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list" type="checkbox" />
+                    <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list">${all_hotel_amenity_options[i]}</label>
+                </div>
+            `; 
+        }else{
+            document.getElementById("select_amenities_list1").innerHTML += 
+            `
+                <div style="padding: 5px;">
+                    <input style="margin-right: 5px;" id="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list" type="checkbox" />
+                    <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list">${all_hotel_amenity_options[i]}</label>
+                </div>
+            `; 
+        }
+    }
+}
+
+add_all_amenity_options_to_select_from_list();
+
 var cheap_hotel_building = {
     hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
       full_location_address: "2122 Estate Junc, Sepe Tinpom, Kumasi, Ghana",

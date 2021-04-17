@@ -30,21 +30,24 @@
 <body>
     <div id="add_amenities_from_list_div" style="display: none;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
-            <div style="padding: 10px;">
+            <div style="padding: 10px; height: 80px;">
                 <p onclick="toggle_show_select_all_amenities_from_list_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-                
                 <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
                     Select Your Amenities
                 </p>
-                <div class="flex_row_default_flex_column_mobile">
-                    <div class="flex_child_of_two">
-                        <div>
-                            <input style="margin-right: 5px;" id="free_wifi_amenity_from_add_from_list" type="checkbox" />
-                            <label style="font-size: 14px;" for="free_wifi_amenity_from_add_from_list">Free Wifi</label>
+                <div style="text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
+                    Save Selected
+                </div>
+            </div>
+            <div id="page_popup_content_body" style="height: calc(100% - 120px);">
+                <div style="padding: 10px;">
+                    <div class="flex_row_default_flex_column_mobile">
+                        <div id="select_amenities_list1" class="flex_child_of_two">
+                            
                         </div>
-                    </div>
-                    <div class="flex_child_of_two flex_non_first_child">
+                        <div id="select_amenities_list2" style="margin-top: 0;" class="flex_child_of_two flex_non_first_child">
 
+                        </div>
                     </div>
                 </div>
             </div>
