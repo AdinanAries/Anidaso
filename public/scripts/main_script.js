@@ -941,6 +941,28 @@ autocomplete5.addListener('place_changed', function () {
 //$("#car_rentals_to_when_search_input").datepicker({minDate: 0});
 
 $(function() {
+  $('#book_cheap_hotel_date_range_input').daterangepicker({
+    opens: 'left',
+    autoUpdateInput: false,
+    locale: {
+      cancelLabel: 'Clear'
+    }
+  }, function(start, end, label) {
+
+    setTimeout(()=>{
+      document.getElementById("book_cheap_hotel_date_range_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
+    }, 100);
+
+    //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
+    //fligh_search_data.return_date = end.format('YYYY-MM-DD');
+
+    //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+
+    //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+  });
+});
+
+$(function() {
   $('#from_when_search_input').daterangepicker({
     opens: 'left',
     autoUpdateInput: false,
@@ -2259,4 +2281,16 @@ function show_prompt_to_user(title, msg){
   toggle_show_hide_page_full_screen_prompt();
   document.getElementById("page_full_screen_prompt_title").innerHTML = title;
   document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
+}
+
+function room_booking_enforce_child_age_input(input_id){
+  if(document.getElementById(input_id).value > 17){
+      document.getElementById(input_id).value = 17;
+  }
+}
+
+function room_booking_enforce_adult_age_input(input_id){
+  if(document.getElementById(input_id).value < 18){
+      document.getElementById(input_id).value = 18;
+  }
 }
