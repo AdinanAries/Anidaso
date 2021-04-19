@@ -637,8 +637,57 @@ function toggle_show_all_cities(){
     $("#all_cities_list_container").toggle("up");
 }
 
-function toggle_show_all_policies(){
+async function toggle_show_all_policies(){
+
     $("#all_policies_list_container").toggle("up");
+
+    document.getElementById("all_hotel_policies_list").innerHTML = ``;
+
+    let policies = await get_all_policies(window.localStorage.getItem("ANDSBZID"));
+
+    if(policies){
+        if(policies.length > 0){
+            for(let i=0; i < policies.length; i++){
+                document.getElementById("all_hotel_policies_list").innerHTML = all_policies_return_each_policy_markup(i, policies[i]);
+            }
+        }else{
+            document.getElementById("all_hotel_policies_list").innerHTML = `
+                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: rgba(0,0,0,0.9);">
+                    <i style="color: crimson; margin-right: 5px;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
+                    <span style="font-weight: bolder; color: orangered; font-size: 14px;">You have not added any policies:</span>
+                    Your hotel policies help inform your guests about restrictions and rules. 
+                </p>
+            `;
+        }
+    }
+}
+
+function all_policies_return_each_policy_markup(number, policy){
+    return `
+        <div id="all_logged_in_hotel_policies_${number}_policy">
+            <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: rgba(0,0,0,0.9);">
+                    <span style="color: orangered; font-size: 14px; font-weight: bolder;">${policy.type}:</span>
+                    ${policy.description} 
+                </p>
+                <span onclick="toggle_hide_show_anything('all_policies_delete_${number}_policy_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i style="color: rgb(158, 12, 12);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div id="all_policies_delete_${number}_policy_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; background: none; width: 100%;" class="confirm_delete_dialog">
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px;">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div onclick="all_cities_op_remove_each_city_op('all_logged_in_hotel_policies_${number}_policy', '${policy.type}, ${policy.description.replaceAll("'", "@apostrophe@")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('all_policies_delete_${number}_policy_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
 }
 
 function show_all_cities(){
@@ -873,11 +922,11 @@ function render_each_operation_city(city, country){
 }
 
 //function to render last added hotel policy
-function render_logged_in_hotel_last_added_policy(policy_obj){
+function render_logged_in_hotel_last_added_policy(policy){
     document.getElementById("dashboard_displayed_last_added_hotel_policy").innerHTML = `
         <p class="logged_in_payments_card_display" style="margin-top: 10px; color: white;">
-            <span style="color:aqua; font-size: 13px;">Policy Name:</span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid asperiores unde corporis nostrum deleniti accusamus soluta praesentium 
+            <span style="color:aqua; font-size: 14px;">${policy.type}:</span>
+            ${policy.description} 
         </p>
     `;
 }
@@ -1073,7 +1122,7 @@ function get_logged_in_hotel_infor(){
                     </p>
                 `;
             }
-            
+
             //photos 
             display_logged_in_hotel_photos(data.photos[0], data.photos[1], data.photos[2], data.photos[3]);
 
@@ -1589,6 +1638,21 @@ function get_all_cities(hotel_id){
         error: err => {
             console.log(err);
             return err
+        }
+    });
+}
+
+function get_all_policies(hotel_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_all_policies/"+hotel_id,
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
         }
     });
 }

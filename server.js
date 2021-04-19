@@ -669,8 +669,9 @@ app.get("/get_login_user/:id", async (req, res, next) =>{
 app.post("/listed_property_login/", async (req, res, next) => {
 
   console.log(req.body);
-//6063dd3fb6dfe50bc800dd5f 
-  let hotel = await cheap_hotel.findById("6063e055b6dfe50bc800dd60");
+  //6063dd3fb6dfe50bc800dd5f 
+  //6063e055b6dfe50bc800dd60
+  let hotel = await cheap_hotel.findById("6063dd3fb6dfe50bc800dd5f");
 
   res.send(hotel);
 
@@ -1333,6 +1334,17 @@ app.get("/get_all_amenities/:hotel_brand_id", async (req, res, next) => {
   let hotel = await cheap_hotel.findById(brand_id);
   
   res.send(hotel.amenities);
+
+});
+
+//get all cheap hotel policies
+app.get("/get_all_policies/:hotel_brand_id", async (req, res, next) => {
+
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  res.send(hotel.policies_and_restrictions);
 
 });
 
