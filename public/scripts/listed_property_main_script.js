@@ -178,9 +178,11 @@ async function update_description_info_onsubmit(){
         elem.focus();
         elem.placeholder = "please enter description";
     }else{
+        document.getElementById("full_screen_loader").style.display = "flex";
         let returned_description = await update_info_item("description", elem.value, window.localStorage.getItem("ANDSBZID"));
         display_logged_in_hotel_description(returned_description);
         toggle_show_edit_desc_info_form();
+        document.getElementById("full_screen_loader").style.display = "none";
     }
 }
 
@@ -224,6 +226,8 @@ async function update_misc_info_onsubmit(){
         elem.placeholder = "please enter information";
     }else{
 
+        document.getElementById("full_screen_loader").style.display = "flex";
+
         let returned_misc = await update_info_item(current_info_update_type, elem.value, window.localStorage.getItem("ANDSBZID"));
 
         if(current_info_update_type === "web_url"){
@@ -232,7 +236,7 @@ async function update_misc_info_onsubmit(){
         if(current_info_update_type === "office_location"){
             render_each_loggin_hotel_info_item("logged_in_hotel_office_location_infor_item", "Office", returned_misc, "start_edit_misc_info");
         }
-        if(current_info_update_type === "Avg. Room Price"){
+        if(current_info_update_type === "avg_price"){
             let avg_room_price = `$${returned_misc}`;
             render_each_loggin_hotel_info_item("logged_in_hotel_avg_price_infor_item", "Avg. Room Price", avg_room_price, "start_edit_misc_info");
         }
@@ -241,6 +245,7 @@ async function update_misc_info_onsubmit(){
             $("#"+current_misc_edit_elem_id).toggle("up");
         }
         $("#logged_in_hotel_edit_misc_info_form").toggle("up");
+        document.getElementById("full_screen_loader").style.display = "none";
     }
 }
 
@@ -278,6 +283,9 @@ function start_edit_contact_info(elem_id, info, title){
 }
 
 async function update_contact_info_onsubmit(){
+
+    document.getElementById("full_screen_loader").style.display = "flex";
+
     let elem = document.getElementById("logged_in_hotel_edit_contact_form_input");
 
     if(elem.value === ""){
@@ -300,6 +308,7 @@ async function update_contact_info_onsubmit(){
             $("#"+current_contact_edit_elem_id).toggle("up");
         }
         $("#logged_in_hotel_edit_contact_info_form").toggle("up");
+        document.getElementById("full_screen_loader").style.display = "none";
     }
 }
 
@@ -355,6 +364,8 @@ async function add_new_amenity_onclick(){
         return null;
     }
 
+    document.getElementById("full_screen_loader").style.display = "flex";
+
     let new_amenity = document.getElementById("logged_in_hotel_edit_amenity_form_input").value;
     if(current_edited_amenity_obj.edit_type === "add new"){
         let returned_amenities = await add_new_amenity(new_amenity, window.localStorage.getItem("ANDSBZID"));
@@ -364,6 +375,7 @@ async function add_new_amenity_onclick(){
         document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(returned_amenities[returned_amenities.length - 1]); 
         toggle_hide_show_anything("logged_in_hotel_edit_amenity_info_form"); 
         toggle_hide_show_anything("logged_in_hotel_add_amenity_btn");
+        document.getElementById("full_screen_loader").style.display = "none";
         
     }else{
         let returned_amenity = await update_existing_amenity(current_edited_amenity_obj.old_amenity, new_amenity, window.localStorage.getItem("ANDSBZID"));
@@ -374,14 +386,25 @@ async function add_new_amenity_onclick(){
         }*/
         document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(returned_amenity);
         toggle_hide_show_anything("logged_in_hotel_edit_amenity_info_form");
+        document.getElementById("full_screen_loader").style.display = "none";
     }
 }
 
 async function all_amenities_update_existing_amenity(all_amenities_each_amenity_elem_id, amenity_input_id, old_amenity){
+
+    if(document.getElementById(amenity_input_id).value === ""){
+        document.getElementById(amenity_input_id).focus();
+        document.getElementById(amenity_input_id).placeholder = "this input field cant be empty";
+        return null;
+    }
+
+    document.getElementById("full_screen_loader").style.display = "flex";
+
     let new_amenity = document.getElementById(amenity_input_id).value;
     let returned_amenity = await update_existing_amenity(old_amenity, new_amenity, window.localStorage.getItem("ANDSBZID"));
     document.getElementById(all_amenities_each_amenity_elem_id).innerHTML = all_amenities_return_each_amenity_markup_after_update(returned_amenity);
     document.getElementById(all_amenities_each_amenity_elem_id).id = `logged_in_hotel_all_amenities_${returned_amenity.replaceAll(" ", "_").trim()}_amenity`;
+    document.getElementById("full_screen_loader").style.display = "none";
 }
 
 function all_amenities_start_edit_amenity_info(elem_id, info, title){
@@ -423,6 +446,8 @@ async function add_new_cities_op_onclick(){
         return null;
     }
 
+    document.getElementById("full_screen_loader").style.display = "flex";
+
     let city = document.getElementById("register_cheap_hotels_location_text_field").value;
     let returned_cities = await add_new_cities_op(city, window.localStorage.getItem("ANDSBZID"));
     if(document.getElementById("no_cities_to_display_msg"))
@@ -431,6 +456,7 @@ async function add_new_cities_op_onclick(){
         
     toggle_hide_show_anything("logged_in_hotel_edit_op_cities_info_form");
     toggle_hide_show_anything("logged_in_hotel_add_op_city_btn");
+    document.getElementById("full_screen_loader").style.display = "none";
 }
 
 function delete_city_op_submit(elem_id, city){
@@ -465,14 +491,62 @@ function toggle_show_edit_desc_info_form(){
     }, 500);
 }
 
-function toggle_show_search_room_pane(){
+async function toggle_show_search_room_pane(){
+    
+    let rooms = await get_hotel_rooms(window.localStorage.getItem("ANDSBZID"))
+
+    if(rooms){
+        if((rooms.length === 0)){
+            alert("You don't have any rooms in your account. Please add rooms first");
+            toggle_show_add_room_pane();
+            return null;
+        }
+    }else{
+        alert("You don't have any rooms in your account. Please add rooms first");
+        toggle_show_add_room_pane();
+        return null;
+    }
+
     document.getElementById("add_room_form_panel").style.display = "none";
     $("#search_room_panel").toggle("up");
+
 }
 
-function toggle_show_add_room_pane(){
+async function toggle_show_add_room_pane(){
     document.getElementById("search_room_panel").style.display = "none";
     $("#add_room_form_panel").toggle("up");
+    let properties = await get_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    if(properties){
+        if(properties.length === 0){
+            document.getElementById("add_room_form_properties_select").style.backgroundColor = "red";
+            //document.getElementById("add_room_form_properties_select").addEventListener('click', toggle_show_add_hotel_property_pane);
+            document.getElementById("add_room_form_properties_select").disabled = true;
+            document.getElementById("add_room_form_properties_select").innerHTML = `
+            <option>
+                add a new propterty first
+            </option>
+            `
+        }else{
+            for(let i=0; i < properties.length; i++){
+                document.getElementById("add_room_form_properties_select").innerHTML = `
+                <option value="${properties[i]}">
+                    ${properties[i]};
+                </option>`;
+            }
+        }
+    }else{
+
+        document.getElementById("add_room_form_properties_select").style.backgroundColor = "red";
+        //document.getElementById("add_room_form_properties_select").addEventListener('click', toggle_show_add_hotel_property_pane);
+        document.getElementById("add_room_form_properties_select").disabled = true;
+        document.getElementById("add_room_form_properties_select").innerHTML = `
+            <option>
+                <i class="fa fa-exclamation-triangle" style="margin-right: 5px;"></i>
+                add a new propterty first
+            </option>
+            `
+    }
 }
 
 function add_new_hotel_room_func(){
@@ -491,7 +565,22 @@ function toggle_show_make_room_reservation_div(){
     $("#make_reservation_pane").toggle("up");
 }
 
-function continue_room_reservation(){
+async function continue_room_reservation(){
+    
+    let rooms = await get_hotel_rooms(window.localStorage.getItem("ANDSBZID"))
+
+    if(rooms){
+        if((rooms.length === 0)){
+            alert("You don't have any rooms in your account. Please add rooms first");
+            toggle_show_add_room_pane();
+            return null;
+        }
+    }else{
+        alert("You don't have any rooms in your account. Please add rooms first");
+        toggle_show_add_room_pane();
+        return null;
+    }
+
     toggle_show_make_room_reservation_div();
 }
 
@@ -503,8 +592,24 @@ function toggle_show_booked_rooms(){
     $("#booked_rooms_container").toggle("up");
 }
 
-function toggle_show_all_hotel_properties(){
+async function toggle_show_all_hotel_properties(){
+
+    let properties = await get_hotel_buildings(window.localStorage.getItem("ANDSBZID"))
+
+    if(properties){
+        if((properties.length === 0)){
+            alert("You don't have any property in your account. Please add property first");
+            toggle_show_add_hotel_property_pane();
+            return null;
+        }
+    }else{
+        alert("You don't have any property in your account. Please add property first");
+        toggle_show_add_hotel_property_pane();
+        return null;
+    }
+
     $("#all_hotel_properties_container").toggle("up");
+
 }
 
 function toggle_show_all_hotel_property_rooms(){
@@ -530,6 +635,10 @@ function toggle_show_select_all_amenities_from_list_div(){
 
 function toggle_show_all_cities(){
     $("#all_cities_list_container").toggle("up");
+}
+
+function toggle_show_all_policies(){
+    $("#all_policies_list_container").toggle("up");
 }
 
 function show_all_cities(){
@@ -700,6 +809,7 @@ function display_logged_in_hotel_name(name, subs_status, prof_status){
 function display_logged_in_hotel_description(desc){
     document.getElementById("logged_in_hotel_desc_info_txt").innerText = desc;
     document.getElementById("logged_in_hotel_description_input").innerText = desc;
+    document.getElementById("logged_in_hotel_desc_info_txt_loader").style.display = "none";
 }
 
 //function to render each amenity
@@ -732,6 +842,7 @@ function render_each_hotel_amenity(amenity){
         </div>
     `;
 }
+
 //function to render each city operating in
 function render_each_operation_city(city, country){
     return `
@@ -761,6 +872,17 @@ function render_each_operation_city(city, country){
     `;
 }
 
+//function to render last added hotel policy
+function render_logged_in_hotel_last_added_policy(policy_obj){
+    document.getElementById("dashboard_displayed_last_added_hotel_policy").innerHTML = `
+        <p class="logged_in_payments_card_display" style="margin-top: 10px; color: white;">
+            <span style="color:aqua; font-size: 13px;">Policy Name:</span>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid asperiores unde corporis nostrum deleniti accusamus soluta praesentium 
+        </p>
+    `;
+}
+
+//function to render hotel last review
 function display_logged_in_hotel_last_review_rating(rating_number = 1){
 
     let rating_remark;
@@ -916,6 +1038,42 @@ function get_logged_in_hotel_infor(){
                 }
             }
 
+            //last policy
+            if(data.policies_and_restrictions){
+                if(data.policies_and_restrictions.length > 0){
+                    render_logged_in_hotel_last_added_policy(data.policies_and_restrictions[data.policies_and_restrictions.length - 1]);
+                }
+                else{
+                    document.getElementById("dashboard_displayed_last_added_hotel_policy").innerHTML = `
+                        <p style="color: white; font-size: 13px; letter-spacing: 1px;">
+                        <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        <span style="color: skyblue; font-size: 13px; font-weight: bolder;">
+                        You've not added any policies:</span>
+                        <br/><br/>
+                        Your business policies help inform guests about restrictions and rules.
+                        <br/><br/>
+                        <span style="color: rgba(255, 255, 255, 0.8); font-size: 14px; font-weight: bolder;">
+                        Click on the "click here to manage policies" link below to add new policies
+                        </span>
+                        </p>
+                    `;
+                }
+            }else{
+                document.getElementById("dashboard_displayed_last_added_hotel_policy").innerHTML = `
+                    <p style="color: white; font-size: 13px; letter-spacing: 1px;">
+                    <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <span style="color: skyblue; font-size: 13px; font-weight: bolder;">
+                    You've not added any policies:</span>
+                    <br/><br/>
+                    Your business policies help inform guests about restrictions and rules.
+                    <br/><br/>
+                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 14px; font-weight: bolder;">
+                    Click on the "click here to manage policies" link below to add new policies
+                    </span>
+                    </p>
+                `;
+            }
+            
             //photos 
             display_logged_in_hotel_photos(data.photos[0], data.photos[1], data.photos[2], data.photos[3]);
 
@@ -971,6 +1129,21 @@ function add_new_cheap_room(){
 //add_new_cheap_room();
 
 async function render_hotel_rooms(rooms_list){
+
+    if(rooms_list.length === 0){
+        document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
+            <p style="font-size: 13px; text-align: center; color: white; paddin: 20px;">
+                <i style="color: orangered; margin-right: 5px; " class="fa fa-exclamation-triangle"></i>
+                You don't have any room. <br/>
+                Without any room added to your account, guests can't book
+                your brand.
+                <br/><br/> 
+                <span style="color: rgba(255, 255, 255, 0.6); font-weight: bolder;">
+                Click on add new room to add a room</span>
+            </p>
+        `;
+        return null;
+    }
 
     let property = await get_and_return_hotel_property_by_id(rooms_list[0].property_id);
     

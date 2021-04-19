@@ -32,7 +32,26 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <div id="add_amenities_from_list_div" style="display: none;" class="page_pop_up_cover">
+    <div id="full_screen_loader" style="display: none; z-index: 100;" class="page_pop_up_cover">
+        <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+              <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+              </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+              loading...
+            </p>
+          </div>
+    </div>
+    <div id="add_amenities_from_list_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <div style="padding: 10px; height: 80px;">
                 <p onclick="toggle_show_select_all_amenities_from_list_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
@@ -340,7 +359,7 @@
                 <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
                     <div class="flex_child_of_two">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
-                        <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                        <select id="add_room_form_properties_select" style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
                             <option>
                                 New York, 1223 Mont Gomery, United States
                             </option>
@@ -470,15 +489,8 @@
                     Add Property</p>
                 <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
                     <div class="flex_child_of_two">
-                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select City</p>
-                        <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
-                            <option>
-                                New York, United States
-                            </option>
-                            <option>
-                                Kumasi, Ghana
-                            </option>
-                        </select>
+                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Enter City, Country</p>
+                        <input id="add_hotel_property_form_property_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 13px; background-color:rgb(187, 245, 255);" placeholder="enter city here" />
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
                         <p style="font-size: 13px; color:rgb(8, 40, 66);">Click below to see all your hotels</p>
@@ -674,7 +686,7 @@
                 <div id="logged_in_hotel_all_amenities_add_amenity_info_form" style="margin-top: 10px;">
                     <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
                     Add New Amenity</p>
-                    <p style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
+                    <p onclick="toggle_show_select_all_amenities_from_list_div();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
                         select amenities from list
                         <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                     </p>
@@ -716,6 +728,35 @@
             </div>
         </div>
     </div>
+    <div id="all_policies_list_container" style="display: none;" class="page_pop_up_cover">
+        <div class="page_popup_content_container">
+            <div style="padding: 10px; background-color:rgb(3, 70, 97);">
+                <div id="logged_in_hotel_all_amenities_add_amenity_info_form" style="margin-top: 10px;">
+                    <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                    Add New Policy</p>
+                    <p style="color: white; font-weight: bolder; font-size: 13px; margin-top: 10px; margin-bottom: 5px;">Select policy type below</p>
+                    <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                        <select id="logged_in_hotel_all_amenities_add_amenity_form_input" style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 14px; width: calc(100% - 100px); border: none;" type="text" placeholder="enter amenity here" value="" >
+                            <option>Policy Type</option>
+                        </select>
+                        <div style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            Add
+                        </div>
+                    </div>
+                    <div style="display: none;">
+                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-top: 10px; margin-bottom: 5px;">Add policy description below</p>
+                        <textarea style="width: calc(100% - 20px); border: none; border-radius: 4px; padding: 10px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <p onclick="toggle_show_all_policies();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                Your Policies</p>
+            <div id="all_hotel_policies_list" style="padding: 10px;">
+                
+            </div>
+        </div>
+    </div>
     <!--div class="page_pop_up_cover">
         <div class="page_popup_content_container">
             <p class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
@@ -731,7 +772,23 @@
                     </div>
                 </div>
                 <div id="main_top_nav_hotel_name_display" style="position: relative;" class="top_nav_hotel_name_display">
-                    
+                    <div style="width: 100%; text-align: center;" class="loader loader--style2" title="1">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                          width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                          <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 25 25"
+                            to="360 25 25"
+                            dur="0.6s"
+                            repeatCount="indefinite"/>
+                          </path>
+                        </svg>
+                        <p style="text-align: center; font-size: 10px; color:white;">
+                          loading...
+                        </p>
+                      </div>
                 </div>
                 <div style="display: none;" class="top_nav_login_btn">
                     <p>
@@ -771,7 +828,23 @@
                                 Contacts
                             </p>
                             <div id="logged_in_hotel_email_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
-                                
+                                <div style="width: 100%; text-align: center; padding: 20px 0; background-color: rgba(0,0,0,0.4);" class="loader loader--style2" title="1">
+                                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                    <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                      <animateTransform attributeType="xml"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 25 25"
+                                        to="360 25 25"
+                                        dur="0.6s"
+                                        repeatCount="indefinite"/>
+                                      </path>
+                                    </svg>
+                                    <p style="text-align: center; font-size: 14px; color:white;">
+                                      loading...
+                                    </p>
+                                  </div>
                             </div>
                             <div id="logged_in_hotel_mobile_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
                                 
@@ -799,7 +872,23 @@
                                 Misc.
                             </p>
                             <div id="logged_in_hotel_url_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
-                                
+                                <div style="width: 100%; text-align: center; padding: 20px 0; background-color: rgba(0,0,0,0.4);" class="loader loader--style2" title="1">
+                                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                    <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                      <animateTransform attributeType="xml"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 25 25"
+                                        to="360 25 25"
+                                        dur="0.6s"
+                                        repeatCount="indefinite"/>
+                                      </path>
+                                    </svg>
+                                    <p style="text-align: center; font-size: 14px; color:white;">
+                                      loading...
+                                    </p>
+                                  </div>
                             </div>
                             <div id="logged_in_hotel_office_location_infor_item" class="logged_in_hotel_infor_item" style="margin-bottom: 5px;">
                                 
@@ -827,8 +916,24 @@
                         <p style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
                             About Your Brand</p>
                         <div id="logged_in_hotel_desc_info_txt_and_btn">
+                            <div id="logged_in_hotel_desc_info_txt_loader" style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                  width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                  <animateTransform attributeType="xml"
+                                    attributeName="transform"
+                                    type="rotate"
+                                    from="0 25 25"
+                                    to="360 25 25"
+                                    dur="0.6s"
+                                    repeatCount="indefinite"/>
+                                  </path>
+                                </svg>
+                                <p style="text-align: center; font-size: 14px; color:white;">
+                                  loading...
+                                </p>
+                              </div>
                             <p id="logged_in_hotel_desc_info_txt" style="color: white;">
-                                
                             </p>
                             <p onclick="toggle_show_edit_desc_info_form();" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: teal;">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> Edit
@@ -851,18 +956,51 @@
                         <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                                 Policies/Restrictions</p>
-                            <p class="logged_in_payments_card_display" style="margin-top: 10px; color: white;">
-                                <span style="color:aqua; font-size: 13px;">Policy Name:</span>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid asperiores unde corporis nostrum deleniti accusamus soluta praesentium 
+                            <div id="dashboard_displayed_last_added_hotel_policy">
+                                <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                    <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                      <animateTransform attributeType="xml"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 25 25"
+                                        to="360 25 25"
+                                        dur="0.6s"
+                                        repeatCount="indefinite"/>
+                                      </path>
+                                    </svg>
+                                    <p style="text-align: center; font-size: 14px; color:white;">
+                                      loading...
+                                    </p>
+                                  </div>
+                            </div>
+                            <p onclick="toggle_show_all_policies();" id="logged_in_hotel_manage_policies_btn" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
+                                click here to manage policies
+                                <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                             </p>
-                            <p id="logged_in_hotel_manage_policies_btn" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
-                                click here to manage policies</p>
                         </div>
                         <div style="background-color: rgba(0,0,0,0.4); padding: 10px; margin-top: 10px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                                 Amenities</p>
                             <div id="logged_in_hotel_amenities_list">
-                                
+                                <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                    <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                      <animateTransform attributeType="xml"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 25 25"
+                                        to="360 25 25"
+                                        dur="0.6s"
+                                        repeatCount="indefinite"/>
+                                      </path>
+                                    </svg>
+                                    <p style="text-align: center; font-size: 14px; color:white;">
+                                      loading...
+                                    </p>
+                                  </div>
                             </div>
                             <p id="logged_in_hotel_amenities_see_all_amenities_btn" onclick="show_all_amenities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
                                 see all amenities</p>
@@ -991,7 +1129,23 @@
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                                 Operating Cities</p>
                             <div id="logged_in_hotel_cities_op_list">
-                                
+                                <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                    <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                      <animateTransform attributeType="xml"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 25 25"
+                                        to="360 25 25"
+                                        dur="0.6s"
+                                        repeatCount="indefinite"/>
+                                      </path>
+                                    </svg>
+                                    <p style="text-align: center; font-size: 14px; color:white;">
+                                      loading...
+                                    </p>
+                                  </div>
                             </div>
                             <p id="logged_in_hotel_cities_op_see_all_cities_btn" onclick="show_all_cities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
                                 see all cities</p>
@@ -1041,7 +1195,23 @@
                     <div style="margin-top: 10px;">
                         <div style="padding: 10px;">
                             <div id="dashboard_onload_displayed_rooms">
-                                
+                                <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                                    <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                    <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                      <animateTransform attributeType="xml"
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 25 25"
+                                        to="360 25 25"
+                                        dur="0.6s"
+                                        repeatCount="indefinite"/>
+                                      </path>
+                                    </svg>
+                                    <p style="text-align: center; font-size: 14px; color:white;">
+                                      loading...
+                                    </p>
+                                  </div>
                             </div>
                             <div style="display: none;">
                                 <p style="margin-top: 20px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
@@ -1139,25 +1309,106 @@
                     <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder;">
                         Photos
                     </p>
+                    
                     <div class="gallery_photos_display_container">
                         <div id="logged_in_hotel_main_photo_display" class="gallery_photos_display_main_section">
-                            
+                            <div style="width: 100%; text-align: center; min-height: 300px; display: flex; flex-direction: column !important; justify-content: center; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.267);" class="loader loader--style2" title="1">
+                                <p style="text-align: center;"><svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                  width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                  <animateTransform attributeType="xml"
+                                    attributeName="transform"
+                                    type="rotate"
+                                    from="0 25 25"
+                                    to="360 25 25"
+                                    dur="0.6s"
+                                    repeatCount="indefinite"/>
+                                  </path>
+                                </svg></p>
+                                <p style="text-align: center; font-size: 14px; color:white;">
+                                  loading...
+                                </p>
+                              </div>
                         </div>
                         <div class="gallery_photos_display_section">
                             <div class="gallery_photos_display_section_part">
                                 <div id="logged_in_hotel_first_photo_display" class="gallery_photos_display_section_part_item">
-                                    
+                                    <div style="width: 100%; text-align: center; min-height: 150px; display: flex; flex-direction: column !important; justify-content: center; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.267);" class="loader loader--style2" title="1">
+                                        <p style="text-align: center;"><svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                          width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                        <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                          <animateTransform attributeType="xml"
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 25 25"
+                                            to="360 25 25"
+                                            dur="0.6s"
+                                            repeatCount="indefinite"/>
+                                          </path>
+                                        </svg></p>
+                                        <p style="text-align: center; font-size: 14px; color:white;">
+                                          loading...
+                                        </p>
+                                      </div>
                                 </div>
                                 <div id="logged_in_hotel_second_photo_display" class="gallery_photos_display_section_part_item">
-                                    
+                                    <div style="width: 100%; text-align: center; min-height: 150px; display: flex; flex-direction: column !important; justify-content: center; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.267);" class="loader loader--style2" title="1">
+                                        <p style="text-align: center;"><svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                          width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                        <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                          <animateTransform attributeType="xml"
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 25 25"
+                                            to="360 25 25"
+                                            dur="0.6s"
+                                            repeatCount="indefinite"/>
+                                          </path>
+                                        </svg></p>
+                                        <p style="text-align: center; font-size: 14px; color:white;">
+                                          loading...
+                                        </p>
+                                      </div>
                                 </div>
                             </div>
                             <div class="gallery_photos_display_section_part">
                                 <div id="logged_in_hotel_third_photo_display" class="gallery_photos_display_section_part_item">
-                                    
+                                    <div style="width: 100%; text-align: center; min-height: 150px; display: flex; flex-direction: column !important; justify-content: center; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.267);" class="loader loader--style2" title="1">
+                                        <p style="text-align: center;"><svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                          width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                        <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                          <animateTransform attributeType="xml"
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 25 25"
+                                            to="360 25 25"
+                                            dur="0.6s"
+                                            repeatCount="indefinite"/>
+                                          </path>
+                                        </svg></p>
+                                        <p style="text-align: center; font-size: 14px; color:white;">
+                                          loading...
+                                        </p>
+                                      </div>
                                 </div>
                                 <div  id="logged_in_hotel_fourth_photo_display" class="gallery_photos_display_section_part_item">
-                                    
+                                    <div style="width: 100%; text-align: center; min-height: 150px; display: flex; flex-direction: column !important; justify-content: center; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.267);" class="loader loader--style2" title="1">
+                                        <p style="text-align: center;"><svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                          width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                        <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                          <animateTransform attributeType="xml"
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 25 25"
+                                            to="360 25 25"
+                                            dur="0.6s"
+                                            repeatCount="indefinite"/>
+                                          </path>
+                                        </svg></p>
+                                        <p style="text-align: center; font-size: 14px; color:white;">
+                                          loading...
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1180,7 +1431,23 @@
                         
                         </p>
                         <div id="logged_in_hotel_last_review_rating" style="width: fit-content; margin: auto;">
-                            
+                            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                  width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                  <animateTransform attributeType="xml"
+                                    attributeName="transform"
+                                    type="rotate"
+                                    from="0 25 25"
+                                    to="360 25 25"
+                                    dur="0.6s"
+                                    repeatCount="indefinite"/>
+                                  </path>
+                                </svg>
+                                <p style="text-align: center; font-size: 14px; color:white;">
+                                  loading...
+                                </p>
+                              </div>
                         </div>
                         <p style="cursor: pointer; text-align: center; font-size: 14px; color: white; padding: 10px;">
                             see all reviews...

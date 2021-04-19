@@ -669,8 +669,8 @@ app.get("/get_login_user/:id", async (req, res, next) =>{
 app.post("/listed_property_login/", async (req, res, next) => {
 
   console.log(req.body);
-
-  let hotel = await cheap_hotel.findById("6063dd3fb6dfe50bc800dd5f");
+//6063dd3fb6dfe50bc800dd5f 
+  let hotel = await cheap_hotel.findById("6063e055b6dfe50bc800dd60");
 
   res.send(hotel);
 
@@ -1175,6 +1175,8 @@ app.post("/update_cheap_hotel_fax/:hotel_brand_id", async (req, res, next) => {
 app.post("/update_cheap_hotel_avg_price/:hotel_brand_id", async (req, res, next) => {
 
   let new_avg_price = req.query.new_avg_price;
+  new_avg_price = new_avg_price.replace("$", "");
+  
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
@@ -1184,7 +1186,7 @@ app.post("/update_cheap_hotel_avg_price/:hotel_brand_id", async (req, res, next)
   let new_hotel = new cheap_hotel(hotel);
   let update_hotel = await new_hotel.save();
 
-  res.send(update_hotel.price);
+  res.send(new_avg_price);
 
 });
 
