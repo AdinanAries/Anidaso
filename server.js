@@ -1064,6 +1064,24 @@ app.get("/get_cheap_hotel_rooms/:id", async (req, res, next) =>{
 
 });
 
+app.get("/get_room_by_id/:room_id", async (req, res, next) =>{
+
+  let room = await cheap_hotel_room.findById(req.params.room_id);
+  res.send(room);
+
+});
+
+//getting rooms by property id
+app.get("/get_cheap_hotel_rooms_by_property_id/:property_id", async (req, res, next) => {
+  
+  let rooms = await cheap_hotel_room.find({
+    property_id: req.params.property_id
+  }).exec();
+
+  res.send(rooms);
+
+})
+
 //getting cheap hotel properties
 app.get("/get_cheap_hotel_properties/:id", async (req, res, next) =>{
 

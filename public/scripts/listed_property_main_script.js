@@ -490,9 +490,22 @@ function toggle_show_edit_desc_info_form(){
     }, 500);
 }
 
+async function set_rooms_for_search_selection(){
+
+    document.getElementById("search_room_select_room_input").innerHTML = '';
+
+    let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById("search_room_select_property_input").value);
+    for(let i=0; i < rooms.length; i++){
+        document.getElementById("search_room_select_room_input").innerHTML += `
+            <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
+        `; 
+    }
+}
+
 async function toggle_show_search_room_pane(){
     
     let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     if(rooms){
         if((rooms.length === 0)){
@@ -506,14 +519,27 @@ async function toggle_show_search_room_pane(){
         return null;
     }
 
+    document.getElementById("search_room_select_property_input").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("search_room_select_property_input").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
+    set_rooms_for_search_selection();
     let room_desc = rooms[0].description.replaceAll("'", "@apostrophe@").replaceAll(",", "@comma@");
     
     document.getElementById("room_search_result_room_details").innerHTML =  
     room_search_result_return_markup(rooms[0].booked, rooms[0].closed,rooms[0].room_number, rooms[0].room_type, rooms[0].bed_type, rooms[0].price, room_desc, rooms[0].amenities, 
         rooms[0].guest_capacitance, rooms[0].room_link);
+    
     document.getElementById("add_room_form_panel").style.display = "none";
     $("#search_room_panel").toggle("up");
 
+}
+
+async function search_room_get_selected_room(){
+    let room = get_and_return_hotel_room_by_id(document.getElementById("search_room_select_room_input").value);
 }
 
 let global_is_room_closed = false;
@@ -1378,7 +1404,7 @@ function add_new_cheap_room(){
         }
     });
 }
-add_new_cheap_room();
+//add_new_cheap_room();
 
 async function render_hotel_rooms(rooms_list){
 
@@ -1657,6 +1683,21 @@ function get_and_return_hotel_property_by_id(property_id){
         type: "GET",
         url: "/get_property_by_id/"+property_id,
         success: res => {
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
+function get_and_return_hotel_room_by_id(id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_room_by_id/"+id,
+        success: res => {
+            console.log(res);
             return res;
         },
         error: err => {
@@ -1998,6 +2039,21 @@ function update_info_item(update_type, new_info, hotel_brand_id){
         }
     });
 
+}
+
+function get_and_return_cheap_hotel_rooms_by_property_id(property_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_cheap_hotel_rooms_by_property_id/"+property_id,
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
 }
 
 $(document).ready(()=>{
