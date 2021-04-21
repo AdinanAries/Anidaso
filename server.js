@@ -1020,7 +1020,7 @@ app.post("/create_new_hotel_room/", async (req, res, next) =>{
       booked: req.body.booked,
       room_type: req.body.room_type,
       bed_type: req.body.bed_type,
-      room_link: req.body.room_link,
+      room_link: "",
       guest_capacitance: {
         adults: req.body.guest_capacitance.adults,
         children: req.body.guest_capacitance.children
@@ -1039,7 +1039,14 @@ app.post("/create_new_hotel_room/", async (req, res, next) =>{
     });
 
     let saved_room = await room_obj.save();
-    res.send({success: true, data: saved_room, msg: "Hotel registration finished successfully!"});
+
+    saved_room.room_link = `https://anidaso.com/bookcheapnow.html?r=${saved_room._id}`;
+
+    let room_with_link = new cheap_hotel_room(saved_room);
+
+    room_with_link = await room_with_link.save();
+
+    res.send({success: true, data: room_with_link, msg: "room has been added successfully!"});
 
   }catch(e){
     res.send({success: false, data: e, msg: "Server Error!"});

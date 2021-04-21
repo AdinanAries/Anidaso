@@ -82,11 +82,10 @@ var cheap_hotel_building = {
 var cheap_hotel_room = {
     property_id: "607304a562a84645bccdf40b",
     hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
-    room_number: "4D",
+    room_number: "6D",
     closed: "false",
     booked: "false",
     room_type: "Delux",
-    room_link: "https://anidaso.com/p=607304a562a84645bccdf40b&b=6063dd3fb6dfe50bc800dd5f&r=4D",
     guest_capacitance: {
     adults: 1,
     children: 4
@@ -524,7 +523,7 @@ function room_search_result_return_markup(is_booked, is_closed, room_number, roo
 
     if(the_room_link.length > 40){
         the_room_link = `
-            ${room_link.substring(0, 40)} <br/> ${room_link.substring(41, room_link.length - 1)}`;
+            ${room_link.substring(0, 40)} <br/> ${room_link.substring(41, room_link.length)}`;
     }
 
     let amenities_display = amenities_list.join(", ");
@@ -1379,7 +1378,7 @@ function add_new_cheap_room(){
         }
     });
 }
-//add_new_cheap_room();
+add_new_cheap_room();
 
 async function render_hotel_rooms(rooms_list){
 
