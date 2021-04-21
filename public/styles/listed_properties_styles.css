@@ -61,11 +61,12 @@
   color: rgb(5, 44, 59);
   border-radius: 3px;
 }
-#page_popup_content_header {
+.page_popup_content_header {
   padding: 10px;
   height: 70px;
 }
-#page_popup_content_body {
+.page_popup_content_body {
+  overscroll-behavior: contain;
   padding: 10px;
   background-color: rgb(14, 31, 61);
   height: calc(100% - 165px);
@@ -84,6 +85,7 @@ textarea:focus {
   outline: none;
 }
 .page_pop_up_cover {
+  overscroll-behavior: contain;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -395,10 +397,10 @@ footer a {
   .wrapper {
     margin: 0;
   }
-  #page_popup_content_header {
+  .page_popup_content_header {
     height: 150px;
   }
-  #page_popup_content_body {
+  .page_popup_content_body {
     height: calc(100% - 240px);
   }
   .flex_row_default_flex_column_mobile {

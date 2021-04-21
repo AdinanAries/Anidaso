@@ -62,7 +62,7 @@
                     Save Selected
                 </div>
             </div>
-            <div id="page_popup_content_body" style="height: calc(100% - 120px);">
+            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
                 <div style="padding: 10px;">
                     <div class="flex_row_default_flex_column_mobile">
                         <div id="select_amenities_list1" class="flex_child_of_two">
@@ -109,7 +109,7 @@
                         </button>
                     </div>
                 </div>
-                <div id="page_popup_content_body">
+                <div class="page_popup_content_body">
                     <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0;">
                         Add Guest(s) Information</p>
                 
@@ -190,7 +190,7 @@
             <div style="height: 100%;">
                 <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
                     Search Room</p>
-                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                <div class="flex_row_default_flex_column_mobile page_popup_content_header">
                     <div class="flex_child_of_two">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
                         <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
@@ -215,136 +215,10 @@
                         <button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button>
                     </div>
                 </div>
-                <div id="page_popup_content_body">
+                <div class="page_popup_content_body">
                     <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">See room details here</p>
-                    <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
-                        <div class="flex_child_of_two">
-                            <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
-                                Room 5D 
-                                <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
-                                    <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
-                                    (available)
-                                </span>
-                            </p>
-                            
-                            <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px;">
-                                <input style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
-                                <label for="room_status_switch_toggle" style="font-size: 12px;">
-                                    Close Room</label>
-                            </p>
-                            <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
-                                <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                                    <i class="fa fa-plus" aria-hidden="true"></i> add new room
-                                </div>
-                                <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
-                                </div>
-                            </div>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Room type: 
-                                <span style="font-size: 13px; color: white;">
-                                    Deluxe</span></p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Bed type: 
-                                <span style="font-size: 13px; color: white;">
-                                    King size</span></p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Amenities: 
-                                <span style="font-size: 13px; color: white;">
-                                    Wifi, Cable, others...</span></p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Price: 
-                                <span style="font-size: 13px; color: white;">
-                                    $90.00</span></p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Description: 
-                                <span style="font-size: 13px; color: white;">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas soluta eum ipsum quaerat 
-                                    doloribus fugit obcaecati non a aperiam ex omnis dolorem veniam eve...
-                                </span></p>
-                        </div>
-                        <div class="flex_child_of_two flex_non_first_child">
-                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                                Last Booked</p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Checkin: 
-                                <span style="font-size: 13px; color: white;">
-                                    March 23, 2022</span></p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Checkout: 
-                                <span style="font-size: 13px; color: white;">
-                                    March 25, 2022</span></p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Guest: 
-                                <span style="font-size: 13px; color: white;">
-                                    Adam, 25yrs, Male</span></p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Paid: 
-                                <span style="font-size: 13px; color: white;">
-                                    $75.00</span></p>
-                            <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
-                                view room guests history
-                                <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
-                            </p>
-                            <p style="color: white; margin-bottom: 10px; margin-top: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                                Room Link</p>
-                            <p style="margin: 10px; font-size: 13px; letter-spacing: 1px; color: rgb(121, 223, 252);">
-                                The link below can be directly used to book this room. You may share to customers so that they find and book 
-                                this room.</p>
-                            <p class="room_sharing_link">
-                                <i class="fa fa-copy" aria-hidden="true"></i> 
-                                <span style="font-size: 13px; color: white;">
-                                    https://anidaso.com/bookcheapnow.html?id=eidjE33skjdoieDgi3433k&room=5D
-                                </span>
-                                <span class="tooltip">
-                                    Click to copy link</span>
-                            </p>
-                            <p style="margin-top: 20px; color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                                Next Availability</p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                March 23, 2022 
-                                <span style="font-size: 13px; color: white;">
-                                   - 12:30PM</span></p>
-                        </div>
-                    </div>
-                    <div class="flex_row_default_flex_column_mobile">
-                          <div class="flex_child_of_two" style="margin-top: 20px;">
-                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                                Misc</p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Guests Capacitance: 
-                                <span style="font-size: 13px; color: white;">
-                                    1 adult, 4 children
-                                </span>
-                            </p>
-                            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                                Cancellation: 
-                                <span style="font-size: 13px; color: white;">
-                                    1 week, $90.00 
-                                    <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
-                                </span>
-                            </p>
-                            <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
-                                view room photo
-                                <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
-                            </p>
-                            <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
-                                <i style="margin-right: 5px; color:rgb(255, 78, 78);" aria-hidden="true" class="fa fa-trash"></i>
-                                delete this room
-                            </p>
-                          </div>
-                          <div style="margin-bottom: 20px; margin-top: 20px;" class="flex_child_of_two flex_non_first_child">
-                            <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                                Cancellation Request</p>
-                                <p style="color: whitesmoke; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px;">
-                                    Guest requested booking cancellation. Click on the button below to cancel booking
-                                    <span style="color:rgb(255, 97, 6); font-size: 13px;">
-                                        with cancellation fee of $90.00</span>
-                                </p>
-                                <p style="background-color: steelblue; color: white; border-radius: 4px; padding: 10px; margin-bottom: 20px; text-align: center; width: 160px; font-size: 13px; letter-spacing: 1px;">
-                                    Cancel Booking
-                                </p>
-                          </div>
+                    <div id="room_search_result_room_details">
+
                     </div>
                 </div>
             </div>
@@ -356,7 +230,7 @@
             <div style="height: 100%;">
                 <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
                     Add Room</p>
-                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                <div class="flex_row_default_flex_column_mobile page_popup_content_header">
                     <div class="flex_child_of_two">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
                         <select id="add_room_form_properties_select" style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
@@ -376,7 +250,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="page_popup_content_body">
+                <div class="page_popup_content_body">
                     <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">Add room details here</p>
                     <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
                         <div class="flex_child_of_two">
@@ -487,7 +361,7 @@
             <div style="height: 100%;">
                 <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
                     Add Property</p>
-                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                <div class="flex_row_default_flex_column_mobile page_popup_content_header">
                     <div class="flex_child_of_two">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Enter City, Country</p>
                         <input id="add_hotel_property_form_property_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 13px; background-color:rgb(187, 245, 255);" placeholder="enter city here" />
@@ -500,7 +374,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="page_popup_content_body">
+                <div class="page_popup_content_body">
                     <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">Add property details here</p>
                     <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
                         <div class="flex_child_of_two">
@@ -699,10 +573,12 @@
                 </div>
             </div>
             <p onclick="toggle_show_all_amenities();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
-                All Amenities</p>
-            <div id="all_hotel_amenities_list" style="padding: 10px;">
-                
+            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
+                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                    All Amenities</p>
+                <div id="all_hotel_amenities_list" style="padding: 10px;">
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -721,10 +597,12 @@
                 </div>
             </div>
             <p onclick="toggle_show_all_cities();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
-                All Cities</p>
-            <div id="all_cities_list" style="padding: 10px;">
-                
+            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
+                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                    All Cities</p>
+                <div id="all_cities_list" style="padding: 10px;">
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -750,10 +628,12 @@
                 </div>
             </div>
             <p onclick="toggle_show_all_policies();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
-                Your Policies</p>
-            <div id="all_hotel_policies_list" style="padding: 10px;">
-                
+            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
+                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
+                    Your Policies</p>
+                <div id="all_hotel_policies_list" style="padding: 10px;">
+                    
+                </div>
             </div>
         </div>
     </div>

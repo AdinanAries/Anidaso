@@ -1019,6 +1019,7 @@ app.post("/create_new_hotel_room/", async (req, res, next) =>{
       closed: req.body.closed,
       booked: req.body.booked,
       room_type: req.body.room_type,
+      bed_type: req.body.bed_type,
       room_link: req.body.room_link,
       guest_capacitance: {
         adults: req.body.guest_capacitance.adults,

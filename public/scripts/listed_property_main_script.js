@@ -493,7 +493,7 @@ function toggle_show_edit_desc_info_form(){
 
 async function toggle_show_search_room_pane(){
     
-    let rooms = await get_hotel_rooms(window.localStorage.getItem("ANDSBZID"))
+    let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
 
     if(rooms){
         if((rooms.length === 0)){
@@ -507,9 +507,168 @@ async function toggle_show_search_room_pane(){
         return null;
     }
 
+    let room_desc = rooms[0].description.replaceAll("'", "@apostrophe@").replaceAll(",", "@comma@");
+    
+    document.getElementById("room_search_result_room_details").innerHTML =  
+    room_search_result_return_markup(rooms[0].booked, rooms[0].room_number, rooms[0].room_type, rooms[0].bed_type, rooms[0].price, room_desc, rooms[0].amenities, 
+        rooms[0].guest_capacitance, rooms[0].room_link);
     document.getElementById("add_room_form_panel").style.display = "none";
     $("#search_room_panel").toggle("up");
 
+}
+
+function room_search_result_return_markup(is_booked, room_number, room_type, bed_type, room_price, description, amenities_list, guest_capacitance, room_link){
+    
+    let the_room_link = room_link;
+
+    if(the_room_link.length > 40){
+        the_room_link = `
+            ${room_link.substring(0, 40)} <br/> ${room_link.substring(41, room_link.length - 1)}`;
+    }
+
+    let amenities_display = amenities_list.join(", ");
+
+    let room_booked_status = `
+        <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
+        (available)
+    `;
+    if(is_booked){
+        room_booked_status = `
+        <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
+        (booked)
+    `;
+    }
+
+    let room_desc = description.replaceAll("@apostrophe@", "'").replaceAll("@comma@", ",");
+    return `
+        <div class="flex_row_default_flex_column_mobile" id="">
+            <div class="flex_child_of_two">
+                <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                    Room ${room_number} 
+                    <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
+                        ${room_booked_status}
+                    </span>
+                </p>
+                
+                <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px;">
+                    <input style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
+                    <label for="room_status_switch_toggle" style="font-size: 12px;">
+                        Close Room</label>
+                </p>
+                <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
+                    <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                        <i class="fa fa-plus" aria-hidden="true"></i> add new room
+                    </div>
+                    <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
+                    </div>
+                </div>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Room type: 
+                    <span style="font-size: 13px; color: white;">
+                        ${room_type}</span></p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Bed type: 
+                    <span style="font-size: 13px; color: white;">
+                        ${bed_type}</span></p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Amenities: 
+                    <span style="font-size: 13px; color: white;">
+                        ${amenities_display}...</span></p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Price: 
+                    <span style="font-size: 13px; color: white;">
+                        $${parseFloat(room_price).toFixed(2)}</span></p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Description: 
+                    <span style="font-size: 13px; color: white;">
+                        ${room_desc}
+                    </span></p>
+            </div>
+            <div class="flex_child_of_two flex_non_first_child">
+                <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                    Last Booked</p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Checkin: 
+                    <span style="font-size: 13px; color: white;">
+                        March 23, 2022</span></p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Checkout: 
+                    <span style="font-size: 13px; color: white;">
+                        March 25, 2022</span></p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Guest: 
+                    <span style="font-size: 13px; color: white;">
+                        Adam, 25yrs, Male</span></p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Paid: 
+                    <span style="font-size: 13px; color: white;">
+                        $75.00</span></p>
+                <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                    view room guests history
+                    <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                </p>
+                <p style="color: white; margin-bottom: 10px; margin-top: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                    Room Link</p>
+                <p style="margin: 10px; font-size: 13px; letter-spacing: 1px; color: rgb(121, 223, 252);">
+                    The link below can be directly used to book this room. You may share to customers so that they find and book 
+                    this room.</p>
+                <p class="room_sharing_link">
+                    <i class="fa fa-copy" aria-hidden="true"></i> 
+                    <span style="font-size: 13px; color: white;">
+                        ${the_room_link}
+                    </span>
+                    <span class="tooltip">
+                        Click to copy link</span>
+                </p>
+                <p style="margin-top: 20px; color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                    Next Availability</p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    March 23, 2022 
+                    <span style="font-size: 13px; color: white;">
+                    - 12:30PM</span></p>
+            </div>
+        </div>
+        <div class="flex_row_default_flex_column_mobile">
+            <div class="flex_child_of_two" style="margin-top: 20px;">
+                <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                    Misc</p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Guests Capacitance: 
+                    <span style="font-size: 13px; color: white;">
+                        ${guest_capacitance.adults} adult, ${guest_capacitance.children} children
+                    </span>
+                </p>
+                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Cancellation: 
+                    <span style="font-size: 13px; color: white;">
+                        1 week, $90.00 
+                        <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                    </span>
+                </p>
+                <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                    view room photo
+                    <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                </p>
+                <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                    <i style="margin-right: 5px; color:rgb(255, 78, 78);" aria-hidden="true" class="fa fa-trash"></i>
+                    delete this room
+                </p>
+            </div>
+            <div style="margin-bottom: 20px; margin-top: 20px;" class="flex_child_of_two flex_non_first_child">
+                <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                    Cancellation Request</p>
+                    <p style="color: whitesmoke; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px;">
+                        Guest requested booking cancellation. Click on the button below to cancel booking
+                        <span style="color:rgb(255, 97, 6); font-size: 13px;">
+                            with cancellation fee of $90.00</span>
+                    </p>
+                    <p style="background-color: steelblue; color: white; border-radius: 4px; padding: 10px; margin-bottom: 20px; text-align: center; width: 160px; font-size: 13px; letter-spacing: 1px;">
+                        Cancel Booking
+                    </p>
+            </div>
+        </div>
+    `
 }
 
 async function toggle_show_add_room_pane(){
@@ -567,7 +726,7 @@ function toggle_show_make_room_reservation_div(){
 
 async function continue_room_reservation(){
     
-    let rooms = await get_hotel_rooms(window.localStorage.getItem("ANDSBZID"))
+    let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"))
 
     if(rooms){
         if((rooms.length === 0)){
@@ -594,7 +753,7 @@ function toggle_show_booked_rooms(){
 
 async function toggle_show_all_hotel_properties(){
 
-    let properties = await get_hotel_buildings(window.localStorage.getItem("ANDSBZID"))
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"))
 
     if(properties){
         if((properties.length === 0)){
@@ -652,7 +811,7 @@ async function toggle_show_all_policies(){
             }
         }else{
             document.getElementById("all_hotel_policies_list").innerHTML = `
-                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: rgba(0,0,0,0.9);">
+                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: white;">
                     <i style="color: crimson; margin-right: 5px;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
                     <span style="font-weight: bolder; color: orangered; font-size: 14px;">You have not added any policies:</span>
                     Your hotel policies help inform your guests about restrictions and rules. 
@@ -666,16 +825,16 @@ function all_policies_return_each_policy_markup(number, policy){
     return `
         <div id="all_logged_in_hotel_policies_${number}_policy">
             <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
-                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: rgba(0,0,0,0.9);">
+                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: white;">
                     <span style="color: orangered; font-size: 14px; font-weight: bolder;">${policy.type}:</span>
                     ${policy.description} 
                 </p>
                 <span onclick="toggle_hide_show_anything('all_policies_delete_${number}_policy_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                    <i style="color: rgb(158, 12, 12);" class="fa fa-trash" aria-hidden="true"></i>
+                    <i style="color: rgb(258, 112, 112);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </div>
             <div id="all_policies_delete_${number}_policy_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; background: none; width: 100%;" class="confirm_delete_dialog">
-                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px;">
+                <p style="color: white; font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                     Are you sure</p>
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                     <div onclick="all_cities_op_remove_each_city_op('all_logged_in_hotel_policies_${number}_policy', '${policy.type}, ${policy.description.replaceAll("'", "@apostrophe@")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1299,6 +1458,21 @@ function get_hotel_rooms(hotel_id){
     });
 }
 
+//function that gets and return all rooms
+function get_and_return_rooms(hotel_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_cheap_hotel_rooms/"+hotel_id,
+        success: res =>{
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            return err;
+        }
+    });
+}
+
 //getting cheap hotel properties
 function get_hotel_buildings(hotel_id){
     $.ajax({
@@ -1309,6 +1483,19 @@ function get_hotel_buildings(hotel_id){
         },
         error: err => {
             console.log(err);
+        }
+    });
+}
+
+function get_and_return_hotel_buildings(hotel_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_cheap_hotel_properties/"+hotel_id,
+        success: res =>{
+            return res;
+        },
+        error: err => {
+            return err;
         }
     });
 }
@@ -1549,19 +1736,19 @@ function all_amenities_return_each_amenity_markup(amenity){
     return `
         <div id="logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity" class="logged_in_hotel_amenity">
             <p>
-                <span style="font-size: 14px; color: rgb(33, 80, 82); font-weight: bolder;">
-                    <i style="color: rgb(7, 59, 61); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                <span style="font-size: 14px; color: white; font-weight: bolder;">
+                    <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                     ${amenity}
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                    <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(5, 88, 126); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                    <i  onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="color: rgb(150, 22, 22);" class="fa fa-trash" aria-hidden="true"></i>
+                    <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i  onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="color: rgb(250, 122, 122);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </p>
             <div id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
-                <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="color: rgb(5, 44, 59); display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
                 </p>
-                <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="background-color:rgb(30, 78, 117); color: white; padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
+                <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                     <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                         Save
@@ -1572,7 +1759,7 @@ function all_amenities_return_each_amenity_markup(amenity){
                 </div>
             </div>
             <div id="delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
-                <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: rgb(5, 44, 59);">
+                <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                     Are you sure</p>
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                     <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1590,19 +1777,19 @@ function all_amenities_return_each_amenity_markup(amenity){
 function all_amenities_return_each_amenity_markup_after_update(amenity){
     return `
         <p>
-            <span style="font-size: 14px; color: rgb(33, 80, 82); font-weight: bolder;">
-                <i style="color: rgb(7, 59, 61); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+            <span style="font-size: 14px; color: white; font-weight: bolder;">
+                <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                 ${amenity}
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(5, 88, 126); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                <i  onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="color: rgb(150, 22, 22);" class="fa fa-trash" aria-hidden="true"></i>
+                <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                <i  onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="color: rgb(250, 122, 122);" class="fa fa-trash" aria-hidden="true"></i>
             </span>
         </p>
         <div id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
-            <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="color: rgb(5, 44, 59); display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+            <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
             </p>
-            <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="background-color:rgb(30, 78, 117); color: white; padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
+            <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                 <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                     Save
@@ -1613,7 +1800,7 @@ function all_amenities_return_each_amenity_markup_after_update(amenity){
             </div>
         </div>
         <div id="delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
-            <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: rgb(5, 44, 59);">
+            <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                 Are you sure</p>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                 <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1676,16 +1863,16 @@ function all_cities_return_each_city_markup(city_param){
     return `
         <div id="all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op" class="logged_in_hotel_amenity">
             <p>
-                <span style="font-size: 14px; color:rgb(33, 80, 82); font-weight: bolder;">
-                    <i style="color: rgb(9, 70, 67); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                <span style="font-size: 14px; color: white; font-weight: bolder;">
+                    <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                     ${city_param.city}, ${city_param.country}
                 </span>
                 <span onclick="toggle_hide_show_anything('all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                    <i style="color: rgb(158, 12, 12);" class="fa fa-trash" aria-hidden="true"></i>
+                    <i style="color: rgb(250, 122, 122);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </p>
-            <div id="all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; background: none; width: 100%;" class="confirm_delete_dialog">
-                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px;">
+            <div id="all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; margin-bottom: 20px; background: none; width: 100%;" class="confirm_delete_dialog">
+                <p style="font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                     Are you sure</p>
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                     <div onclick="all_cities_op_remove_each_city_op('all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op', '${city_param.city}, ${city_param.country}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">

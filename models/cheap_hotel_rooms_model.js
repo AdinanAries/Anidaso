@@ -29,6 +29,9 @@ const cheap_hotel_rooms_schema = new mongoose.Schema({
     room_type: {
         type: String
     },
+    bed_type: {
+        type: String
+    },
     room_link: {
         type: String
     },
