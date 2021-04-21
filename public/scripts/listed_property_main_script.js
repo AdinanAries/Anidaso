@@ -510,14 +510,15 @@ async function toggle_show_search_room_pane(){
     let room_desc = rooms[0].description.replaceAll("'", "@apostrophe@").replaceAll(",", "@comma@");
     
     document.getElementById("room_search_result_room_details").innerHTML =  
-    room_search_result_return_markup(rooms[0].booked, rooms[0].room_number, rooms[0].room_type, rooms[0].bed_type, rooms[0].price, room_desc, rooms[0].amenities, 
+    room_search_result_return_markup(rooms[0].booked, rooms[0].closed,rooms[0].room_number, rooms[0].room_type, rooms[0].bed_type, rooms[0].price, room_desc, rooms[0].amenities, 
         rooms[0].guest_capacitance, rooms[0].room_link);
     document.getElementById("add_room_form_panel").style.display = "none";
     $("#search_room_panel").toggle("up");
 
 }
 
-function room_search_result_return_markup(is_booked, room_number, room_type, bed_type, room_price, description, amenities_list, guest_capacitance, room_link){
+let global_is_room_closed = false;
+function room_search_result_return_markup(is_booked, is_closed, room_number, room_type, bed_type, room_price, description, amenities_list, guest_capacitance, room_link){
     
     let the_room_link = room_link;
 
@@ -527,6 +528,30 @@ function room_search_result_return_markup(is_booked, room_number, room_type, bed
     }
 
     let amenities_display = amenities_list.join(", ");
+
+    let room_closed_status = `
+    <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
+    <label for="room_status_switch_toggle">
+        <span style="font-size: 12px;" id="room_status_switch_toggle_display">
+            Close Room
+            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+            (room is open)</span>
+        </span>
+    </label>
+    `;
+    if(is_closed){
+        global_is_room_closed = true;
+        room_closed_status = `
+        <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" id="room_status_switch_toggle" type="checkbox" />
+        <label for="room_status_switch_toggle">
+            <span style="font-size: 12px;" id="room_status_switch_toggle_display">
+                Open Room
+                <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+                (room is closed)</span>
+            </span>
+        </label>
+    `;
+    }
 
     let room_booked_status = `
         <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
@@ -551,9 +576,7 @@ function room_search_result_return_markup(is_booked, room_number, room_type, bed
                 </p>
                 
                 <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px;">
-                    <input style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
-                    <label for="room_status_switch_toggle" style="font-size: 12px;">
-                        Close Room</label>
+                    ${room_closed_status}
                 </p>
                 <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
                     <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
@@ -669,6 +692,28 @@ function room_search_result_return_markup(is_booked, room_number, room_type, bed
             </div>
         </div>
     `
+}
+
+function open_close_rooms_function(){
+    
+    if(global_is_room_closed){
+        //open the room
+        global_is_room_closed = false;
+        document.getElementById("room_status_switch_toggle_display").innerHTML = `
+            Close Room
+            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+            (room is open)</span>
+        `;
+    
+    }else{
+        //close the room
+        global_is_room_closed = true;
+        document.getElementById("room_status_switch_toggle_display").innerHTML = `
+            Open Room
+            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+            (room is closed)</span>
+        `;
+    }
 }
 
 async function toggle_show_add_room_pane(){
