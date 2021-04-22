@@ -943,7 +943,7 @@ autocomplete5.addListener('place_changed', function () {
 $(function() {
   $('#book_cheap_hotel_date_range_input').daterangepicker({
     opens: 'left',
-    autoUpdateInput: false,
+    //autoUpdateInput: false,
     locale: {
       cancelLabel: 'Clear'
     }

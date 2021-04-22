@@ -199,7 +199,7 @@
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Room</p>
-                        <select onchange="search_room_get_selected_room();" id="search_room_select_room_input" style="width: 70%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
+                        <select onchange="search_room_get_selected_room();" id="search_room_select_room_input" style="width: 100%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
                             <option>
                                 5D
                             </option>
@@ -207,7 +207,7 @@
                                 10A
                             </option>
                         </select>
-                        <button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button>
+                        <!--button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button-->
                     </div>
                 </div>
                 <div class="page_popup_content_body">
@@ -433,12 +433,12 @@
                     </div>
                 </div>
             </div>
-            <div id="bookings_content_container" style="padding: 10px;">
-                <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
+            <div class="page_popup_content_body" style="height: calc(100% - 132px);">
+                <p style="margin-bottom: 20px 0; color: white; font-size: 14px; font-weight: bolder; text-align: center;">
                     Filter Search</p>
-                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                <div class="flex_row_default_flex_column_mobile" class="page_popup_content_header">
                     <div class="flex_child_of_two">
-                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
+                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Property</p>
                         <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
                             <option>
                                 All Properties
@@ -452,8 +452,8 @@
                         </select>
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
-                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Room</p>
-                        <select style="width: 70%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
+                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Room</p>
+                        <select style="width: 100%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
                             <option>
                                 All Rooms
                             </option>
@@ -464,11 +464,11 @@
                                 10A
                             </option>
                         </select>
-                        <button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button>
+                        <!--button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button-->
                     </div>
                 </div>
-                <div id="booked_rooms_list">
-                    <div class="each_booked_room" style="background-color:rgb(8, 40, 66); border-radius: 4px; min-height: 200px;">
+                <div id="booked_rooms_list" style="margin-top: 10px;">
+                    <div class="each_booked_room" style="background-color:rgba(0, 0, 0, 0.8); border-radius: 4px; margin-bottom: 5px;">
                         <div style="padding: 10px;">
                             <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
                                 Room 5D:
@@ -519,12 +519,11 @@
             <p onclick="toggle_show_all_hotel_properties();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
                 Your Properties</p>
-                <div class="page_popup_content_body" style="height: calc(100% - 75px);">
-                    <p style="color: white; font-size: 13px; text-align: center; margin: 20px 0; font-weight: bolder;">
-                    </p>
-                    <div id="hotel_properties_list">
-                        
-                    </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 75px);">
+                <p style="color: white; font-size: 13px; text-align: center; margin: 20px 0; font-weight: bolder;">
+                </p>
+                <div id="hotel_properties_list">
+                    
                 </div>
             </div>
         </div>

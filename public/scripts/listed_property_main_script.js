@@ -1037,7 +1037,7 @@ async function toggle_show_all_hotel_properties(){
 
 function all_properties_return_each_property_markup(property){
     return `
-        <div class="each_property_info" style="background-color:rgba(0, 0, 0, 0.7); border-radius: 4px; padding: 10px;">
+        <div class="each_property_info" style="background-color:rgba(0, 0, 0, 0.7); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
             <p style="font-weight: bolder; margin-bottom: 10px; letter-spacing: 1px; color: white; font-size: 13px;">
                 <i style="color:rgb(211, 87, 5); margin-right: 5px; font-size: 20px;" class="fa fa-building" aria-hidden="true"></i>
                 ${property.city},
@@ -2280,7 +2280,6 @@ $(document).ready(()=>{
 $(function() {
     $('#all_bookings_date_range_input').daterangepicker({
       opens: 'left',
-      autoUpdateInput: false,
       locale: {
         cancelLabel: 'Clear'
       }
@@ -2302,7 +2301,6 @@ $(function() {
   $(function() {
     $('#make_reservation_date_range_input').daterangepicker({
       opens: 'left',
-      autoUpdateInput: false,
       locale: {
         cancelLabel: 'Clear'
       }
