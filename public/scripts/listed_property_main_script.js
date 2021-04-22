@@ -7,6 +7,10 @@ var current_contact_edit_elem_id;
 var current_amenity_edit_elem_id;
 var current_edited_amenity_obj;
 var current_op_cities_edit_elem_id;
+var global_is_room_closed = false;
+var search_result_current_room_id;
+
+//show_all_hotel_property_rooms(propety_id) use this function to show  rooms of each property;
 
 var all_hotel_amenity_options = [
     "Business Center",
@@ -507,6 +511,8 @@ async function toggle_show_search_room_pane(){
     let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
+    set_search_room_inputs_options(properties);
+
     if(rooms){
         if((rooms.length === 0)){
             alert("You don't have any rooms in your account. Please add rooms first");
@@ -519,14 +525,7 @@ async function toggle_show_search_room_pane(){
         return null;
     }
 
-    document.getElementById("search_room_select_property_input").innerHTML = '';
-    for(let i=0; i < properties.length; i++){
-        document.getElementById("search_room_select_property_input").innerHTML += `
-            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
-        `; 
-    }
-
-    set_rooms_for_search_selection();
+    search_result_current_room_id = rooms[0]._id;
     let room_desc = rooms[0].description.replaceAll("'", "@apostrophe@").replaceAll(",", "@comma@");
     
     document.getElementById("room_search_result_room_details").innerHTML =  
@@ -539,10 +538,183 @@ async function toggle_show_search_room_pane(){
 }
 
 async function search_room_get_selected_room(){
-    let room = get_and_return_hotel_room_by_id(document.getElementById("search_room_select_room_input").value);
+
+    let room = await get_and_return_hotel_room_by_id(document.getElementById("search_room_select_room_input").value);
+
+    search_result_current_room_id = room._id;
+    let room_desc = room.description.replaceAll("'", "@apostrophe@").replaceAll(",", "@comma@");
+
+    document.getElementById("room_search_result_room_details").innerHTML =  
+    room_search_result_return_markup(room.booked, room.closed,room.room_number, room.room_type, room.bed_type, room.price, room_desc, room.amenities, 
+        room.guest_capacitance, room.room_link);
+
 }
 
-let global_is_room_closed = false;
+function set_search_room_inputs_options(properties){
+
+    document.getElementById("search_room_select_property_input").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("search_room_select_property_input").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
+    set_rooms_for_search_selection();
+}
+
+async function view_selected_room_full_details(room_id){
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    set_search_room_inputs_options(properties);
+
+    $("#search_room_panel").toggle("up");
+
+    let room = await get_and_return_hotel_room_by_id(room_id);
+
+    document.getElementById("search_room_select_room_input").value = room._id;
+    document.getElementById("search_room_select_property_input").value = room.property_id;
+    
+    search_result_current_room_id = room._id;
+    let room_desc = room.description.replaceAll("'", "@apostrophe@").replaceAll(",", "@comma@");
+
+    document.getElementById("room_search_result_room_details").innerHTML =  
+    room_search_result_return_markup(room.booked, room.closed,room.room_number, room.room_type, room.bed_type, room.price, room_desc, room.amenities, 
+        room.guest_capacitance, room.room_link);
+
+}
+
+async function get_all_room_of_property(property_id){
+
+    document.getElementById("hotel_property_all_rooms_list").innerHTML = ``;
+
+    let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(property_id);
+    let property = await get_and_return_hotel_property_by_id(property_id);
+
+    document.getElementById('hotel_property_all_rooms_building_location').innerHTML = `
+        <i style="color:rgb(211, 87, 5); margin-right: 5px; font-size: 20px;" class="fa fa-building" aria-hidden="true"></i>
+        ${property.city},
+        <span style="font-weight: initial; color:rgb(31, 42, 65); font-size: 12px; letter-spacing: 1px;">
+            ${property.street_address}, ${property.country}
+        </span>
+    `;
+
+    if(rooms.length === 0 ){
+        alert("no rooms were found!");
+        return null;
+    }
+
+    document.getElementById("hotel_property_all_rooms_body_title").innerText = `${rooms.length} room(s) on this property`;
+
+    for(let i=0; i < rooms.length; i++){
+        document.getElementById("hotel_property_all_rooms_list").innerHTML += 
+            all_rooms_return_each_room_markup(rooms[i]._id, rooms[i].closed ,rooms[i].booked, rooms[i].room_number, rooms[i].price, rooms[i].room_type, rooms[i].bed_type,
+                rooms[i].guest_capacitance.adults, rooms[i].guest_capacitance.children);
+    }
+}
+
+function all_rooms_return_each_room_markup(room_id, is_closed, is_booked, room_number, room_price, room_type, bed_type, number_of_adults, number_of_children){
+
+    let room_closed_status = `
+    <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
+    <label for="room_status_switch_toggle">
+        <span style="font-size: 12px;" id="room_status_switch_toggle_display">
+            Close Room
+            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+            (room is open)</span>
+        </span>
+    </label>
+    `;
+    if(is_closed){
+        global_is_room_closed = true;
+        room_closed_status = `
+        <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" id="room_status_switch_toggle" type="checkbox" />
+        <label for="room_status_switch_toggle">
+            <span style="font-size: 12px;" id="room_status_switch_toggle_display">
+                Open Room
+                <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+                (room is closed)</span>
+            </span>
+        </label>
+    `;
+    }
+
+    let room_booked_status = `
+        <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
+        (available)
+    `;
+    if(is_booked){
+        room_booked_status = `
+        <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
+        (booked)
+    `;
+    }
+
+    return `
+        <div class="each_property_info" style="background-color: rgba(0, 0, 0, 0.4); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
+            <div class="flex_row_default_flex_column_mobile">
+                <div class="flex_child_of_two">
+                    <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                        Room ${room_number}
+                        <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
+                            ${room_booked_status}
+                        </span>
+                    </p>
+                    <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px; margin-bottom: 10px;">
+                        ${room_closed_status}
+                    </p>
+                    
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        Room type: 
+                        <span style="font-size: 13px; color: white;">
+                            ${room_type}</span></p>
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        Bed type: 
+                        <span style="font-size: 13px; color: white;">
+                            ${bed_type}</span></p>
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        Price: 
+                        <span style="font-size: 13px; color: white;">
+                            $${parseFloat(room_price).toFixed(2)}</span></p>
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        Guests Capacitance: 
+                        <span style="font-size: 13px; color: white;">
+                            ${number_of_adults} adult, ${number_of_children} children
+                        </span>
+                    </p>
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        Cancellation: 
+                        <span style="font-size: 13px; color: white;">
+                            1 week, $90.00 
+                            <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                        </span>
+                    </p>
+                </div>
+                <div class="flex_child_of_two flex_non_first_child">
+                    <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                        Last Booked</p>
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        Checkin: 
+                        <span style="font-size: 13px; color: white;">
+                            March 23, 2022</span></p>
+                    <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        Checkout: 
+                        <span style="font-size: 13px; color: white;">
+                            March 25, 2022</span></p>
+                    <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
+                        <div onclick="view_selected_room_full_details('${room_id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                            <i class="fa fa-eye" aria-hidden="true"></i> view this room
+                        </div>
+                        <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function room_search_result_return_markup(is_booked, is_closed, room_number, room_type, bed_type, room_price, description, amenities_list, guest_capacitance, room_link){
     
     let the_room_link = room_link;
@@ -591,7 +763,7 @@ function room_search_result_return_markup(is_booked, is_closed, room_number, roo
 
     let room_desc = description.replaceAll("@apostrophe@", "'").replaceAll("@comma@", ",");
     return `
-        <div class="flex_row_default_flex_column_mobile" id="">
+        <div class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
                 <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
                     Room ${room_number} 
@@ -813,9 +985,9 @@ async function continue_room_reservation(){
     toggle_show_make_room_reservation_div();
 }
 
-function view_and_edit_room(){
+/*function view_and_edit_room(){
     toggle_show_search_room_pane();
-}
+}*/
 
 function toggle_show_booked_rooms(){
     $("#booked_rooms_container").toggle("up");
@@ -846,6 +1018,7 @@ function toggle_show_all_hotel_property_rooms(){
 }
 
 function show_all_hotel_property_rooms(property_id){
+    get_all_room_of_property(property_id)
     toggle_show_all_hotel_property_rooms();
 }
 
@@ -1424,7 +1597,7 @@ async function render_hotel_rooms(rooms_list){
     }
 
     let property = await get_and_return_hotel_property_by_id(rooms_list[0].property_id);
-    
+
     let property_city = "";
     let property_address_tail = "";
 
@@ -1457,7 +1630,7 @@ async function render_hotel_rooms(rooms_list){
                 </tr>
             </tbody>
         </table>
-        <p onclick="show_all_hotel_property_rooms('property_id')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+        <p onclick="show_all_hotel_property_rooms('${rooms_list[0].property_id}')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
             view all rooms
             <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
         </p>
@@ -1500,7 +1673,7 @@ async function render_hotel_rooms(rooms_list){
                 <td>
                     ${room_booked}
                 </td>
-                <td onclick="view_and_edit_room();" class="rooms_list_edit_room_icon">
+                <td onclick="view_selected_room_full_details('${rooms_sublist[r]._id}');" class="rooms_list_edit_room_icon">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                 </td>
             </tr>

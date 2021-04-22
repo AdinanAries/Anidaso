@@ -184,7 +184,7 @@
             </div>
         </div>
     </div>
-    <div id="search_room_panel" style="display: none;" class="page_pop_up_cover">
+    <div id="search_room_panel" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <p onclick="toggle_show_search_room_pane();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div style="height: 100%;">
@@ -219,7 +219,7 @@
             </div>
         </div>
     </div>
-    <div id="add_room_form_panel" style="display: none;" class="page_pop_up_cover">
+    <div id="add_room_form_panel" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <p onclick="toggle_show_add_room_pane();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div style="height: 100%;">
@@ -519,10 +519,14 @@
             <p onclick="toggle_show_all_hotel_properties();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
                 Your Properties</p>
-            <div id="hotel_properties_list_content_container" style="padding: 10px;">
-                <div id="hotel_properties_list">
-                    <div class="each_property_info" style="background-color:rgb(8, 40, 66); border-radius: 4px; min-height: 200px;">
-                        
+                <div class="page_popup_content_body" style="height: calc(100% - 105px);">
+                    <p style="color: white; font-size: 13px;">
+                        4 properties found
+                    </p>
+                    <div id="hotel_properties_list">
+                        <div class="each_property_info" style="background-color:rgba(0, 0, 0, 0.7); border-radius: 4px; min-height: 200px;">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -533,17 +537,81 @@
             <p onclick="toggle_show_all_hotel_property_rooms();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <p style="color:rgb(5, 44, 59); font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
                 All Rooms</p>
-            <p style="font-weight: bolder; margin-bottom: 20px; letter-spacing: 1px; text-align: center; color: rgb(55, 70, 15); font-size: 13px; margin-bottom: 5px;">
-                Kumasi,
-                <span style="font-weight: bolder; color:rgb(31, 42, 65); font-size: 12px; letter-spacing: 1px;">
-                    1223 Anloga Juction, Ghana
-                </span>
-            </p>
-            <div id="hotel_property_all_room_list_content_container" style="padding: 10px;">
+            <p id="hotel_property_all_rooms_building_location" style="font-weight: bolder; margin-bottom: 10px; letter-spacing: 1px; text-align: center; color: rgb(0, 29, 46); font-size: 13px;">
                 
+            </p>
+            <div class="page_popup_content_body" style="height: calc(100% - 105px);">
+                <p id="hotel_property_all_rooms_body_title" style="color: white; font-size: 13px; margin: 20px 0; text-align: center; font-weight: bolder;">
+                </p>
                 <div id="hotel_property_all_rooms_list">
-                    <div class="each_property_info" style="background-color:rgb(8, 40, 66); border-radius: 4px; min-height: 200px;">
-                        
+                    <div class="each_property_info" style="background-color: rgba(0, 0, 0, 0.4); border-radius: 4px; padding: 10px;">
+                        <div class="flex_row_default_flex_column_mobile">
+                            <div class="flex_child_of_two">
+                                <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                    Room 5D
+                                    <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
+                                        <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
+                                        (available)
+                                    </span>
+                                </p>
+                                <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px; margin-bottom: 10px;">
+                                    <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
+                                    <label for="room_status_switch_toggle">
+                                        <span style="font-size: 12px;" id="room_status_switch_toggle_display">
+                                            Close Room
+                                            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+                                            (room is open)</span>
+                                        </span>
+                                    </label>
+                                </p>
+                                
+                                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                    Room type: 
+                                    <span style="font-size: 13px; color: white;">
+                                        Delux</span></p>
+                                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                    Bed type: 
+                                    <span style="font-size: 13px; color: white;">
+                                        Queen Size</span></p>
+                                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                    Price: 
+                                    <span style="font-size: 13px; color: white;">
+                                        $77.00</span></p>
+                                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                    Guests Capacitance: 
+                                    <span style="font-size: 13px; color: white;">
+                                        3 adult, 4 children
+                                    </span>
+                                </p>
+                                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                    Cancellation: 
+                                    <span style="font-size: 13px; color: white;">
+                                        1 week, $90.00 
+                                        <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="flex_child_of_two flex_non_first_child">
+                                <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                                    Last Booked</p>
+                                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                    Checkin: 
+                                    <span style="font-size: 13px; color: white;">
+                                        March 23, 2022</span></p>
+                                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                                    Checkout: 
+                                    <span style="font-size: 13px; color: white;">
+                                        March 25, 2022</span></p>
+                                <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
+                                    <div onclick="" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> view this room
+                                    </div>
+                                    <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
