@@ -976,6 +976,7 @@ function edit_hotel_room_func(){
 
 function toggle_show_add_hotel_property_pane(){
     $("#add_hotel_property_form_panel").toggle("up");
+    document.getElementById("all_hotel_properties_container").style.display = "none";
 }
 
 function toggle_show_make_room_reservation_div(){
@@ -1026,6 +1027,7 @@ async function toggle_show_all_hotel_properties(){
     }
 
     $("#all_hotel_properties_container").toggle("up");
+    document.getElementById("add_hotel_property_form_panel").style.display = "none"
 
     document.getElementById("hotel_properties_list").innerText = `${properties.length} property(s) found`;
     document.getElementById("hotel_properties_list").innerHTML = '';
@@ -1112,11 +1114,14 @@ function all_policies_return_each_policy_markup(number, policy){
     return `
         <div id="all_logged_in_hotel_policies_${number}_policy">
             <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
-                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: white;">
-                    <span style="color: orangered; font-size: 14px; font-weight: bolder;">${policy.type}:</span>
-                    ${policy.description} 
-                </p>
-                <span onclick="toggle_hide_show_anything('all_policies_delete_${number}_policy_confirm_dialog')" class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                <div>
+                    <p style="color: orangered; font-size: 14px; font-weight: bolder; margin-bottom: 5px;">
+                    ${policy.type}:</p>
+                    <p style="margin-top: 10px; color: white; font-size: 13px; letter-spacing: 1px;">
+                        ${policy.description} 
+                    </p>
+                </div>
+                <span onclick="toggle_hide_show_anything('all_policies_delete_${number}_policy_confirm_dialog')" style="padding-left: 20px;">
                     <i style="color: rgb(258, 112, 112);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </div>
@@ -1134,6 +1139,10 @@ function all_policies_return_each_policy_markup(number, policy){
             </div>
         </div>
     `
+}
+
+function toggle_show_finish_add_new_policy_form(){
+    $("#add_new_policy_additional_info_form").toggle("up");
 }
 
 function show_all_cities(){
