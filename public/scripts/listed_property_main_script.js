@@ -1648,7 +1648,7 @@ function add_new_cheap_room(room_obj){
         data: JSON.stringify(room_obj),
         success: res => {
             console.log(res);
-            return res.data;
+            return res;
         },
         error: err => {
             console.log(err);
@@ -2559,6 +2559,18 @@ function reset_all_add_room_inputs(){
 
 function collect_all_add_new_room_inputs(){
 
+    cheap_hotel_room.amenities = [];
+
+    if(add_room_wifi_amen_check.checked()){
+        cheap_hotel_room.amenities.push("Free Wifi")
+    }
+    if(add_room_cable_amen_check.checked()){
+        cheap_hotel_room.amenities.push("Cable Tv")
+    }
+    if(add_room_other_amen_check.checked()){
+        cheap_hotel_room.amenities.push("Other")
+    }
+
     cheap_hotel_room.property_id = add_room_form_properties_select.value;
     cheap_hotel_room.hotel_brand_id = window.localStorage.getItem("ANDSBZID");
     cheap_hotel_room.room_number = add_room_form_room_number_input.value;
@@ -2570,7 +2582,6 @@ function collect_all_add_new_room_inputs(){
     cheap_hotel_room.guest_capacitance.children = add_room_form_num_of_children_input.value;
     cheap_hotel_room.price = add_room_form_room_price_input.value;
     cheap_hotel_room.description = add_room_form_room_description_input.value;
-    cheap_hotel_room.amenities = ["Free Wifi", "Cable", "Other"];
     cheap_hotel_room.next_available_date = "";
     cheap_hotel_room.next_available_time = "";
     cheap_hotel_room.cancellation_policy.time_period = add_room_form_room_cancellation_period_input.value;
@@ -2613,7 +2624,8 @@ async function save_room_new_room() {
        let new_room_obj = await collect_all_add_new_room_inputs();
        let returned_added_room = await add_new_cheap_room(new_room_obj);
        console.log(returned_added_room);
-       alert("room " + returned_added_room.room_number + " has been added successfully");
+       alert("room " + returned_added_room.data.room_number + " has been added successfully");
+       reset_all_add_room_inputs();
     }
 
 }
