@@ -942,7 +942,10 @@ function open_close_rooms_function(){
 }
 
 async function toggle_show_add_room_pane(){
+
+    document.getElementById("add_room_form_properties_select").innerHTML = '';
     document.getElementById("search_room_panel").style.display = "none";
+
     $("#add_room_form_panel").toggle("up");
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
@@ -958,7 +961,7 @@ async function toggle_show_add_room_pane(){
             `
         }else{
             for(let i=0; i < properties.length; i++){
-                document.getElementById("add_room_form_properties_select").innerHTML = `
+                document.getElementById("add_room_form_properties_select").innerHTML += `
                 <option value="${properties[i]._id}">
                     ${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}
                 </option>`;
@@ -1172,6 +1175,25 @@ function toggle_show_finish_add_new_policy_form(){
 function show_all_cities(){
     toggle_show_all_cities();
     render_all_logged_in_hotel_cities();
+}
+
+async function all_cities_add_new_city(){
+
+    document.getElementById("full_screen_loader").style.display = "flex";
+    let input_elem = document.getElementById("logged_in_hotel_all_cities_list_add_city_form_input");
+    let new_city = input_elem.value
+
+    if(new_city === ""){
+        input_elem.focus();
+        input_elem.placeholder = "please enter new city";
+        document.getElementById("full_screen_loader").style.display = "none";
+    }else{
+        let return_res = await add_new_cities_op(new_city, window.localStorage.getItem("ANDSBZID"));
+        document.getElementById("full_screen_loader").style.display = "none";
+        input_elem.value = "";
+        alert("new city added!");
+        render_all_logged_in_hotel_cities();
+    }
 }
 
 function toggle_hide_show_anything(elem_id){
@@ -1621,13 +1643,13 @@ function get_logged_in_hotel_infor(){
 
 }
 
-function add_new_hotel_building(){
+function add_new_hotel_building(buildig_obj){
     $.ajax({
         type: "POST",
         url: "/create_new_hotel_property",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(cheap_hotel_building),
+        data: JSON.stringify(buildig_obj),
         success: res => {
             console.log(res);
         },
@@ -2632,4 +2654,69 @@ async function save_room_new_room() {
 
 document.getElementById("add_room_form_save_room_btn").addEventListener("click", e => {
     save_room_new_room();
+});
+
+var add_hotel_property_form_city_country_select = document.getElementById("add_hotel_property_form_city_country_select");
+var add_hotel_property_form_street_address_input = document.getElementById("add_hotel_property_form_street_address_input");
+var add_hotel_property_form_town_input = document.getElementById("add_hotel_property_form_town_input");
+var add_hotel_property_form_zipcode_input = document.getElementById("add_hotel_property_form_zipcode_input");
+var add_property_wifi_amen_check = document.getElementById("add_property_wifi_amen_check");
+var add_property_cable_amen_check = document.getElementById("add_property_cable_amen_check");
+var add_property_other_amen_check = document.getElementById("add_property_other_amen_check");
+var add_hotel_property_form_description_input = document.getElementById("add_hotel_property_form_description_input");
+//var = document.getElementById("");
+
+function reset_add_new_building_inputs(){
+    //add_hotel_property_form_city_country_select.value = "";
+    add_hotel_property_form_town_input.value = "";
+    add_hotel_property_form_street_address_input.value = "";
+    add_hotel_property_form_zipcode_input.value = "";
+    add_hotel_property_form_description_input.value = "";
+}
+
+function collect_add_hotel_property_inputs_data(){
+
+    let prop_city = add_hotel_property_form_city_country_select.value.split(",")[0].trim();
+    let prop_country = add_hotel_property_form_city_country_select.value.split(",")[1].trim();
+    let prop_town = add_hotel_property_form_town_input.value.trim();
+    let prop_street = add_hotel_property_form_street_address_input.value.trim();
+    let prop_zipcode = add_hotel_property_form_zipcode_input.value.trim();
+    let prop_description = add_hotel_property_form_description_input.value.trim();
+
+    cheap_hotel_building.hotel_brand_id = window.localStorage.getItem("ANDSBZID");
+    cheap_hotel_building.full_location_address = `${prop_street}, ${prop_town}, ${prop_city}, ${prop_country}`;
+    cheap_hotel_building.city = prop_city;
+    cheap_hotel_building.country = prop_country;
+    cheap_hotel_building.zipcode = prop_zipcode;
+    cheap_hotel_building.street_address = prop_street;
+    cheap_hotel_building.town = prop_town;
+    cheap_hotel_building.description = prop_description,
+    cheap_hotel_building.amenities = ["Free Wifi", "Cable", "Other"]
+
+    return cheap_hotel_building;
+}
+
+async function save_new_property(){
+    if(add_hotel_property_form_street_address_input.value === ""){
+        add_hotel_property_form_street_address_input.focus();
+        add_hotel_property_form_street_address_input.placeholder = "please enter street address";
+    }else if(add_hotel_property_form_town_input.value === ""){
+        add_hotel_property_form_town_input.focus();
+        add_hotel_property_form_town_input.placeholder = "please enter town";
+    }else if(add_hotel_property_form_zipcode_input.value === ""){
+        add_hotel_property_form_zipcode_input.focus();
+        add_hotel_property_form_zipcode_input.placeholder = "please enter zipcode";
+    }else if(add_hotel_property_form_description_input.value === ""){
+        add_hotel_property_form_description_input.focus();
+        add_hotel_property_form_description_input.placeholder = "please enter description";
+    }else{
+        let new_building = await collect_add_hotel_property_inputs_data();
+        let response = await add_new_hotel_building(new_building);
+        alert("new building added successfully!")
+        reset_add_new_building_inputs();
+    }
+}
+
+document.getElementById("add_hotel_property_form_save_btn").addEventListener("click", e => {
+    save_new_property();
 })
