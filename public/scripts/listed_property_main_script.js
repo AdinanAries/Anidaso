@@ -1108,8 +1108,19 @@ function toggle_show_select_all_amenities_from_list_div(){
     $("#add_amenities_from_list_div").toggle("up");
 }
 
-function toggle_show_all_cities(){
+async function toggle_show_all_cities(){
     $("#all_cities_list_container").toggle("up");
+
+    let cities_operating = await get_all_cities(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("add_hotel_property_form_city_country_select").innerHTML = "";
+    for(let i=0; i < cities_operating.length; i++){
+        document.getElementById("add_hotel_property_form_city_country_select").innerHTML += `
+            <option value="${cities_operating[i].city}, ${cities_operating[i].country}">
+                ${cities_operating[i].city}, ${cities_operating[i].country}
+            </option>
+        `;
+    }
 }
 
 async function toggle_show_all_policies(){
