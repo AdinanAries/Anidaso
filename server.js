@@ -1035,7 +1035,8 @@ app.post("/create_new_hotel_room/", async (req, res, next) =>{
         percentage:  req.body.cancellation_policy.percentage
       },
       photo_url: req.body.photo_url,
-      cancellation_requests: req.body.cancellation_requests
+      cancellation_requests: req.body.cancellation_requests,
+      cancellation_history: req.body.cancellation_history
     });
 
     let saved_room = await room_obj.save();

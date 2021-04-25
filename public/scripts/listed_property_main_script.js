@@ -105,7 +105,7 @@ var cheap_hotel_room = {
     time_period: 14,
     percentage: 50,
     },
-    photo_url: "./images/hotel_pic.png",
+    photo_url: "",
     cancellation_requests: []
 };
 
@@ -644,12 +644,12 @@ function all_rooms_return_each_room_markup(room){
 
     let room_booked_status = `
         <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
-        (available)
+        (vacant)
     `;
     if(is_booked){
         room_booked_status = `
         <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-        (booked)
+        (occupied)
     `;
     }
 
@@ -742,6 +742,7 @@ function room_search_result_return_markup(room){
 
     let amenities_display = amenities_list.join(", ");
 
+    let room_is_closed_msg_display = "none";
     let room_closed_status = `
     <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
     <label for="room_status_switch_toggle">
@@ -753,6 +754,7 @@ function room_search_result_return_markup(room){
     </label>
     `;
     if(is_closed){
+        room_is_closed_msg_display = "block";
         global_is_room_closed = true;
         room_closed_status = `
         <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" id="room_status_switch_toggle" type="checkbox" />
@@ -768,12 +770,12 @@ function room_search_result_return_markup(room){
 
     let room_booked_status = `
         <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
-        (available)
+        (vacant)
     `;
     if(is_booked){
         room_booked_status = `
         <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-        (booked)
+        (occupied)
     `;
     }
 
@@ -790,6 +792,10 @@ function room_search_result_return_markup(room){
                 
                 <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px;">
                     ${room_closed_status}
+                </p>
+                <p style="display: ${room_is_closed_msg_display}; font-size: 13px; letter-spacing: 1px; color: rgb(245, 210, 210); margin-top: 5px;" id="room_search_result_room_is_closed_status">
+                    <i style="color: orangered; margin-right: 5px" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Closed rooms can't be booked.
                 </p>
                 <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
                     <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
@@ -863,6 +869,10 @@ function room_search_result_return_markup(room){
                     March 23, 2022 
                     <span style="font-size: 13px; color: white;">
                     - 12:30PM</span></p>
+                <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                    see all availability
+                    <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                </p>
             </div>
         </div>
         <div class="flex_row_default_flex_column_mobile">
@@ -895,12 +905,12 @@ function room_search_result_return_markup(room){
                 <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
                     Cancellation Request</p>
                     <p style="color: whitesmoke; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px;">
-                        Guest requested booking cancellation. Click on the button below to cancel booking
+                        Guest(s) requested booking cancellation. Click on the button below to view cancellation requests
                         <span style="color:rgb(255, 97, 6); font-size: 13px;">
                             with cancellation fee of $90.00</span>
                     </p>
                     <p style="background-color: steelblue; color: white; border-radius: 4px; padding: 10px; margin-bottom: 20px; text-align: center; width: 160px; font-size: 13px; letter-spacing: 1px;">
-                        Cancel Booking
+                        View Requests
                     </p>
             </div>
         </div>
@@ -909,6 +919,8 @@ function room_search_result_return_markup(room){
 
 function open_close_rooms_function(){
     
+    $("#room_search_result_room_is_closed_status").toggle("up");
+
     if(global_is_room_closed){
         //open the room
         global_is_room_closed = false;
@@ -932,7 +944,7 @@ function open_close_rooms_function(){
 async function toggle_show_add_room_pane(){
     document.getElementById("search_room_panel").style.display = "none";
     $("#add_room_form_panel").toggle("up");
-    let properties = await get_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     if(properties){
         if(properties.length === 0){
@@ -947,8 +959,8 @@ async function toggle_show_add_room_pane(){
         }else{
             for(let i=0; i < properties.length; i++){
                 document.getElementById("add_room_form_properties_select").innerHTML = `
-                <option value="${properties[i]}">
-                    ${properties[i]};
+                <option value="${properties[i]._id}">
+                    ${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}
                 </option>`;
             }
         }
@@ -974,9 +986,21 @@ function edit_hotel_room_func(){
     toggle_show_add_room_pane();
 }
 
-function toggle_show_add_hotel_property_pane(){
+async function toggle_show_add_hotel_property_pane(){
     $("#add_hotel_property_form_panel").toggle("up");
     document.getElementById("all_hotel_properties_container").style.display = "none";
+
+    let cities_operating = await get_all_cities(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("add_hotel_property_form_city_country_select").innerHTML = "";
+    for(let i=0; i < cities_operating.length; i++){
+        document.getElementById("add_hotel_property_form_city_country_select").innerHTML += `
+            <option value="${cities_operating[i].city}, ${cities_operating[i].country}">
+                ${cities_operating[i].city}, ${cities_operating[i].country}
+            </option>
+        `;
+    }
+
 }
 
 function toggle_show_make_room_reservation_div(){
@@ -1614,19 +1638,21 @@ function add_new_hotel_building(){
 }
 //add_new_hotel_building();
 
-function add_new_cheap_room(){
+function add_new_cheap_room(room_obj){
     
-    $.ajax({
+    return $.ajax({
         type: "POST",
         url: "/create_new_hotel_room",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(cheap_hotel_room),
+        data: JSON.stringify(room_obj),
         success: res => {
             console.log(res);
+            return res.data;
         },
         error: err => {
             console.log(err);
+            return err;
         }
     });
 }
@@ -1692,8 +1718,8 @@ async function render_hotel_rooms(rooms_list){
 
     for(let r=0; r < rooms_sublist.length; r++){
 
-        let checkin = "unbooked";
-        let checkout = "unbooked";
+        let checkin = "N/A";
+        let checkout = "N/A";
 
         let room_price = parseFloat(rooms_sublist[r].price).toFixed(2);
 
@@ -1701,13 +1727,13 @@ async function render_hotel_rooms(rooms_list){
 
         let room_booked = `
             <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 5px;"></i> 
-            Available
+            vacant
         `;
 
         if(rooms_sublist[r].booked){
             room_booked = `
                 <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 5px;"></i> 
-                Booked
+                occupied
             `;
             
             let booking = await get_and_return_current_booking_by_room_id(rooms_sublist[r]._id, rooms_sublist[r].room_number);
@@ -2327,3 +2353,271 @@ $(function() {
       //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     });
   });
+
+
+//photo uploads functions
+async function cheap_hotel_preview_image(event, elem) {
+
+    var output = document.getElementById(elem);
+
+    if(event.target.value !== ""){
+        //file url looks like "https://anidaso-img.s3.amazonaws.com/HotelEfyaSplending_hotel_one_seed2.jpg_0"
+                            //"protocol://bucket_name.s3.amazonaws.com/file_name"
+        try{
+            let s3_photo_url = cheap_hotel_room.photo_url.split("/");
+            let s3_photot_file_name = s3_photo_url[s3_photo_url.length - 1];
+            console.log(s3_photot_file_name);
+            await delete_s3_file(s3_photot_file_name);
+            output.style.backgroundImage = 'none';
+            output.style.backgroundColor = 'rgba(0,0,0,0.4)';
+        }catch(e){
+            console.log("aws s3 photo url from post data can't be read or its file deletion from s3 bucket failed")
+            console.log(e);
+        }
+    }
+
+    var reader = new FileReader();
+    reader.onload = function()
+    {
+
+        if(document.getElementById("add_room_form_room_number_input").value === ""){
+            alert("please enter room  number first");
+            return null;
+        }
+
+        output.style.backgroundImage = `url('${reader.result}')`;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+async function upload_photo_to_s3(file_input_Id, hotel_id, unique_name){
+
+    const files = document.getElementById(file_input_Id).files;
+    const file = files[0];
+
+    if(file == null){
+
+        try{
+            let s3_photo_url = cheap_hotel_room.photo_url.split("/");
+            let s3_photot_file_name = s3_photo_url[s3_photo_url.length - 1];
+            console.log(s3_photot_file_name);
+            await delete_s3_file(s3_photot_file_name);
+
+            document.getElementById("add_room_form_room_photo_input_btn").style.backgroundImage = 'none';
+            document.getElementById("add_room_form_room_photo_input_btn").style.backgroundColor = 'rgba(0,0,0,0.4)';
+        }catch(e){
+            console.log("aws s3 photo url from post data can't be read or its file deletion from s3 bucket failed")
+            console.log(e);
+        }
+
+        console.log('no file selected.');
+        //document.getElementById("add_room_form_room_photo_input_btn").style.backgroundImage = "none";
+        return {
+            success: false,
+            msg: "no file selected."
+        }
+        
+    }
+    //getSignedRequest(file);
+
+    return $.ajax({
+        type: "GET",
+        url: `/upload_picture_sign_s3?file-name=${hotel_id}_${unique_name}_${file.name}&file-type=${file.type}`,
+        success: res_data => {
+
+            //const response = JSON.parse(xhr.responseText);
+            const response = res_data;
+            console.log(res_data);
+
+            cheap_hotel_room.photo_url = response.url;
+            console.log(cheap_hotel_room);
+
+            uploadFile(file, response.signedRequest).then(res_data2 => {
+                 console.log(res_data2);
+                 return res_data2;
+
+             }).catch(err => {
+                 console.log(err);
+                 return err
+             });
+        },
+        error: err => {
+            console.log('could not get signed URL.');
+            return {
+                success: false,
+                error: err
+            }
+        }
+    });
+    
+}
+
+//this function uploads image file to AWS s3
+async function uploadFile(file, signedRequest){
+
+    document.getElementById("add_room_form_room_photo_input_label").style.display = "none";
+    document.getElementById("add_room_form_room_photo_upload_loader").style.display = "block";
+
+    return $.ajax({
+        type: "PUT",
+        url: signedRequest,
+        contentType: file.type,
+        processData: false,
+        data: file,
+        success: res => {
+
+            //console.log(res);
+            console.log("file upload completed");
+            
+            document.getElementById("add_room_form_room_photo_input_label").style.display = "flex";
+            document.getElementById("add_room_form_room_photo_upload_loader").style.display = "none";
+
+            return {
+                success: true
+            }
+        },
+        error: err => {
+
+            console.log('could not upload file.');
+
+            
+            document.getElementById("add_room_form_room_photo_input_label").style.display = "flex";
+            document.getElementById("add_room_form_room_photo_upload_loader").style.display = "none";
+
+            document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
+            book_cheap_hotel_register_new_hotel_button.style.display = "block";
+
+            //document.getElementById("add_room_form_room_photo_input_btn").style.backgroundImage = "none";
+            
+            return {
+                success: false,
+                error: err
+            }
+        }
+
+    });
+}
+
+//function to delete s3 photo
+function delete_s3_file(s3_file_name){
+    $.ajax({
+        type: "DELETE",
+        url: `./delete_file_from_s3?file_name=${s3_file_name}`,
+        success: res =>{
+            console.log(res)
+        },
+        error: err =>{
+            console.log(err);
+        }
+    });
+}
+
+document.getElementById("add_room_form_room_photo_input").addEventListener("change", ()=>{
+
+    if(document.getElementById("add_room_form_room_number_input").value === ""){
+        return null;
+    }
+    
+    upload_photo_to_s3("add_room_form_room_photo_input", window.localStorage.getItem("ANDSBZID"),
+        document.getElementById("add_room_form_room_number_input").value).then(()=>{
+        //do nothing here for now
+    });
+
+});
+
+var add_room_form_properties_select  = document.getElementById("add_room_form_properties_select");
+var add_room_form_room_number_input = document.getElementById("add_room_form_room_number_input");
+var add_room_form_room_type_select = document.getElementById("add_room_form_room_type_select");
+var add_room_form_bed_type_select = document.getElementById("add_room_form_bed_type_select");
+var add_room_wifi_amen_check = document.getElementById("add_room_wifi_amen_check");
+var add_room_cable_amen_check = document.getElementById("add_room_cable_amen_check");
+var add_room_other_amen_check = document.getElementById("add_room_other_amen_check");
+var add_room_form_room_photo_input = document.getElementById("add_room_form_room_photo_input");
+var add_room_form_room_price_input = document.getElementById("add_room_form_room_price_input");
+var add_room_form_room_description_input = document.getElementById("add_room_form_room_description_input");
+var add_room_form_room_cancellation_period_input = document.getElementById("add_room_form_room_cancellation_period_input");
+var add_room_form_room_cancellation_percentage_select = document.getElementById("add_room_form_room_cancellation_percentage_select");
+var add_room_form_num_of_adults_input = document.getElementById("add_room_form_num_of_adults_input");
+var add_room_form_num_of_children_input = document.getElementById("add_room_form_num_of_children_input");
+
+function reset_all_add_room_inputs(){
+    //add_room_form_properties_select.value  = "";
+    add_room_form_room_number_input.value = "";
+    //add_room_form_room_type_select.value = "";
+    //add_room_form_bed_type_select.value = "";
+    add_room_wifi_amen_check.value = "";
+    add_room_cable_amen_check.value = "";
+    add_room_other_amen_check.value = "";
+    add_room_form_room_photo_input.value = "";
+    add_room_form_room_price_input.value = "";
+    add_room_form_room_description_input.value = "";
+    add_room_form_room_cancellation_period_input.value = 0;
+    add_room_form_room_cancellation_percentage_select.value = 10;
+    add_room_form_num_of_adults_input.value = 1;
+    add_room_form_num_of_children_input.value = 0;
+}
+
+function collect_all_add_new_room_inputs(){
+
+    cheap_hotel_room.property_id = add_room_form_properties_select.value;
+    cheap_hotel_room.hotel_brand_id = window.localStorage.getItem("ANDSBZID");
+    cheap_hotel_room.room_number = add_room_form_room_number_input.value;
+    cheap_hotel_room.closed = false;
+    cheap_hotel_room.booked = false;
+    cheap_hotel_room.room_type = add_room_form_room_type_select.value;
+    cheap_hotel_room.bed_type = add_room_form_bed_type_select.value;
+    cheap_hotel_room.guest_capacitance.adults = add_room_form_num_of_adults_input.value;
+    cheap_hotel_room.guest_capacitance.children = add_room_form_num_of_children_input.value;
+    cheap_hotel_room.price = add_room_form_room_price_input.value;
+    cheap_hotel_room.description = add_room_form_room_description_input.value;
+    cheap_hotel_room.amenities = ["Free Wifi", "Cable", "Other"];
+    cheap_hotel_room.next_available_date = "";
+    cheap_hotel_room.next_available_time = "";
+    cheap_hotel_room.cancellation_policy.time_period = add_room_form_room_cancellation_period_input.value;
+    cheap_hotel_room.cancellation_policy.percentage = add_room_form_room_cancellation_percentage_select.value;
+    //cheap_hotel_room.photo_url= "";
+    cheap_hotel_room.cancellation_requests = [];
+    cheap_hotel_room.cancellation_history = [];
+
+    return cheap_hotel_room;
+
+}
+
+async function save_room_new_room() {
+
+    if(add_room_form_properties_select.value === ""){
+        add_room_form_properties_select.focus();
+        add_room_form_properties_select.placeholder = "please select hotel property";
+    }else if(add_room_form_room_number_input.value === ""){
+        add_room_form_room_number_input.focus();
+        add_room_form_room_number_input.placeholder = "please enter room number";
+    }else if(add_room_form_room_type_select.value === ""){
+        add_room_form_room_type_select.focus();
+        add_room_form_room_type_select.placeholder = "please select room type";
+    }else if(add_room_form_room_price_input.value === ""){
+        add_room_form_room_price_input.focus();
+        add_room_form_room_price_input.placeholder = "please enter room number";
+    }else if(add_room_form_room_description_input.value === ""){
+        add_room_form_room_description_input.focus();
+        add_room_form_room_description_input.placeholder = "please enter room description";
+    }else if(add_room_form_room_cancellation_period_input.value === ""){
+        add_room_form_room_cancellation_period_input.focus();
+        add_room_form_room_cancellation_period_input.placeholder = "please enter allowed cancellation period";
+    }else if(add_room_form_room_cancellation_percentage_select.value === ""){
+        add_room_form_room_cancellation_percentage_select.focus();
+        add_room_form_room_cancellation_percentage_select.placeholder = "please select cancellation percentage";
+    }else if(add_room_form_room_photo_input.value === ""){
+        alert("please add a photo")
+        add_room_form_room_photo_input.click();
+    }else{
+       let new_room_obj = await collect_all_add_new_room_inputs();
+       let returned_added_room = await add_new_cheap_room(new_room_obj);
+       console.log(returned_added_room);
+       alert("room " + returned_added_room.room_number + " has been added successfully");
+    }
+
+}
+
+document.getElementById("add_room_form_save_room_btn").addEventListener("click", e => {
+    save_room_new_room();
+})

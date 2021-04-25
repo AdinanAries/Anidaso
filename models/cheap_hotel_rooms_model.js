@@ -61,6 +61,9 @@ const cheap_hotel_rooms_schema = new mongoose.Schema({
     },
     cancellation_requests: {
         type: Array
+    },
+    cancellation_history: {
+        type: Array
     }
 
 });
