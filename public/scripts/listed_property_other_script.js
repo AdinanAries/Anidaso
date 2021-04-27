@@ -219,13 +219,17 @@ async function delete_uploaded_photo_using_photo_url(photo_url){
 
 async function general_delete_photo(photo_url, hotel_id){
 
-    await general_main_delete_photo(photo_url, hotel_id);
+    let res = await general_main_delete_photo(photo_url, hotel_id);
 
-    let photos_after_deletion = await get_logged_in_hotel_all_photos(window.localStorage.getItem("ANDSBZID"));
+    if(res !== "not deleted"){
 
-    let last_photo_url = photos_after_deletion.length > 4 ? photos_after_deletion[photos_after_deletion.length - 5] : photos_after_deletion[photos_after_deletion.length - 4];
-    display_logged_in_hotel_photos(photos_after_deletion[photos_after_deletion.length - 1], photos_after_deletion[photos_after_deletion.length - 2], 
-        photos_after_deletion[photos_after_deletion.length - 3], photos_after_deletion[photos_after_deletion.length - 4], last_photo_url);
+        let photos_after_deletion = await get_logged_in_hotel_all_photos(window.localStorage.getItem("ANDSBZID"));
+
+        let last_photo_url = photos_after_deletion.length > 4 ? photos_after_deletion[photos_after_deletion.length - 5] : photos_after_deletion[photos_after_deletion.length - 4];
+        display_logged_in_hotel_photos(photos_after_deletion[photos_after_deletion.length - 1], photos_after_deletion[photos_after_deletion.length - 2], 
+            photos_after_deletion[photos_after_deletion.length - 3], photos_after_deletion[photos_after_deletion.length - 4], last_photo_url);
+
+    }
 }
 
 async function general_main_delete_photo(photo_url, hotel_id){
@@ -233,28 +237,31 @@ async function general_main_delete_photo(photo_url, hotel_id){
     let existing_photos = await get_logged_in_hotel_all_photos(window.localStorage.getItem("ANDSBZID"));
 
     if(existing_photos.length < 5){
+        
         alert("You must have atleast 4 photos");
-        return null;
-    }
+        return "not deleted";
 
-    await delete_uploaded_photo_using_photo_url(photo_url);
-    return $.ajax({
-        type: "POST",
-        url: "/remove_photo_url_from_photos/"+hotel_id,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({
-            removed_photo: photo_url
-        }),
-        success: res => {
-            console.log(res);
-            return res;
-        },
-        error: err =>  {
-            console.log(err);
-            return err;
-        }
-    });
+    }else{
+
+        await delete_uploaded_photo_using_photo_url(photo_url);
+        return $.ajax({
+            type: "POST",
+            url: "/remove_photo_url_from_photos/"+hotel_id,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                removed_photo: photo_url
+            }),
+            success: res => {
+                console.log(res);
+                return res;
+            },
+            error: err =>  {
+                console.log(err);
+                return err;
+            }
+        });
+    }
 }
 
 document.getElementById("logged_in_hotel_add_new_photo_save_btn").addEventListener("click", async e => {

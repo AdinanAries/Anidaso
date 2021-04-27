@@ -1882,7 +1882,18 @@ function get_and_return_hotel_buildings(hotel_id){
     });
 }
 
-function render_recent_hotel_booking(rooms, property_location, booking_checkin_date, booking_checkout_date, price_paid, room_guests){
+async function render_recent_hotel_booking(recent_booking){
+
+    let property = await get_and_return_hotel_property_by_id(recent_booking.property_id);
+    let property_city = property.city;
+    let property_country = property.country;
+    let property_street = property.street_address;
+
+    let rooms = recent_booking.rooms;
+    let booking_checkin_date = recent_booking.checkin_date;
+    let booking_checkout_date = recent_booking.checkout_date;
+    let price_paid = recent_booking.price_paid;
+    let room_guests = recent_booking.guests;
 
     let room_number = rooms[0].number;
     let room_guests_markup = "";
@@ -1926,9 +1937,9 @@ function render_recent_hotel_booking(rooms, property_location, booking_checkin_d
             </p>
             ${other_rooms_included}
             <p style="margin-top: 5px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
-                ${property_location.split(",")[0]}
+                ${property_city}
                 <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
-                    - ${property_location.split(",")[1]}
+                    - ${property_street} (${property_country})
                 </span>
             </p>
             <div style="margin-top: 20px;">
@@ -1965,7 +1976,7 @@ function get_hotel_bookings(hotel_id){
         success: res => {
             console.log(res);
             let recent_booking = res[res.length - 1];
-            render_recent_hotel_booking(recent_booking.rooms, recent_booking.full_property_location, recent_booking.checkin_date, recent_booking.checkout_date, recent_booking.price_paid, recent_booking.guests)
+            render_recent_hotel_booking(recent_booking)
         },
         error: err => {
             console.log(err);

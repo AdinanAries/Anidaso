@@ -1103,7 +1103,7 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
       rooms: req.body.rooms,
-      full_property_location: req.body.full_property_location,
+      //full_property_location: req.body.full_property_location,
       price_paid: req.body.price_paid,
       checkin_date: req.body.checkin_date,
       checkout_date: req.body.checkout_date,

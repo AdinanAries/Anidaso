@@ -124,7 +124,7 @@
             <div style="height: 100%;">
                 <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
                     Pick a room for reservation</p>
-                <div class="flex_row_default_flex_column_mobile" id="page_popup_content_header">
+                <div class="flex_row_default_flex_column_mobile page_popup_content_header">
                     <div class="flex_child_of_two">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
                         <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
@@ -152,70 +152,164 @@
                     </div>
                 </div>
                 <div class="page_popup_content_body">
-                    <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0;">
-                        Add Guest(s) Information</p>
-                
-                    <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;">
-                        <span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
-                        1 Adult, 4 children
-                    </p>
+                    <div>
+                        <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0;">
+                            Find A Room</p>
+                        <div>
+                            <div style="width: 100%; overflow-x: auto;">
+                                <table class="room_availability_grid_view">
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>12</td>
+                                            <td>13</td>
+                                            <td>14</td>
+                                            <td>15</td>
+                                            <td>16</td>
+                                            <td>17</td>
+                                            <td>18</td>
+                                            <td>19</td>
+                                            <td>20</td>
+                                            <td>21</td>
+                                            <td>22</td>
+                                            <td>23</td>
+                                            <td>24</td>
+                                            <td>25</td>
+                                            <td>26</td>
+                                            <td>27</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5D</td>
+                                            <td class="selected_day first_available">12th</td>
+                                            <td class="selected_day"></td>
+                                            <td class="selected_day last_available">14th</td>
+                                            <td class="booked_date booked_checkin">15th</td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date booked_checkout">20th</td>
+                                            <td class="selected_day first_available">21st</td>
+                                            <td class="selected_day"></td>
+                                            <td class="selected_day"></td>
+                                            <td class="selected_day"></td>
+                                            <td class="selected_day"></td>
+                                            <td class="selected_day"></td>
+                                            <td class="selected_day last_available">27th</td>
+                                        </tr>
+                                        <tr class="non_selected_day">
+                                            <td>6A</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">22nd</td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date booked_checkout">26th</td>
+                                        </tr>
+                                        <tr class="non_selected_day">
+                                            <td>2A</td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">
+                                                13th
+                                            </td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date booked_checkout">
+                                                16th
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">23rd</td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date booked_checkout">27th</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: none;">
+                        <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0;">
+                            Add Guest(s) Information</p>
                     
-                    <div id="make_reservation_guests_list">
-                        <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                            <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Adult 1</p>
-                            <div class="flex_row_default_flex_column_mobile">
-                                <div class="flex_child_of_two">
-                                    <div style="margin-top: 10px;">
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
-                                        <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
-                                    </div>
-                                    <div style="margin-top: 20px;">
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
-                                        <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
-                                    </div>
-                                </div>
-                                <div class="flex_child_of_two flex_non_first_child">
-                                    <div style="margin-top: 10px;">
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                            Gender</p>
-                                        <select style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
-                                            <option>Male</option>
-                                            <option>Female</option>
-                                        </select>
+                        <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;">
+                            <span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+                            1 Adult, 4 children
+                        </p>
+                        
+                        <div id="make_reservation_guests_list">
+                            <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                                <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Adult 1</p>
+                                <div class="flex_row_default_flex_column_mobile">
+                                    <div class="flex_child_of_two">
+                                        <div style="margin-top: 10px;">
+                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
+                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
+                                        </div>
                                         <div style="margin-top: 20px;">
+                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
+                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
+                                        </div>
+                                    </div>
+                                    <div class="flex_child_of_two flex_non_first_child">
+                                        <div style="margin-top: 10px;">
                                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
-                                            <input id="mk_reservationS_adult_age_input_1" onchange="room_booking_enforce_adult_age_input('mk_reservationS_adult_age_input_1');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                                                Gender</p>
+                                            <select style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                            </select>
+                                            <div style="margin-top: 20px;">
+                                                <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                                                    Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
+                                                <input id="mk_reservationS_adult_age_input_1" onchange="room_booking_enforce_adult_age_input('mk_reservationS_adult_age_input_1');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                            <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Child 1</p>
-                            <div class="flex_row_default_flex_column_mobile">
-                                <div class="flex_child_of_two">
-                                    <div style="margin-top: 10px;">
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
-                                        <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
-                                    </div>
-                                    <div style="margin-top: 20px;">
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
-                                        <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
-                                    </div>
-                                </div>
-                                <div class="flex_child_of_two flex_non_first_child">
-                                    <div style="margin-top: 10px;">
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                            Gender</p>
-                                        <select style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
-                                            <option>Male</option>
-                                            <option>Female</option>
-                                        </select>
+                            <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                                <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Child 1</p>
+                                <div class="flex_row_default_flex_column_mobile">
+                                    <div class="flex_child_of_two">
+                                        <div style="margin-top: 10px;">
+                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
+                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
+                                        </div>
                                         <div style="margin-top: 20px;">
+                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
+                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
+                                        </div>
+                                    </div>
+                                    <div class="flex_child_of_two flex_non_first_child">
+                                        <div style="margin-top: 10px;">
                                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
-                                            <input id="mk_reservationS_child_age_input_1" oninput="room_booking_enforce_child_age_input('mk_reservationS_child_age_input_1')" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                                                Gender</p>
+                                            <select style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                            </select>
+                                            <div style="margin-top: 20px;">
+                                                <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                                                    Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
+                                                <input id="mk_reservationS_child_age_input_1" oninput="room_booking_enforce_child_age_input('mk_reservationS_child_age_input_1')" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -318,17 +412,6 @@
                                 </select>
                             </div>
                             <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
-                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Amenities</p>
-                                <div>
-                                    <input id="add_room_wifi_amen_check" type="checkbox" />
-                                    <label for="add_room_wifi_amen_check" style="font-size: 14px; font-weight: initial;">Free Wifi</label>
-                                    <input style="margin-left: 20px;" id="add_room_cable_amen_check" type="checkbox" />
-                                    <label for="add_room_cable_amen_check" style="font-size: 14px; font-weight: initial;">Cable Tv</label>
-                                    <input style="margin-left: 20px;" id="add_room_other_amen_check" type="checkbox" />
-                                    <label for="add_room_other_amen_check" style="font-size: 14px; font-weight: initial;">Others</label>
-                                </div>
-                            </div>
-                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
                                 <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">
                                     Add Photo</p>
                                 <div id="add_room_form_room_photo_input_btn" style="background-color: rgba(0,0,0,0.4); border-radius: 4px; width: 100%; height: 120px; background-size: cover; background-repeat: no-repeat; background-position: center;">
@@ -386,6 +469,17 @@
                             <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
                                 <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Enter Room Description</p>
                                 <textarea id="add_room_form_room_description_input" style="border: none; width: calc(100% - 20px); padding: 10px;"></textarea>
+                            </div>
+                            <div style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                                <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Amenities</p>
+                                <div>
+                                    <input id="add_room_wifi_amen_check" type="checkbox" />
+                                    <label for="add_room_wifi_amen_check" style="font-size: 14px; font-weight: initial;">Free Wifi</label>
+                                    <input style="margin-left: 20px;" id="add_room_cable_amen_check" type="checkbox" />
+                                    <label for="add_room_cable_amen_check" style="font-size: 14px; font-weight: initial;">Cable Tv</label>
+                                    <input style="margin-left: 20px;" id="add_room_other_amen_check" type="checkbox" />
+                                    <label for="add_room_other_amen_check" style="font-size: 14px; font-weight: initial;">Others</label>
+                                </div>
                             </div>
                             <p style="color: rgb(255, 97, 6); margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
                                 Cancellation Policy</p>

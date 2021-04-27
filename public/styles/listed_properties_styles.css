@@ -4,6 +4,68 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+.room_availability_grid_view {
+  color: white;
+  width: 100%;
+  padding: 0 10px;
+  border-spacing: 0 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+.room_availability_grid_view .non_selected_day {
+  opacity: 0.5 !important;
+}
+.room_availability_grid_view td {
+  min-width: 25px;
+  padding: 5px;
+  font-size: 14px;
+}
+.room_availability_grid_view .selected_day {
+  background-color: rgba(255, 255, 255, 0.541) !important;
+}
+.room_availability_grid_view .first_available {
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  font-size: 12px !important;
+  color: rgb(3, 31, 53);
+  font-weight: bolder;
+  letter-spacing: 1px;
+  max-width: 10px !important;
+  overflow: visible;
+}
+.room_availability_grid_view .last_available {
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  font-size: 12px !important;
+  color: rgb(3, 31, 53);
+  font-weight: bolder;
+  letter-spacing: 1px;
+  max-width: 10px !important;
+  overflow: visible;
+}
+.room_availability_grid_view .booked_date {
+  background-color: #e25a00 !important;
+}
+.room_availability_grid_view .booked_checkin {
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  font-size: 12px !important;
+  color: rgb(3, 31, 53);
+  font-weight: bolder;
+  letter-spacing: 1px;
+  max-width: 10px !important;
+  overflow: visible;
+}
+.room_availability_grid_view .booked_checkout {
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  font-size: 12px !important;
+  color: rgb(3, 31, 53);
+  font-weight: bolder;
+  letter-spacing: 1px;
+  max-width: 10px !important;
+  overflow: visible;
+}
 #room_status_switch_toggle {
   position: relative;
   appearance: none;

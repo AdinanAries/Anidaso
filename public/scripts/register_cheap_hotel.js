@@ -19,7 +19,8 @@ var register_cheap_hotel_post_data = {
             person: "Anidaso Team",
             image: "./images/management_team_icon.png",
             rated: 5,
-            message: "We have conducted checks on this hotel brand and we are satisfied by our findings."
+            message: "We have conducted checks on this hotel brand and we are satisfied by our findings.",
+            date_added: new Date().toString()
         }
     ],
     fax: "",

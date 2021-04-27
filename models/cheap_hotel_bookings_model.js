@@ -17,9 +17,9 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
     rooms: {
         type: Array
     },
-    full_property_location: {
+    /*full_property_location: {
         type: String
-    },
+    },*/
     checkin_date: {
         type: String
     },

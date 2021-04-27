@@ -743,7 +743,7 @@ var cheap_room_booking_obj = {
             number: "5D"
         }
       ],
-      full_property_location: "New York, 1223 Mont Gomery, United States",
+      //full_property_location: "New York, 1223 Mont Gomery, United States",
       price_paid: 69.00,
       checkin_date: "03-24-2022",
       checkout_date: "03-30-2022",
