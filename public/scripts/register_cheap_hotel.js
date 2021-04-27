@@ -74,11 +74,11 @@ async function collect_register_cheap_hotel_data(){
     register_cheap_hotel_post_data.mobile = book_cheap_book_direct_register_hotel_phone_input_fld.value;
     register_cheap_hotel_post_data.description = book_cheap_book_direct_register_hotel_description_input.value;
 
-    //adding user's selected photos
+    /*/adding user's selected photos
     register_cheap_hotel_post_data.photos.push(book_cheap_book_direct_add_hotel_add_pic_input_1.value);
     register_cheap_hotel_post_data.photos.push(book_cheap_book_direct_add_hotel_add_pic_input_2.value);
     register_cheap_hotel_post_data.photos.push(book_cheap_book_direct_add_hotel_add_pic_input_3.value);
-    register_cheap_hotel_post_data.photos.push(book_cheap_book_direct_add_hotel_add_pic_input_4.value);
+    register_cheap_hotel_post_data.photos.push(book_cheap_book_direct_add_hotel_add_pic_input_4.value);*/
 
 }
 

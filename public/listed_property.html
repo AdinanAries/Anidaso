@@ -32,6 +32,48 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+    <div id="add_new_photo_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
+        <div style="padding: 10px; width: calc(100% - 30px); max-width: 700px; margin: auto; border-radius: 4px; background-color: white;">
+            <p style="color:rgb(5, 44, 59); font-weight: bolder; text-align: center; font-size: 14px; margin: 10px 0;">
+                Upload new photo</p>
+            <div id="logged_in_hotel_add_new_photo_file_input_btn" style="height: 200px; background-color: rgba(0, 0, 0, 0.4); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                <label id="logged_in_hotel_add_new_photo_file_input_label" style="height: 100%; width: 100%; text-align: center; display: flex; flex-direction: column !important; justify-content: center;" for="logged_in_hotel_add_new_photo_file_input">
+                    <i style="font-size: 42px; color: rgba(0, 0, 0, 0.7);" class="fa fa-plus" aria-hidden="true"></i>
+                    <p style="font-size: 13px; margin-top: 5px;">click here to select photo</p>
+                </label>
+                <div id="logged_in_hotel_add_new_photo_upload_loader" style="display: none; width: 100%; padding: 10px 0; text-align: center; background-color: rgba(0, 0, 0, 0.568);" class="loader2 loader--style2" title="1">
+                    <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        width="30px" height="30px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                        <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 25 25"
+                            to="360 25 25"
+                            dur="0.6s"
+                            repeatCount="indefinite"/>
+                        </path>
+                        </svg>
+                        <p style="text-align: center; font-size: 14px; color:white;">
+                        processing...
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin: 10px 0;">
+                <div id="logged_in_hotel_add_new_photo_save_btn" style="cursor: pointer; padding: 10px 0; text-align: center; width: 60%; border-radius: 4px; background-color:rgb(5, 44, 59); color: white; font-size: 14px;">
+                    save
+                </div>
+                <div id="logged_in_hotel_add_new_photo_cancel_btn" onclick="toggle_show_add_new_photo_div()" style="width: calc(40% - 5px); cursor: pointer; padding: 10px 0; text-align: center; font-weight: bolder; font-size: 14px; background-color: rgba(0, 0, 0, 0.7); color: white;">
+                    <i style="margin-right: 5px; color: crimson;" class="fa fa-times" aria-hidden="true"></i>
+                    cancel
+                </div>
+            </div>
+            <input id="logged_in_hotel_add_new_photo_file_input" type="file" style="display: none;" />
+        </div>
+    </div>
     <div id="full_screen_loader" style="display: none; z-index: 100;" class="page_pop_up_cover">
         <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
             <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -49,7 +91,7 @@
             <p style="text-align: center; font-size: 14px; color:white;">
               loading...
             </p>
-          </div>
+        </div>
     </div>
     <div id="add_amenities_from_list_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
@@ -711,8 +753,8 @@
                         <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                     </p>
                     <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                        <input id="logged_in_hotel_all_amenities_add_amenity_form_input" style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter amenity here" value="" />
-                        <div style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                        <input id="logged_in_hotel_all_amenities_add_new_amenity_form_input" style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter amenity here" value="" />
+                        <div onclick="all_amenities_add_new_amenity();" style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                             Save
                         </div>
                     </div>
@@ -1456,7 +1498,7 @@
                             </div>
                         </div>
                     </div>
-                    <p style="cursor: pointer; text-align: center; font-size: 13px; color: white; max-width: 150px; padding: 10px; margin: auto; margin-top: 10px; margin-bottom: 10px; border-radius: 4px; background-color: rgb(127, 144, 175);">
+                    <p onclick="toggle_show_add_new_photo_div();" style="cursor: pointer; text-align: center; font-size: 13px; color: white; max-width: 150px; padding: 10px; margin: auto; margin-top: 10px; margin-bottom: 10px; border-radius: 4px; background-color: rgb(127, 144, 175);">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add Photo
                     </p>
                 </div>

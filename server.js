@@ -1304,7 +1304,40 @@ app.post("/update_amenity/:hotel_brand_id", async (req, res, next) => {
 
 });
 
-//add new routes
+app.post("/remove_photo_url_from_photos/:hotel_brand_id", async (req, res, next) => {
+
+  let hotel = await cheap_hotel.findById(req.params.hotel_brand_id);
+  hotel.photos = hotel.photos.filter(each => {
+    return each !== req.body.removed_photo
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.photos);
+
+});
+
+app.get("/get_all_cheap_hotel_photos/:hotel_brand_id", async (req, res, next) => {
+
+  let hotel = await cheap_hotel.findById(req.params.hotel_brand_id);
+  res.send(hotel.photos);
+
+});
+
+//add new stuff routes
+app.post("/save_newly_uploaded_photo_url/:hotel_brand_id", async (req, res, next) => {
+
+    let hotel = await cheap_hotel.findById(req.params.hotel_brand_id);
+    hotel.photos.push(req.body.new_url);
+
+    let new_hotel = new cheap_hotel(hotel);
+    let update_hotel = await new_hotel.save();
+
+    res.send(update_hotel.photos);
+
+});
+
 app.post("/add_new_amenity/:hotel_brand_id", async (req, res, next) => {
 
   let amenity = req.query.amenity;

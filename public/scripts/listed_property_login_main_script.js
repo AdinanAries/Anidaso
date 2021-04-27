@@ -4,6 +4,10 @@ function go_to_home_page(){
 
 
 function login_func(email_param, password_param){
+    
+    $("#listed_property_login_submit_loader").toggle("up");
+    $("#listed_property_login_btn").toggle("up");
+
     $.ajax({
         type: "POST",
         url: "/listed_property_login",
@@ -14,11 +18,19 @@ function login_func(email_param, password_param){
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: data =>{
+
+            $("#listed_property_login_submit_loader").toggle("up");
+            $("#listed_property_login_btn").toggle("up");
+
             window.localStorage.setItem("ANDSBZID", data._id);
             login_success_function();
             //console.log(data);
         },
         error: err => {
+            
+            $("#listed_property_login_submit_loader").toggle("up");
+            $("#listed_property_login_btn").toggle("up");
+
             console.log(err);
         }
     });

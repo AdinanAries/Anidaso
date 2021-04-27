@@ -109,6 +109,10 @@ var cheap_hotel_room = {
     cancellation_requests: []
 };
 
+function toggle_show_add_new_photo_div(){
+    $("#add_new_photo_div").toggle("up");
+}
+
 function return_cheap_hotel_rating_markup(rating_number = 1){
 
     let rating_remark;
@@ -1104,6 +1108,25 @@ function show_all_amenities(){
     render_all_logged_in_hotel_amenities();
 }
 
+async function all_amenities_add_new_amenity(){
+
+    document.getElementById("full_screen_loader").style.display = "flex";
+    let input_elem = document.getElementById("logged_in_hotel_all_amenities_add_new_amenity_form_input");
+    let new_amenity = input_elem.value
+
+    if(new_amenity === ""){
+        input_elem.focus();
+        input_elem.placeholder = "please enter new amenity";
+        document.getElementById("full_screen_loader").style.display = "none";
+    }else{
+        let return_res = await add_new_amenity(new_amenity, window.localStorage.getItem("ANDSBZID"));
+        document.getElementById("full_screen_loader").style.display = "none";
+        input_elem.value = "";
+        alert("new amenity added!");
+        render_all_logged_in_hotel_amenities();
+    }
+}
+
 function toggle_show_select_all_amenities_from_list_div(){
     $("#add_amenities_from_list_div").toggle("up");
 }
@@ -1217,18 +1240,18 @@ function hotel_manager_logout(){
 }
 
 //function to render hotel pictures
-function display_logged_in_hotel_photos(pic1, pic2, pic3, pic4){
+function display_logged_in_hotel_photos(pic1, pic2, pic3, pic4, pic5){
 
     document.getElementById("logged_in_hotel_main_photo_display").innerHTML = `
         <p class="gallery_photos_action_buttons" >
             <i  onclick="toggle_hide_show_anything('delete_main_photo_confirm_dialog');" style="color: rgb(252, 26, 26);" class="fa fa-trash" aria-hidden="true"></i>
         </p>
-        <img style="height: auto; min-height: 300px; width: 100%;" src="${pic4}" alt="" />
+        <img style="height: auto; min-height: 300px; width: 100%;" src="${pic5}" alt="" />
         <div id="delete_main_photo_confirm_dialog" class="confirm_delete_dialog">
             <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
                 Are you sure</p>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div onclick="general_delete_photo('${pic5}', '${window.localStorage.getItem("ANDSBZID")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Delete
                 </div>
                 <div onclick="toggle_hide_show_anything('delete_main_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1246,7 +1269,7 @@ function display_logged_in_hotel_photos(pic1, pic2, pic3, pic4){
             <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
                 Are you sure</p>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div onclick="general_delete_photo('${pic1}', '${window.localStorage.getItem("ANDSBZID")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Delete
                 </div>
                 <div onclick="toggle_hide_show_anything('delete_first_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1264,7 +1287,7 @@ function display_logged_in_hotel_photos(pic1, pic2, pic3, pic4){
             <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
                 Are you sure</p>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div onclick="general_delete_photo('${pic2}', '${window.localStorage.getItem("ANDSBZID")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Delete
                 </div>
                 <div onclick="toggle_hide_show_anything('delete_second_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1282,7 +1305,7 @@ function display_logged_in_hotel_photos(pic1, pic2, pic3, pic4){
             <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
                 Are you sure</p>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div onclick="general_delete_photo('${pic3}', '${window.localStorage.getItem("ANDSBZID")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Delete
                 </div>
                 <div onclick="toggle_hide_show_anything('delete_third_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1300,7 +1323,7 @@ function display_logged_in_hotel_photos(pic1, pic2, pic3, pic4){
             <p style="font-size: 12px; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
                 Are you sure</p>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                <div style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div onclick="general_delete_photo('${pic4}', '${window.localStorage.getItem("ANDSBZID")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Delete
                 </div>
                 <div onclick="toggle_hide_show_anything('delete_fourth_photo_confirm_dialog');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
@@ -1636,7 +1659,11 @@ function get_logged_in_hotel_infor(){
             }
 
             //photos 
-            display_logged_in_hotel_photos(data.photos[0], data.photos[1], data.photos[2], data.photos[3]);
+            if(data.photos.length > 0){
+                let last_photo_url = data.photos.length > 4 ? data.photos[data.photos.length - 5] : data.photos[data.photos.length - 4]
+                display_logged_in_hotel_photos(data.photos[data.photos.length - 1], data.photos[data.photos.length - 2], 
+                    data.photos[data.photos.length - 3], data.photos[data.photos.length - 4], last_photo_url);
+            }
 
             //getting hotel rooms
             get_hotel_rooms(data._id);
@@ -2387,6 +2414,20 @@ $(function() {
     });
   });
 
+function get_logged_in_hotel_all_photos(hotel_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_all_cheap_hotel_photos/"+hotel_id,
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    })
+}
 
 //photo uploads functions
 async function cheap_hotel_preview_image(event, elem) {
@@ -2517,8 +2558,8 @@ async function uploadFile(file, signedRequest){
             document.getElementById("add_room_form_room_photo_input_label").style.display = "flex";
             document.getElementById("add_room_form_room_photo_upload_loader").style.display = "none";
 
-            document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
-            book_cheap_hotel_register_new_hotel_button.style.display = "block";
+            //document.getElementById("book_cheap_hotel_register_new_hotel_loader_animation").style.display = "none";
+            //book_cheap_hotel_register_new_hotel_button.style.display = "block";
 
             //document.getElementById("add_room_form_room_photo_input_btn").style.backgroundImage = "none";
             
