@@ -121,7 +121,7 @@
     <div id="make_reservation_pane" style="display: none;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <p onclick="toggle_show_make_room_reservation_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <div style="height: 100%;">
+            <div style="height: 100%; position: relative;">
                 <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
                     Pick a room for reservation</p>
                 <div class="flex_row_default_flex_column_mobile page_popup_content_header">
@@ -152,21 +152,36 @@
                     </div>
                 </div>
                 <div class="page_popup_content_body">
-                    <div>
-                        <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0;">
-                            Find A Room</p>
+                    <div style="padding-bottom: 60px;">
+                        <p style="font-size: 13px; margin-top: 10px; margin-bottom: 5px; color: rgb(149, 215, 241); font-weight: bolder;">
+                            Checkin - Checkout</p>
+                            <input id="make_reservation_date_range_on_popup_chekin_checkout_input" style="padding: 10px; border-radius: 0; background-color:rgb(149, 215, 241); border-radius: 4px; border: none; font-size: 14px;" type="text" readonly="true"/>
+                        <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0; margin-top: 20px;">
+                            Availability Preview</p>
                         <div>
-                            <div style="width: 100%; overflow-x: auto;">
+                            <input id="make_reservation_date_range_on_popup_input" style="text-align: center; letter-spacing: 1px;; font-weight: bolder; color:rgb(136, 17, 17); padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-top-right-radius: 4px; border: none; font-size: 14px; width: calc(100% - 20px);" type="text" readonly="true"/>
+                            <div style="width: 100%; overflow-x: auto; background-color: rgba(0, 0, 0, 0.4); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
+                                <div style="margin: 10px;">
+                                    <span style="font-size: 14px; color: white; margin-right: 20px;">
+                                        <i style="color: #00ffbf;" class="fa fa-square" aria-hidden="true"></i> Booked
+                                    </span>
+                                    <span style="font-size: 14px; color: white; margin-right: 20px;">
+                                        <i style="color: rgb(0, 46, 105);" class="fa fa-square" aria-hidden="true"></i> Chosen
+                                    </span>
+                                    <span style="font-size: 14px; color: white;">
+                                        <i style="color: crimson;" class="fa fa-square" aria-hidden="true"></i> Overlap
+                                    </span>
+                                </div>
                                 <table class="room_availability_grid_view">
                                     <tbody>
                                         <tr>
                                             <td></td>
-                                            <td>12</td>
-                                            <td>13</td>
-                                            <td>14</td>
-                                            <td>15</td>
-                                            <td>16</td>
-                                            <td>17</td>
+                                            <td class="date_day_picked">12</td>
+                                            <td class="date_day_picked">13</td>
+                                            <td class="date_day_picked">14</td>
+                                            <td class="date_day_picked">15</td>
+                                            <td class="date_day_picked">16</td>
+                                            <td class="date_day_picked">17</td>
                                             <td>18</td>
                                             <td>19</td>
                                             <td>20</td>
@@ -178,26 +193,26 @@
                                             <td>26</td>
                                             <td>27</td>
                                         </tr>
-                                        <tr>
-                                            <td>5D</td>
+                                        <tr class="focused_on_room">
+                                            <td style="color:rgb(248, 16, 16); font-weight: bolder;">5D</td>
                                             <td class="selected_day first_available">12th</td>
                                             <td class="selected_day"></td>
-                                            <td class="selected_day last_available">14th</td>
-                                            <td class="booked_date booked_checkin">15th</td>
-                                            <td class="booked_date"></td>
-                                            <td class="booked_date"></td>
+                                            <td class="selected_day"></td>
+                                            <td class="booked_date booked_checkin overlap">15th</td>
+                                            <td class="booked_date overlap"></td>
+                                            <td class="booked_date last_available overlap">17th</td>
                                             <td class="booked_date"></td>
                                             <td class="booked_date"></td>
                                             <td class="booked_date booked_checkout">20th</td>
-                                            <td class="selected_day first_available">21st</td>
-                                            <td class="selected_day"></td>
-                                            <td class="selected_day"></td>
-                                            <td class="selected_day"></td>
-                                            <td class="selected_day"></td>
-                                            <td class="selected_day"></td>
-                                            <td class="selected_day last_available">27th</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
-                                        <tr class="non_selected_day">
+                                        <tr>
                                             <td>6A</td>
                                             <td></td>
                                             <td></td>
@@ -214,9 +229,9 @@
                                             <td class="booked_date"></td>
                                             <td class="booked_date"></td>
                                             <td class="booked_date"></td>
-                                            <td class="booked_date booked_checkout">26th</td>
+                                            <td class="booked_date booked_checkout">27th</td>
                                         </tr>
-                                        <tr class="non_selected_day">
+                                        <tr>
                                             <td>2A</td>
                                             <td></td>
                                             <td class="booked_date booked_checkin">
@@ -237,14 +252,83 @@
                                             <td class="booked_date"></td>
                                             <td class="booked_date"></td>
                                             <td class="booked_date"></td>
-                                            <td class="booked_date booked_checkout">27th</td>
+                                            <td class="booked_date"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2A</td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">
+                                                13th
+                                            </td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date booked_checkout">
+                                                16th
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">23rd</td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2A</td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">
+                                                13th
+                                            </td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date booked_checkout">
+                                                16th
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">23rd</td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2A</td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">
+                                                13th
+                                            </td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date booked_checkout">
+                                                16th
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="booked_date booked_checkin">23rd</td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
+                                            <td class="booked_date"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div style="display: none;">
+                    <div style="display: none; padding-bottom: 60px;">
                         <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0;">
                             Add Guest(s) Information</p>
                     
@@ -315,6 +399,14 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div style="position: absolute; width: calc(100% - 20px); bottom: 30px; left: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                    <div style="padding: 10px; color: white; background-color: rgba(0, 0, 0, 0.8); border-radius: 4px;">
+                        <i style="margin-right: 10px; color: rgb(255, 7, 7)" class="fa fa-long-arrow-left" aria-hidden="true"></i>back
+                    </div>
+                    <div style="padding: 10px; color: white; background-color: rgba(0, 0, 0, 0.8); border-radius: 4px;">
+                        Next<i style="margin-left: 10px; color: rgb(0, 166, 243)" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
