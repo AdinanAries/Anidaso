@@ -120,7 +120,7 @@
     </div>
     <div id="make_reservation_pane" style="display: none;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
-            <p onclick="toggle_show_make_room_reservation_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p onclick="toggle_show_make_room_reservation_div();" style="z-index: 11;" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div style="height: 100%; position: relative;">
                 <p style="margin: 20px 0; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
                     Pick a room for reservation</p>
@@ -402,10 +402,10 @@
                     </div>
                 </div>
                 <div style="position: absolute; width: calc(100% - 20px); bottom: 30px; left: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                    <div style="padding: 10px; color: white; background-color: rgba(0, 0, 0, 0.8); border-radius: 4px;">
+                    <div style="cursor: pointer; padding: 10px; color: white; background-color: rgba(0, 0, 0, 0.8); border-radius: 4px;">
                         <i style="margin-right: 10px; color: rgb(255, 7, 7)" class="fa fa-long-arrow-left" aria-hidden="true"></i>back
                     </div>
-                    <div style="padding: 10px; color: white; background-color: rgba(0, 0, 0, 0.8); border-radius: 4px;">
+                    <div style="cursor: pointer; padding: 10px; color: white; background-color: rgba(0, 0, 0, 0.8); border-radius: 4px;">
                         Next<i style="margin-left: 10px; color: rgb(0, 166, 243)" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
                 </div>
