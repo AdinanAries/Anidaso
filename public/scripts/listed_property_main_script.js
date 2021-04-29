@@ -1033,6 +1033,23 @@ async function continue_room_reservation(){
     toggle_show_make_room_reservation_div();
 }
 
+function toggle_show_make_reservation_add_guests_pane(){
+    if(document.getElementById("make_reservation_add_guests_pane").style.display === "none"){
+        $("#make_reservation_find_spot_pane").toggle("up");
+        $("#make_reservation_add_guests_pane").toggle("up");
+        document.getElementById("make_reservation_pane_next_btn").style.opacity = 0.2;
+        document.getElementById("make_reservation_pane_back_btn").style.opacity = 1;
+    }
+}
+
+function toggle_show_make_reservation_find_spot_pane(){
+    if(document.getElementById("make_reservation_find_spot_pane").style.display === "none"){
+        $("#make_reservation_add_guests_pane").toggle("up");
+        $("#make_reservation_find_spot_pane").toggle("up");
+        document.getElementById("make_reservation_pane_next_btn").style.opacity = 1;
+        document.getElementById("make_reservation_pane_back_btn").style.opacity = 0.2;
+    }
+}
 /*function view_and_edit_room(){
     toggle_show_search_room_pane();
 }*/

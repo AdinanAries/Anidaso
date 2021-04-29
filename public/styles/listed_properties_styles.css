@@ -4,11 +4,46 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+@keyframes room_calender_mounting {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes room_calender_positives_mounting {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 .room_availability_grid_view {
   color: white;
   width: 100%;
   padding: 0 10px;
   border-spacing: 0 10px;
+}
+.room_availability_grid_view tr {
+  animation-name: room_calender_mounting;
+  animation-duration: 1.5s;
+}
+.room_availability_grid_view tr:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.room_availability_grid_view tr:nth-child(3) {
+  animation-delay: 0.8s;
+}
+.room_availability_grid_view tr:nth-child(4) {
+  animation-delay: 0.12s;
+}
+.room_availability_grid_view tr:nth-child(5) {
+  animation-delay: 0.16s;
+}
+.room_availability_grid_view tr:nth-child(6) {
+  animation-delay: 0.2s;
 }
 .room_availability_grid_view td {
   min-width: 25px;
@@ -17,9 +52,14 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 .room_availability_grid_view .date_day_picked {
-  color: rgb(67, 149, 255) !important;
+  color: rgb(143, 191, 255) !important;
+  border: rgb(143, 191, 255) 1px solid;
+  background-color: rgb(11, 67, 104) !important;
 }
 .room_availability_grid_view .selected_day {
+  animation-name: room_calender_positives_mounting;
+  animation-delay: 2s;
+  animation-duration: 0.4s;
   background-color: rgb(0, 46, 105) !important;
 }
 .room_availability_grid_view .first_available {
@@ -43,6 +83,9 @@
   overflow: visible;
 }
 .room_availability_grid_view .booked_date {
+  animation-name: room_calender_positives_mounting;
+  animation-delay: 2s;
+  animation-duration: 0.4s;
   background-color: #00ffbf !important;
 }
 .room_availability_grid_view .booked_checkin {
