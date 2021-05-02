@@ -26,6 +26,9 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
     checkout_date: {
         type: String
     },
+    all_dates_of_occupancy: {
+        type: Array
+    },
     checkin_time: {
         type: String
     },

@@ -26,6 +26,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+
     <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
 
@@ -173,9 +175,9 @@
                                     </span>
                                 </div>
                                 <table class="room_availability_grid_view">
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
+                                    <tbody id="room_availability_grid_view_tbody">
+                                        <tr id="room_availability_grid_view_headers">
+                                            <!--td></td>
                                             <td class="date_day_picked">12</td>
                                             <td class="date_day_picked">13</td>
                                             <td class="date_day_picked">14</td>
@@ -191,10 +193,10 @@
                                             <td>24</td>
                                             <td>25</td>
                                             <td>26</td>
-                                            <td>27</td>
+                                            <td>27</td-->
                                         </tr>
-                                        <tr class="focused_on_room">
-                                            <td style="color:rgb(248, 16, 16); font-weight: bolder;">5D</td>
+                                        <tr id="room_availability_grid_view_focused_on_room" class="focused_on_room">
+                                            <!--td style="color:rgb(248, 16, 16); font-weight: bolder;">5D</td>
                                             <td class="selected_day first_available">12th</td>
                                             <td class="selected_day"></td>
                                             <td class="selected_day"></td>
@@ -210,9 +212,9 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
+                                            <td></td-->
                                         </tr>
-                                        <tr>
+                                        <!--tr>
                                             <td>6A</td>
                                             <td></td>
                                             <td></td>
@@ -330,7 +332,7 @@
                                                 26th
                                             </td>
                                             <td></td>
-                                        </tr>
+                                        </tr-->
                                     </tbody>
                                 </table>
                             </div>
@@ -2132,5 +2134,6 @@
     <script src="scripts/all_world_cities.js" type="text/javascript"></script>
     <script src="scripts/listed_property_stripe.js" type="text/javascript"></script>
     <script src="scripts/listed_property_other_script.js" type="text/javascript"></script>
+    <script src="scripts/rooms_availability_grid_view_script.js" type="text/javascript"></script>
 </body>
 </html>

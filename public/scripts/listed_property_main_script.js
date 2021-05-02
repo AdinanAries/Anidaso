@@ -1931,13 +1931,14 @@ async function render_recent_hotel_booking(recent_booking){
 
     for(let g=0; g < room_guests.length; g++){
         room_guests_markup = `
-            <div>
+            <div style="margin-bottom: 5px;">
                 <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
                     Name:
                     <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
-                        Adam Aldavis</span>
+                        ${room_guests[g].first_name} ${room_guests[g].last_name}</span>
                 </p>
-                <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">25yrs, Male</p>
+                <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">
+                ${room_guests[g].age}yrs, ${room_guests[g].gender}</p>
             </div>
         `
     }

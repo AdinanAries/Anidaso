@@ -1104,6 +1104,7 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
       property_id: req.body.property_id,
       rooms: req.body.rooms,
       //full_property_location: req.body.full_property_location,
+      all_dates_of_occupancy: req.body.all_dates_of_occupancy,
       price_paid: req.body.price_paid,
       checkin_date: req.body.checkin_date,
       checkout_date: req.body.checkout_date,
@@ -1118,6 +1119,72 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
   }catch(e){
     res.send({success: false, data: e, msg: "Server Error!"});
   }
+
+});
+
+app.get("/is_room_booked_on_a_certain_date/:booking_date/:room_id/:room_number", async (req, res, next) =>{
+
+  let answer = {
+    isChekin: false,
+    isBooked: false,
+    isCheckout: false,
+    all_dates_of_occupancy: []
+  }
+
+  let booked = await cheap_hotel_booking.find({
+    checkin_date: req.params.booking_date,
+    rooms: {
+      "$all": {
+        id: req.params.room_id,
+        number: req.params.room_number
+      }
+    }
+  }).exec();
+
+  if(booked.length > 0){
+    answer.isChekin = true;
+    answer.isBooked = true;
+    answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+  }
+
+  if(booked.length === 0){
+    booked = await cheap_hotel_booking.find({
+      checkout_date: req.params.booking_date,
+      rooms: {
+        "$all": {
+          id: req.params.room_id,
+          number: req.params.room_number
+        }
+      }
+    }).exec();
+  }
+
+  if(booked.length > 0 && !answer.isChekin){
+    answer.isCheckout = true;
+    answer.isBooked = true;
+    answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+  }
+
+  if(booked.length === 0){
+    booked = await cheap_hotel_booking.find({
+      all_dates_of_occupancy: {
+        "$all": req.params.booking_date
+      },
+      rooms: {
+        "$all": {
+          id: req.params.room_id,
+          number: req.params.room_number
+        }
+      }
+    }).exec();
+  }
+
+  if(booked.length > 0 && !answer.isChekin && !answer.isCheckout){
+    answer.isBooked = true;
+    answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+  }
+
+  res.send(answer);
 
 });
 

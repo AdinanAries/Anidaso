@@ -739,22 +739,25 @@ var cheap_room_booking_obj = {
       property_id: "607304a562a84645bccdf40b",
       rooms: [
         {
-            id: "607314d60fd9d9659846e1c6",
-            number: "5D"
+            id: "6076abe0546a1e4b74be03fa",
+            number: "3D"
         }
       ],
       //full_property_location: "New York, 1223 Mont Gomery, United States",
-      price_paid: 69.00,
-      checkin_date: "03-24-2022",
-      checkout_date: "03-30-2022",
-      checkin_time: "14:00",
-      checkout_time: "15:00",
+      all_dates_of_occupancy: [
+        "2021-03-20", "2021-03-21", "2021-03-22", "2021-03-23"
+      ],
+      price_paid: 69.40,
+      checkin_date: "2021-03-20",
+      checkout_date: "2021-03-23",
+      checkin_time: "12:00",
+      checkout_time: "12:00",
       guests: [
             {
-                first_name: "Adam",
-                last_name: "Aldavis",
+                first_name: "Penny",
+                last_name: "Setzo",
                 age: 25,
-                gender: "Male",
+                gender: "Female",
                 price_paid: 69.00,
             }
         ]
