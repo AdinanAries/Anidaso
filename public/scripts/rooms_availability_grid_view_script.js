@@ -91,6 +91,12 @@ async function add_classes_to_rooms_with_dates(rooms_with_dates){
 
 }
 
+async function add_classes_to_current_rooms_with_dates(current_room, checking_checkout_dates_list){
+    for(let y=0; y<current_room.days.length; y++){
+        await check_if_date_is_booked_for_current_room(current_room.days[y].full_date, current_room.the_room._id, current_room.the_room.room_number, current_room.days[y], checking_checkout_dates_list);
+    }
+}
+
 function show_selected_dates_on_selected_room(dates_list, selected_room){
     
     for(let j=0; j<selected_room.days.length; j++){
@@ -113,6 +119,48 @@ function show_selected_dates_on_selected_room(dates_list, selected_room){
     }
 
     return selected_room;
+}
+
+function check_if_date_is_booked_for_current_room(date, room_id, room_number, day, checking_checkout_dates_list){
+
+    let the_date = convert_date_object_to_db_string_format(date);
+
+    return $.ajax({
+        type: "GET",
+        url: `/is_room_booked_on_a_certain_date/${the_date}/${room_id}/${room_number}`,
+        success: res => {
+            
+            if(res.isBooked){
+                day.classes.push("booked_date");
+                for(let e=0; e<checking_checkout_dates_list.length; e++){
+                    if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
+                        day.classes.push("overlap")
+                    }
+                }
+            }
+            if(res.isChekin){
+                day.classes.push("booked_checkin");
+                for(let e=0; e<checking_checkout_dates_list.length; e++){
+                    if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
+                        day.classes.push("overlap")
+                    }
+                }
+            }
+            if(res.isCheckout){
+                day.classes.push("booked_checkout");
+                for(let e=0; e<checking_checkout_dates_list.length; e++){
+                    if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
+                        day.classes.push("overlap")
+                    }
+                }
+            }
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+    
 }
 
 function check_if_date_is_booked(date, room_id, room_number, day){
@@ -235,6 +283,7 @@ async function generate_and_display_grid_view_bookings(){
     }
     current_room = show_selected_dates_on_selected_room(checking_checkout_dates_list, current_room)
 
+    await add_classes_to_current_rooms_with_dates(current_room, checking_checkout_dates_list);
     await add_classes_to_rooms_with_dates(rooms_list);
 
     document.getElementById("room_availability_grid_view_tbody").innerHTML = `
