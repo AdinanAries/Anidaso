@@ -1,4 +1,4 @@
-var rooms_availability = [
+/*var rooms_availability = [
     {
         room_id: "",
         room_number: "",
@@ -11,7 +11,20 @@ var rooms_availability = [
             }
         ]
     }
-]
+]*/
+
+var rooms_grid_view_config = {
+    calendar: {
+        first: "2021-03-03",
+        last: "2021-04-02"
+    },
+    picked_dates: {
+        checkin: "2021-03-03",
+        checkout: "2021-03-10"
+    },
+    rooms_id: "607314d60fd9d9659846e1c6",
+    property_id: "607304a562a84645bccdf40b"
+}
 
 function convert_date_object_to_db_string_format(dateObj){
     let date_string = dateObj.toISOString(); //eg. 2021-05-02T09:13:26.243Z
@@ -265,15 +278,36 @@ function return_bookings_grid_view_other_rooms_markup(rooms_list, current_room){
 }
 
 async function generate_and_display_grid_view_bookings(){
+
+    document.getElementById("room_availability_grid_view_tbody").innerHTML = `
+        <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+            <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+            </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+            loading...
+            </p>
+        </div>
+    `;
+
     //YYYY-MM-DD -YYYY-MM-DDTHH:MM:SS
-    let dates_list = build_dates_list_from_range("2021-03-03", "2021-04-02");
-    let checking_checkout_dates_list = build_dates_list_from_range("2021-03-03", "2021-03-10");
+    let dates_list = build_dates_list_from_range(rooms_grid_view_config.calendar.first, rooms_grid_view_config.calendar.last);
+    let checking_checkout_dates_list = build_dates_list_from_range(rooms_grid_view_config.picked_dates.checkin, rooms_grid_view_config.picked_dates.checkout);
     checking_checkout_dates_list = checking_checkout_dates_list.map(each => {
         return each.full_date.getDate() + ", " + each.full_date.getMonth();
     });
     
-    let current_room = await get_and_return_hotel_room_by_id("607314d60fd9d9659846e1c6");
-    let rooms_list = await get_and_return_cheap_hotel_rooms_by_property_id("607304a562a84645bccdf40b");
+    let current_room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
+    let rooms_list = await get_and_return_cheap_hotel_rooms_by_property_id(rooms_grid_view_config.property_id);
 
     rooms_list = await bind_dates_to_rooms(rooms_list, dates_list)
 
@@ -292,7 +326,7 @@ async function generate_and_display_grid_view_bookings(){
         <tr id="room_availability_grid_view_focused_on_room" class="focused_on_room">
         </tr>
     `;
-    
+
     document.getElementById("room_availability_grid_view_headers").innerHTML = return_bookings_grid_view_headers(dates_list, checking_checkout_dates_list);
     document.getElementById("room_availability_grid_view_focused_on_room").innerHTML = return_bookings_grid_view_current_room_markup(current_room);
     document.getElementById("room_availability_grid_view_tbody").innerHTML += return_bookings_grid_view_other_rooms_markup(rooms_list, current_room);
@@ -305,4 +339,76 @@ async function generate_and_display_grid_view_bookings(){
     }*/
 }
 
-generate_and_display_grid_view_bookings();
+document.getElementById("make_reservation_room_select").addEventListener("change", e => {
+    rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
+    generate_and_display_grid_view_bookings();
+});
+
+document.getElementById("make_reservation_property_select").addEventListener("change", async e => {
+
+    document.getElementById("make_reservation_room_select").innerHTML = '';
+
+    let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById("make_reservation_property_select").value);
+    for(let i=0; i < rooms.length; i++){
+        document.getElementById("make_reservation_room_select").innerHTML += `
+            <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
+        `; 
+    }
+    
+    rooms_grid_view_config.property_id = document.getElementById("make_reservation_property_select").value;
+    rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
+
+    generate_and_display_grid_view_bookings();
+});
+
+$(function() {
+    $('#make_reservation_date_range_on_popup_input').daterangepicker({
+      opens: 'left',
+      locale: {
+        cancelLabel: 'Clear'
+      }
+    }, function(start, end, label) {
+  
+      setTimeout(()=>{
+        document.getElementById("make_reservation_date_range_on_popup_input").value = start.toString().substring(0,11) +"  -  "+ end.toString().substring(0,11);
+      }, 100);
+  
+      rooms_grid_view_config.calendar.first = start.format('YYYY-MM-DD');
+      rooms_grid_view_config.calendar.last = end.format('YYYY-MM-DD');
+
+      generate_and_display_grid_view_bookings();
+
+      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
+      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
+  
+      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+  
+      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+});
+
+$(function() {
+    $('#make_reservation_date_range_on_popup_chekin_checkout_input').daterangepicker({
+      opens: 'left',
+      locale: {
+        cancelLabel: 'Clear'
+      }
+    }, function(start, end, label) {
+  
+      setTimeout(()=>{
+        document.getElementById("make_reservation_date_range_on_popup_chekin_checkout_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
+      }, 100);
+  
+      rooms_grid_view_config.picked_dates.checkin = start.format('YYYY-MM-DD');
+      rooms_grid_view_config.picked_dates.checkout = end.format('YYYY-MM-DD');
+
+      generate_and_display_grid_view_bookings();
+
+      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
+      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
+  
+      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+  
+      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+});

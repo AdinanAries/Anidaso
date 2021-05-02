@@ -1016,10 +1016,11 @@ function toggle_show_make_room_reservation_div(){
 
 async function continue_room_reservation(){
     
-    let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"))
+    let the_rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
-    if(rooms){
-        if((rooms.length === 0)){
+    if(the_rooms){
+        if((the_rooms.length === 0)){
             alert("You don't have any rooms in your account. Please add rooms first");
             toggle_show_add_room_pane();
             return null;
@@ -1028,6 +1029,22 @@ async function continue_room_reservation(){
         alert("You don't have any rooms in your account. Please add rooms first");
         toggle_show_add_room_pane();
         return null;
+    }
+
+    document.getElementById("make_reservation_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("make_reservation_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
+    document.getElementById("make_reservation_room_select").innerHTML = '';
+
+    let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById("make_reservation_property_select").value);
+    for(let i=0; i < rooms.length; i++){
+        document.getElementById("make_reservation_room_select").innerHTML += `
+            <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
+        `; 
     }
 
     toggle_show_make_room_reservation_div();
@@ -2432,48 +2449,6 @@ $(function() {
   
       setTimeout(()=>{
         document.getElementById("make_reservation_date_range_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
-      }, 100);
-  
-      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
-      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
-  
-      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
-  
-      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    });
-});
-
-$(function() {
-    $('#make_reservation_date_range_on_popup_input').daterangepicker({
-      opens: 'left',
-      locale: {
-        cancelLabel: 'Clear'
-      }
-    }, function(start, end, label) {
-  
-      setTimeout(()=>{
-        document.getElementById("make_reservation_date_range_on_popup_input").value = start.toString().substring(0,11) +"  -  "+ end.toString().substring(0,11);
-      }, 100);
-  
-      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
-      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
-  
-      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
-  
-      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    });
-});
-
-$(function() {
-    $('#make_reservation_date_range_on_popup_chekin_checkout_input').daterangepicker({
-      opens: 'left',
-      locale: {
-        cancelLabel: 'Clear'
-      }
-    }, function(start, end, label) {
-  
-      setTimeout(()=>{
-        document.getElementById("make_reservation_date_range_on_popup_chekin_checkout_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
       }, 100);
   
       //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
