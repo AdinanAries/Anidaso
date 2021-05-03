@@ -113,8 +113,8 @@
   background-color: crimson !important;
 }
 .room_availability_grid_view .focused_on_room td {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
 }
 #room_status_switch_toggle {
   position: relative;

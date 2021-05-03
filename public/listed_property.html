@@ -347,85 +347,26 @@
                                 Adults: <span style="font-size: 12px; color: rgb(137, 204, 235);">
                                     (above 17)</span>
                               </p>
-                              <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
+                              <input id="make_reservation_popup_number_Of_adults_input" style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
                             </div>
                             <div style="width: calc(50% - 5px); margin-left: 10px;">
                               <p style="font-size: 14px; color: white; margin-bottom: 5px;">
                                 Children: <span style="font-size: 12px; color: rgb(137, 204, 235);">
                                   (below 18)</span>
                               </p>
-                              <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
+                              <input id="make_reservation_popup_number_Of_children_input" style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
                             </div>
                           </div>
                         <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0; margin-top: 20px;">
                             Add Guest(s) Information</p>
                     
-                        <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;">
-                            <span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
-                            1 Adult, 4 children
+                        <p id="make_reservation_number_guests_display_p" style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;">
+                            
                         </p>
                         
                         <div id="make_reservation_guests_list">
-                            <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                                <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Adult 1</p>
-                                <div class="flex_row_default_flex_column_mobile">
-                                    <div class="flex_child_of_two">
-                                        <div style="margin-top: 10px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
-                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
-                                        </div>
-                                        <div style="margin-top: 20px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
-                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
-                                        </div>
-                                    </div>
-                                    <div class="flex_child_of_two flex_non_first_child">
-                                        <div style="margin-top: 10px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                                Gender</p>
-                                            <select style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                            </select>
-                                            <div style="margin-top: 20px;">
-                                                <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                                    Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
-                                                <input id="mk_reservationS_adult_age_input_1" onchange="room_booking_enforce_adult_age_input('mk_reservationS_adult_age_input_1');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-                                <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Child 1</p>
-                                <div class="flex_row_default_flex_column_mobile">
-                                    <div class="flex_child_of_two">
-                                        <div style="margin-top: 10px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
-                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
-                                        </div>
-                                        <div style="margin-top: 20px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
-                                            <input style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
-                                        </div>
-                                    </div>
-                                    <div class="flex_child_of_two flex_non_first_child">
-                                        <div style="margin-top: 10px;">
-                                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                                Gender</p>
-                                            <select style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                            </select>
-                                            <div style="margin-top: 20px;">
-                                                <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                                    Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
-                                                <input id="mk_reservationS_child_age_input_1" oninput="room_booking_enforce_child_age_input('mk_reservationS_child_age_input_1')" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--p style="color:rgb(245, 196, 151); font-size: 13px; letter-spacing: 1px; margin: 10px;">
+                                Adults</p-->
                         </div>
                     </div>
                 </div>
@@ -1588,14 +1529,14 @@
                                     Adults: <span style="font-size: 12px; color: rgb(137, 204, 235);">
                                         (above 17)</span>
                                   </p>
-                                  <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
+                                  <input id="make_reservation_number_of_adults_input" style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
                                 </div>
                                 <div style="width: calc(50% - 20px); margin-left: 10px;">
                                   <p style="font-size: 14px; color: white; margin-bottom: 5px;">
                                     Children: <span style="font-size: 12px; color: rgb(137, 204, 235);">
                                       (below 18)</span>
                                   </p>
-                                  <input style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
+                                  <input id="make_reservation_number_of_children_input" style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
                                 </div>
                               </div>
                           </div>

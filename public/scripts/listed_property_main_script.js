@@ -1047,6 +1047,9 @@ async function continue_room_reservation(){
         `; 
     }
 
+    make_guests_list_from_number_input_values();
+    generate_and_display_grid_view_bookings();
+
     toggle_show_make_room_reservation_div();
 }
 
@@ -2009,7 +2012,7 @@ function get_hotel_bookings(hotel_id){
         type: "GET",
         url: "/get_listed_property_room_bookings/"+hotel_id,
         success: res => {
-            console.log(res);
+            //console.log(res);
             let recent_booking = res[res.length - 1];
             render_recent_hotel_booking(recent_booking)
         },
@@ -2025,11 +2028,11 @@ function get_and_return_current_booking_by_room_id(room_id, room_number){
         type: "GET",
         url: "/get_bookings_by_room_id/"+room_id+"/"+room_number,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
-            console.log(err);
+            //console.log(err);
             return err;
         }
     });
@@ -2044,7 +2047,7 @@ function get_and_return_hotel_property_by_id(property_id){
             return res;
         },
         error: err => {
-            console.log(err);
+            //console.log(err);
             return err;
         }
     });
@@ -2055,11 +2058,11 @@ function get_and_return_hotel_room_by_id(id){
         type: "GET",
         url: "/get_room_by_id/"+id,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
-            console.log(err);
+            //console.log(err);
             return err;
         }
     });
@@ -2070,11 +2073,11 @@ function add_new_amenity(amenity, hotel_id){
         type: "POST",
         url: "/add_new_amenity/"+hotel_id+"?amenity="+amenity,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
-            console.log(err);
+            //console.log(err);
             return err
         }
     });
@@ -2085,7 +2088,7 @@ function update_existing_amenity(old_amenity, new_amenity, hotel_id){
         type: "POST",
         url: "/update_amenity/"+hotel_id+"?new_amenity="+new_amenity+"&old_amenity="+old_amenity,
         success: res => {
-            console.log(res);
+            //console.log(res);
             if(document.getElementById("no_amenities_to_display_msg"))
                 document.getElementById("no_amenities_to_display_msg").style.display = "none";  
             return res;
@@ -2103,11 +2106,11 @@ function add_new_cities_op(city, hotel_id){
         type: "POST",
         url: "/add_new_city/"+hotel_id+"?new_city="+city,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
-            console.log(err);
+            //console.log(err);
             return err;
         }
     });
@@ -2118,7 +2121,7 @@ function remove_city_op(elem_id, city, hotel_id){
         type: "DELETE",
         url: "/remove_city_op/"+hotel_id+"?q_city="+city,
         success: res => {
-            console.log(res);
+            //console.log(res);
             toggle_hide_show_anything(elem_id);
         },
         error: err => {
@@ -2136,7 +2139,7 @@ function remove_amenity(elem_id, amenity, hotel_id){
         type: "DELETE",
         url: "/remove_amenity/"+hotel_id+"?q_amenity="+amenity,
         success: res => {
-            console.log(res);
+            //console.log(res);
             toggle_hide_show_anything(elem_id);
         },
         error: err => {
@@ -2154,7 +2157,7 @@ function get_all_amenities(hotel_id){
         type: "GET",
         url: "/get_all_amenities/"+hotel_id,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
@@ -2262,7 +2265,7 @@ function get_all_cities(hotel_id){
         type: "GET",
         url: "/get_all_cities/"+hotel_id,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
@@ -2277,7 +2280,7 @@ function get_all_policies(hotel_id){
         type: "GET",
         url: "/get_all_policies/"+hotel_id,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
@@ -2388,7 +2391,7 @@ function update_info_item(update_type, new_info, hotel_brand_id){
         type: "POST",
         url: (endpoint_url + hotel_brand_id + "?" + q_param + "=" + new_info),
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
@@ -2404,7 +2407,7 @@ function get_and_return_cheap_hotel_rooms_by_property_id(property_id){
         type: "GET",
         url: "/get_cheap_hotel_rooms_by_property_id/"+property_id,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
@@ -2439,33 +2442,12 @@ $(function() {
     });
 });
 
-$(function() {
-    $('#make_reservation_date_range_input').daterangepicker({
-      opens: 'left',
-      locale: {
-        cancelLabel: 'Clear'
-      }
-    }, function(start, end, label) {
-  
-      setTimeout(()=>{
-        document.getElementById("make_reservation_date_range_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
-      }, 100);
-  
-      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
-      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
-  
-      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
-  
-      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    });
-});
-
 function get_logged_in_hotel_all_photos(hotel_id){
     return $.ajax({
         type: "GET",
         url: "/get_all_cheap_hotel_photos/"+hotel_id,
         success: res => {
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {

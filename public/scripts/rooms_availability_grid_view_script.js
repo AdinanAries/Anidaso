@@ -13,6 +13,8 @@
     }
 ]*/
 
+var make_reservation_guests_list = document.getElementById("make_reservation_guests_list");
+
 var rooms_grid_view_config = {
     calendar: {
         first: "2021-03-03",
@@ -26,11 +28,153 @@ var rooms_grid_view_config = {
     property_id: "607304a562a84645bccdf40b"
 }
 
+var make_reservations_post_data = {
+    hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
+      property_id: "607304a562a84645bccdf40b",
+      rooms: [
+        {
+            id: "6076abe0546a1e4b74be03fa",
+            number: "3D"
+        }
+      ],
+      //full_property_location: "New York, 1223 Mont Gomery, United States",
+      all_dates_of_occupancy: [
+        "2021-03-20", "2021-03-21", "2021-03-22", "2021-03-23"
+      ],
+      price_paid: 69.40,
+      checkin_date: "2021-03-20",
+      checkout_date: "2021-03-23",
+      checkin_time: "12:00",
+      checkout_time: "12:00",
+      guests: [
+            {
+                first_name: "Penny",
+                last_name: "Setzo",
+                type: "adult",
+                age: 25,
+                gender: "Female",
+                price_paid: 69.00,
+            }
+        ]
+}
+
+function add_a_guest_obj(type){
+    return {
+        first_name: "",
+        last_name: "",
+        type: type,
+        age: 0,
+        gender: "",
+        price_paid: 0.00,
+    }
+}
+
+function make_guests_list_from_number_input_values(){
+
+    make_reservation_guests_list.innerHTML = "";
+
+    let number_of_adults = document.getElementById("make_reservation_number_of_adults_input").value;
+    let number_of_children = document.getElementById("make_reservation_number_of_children_input").value;
+
+    document.getElementById("make_reservation_popup_number_Of_adults_input").value = number_of_adults;
+    document.getElementById("make_reservation_popup_number_Of_children_input").value = number_of_children;
+
+    document.getElementById("make_reservation_number_guests_display_p").innerHTML =
+    `
+        <span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+        ${number_of_adults} Adult, ${number_of_children} children
+    `; 
+
+    for(let i=0; i<number_of_adults; i++){
+        make_reservations_post_data.guests.push(add_a_guest_obj("adult"));
+        make_reservation_guests_list.innerHTML += make_reservation_return_each_adult_guest_markup(i);
+    }
+
+    for(let i=0; i<number_of_children; i++){
+        make_reservations_post_data.guests.push(add_a_guest_obj("children"));
+        make_reservation_guests_list.innerHTML += make_reservation_return_each_child_guest_markup(i);
+    }
+}
+
+function make_reservation_return_each_adult_guest_markup(number){
+    return `
+        <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+            <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Adult ${number + 1}</p>
+            <div class="flex_row_default_flex_column_mobile">
+                <div class="flex_child_of_two">
+                    <div style="margin-top: 10px;">
+                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
+                        <input id="mk_reservationS_adult_first_name_input_${number}" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
+                        <input id="mk_reservationS_adult_last_name_input_${number}" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
+                    </div>
+                </div>
+                <div class="flex_child_of_two flex_non_first_child">
+                    <div style="margin-top: 10px;">
+                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                            Gender</p>
+                        <select id="mk_reservationS_adult_gender_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <div style="margin-top: 20px;">
+                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
+                            <input id="mk_reservationS_adult_age_input_${number}" onchange="room_booking_enforce_adult_age_input('mk_reservationS_adult_age_input_${number}');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function make_reservation_return_each_child_guest_markup(number){
+    return `
+        <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+            <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Child ${number + 1}</p>
+            <div class="flex_row_default_flex_column_mobile">
+                <div class="flex_child_of_two">
+                    <div style="margin-top: 10px;">
+                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
+                        <input id="mk_reservationS_child_first_name_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
+                        <input id="mk_reservationS_child_last_name_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
+                    </div>
+                </div>
+                <div class="flex_child_of_two flex_non_first_child">
+                    <div style="margin-top: 10px;">
+                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                            Gender</p>
+                        <select id="mk_reservationS_child_gender_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <div style="margin-top: 20px;">
+                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
+                            <input id="mk_reservationS_child_age_input_${number}" oninput="room_booking_enforce_child_age_input('mk_reservationS_child_age_input_${number}')" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function convert_date_object_to_db_string_format(dateObj){
     let date_string = dateObj.toISOString(); //eg. 2021-05-02T09:13:26.243Z
     return date_string.split("T")[0];
 
 }
+
+let todays_date = new Date();
+rooms_grid_view_config.calendar.first = convert_date_object_to_db_string_format(todays_date);
+rooms_grid_view_config.calendar.last = convert_date_object_to_db_string_format(new Date(todays_date.setDate(todays_date.getDate() + 7)))
 
 function add_trailing_to_date_num(number){
 
@@ -242,6 +386,8 @@ function return_bookings_grid_view_current_room_markup(current_room){
 
 }
 
+
+
 function return_bookings_grid_view_other_rooms_markup(rooms_list, current_room){
 
     let all_room_trs = "";
@@ -331,8 +477,8 @@ async function generate_and_display_grid_view_bookings(){
     document.getElementById("room_availability_grid_view_focused_on_room").innerHTML = return_bookings_grid_view_current_room_markup(current_room);
     document.getElementById("room_availability_grid_view_tbody").innerHTML += return_bookings_grid_view_other_rooms_markup(rooms_list, current_room);
 
-    console.log(rooms_list)
-    console.log(current_room)
+    //console.log(rooms_list)
+    //console.log(current_room)
 
     /*for(let i=0; i < dates_list.length; i++){
         console.log(dates_list[i].full_date.getDate());
@@ -356,7 +502,7 @@ document.getElementById("make_reservation_property_select").addEventListener("ch
     }
     
     rooms_grid_view_config.property_id = document.getElementById("make_reservation_property_select").value;
-    rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
+    rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select ").value;
 
     generate_and_display_grid_view_bookings();
 });
@@ -396,13 +542,46 @@ $(function() {
     }, function(start, end, label) {
   
       setTimeout(()=>{
+        document.getElementById("make_reservation_date_range_on_popup_input").value = start.toString().substring(0,11) +"  -  "+ end.toString().substring(0,11);
         document.getElementById("make_reservation_date_range_on_popup_chekin_checkout_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
       }, 100);
   
       rooms_grid_view_config.picked_dates.checkin = start.format('YYYY-MM-DD');
       rooms_grid_view_config.picked_dates.checkout = end.format('YYYY-MM-DD');
 
+      rooms_grid_view_config.calendar.first = start.format('YYYY-MM-DD');
+      rooms_grid_view_config.calendar.last = end.format('YYYY-MM-DD');
+
       generate_and_display_grid_view_bookings();
+
+      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
+      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
+  
+      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+  
+      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+});
+
+$(function() {
+    $('#make_reservation_date_range_input').daterangepicker({
+      opens: 'left',
+      locale: {
+        cancelLabel: 'Clear'
+      }
+    }, function(start, end, label) {
+  
+      setTimeout(()=>{
+        document.getElementById("make_reservation_date_range_on_popup_chekin_checkout_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
+        document.getElementById("make_reservation_date_range_on_popup_input").value = start.toString().substring(0,11) +"  -  "+ end.toString().substring(0,11);
+        document.getElementById("make_reservation_date_range_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
+      }, 100);
+  
+      rooms_grid_view_config.picked_dates.checkin = start.format('YYYY-MM-DD');
+      rooms_grid_view_config.picked_dates.checkout = end.format('YYYY-MM-DD');
+
+      rooms_grid_view_config.calendar.first = start.format('YYYY-MM-DD');
+      rooms_grid_view_config.calendar.last = end.format('YYYY-MM-DD');
 
       //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
       //fligh_search_data.return_date = end.format('YYYY-MM-DD');

@@ -756,6 +756,7 @@ var cheap_room_booking_obj = {
             {
                 first_name: "Penny",
                 last_name: "Setzo",
+                type: "adult",
                 age: 25,
                 gender: "Female",
                 price_paid: 69.00,
