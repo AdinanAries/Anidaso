@@ -1198,6 +1198,29 @@ app.get("/get_listed_property_room_bookings/:hotel_id", async (req, res, next) =
 
 });
 
+app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_date/:last_date/:room_id/:property_id", async (req, res, next) => {
+  
+  let hotel_id = req.params.hotel_id;
+  let first_date = req.params.first_date;
+  let last_date = req.params.last_date;
+  let room_id = req.params.room_id;
+  let property_id = req.params.property_id;
+
+  let dates_list = req.body.dates_list;
+
+  let bookings = [];
+
+  if(property_id === "all" && room_id === "all"){
+    bookings = await cheap_hotel_booking.find({
+      hotel_brand_id: hotel_id
+    }).exec();
+  }
+
+
+  res.send(bookings);
+
+})
+
 app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next) => {
     let bookings = await cheap_hotel_booking.find({
       rooms: {

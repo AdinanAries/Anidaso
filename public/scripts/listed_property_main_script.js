@@ -1,3 +1,5 @@
+let todays_date = new Date();
+
 var logged_in_hotel_ratings_area = document.getElementById("logged_in_hotel_ratings_area");
 var logged_in_hotel_description_input = document.getElementById("logged_in_hotel_description_input");
 
@@ -9,6 +11,69 @@ var current_edited_amenity_obj;
 var current_op_cities_edit_elem_id;
 var global_is_room_closed = false;
 var search_result_current_room_id;
+
+function change_date_from_iso_to_long_date(isoString){
+    let the_date = new Date(isoString);
+    let n = the_date.toString().split(" ");
+    let formatted_date = `${n[1]} ${n[2]}, ${n[3]}`;
+
+    return formatted_date;
+}
+
+//console.log(change_date_from_iso_to_long_date("2021-12-15"));
+
+function convert_date_object_to_db_string_format(dateObj){
+    let date_string = dateObj.toISOString(); //eg. 2021-05-02T09:13:26.243Z
+    return date_string.split("T")[0];
+
+}
+
+function is_first_greater_than_second_iso_string_dates_comparison(date1, date2){
+    let dt1 = new Date(date1);
+    let dt2 = new Date(date2);
+
+    if(dt1 > dt2){
+        return true;
+    }
+
+    return false;
+}
+
+function is_first_less_than_second_iso_string_dates_comparison(date1, date2){
+    let dt1 = new Date(date1);
+    let dt2 = new Date(date2);
+
+    if(dt1 > dt2){
+        return false;
+    }
+
+    return true;
+}
+
+function general_build_dates_list_from_range(first_date, last_date){
+
+    let startDate = new Date(first_date);
+    let endDate = new Date(last_date);
+
+    endDate = new Date(endDate.setDate(endDate.getDate() + 1));
+
+    let currentDate = startDate;
+    let datesList = [];
+    
+    while(endDate > currentDate){
+        
+        let each_date = {
+            obj: currentDate,
+            str: convert_date_object_to_db_string_format(currentDate)
+        }
+        datesList.push(each_date);
+
+        currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+
+    }
+
+    return datesList;
+}
 
 //show_all_hotel_property_rooms(propety_id) use this function to show  rooms of each property;
 
@@ -1077,10 +1142,6 @@ function toggle_show_make_reservation_find_spot_pane(){
     toggle_show_search_room_pane();
 }*/
 
-function toggle_show_booked_rooms(){
-    $("#booked_rooms_container").toggle("up");
-}
-
 async function toggle_show_all_hotel_properties(){
 
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"))
@@ -1953,14 +2014,14 @@ async function render_recent_hotel_booking(recent_booking){
     }
 
     for(let g=0; g < room_guests.length; g++){
-        room_guests_markup = `
-            <div style="margin-bottom: 5px;">
-                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                    Name:
-                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+        room_guests_markup += `
+            <div style="padding-bottom: 10px;">
+                <p style="letter-spacing: 1px; color: slateblue; font-size: 13px; margin-bottom: 5px;">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                    <span style="letter-spacing: 1px; margin-left: 5px; font-size: 15px; color:rgb(245, 196, 151);">
                         ${room_guests[g].first_name} ${room_guests[g].last_name}</span>
                 </p>
-                <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">
+                <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">
                 ${room_guests[g].age}yrs, ${room_guests[g].gender}</p>
             </div>
         `
@@ -1970,7 +2031,7 @@ async function render_recent_hotel_booking(recent_booking){
         <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); max-width: 500px; margin: auto;">
             <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Booked recently</p>
             <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
-                ${room_number}:
+                Room ${room_number}:
                 <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
                     Booked
                     <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
@@ -1987,12 +2048,12 @@ async function render_recent_hotel_booking(recent_booking){
                 <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
                     Checkin:
                     <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                        ${booking_checkin_date}</span>
+                        ${change_date_from_iso_to_long_date(booking_checkin_date)}</span>
                 </p>
                 <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
                     Checkout:
                     <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                        ${booking_checkout_date}</span>
+                        ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
                 </p>
                 <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
                     Price paid:
@@ -2422,27 +2483,6 @@ function get_and_return_cheap_hotel_rooms_by_property_id(property_id){
 
 $(document).ready(()=>{
     get_logged_in_hotel_infor();
-});
-
-$(function() {
-    $('#all_bookings_date_range_input').daterangepicker({
-      opens: 'left',
-      locale: {
-        cancelLabel: 'Clear'
-      }
-    }, function(start, end, label) {
-  
-      setTimeout(()=>{
-        document.getElementById("all_bookings_date_range_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
-      }, 100);
-  
-      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
-      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
-  
-      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
-  
-      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    });
 });
 
 function get_logged_in_hotel_all_photos(hotel_id){

@@ -716,77 +716,20 @@
                 <div class="flex_row_default_flex_column_mobile" class="page_popup_content_header">
                     <div class="flex_child_of_two">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Property</p>
-                        <select style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
-                            <option>
-                                All Properties
-                            </option>
-                            <option>
-                                New York, 1223 Mont Gomery, United States
-                            </option>
-                            <option>
-                                New York, 1223 Mont Gomery, United States
-                            </option>
+                        <select id="booked_rooms_filter_by_properties_input" style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                            
                         </select>
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
                         <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color: white;">Select Room</p>
-                        <select style="width: 100%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
-                            <option>
-                                All Rooms
-                            </option>
-                            <option>
-                                5D
-                            </option>
-                            <option>
-                                10A
-                            </option>
+                        <select id="booked_rooms_filter_by_room_input" style="width: 100%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
+                            
                         </select>
                         <!--button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button-->
                     </div>
                 </div>
                 <div id="booked_rooms_list" style="margin-top: 10px;">
-                    <div class="each_booked_room" style="background-color:rgba(0, 0, 0, 0.8); border-radius: 4px; margin-bottom: 5px;">
-                        <div style="padding: 10px;">
-                            <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
-                                Room 5D:
-                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
-                                    Booked
-                                    <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
-                                </span>
-                            </p>
-                            <p style="margin-top: 5px; margin-bottom: 20px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px;">
-                                New York 
-                                <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
-                                    - 1223 Mont Gomery
-                                </span>
-                            </p>
-                            <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                                Checkin:
-                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                                    March 23, 2022</span>
-                            </p>
-                            <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                                Checkout:
-                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                                    March 25, 2022</span>
-                            </p>
-                            <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                                Price paid:
-                                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
-                                    $90.00</span>
-                            </p>
-                            <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
-                                Room Guest(s)</p>
-                            <div>
-                                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                                    Name:
-                                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
-                                        Adam Aldavis</span>
-                                </p>
-                                <p style="margin-left: 70px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">25yrs, Male</p>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -2076,5 +2019,6 @@
     <script src="scripts/listed_property_stripe.js" type="text/javascript"></script>
     <script src="scripts/listed_property_other_script.js" type="text/javascript"></script>
     <script src="scripts/rooms_availability_grid_view_script.js" type="text/javascript"></script>
+    <script src="scripts/property_managers_all_bookings_scripts.js" type="text/javascript"></script>
 </body>
 </html>

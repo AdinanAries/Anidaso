@@ -166,15 +166,8 @@ function make_reservation_return_each_child_guest_markup(number){
     `;
 }
 
-function convert_date_object_to_db_string_format(dateObj){
-    let date_string = dateObj.toISOString(); //eg. 2021-05-02T09:13:26.243Z
-    return date_string.split("T")[0];
-
-}
-
-let todays_date = new Date();
 rooms_grid_view_config.calendar.first = convert_date_object_to_db_string_format(todays_date);
-rooms_grid_view_config.calendar.last = convert_date_object_to_db_string_format(new Date(todays_date.setDate(todays_date.getDate() + 7)))
+rooms_grid_view_config.calendar.last = convert_date_object_to_db_string_format(new Date(todays_date.setDate(todays_date.getDate() + 7)));
 
 function add_trailing_to_date_num(number){
 
