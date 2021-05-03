@@ -502,7 +502,7 @@ document.getElementById("make_reservation_property_select").addEventListener("ch
     }
     
     rooms_grid_view_config.property_id = document.getElementById("make_reservation_property_select").value;
-    rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select ").value;
+    rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
 
     generate_and_display_grid_view_bookings();
 });
