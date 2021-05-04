@@ -55,7 +55,25 @@ async function toggle_show_booked_rooms(){
         `; 
     }
 
-    document.getElementById("booked_rooms_list").innerHTML = '';
+    document.getElementById("booked_rooms_list").innerHTML = `
+        <div style="width: 100%; text-align: center; margin-top: 50px" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+            <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+            </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+            loading...
+            </p>
+        </div>
+    `;
 
     let dates_list = general_build_dates_list_from_range(get_all_bookings_config.first_date, get_all_bookings_config.last_date);
 
@@ -77,6 +95,17 @@ async function toggle_show_booked_rooms(){
 }
 
 async function render_all_bookings_markup(bookings){
+
+    if(bookings.length === 0){
+        document.getElementById("booked_rooms_list").innerHTML = `
+            <p style="color: white; font-size: 14px; font-weight: bolder; text-align: center; margin-top: 50px; letter-spacing: 1px;">
+                <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                No booking found!
+            </p>
+        `;
+    }else{
+        document.getElementById("booked_rooms_list").innerHTML = '';
+    }
 
     for(let i=0; i<bookings.length; i++){
 
@@ -192,7 +221,25 @@ $(function() {
             return convert_date_object_to_db_string_format(date.obj);
         });
 
-      document.getElementById("booked_rooms_list").innerHTML = '';
+        document.getElementById("booked_rooms_list").innerHTML = `
+            <div style="width: 100%; text-align: center; margin-top: 50px" class="loader loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:white;">
+                loading...
+                </p>
+            </div>
+        `;
       get_and_render_all_bookings();
 
       //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
@@ -215,7 +262,25 @@ document.getElementById("booked_rooms_filter_by_room_input").addEventListener("c
     document.getElementById("booked_rooms_filter_by_properties_input").value = "all";
     get_all_bookings_config.property = "all";
 
-    document.getElementById("booked_rooms_list").innerHTML = '';
+    document.getElementById("booked_rooms_list").innerHTML = `
+        <div style="width: 100%; text-align: center; margin-top: 50px" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+            <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+            </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+            loading...
+            </p>
+        </div>
+    `;
     get_and_render_all_bookings();
 });
 
@@ -226,7 +291,25 @@ document.getElementById("booked_rooms_filter_by_properties_input").addEventListe
     get_all_bookings_config.room = "all";
     get_all_bookings_config.room_number = "all";
 
-    document.getElementById("booked_rooms_list").innerHTML = '';
+    document.getElementById("booked_rooms_list").innerHTML = `
+        <div style="width: 100%; text-align: center; margin-top: 50px" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+            <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+            </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+            loading...
+            </p>
+        </div>
+    `;
     get_and_render_all_bookings();
 })
 
