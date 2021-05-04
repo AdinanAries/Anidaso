@@ -4,6 +4,7 @@ let get_all_bookings_config = {
     last_date: "",
     property: "all",
     room: "all",
+    room_number: "all",
     dates: []
 }
 
@@ -14,7 +15,7 @@ async function get_and_render_all_bookings(){
 
     let bookings = await get_all_bookings_based_date_range_and_rooms_filter(window.localStorage.getItem("ANDSBZID"), 
         get_all_bookings_config.first_date, get_all_bookings_config.last_date, get_all_bookings_config.room, 
-        get_all_bookings_config.property, get_all_bookings_config.dates);
+        get_all_bookings_config.room_number, get_all_bookings_config.property, get_all_bookings_config.dates);
     
     render_all_bookings_markup(bookings)
 }
@@ -38,7 +39,7 @@ async function toggle_show_booked_rooms(){
     }
 
     document.getElementById("booked_rooms_filter_by_room_input").innerHTML = `
-        <option value="all">
+        <option value="all%r%s%p%all">
             All Rooms
         </option>
     `;
@@ -46,7 +47,7 @@ async function toggle_show_booked_rooms(){
     //let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById("booked_rooms_filter_by_properties_input").value);
     for(let i=0; i < rooms.length; i++){
         document.getElementById("booked_rooms_filter_by_room_input").innerHTML += `
-            <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
+            <option value='${rooms[i]._id}%r%s%p%${rooms[i].room_number}'>${rooms[i].room_number}</option>
         `; 
     }
 
@@ -202,6 +203,13 @@ $(function() {
 document.getElementById("booked_rooms_filter_by_room_input").addEventListener("change", e => {
 
     get_all_bookings_config.room = document.getElementById("booked_rooms_filter_by_room_input").value;
+    get_all_bookings_config.room = get_all_bookings_config.room.split("%r%s%p%")[0];
+
+    get_all_bookings_config.room_number = document.getElementById("booked_rooms_filter_by_room_input").value
+    get_all_bookings_config.room_number = get_all_bookings_config.room_number.split("%r%s%p%")[1];
+
+    document.getElementById("booked_rooms_filter_by_properties_input").value = "all";
+    get_all_bookings_config.property = "all";
 
     document.getElementById("booked_rooms_list").innerHTML = '';
     get_and_render_all_bookings();
@@ -210,16 +218,19 @@ document.getElementById("booked_rooms_filter_by_room_input").addEventListener("c
 document.getElementById("booked_rooms_filter_by_properties_input").addEventListener("change", e => {
 
     get_all_bookings_config.property = document.getElementById("booked_rooms_filter_by_properties_input").value;
+    document.getElementById("booked_rooms_filter_by_room_input").value = "all%r%s%p%all";
+    get_all_bookings_config.room = "all";
+    get_all_bookings_config.room_number = "all";
 
     document.getElementById("booked_rooms_list").innerHTML = '';
     get_and_render_all_bookings();
 })
 
-function get_all_bookings_based_date_range_and_rooms_filter(hotel_id, first_date, last_date, room_id, property_id, booking_dates_list){
+function get_all_bookings_based_date_range_and_rooms_filter(hotel_id, first_date, last_date, room_id, room_number, property_id, booking_dates_list){
     
     return $.ajax({
         type: "POST",
-        url: `/get_all_bookings_based_date_range_and_rooms_filter/${hotel_id}/${first_date}/${last_date}/${room_id}/${property_id}`,
+        url: `/get_all_bookings_based_date_range_and_rooms_filter/${hotel_id}/${first_date}/${last_date}/${room_id}/${room_number}/${property_id}`,
         data: JSON.stringify({
             dates_list: booking_dates_list
         }),

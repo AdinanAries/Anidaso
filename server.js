@@ -1198,13 +1198,14 @@ app.get("/get_listed_property_room_bookings/:hotel_id", async (req, res, next) =
 
 });
 
-app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_date/:last_date/:room_id/:property_id", async (req, res, next) => {
+app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_date/:last_date/:room_id/:room_number/:property_id", async (req, res, next) => {
   
   let hotel_id = req.params.hotel_id;
   let first_date = req.params.first_date;
   let last_date = req.params.last_date;
-  let room_id = req.params.room_id;
-  let property_id = req.params.property_id;
+  let room_number = req.params.room_number;
+  let room_id_p = req.params.room_id;
+  let property_id_p = req.params.property_id;
 
   let dates_list = req.body.dates_list;
 
@@ -1212,8 +1213,23 @@ app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_d
 
   let bookings = [];
 
-  if(property_id === "all" && room_id === "all"){
+  if(property_id_p === "all" && room_id_p === "all"){
     bookings = await cheap_hotel_booking.find({
+      hotel_brand_id: hotel_id
+    }).exec();
+  }else if(property_id_p === "all"){
+    bookings = await cheap_hotel_booking.find({
+      rooms: {
+        "$all": {
+          id: room_id_p,
+          number: room_number
+        }
+      },
+      hotel_brand_id: hotel_id
+    }).exec();
+  }else if(room_id_p === "all"){
+    bookings = await cheap_hotel_booking.find({
+      property_id: property_id_p,
       hotel_brand_id: hotel_id
     }).exec();
   }
