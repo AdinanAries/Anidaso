@@ -1,4 +1,5 @@
 let todays_date = new Date();
+let todays_date2 = new Date();
 
 var logged_in_hotel_ratings_area = document.getElementById("logged_in_hotel_ratings_area");
 var logged_in_hotel_description_input = document.getElementById("logged_in_hotel_description_input");
@@ -55,18 +56,16 @@ function general_build_dates_list_from_range(first_date, last_date){
     let startDate = new Date(first_date);
     let endDate = new Date(last_date);
 
-    endDate = new Date(endDate.setDate(endDate.getDate() + 1));
+    startDate = new Date(startDate.setDate(startDate.getDate() - 1));
 
     let currentDate = startDate;
     let datesList = [];
     
     while(endDate > currentDate){
         
-        let each_date = {
-            obj: currentDate,
-            str: convert_date_object_to_db_string_format(currentDate)
-        }
-        datesList.push(each_date);
+        datesList.push({
+            obj: currentDate
+        });
 
         currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
 
@@ -1899,8 +1898,8 @@ async function render_hotel_rooms(rooms_list){
             
             let booking = await get_and_return_current_booking_by_room_id(rooms_sublist[r]._id, rooms_sublist[r].room_number);
             if(booking[0]){
-                checkin = booking[0].checkin_date;
-                checkout = booking[0].checkout_date;
+                checkin = change_date_from_iso_to_long_date(booking[0].checkin_date);
+                checkout = change_date_from_iso_to_long_date(booking[0].checkout_date);
             }
         }
 

@@ -2,10 +2,22 @@
 let get_all_bookings_config = {
     first_date: "",
     last_date: "",
+    property: "all",
+    room: "all",
+    dates: []
 }
 
-get_all_bookings_config.first_date = convert_date_object_to_db_string_format(todays_date);
-get_all_bookings_config.last_date = convert_date_object_to_db_string_format(new Date(todays_date.setDate(todays_date.getDate() + 7)));
+get_all_bookings_config.first_date = convert_date_object_to_db_string_format(todays_date2);
+get_all_bookings_config.last_date = convert_date_object_to_db_string_format(new Date(todays_date2.setDate(todays_date2.getDate() + 7)));
+
+async function get_and_render_all_bookings(){
+
+    let bookings = await get_all_bookings_based_date_range_and_rooms_filter(window.localStorage.getItem("ANDSBZID"), 
+        get_all_bookings_config.first_date, get_all_bookings_config.last_date, get_all_bookings_config.room, 
+        get_all_bookings_config.property, get_all_bookings_config.dates);
+    
+    render_all_bookings_markup(bookings)
+}
 
 async function toggle_show_booked_rooms(){
 
@@ -13,7 +25,7 @@ async function toggle_show_booked_rooms(){
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     document.getElementById("booked_rooms_filter_by_properties_input").innerHTML = `
-        <option>
+        <option value="all">
             All Properties
         </option>
     `;
@@ -26,7 +38,7 @@ async function toggle_show_booked_rooms(){
     }
 
     document.getElementById("booked_rooms_filter_by_room_input").innerHTML = `
-        <option>
+        <option value="all">
             All Rooms
         </option>
     `;
@@ -42,16 +54,17 @@ async function toggle_show_booked_rooms(){
 
     let dates_list = general_build_dates_list_from_range(get_all_bookings_config.first_date, get_all_bookings_config.last_date);
 
-    //console.log("all bookings dates list", dates_list);
-
-    let string_dates_list = dates_list.map(date => {
-        return date.str;
+    get_all_bookings_config.dates = dates_list.map(date => {
+        return convert_date_object_to_db_string_format(date.obj);
     });
 
-    let bookings = await get_all_bookings_based_date_range_and_rooms_filter(window.localStorage.getItem("ANDSBZID"), 
-        get_all_bookings_config.first_date, get_all_bookings_config.last_date, "all", "all", string_dates_list);
+    get_and_render_all_bookings();
+
+    /*let bookings = await get_all_bookings_based_date_range_and_rooms_filter(window.localStorage.getItem("ANDSBZID"), 
+        get_all_bookings_config.first_date, get_all_bookings_config.last_date, get_all_bookings_config.room, 
+        get_all_bookings_config.property, get_all_bookings_config.dates);
     
-    render_all_bookings_markup(bookings)
+    render_all_bookings_markup(bookings)*/
     
     $("#booked_rooms_container").toggle("up");
 
@@ -136,7 +149,7 @@ async function render_all_bookings_markup(bookings){
                         <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
                         $${parseFloat(price_paid).toFixed(2)}</span>
                     </p>
-                    <div style="margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
+                    <div style="cursor: pointer; margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
                         <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgb(4, 120, 167); text-align: center; font-size: 13px;">
                             <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-pencil" aria-hidden="true"></i>Change
                         </div>
@@ -168,6 +181,15 @@ $(function() {
       get_all_bookings_config.first_date = start.format('YYYY-MM-DD');
       get_all_bookings_config.last_date = end.format('YYYY-MM-DD');
 
+      let dates_list = general_build_dates_list_from_range(get_all_bookings_config.first_date, get_all_bookings_config.last_date);
+
+        get_all_bookings_config.dates = dates_list.map(date => {
+            return convert_date_object_to_db_string_format(date.obj);
+        });
+
+      document.getElementById("booked_rooms_list").innerHTML = '';
+      get_and_render_all_bookings();
+
       //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
       //fligh_search_data.return_date = end.format('YYYY-MM-DD');
   
@@ -177,6 +199,21 @@ $(function() {
     });
 });
 
+document.getElementById("booked_rooms_filter_by_room_input").addEventListener("change", e => {
+
+    get_all_bookings_config.room = document.getElementById("booked_rooms_filter_by_room_input").value;
+
+    document.getElementById("booked_rooms_list").innerHTML = '';
+    get_and_render_all_bookings();
+});
+
+document.getElementById("booked_rooms_filter_by_properties_input").addEventListener("change", e => {
+
+    get_all_bookings_config.property = document.getElementById("booked_rooms_filter_by_properties_input").value;
+
+    document.getElementById("booked_rooms_list").innerHTML = '';
+    get_and_render_all_bookings();
+})
 
 function get_all_bookings_based_date_range_and_rooms_filter(hotel_id, first_date, last_date, room_id, property_id, booking_dates_list){
     

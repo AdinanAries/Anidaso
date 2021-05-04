@@ -1208,6 +1208,8 @@ app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_d
 
   let dates_list = req.body.dates_list;
 
+  console.log(dates_list)
+
   let bookings = [];
 
   if(property_id === "all" && room_id === "all"){
