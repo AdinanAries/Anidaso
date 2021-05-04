@@ -19,7 +19,7 @@ function change_date_from_iso_to_long_date(isoString){
     let the_month = isoString.split("-")[1];
     let the_day = isoString.split("-")[2];
 
-    let the_date = new Date(the_year, the_month, the_day);
+    let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
     let n = the_date.toString().split(" ");
     let formatted_date = `${n[1]} ${n[2]}, ${n[3]}`;
 

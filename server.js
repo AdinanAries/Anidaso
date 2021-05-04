@@ -1209,7 +1209,7 @@ app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_d
 
   let dates_list = req.body.dates_list;
 
-  console.log(dates_list)
+ //console.log(dates_list)
 
   let bookings = [];
 
@@ -1234,6 +1234,13 @@ app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_d
     }).exec();
   }
 
+
+  bookings = bookings.filter(booking => {
+    return (
+      dates_list.includes(booking.checkin_date) ||
+      dates_list.includes(booking.checkout_date) 
+      )
+  });
 
   res.send(bookings);
 
