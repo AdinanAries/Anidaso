@@ -17,45 +17,34 @@ var make_reservation_guests_list = document.getElementById("make_reservation_gue
 
 var rooms_grid_view_config = {
     calendar: {
-        first: "2021-03-03",
-        last: "2021-04-02"
+        first: "",
+        last: ""
     },
     picked_dates: {
-        checkin: "2021-03-03",
-        checkout: "2021-03-10"
+        checkin: "",
+        checkout: ""
     },
-    rooms_id: "607314d60fd9d9659846e1c6",
-    property_id: "607304a562a84645bccdf40b"
+    rooms_id: "",
+    property_id: ""
 }
 
 var make_reservations_post_data = {
-    hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
-      property_id: "607304a562a84645bccdf40b",
+    hotel_brand_id: "",
+      property_id: "",
       rooms: [
         {
-            id: "6076abe0546a1e4b74be03fa",
-            number: "3D"
+            id: "",
+            number: ""
         }
       ],
       //full_property_location: "New York, 1223 Mont Gomery, United States",
-      all_dates_of_occupancy: [
-        "2021-03-20", "2021-03-21", "2021-03-22", "2021-03-23"
-      ],
-      price_paid: 69.40,
-      checkin_date: "2021-03-20",
-      checkout_date: "2021-03-23",
+      all_dates_of_occupancy: [],
+      price_paid: 0,
+      checkin_date: "",
+      checkout_date: "",
       checkin_time: "12:00",
       checkout_time: "12:00",
-      guests: [
-            {
-                first_name: "Penny",
-                last_name: "Setzo",
-                type: "adult",
-                age: 25,
-                gender: "Female",
-                price_paid: 69.00,
-            }
-        ]
+      guests: []
 }
 
 function add_a_guest_obj(type){
@@ -65,7 +54,7 @@ function add_a_guest_obj(type){
         type: type,
         age: 0,
         gender: "",
-        price_paid: 0.00,
+        price_paid: 0,
     }
 }
 
@@ -589,3 +578,42 @@ $(function() {
       //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     });
 });
+
+function submit_room_reservation(){
+    
+}
+
+document.getElementById("make_reservation_submit_button").addEventListener("click", e => {
+
+    if(is_there_overlap){
+        alert("The spots you've chosen overlaps with exsiting bookings");
+        return null;
+    }
+
+    if(make_reservations_post_data.checkin_date === "" || make_reservations_post_data.checkout_date === "" || make_reservations_post_data.all_dates_of_occupancy.length === 0){
+        alert("Please add checkin and checkout dates");
+        if(document.getElementById("make_reservation_find_spot_pane").style.display === "none")
+            toggle_show_make_reservation_find_spot_pane()
+        return null;
+    }
+
+    if(check_if_reservation_guesst_data_is_completed()){
+        alert("making reservation");
+    }else{
+        alert("Please add guests information!")
+        toggle_show_make_reservation_add_guests_pane();
+    }
+});
+
+function check_if_reservation_guesst_data_is_completed(){
+
+    for(let i=0; i<make_reservations_post_data.guests.length; i++){
+        if(make_reservations_post_data.guests[i].first_name === "" || make_reservations_post_data.guests[i].last_name === "" ||
+            make_reservations_post_data.guests[i].age === 0 || make_reservations_post_data.guests[i].price_paid === 0 || 
+            make_reservations_post_data.guests[i].gender === ""){
+                return false;
+            }
+    }
+
+    return true;
+}
