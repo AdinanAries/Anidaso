@@ -286,7 +286,8 @@ function check_if_date_is_booked_for_current_room(date, room_id, room_number, da
                 day.classes.push("booked_date");
                 for(let e=0; e<checking_checkout_dates_list.length; e++){
                     if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
-                        day.classes.push("overlap")
+                        day.classes.push("overlap");
+                        is_there_overlap = true;
                     }
                 }
             }
@@ -294,7 +295,8 @@ function check_if_date_is_booked_for_current_room(date, room_id, room_number, da
                 day.classes.push("booked_checkin");
                 for(let e=0; e<checking_checkout_dates_list.length; e++){
                     if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
-                        day.classes.push("overlap")
+                        day.classes.push("overlap");
+                        is_there_overlap = true;
                     }
                 }
             }
@@ -302,7 +304,8 @@ function check_if_date_is_booked_for_current_room(date, room_id, room_number, da
                 day.classes.push("booked_checkout");
                 for(let e=0; e<checking_checkout_dates_list.length; e++){
                     if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
-                        day.classes.push("overlap")
+                        day.classes.push("overlap");
+                        is_there_overlap = true;
                     }
                 }
             }

@@ -1,6 +1,8 @@
 let todays_date = new Date();
 let todays_date2 = new Date();
 
+var is_there_overlap = false;
+
 var logged_in_hotel_ratings_area = document.getElementById("logged_in_hotel_ratings_area");
 var logged_in_hotel_description_input = document.getElementById("logged_in_hotel_description_input");
 
@@ -1135,6 +1137,12 @@ async function continue_room_reservation(){
 }
 
 function toggle_show_make_reservation_add_guests_pane(){
+
+    if(is_there_overlap){
+        alert("The spots you've chosen overlaps with exsiting bookings");
+        return null
+    }
+
     if(document.getElementById("make_reservation_add_guests_pane").style.display === "none"){
         $("#make_reservation_find_spot_pane").toggle("up");
         $("#make_reservation_add_guests_pane").toggle("up");
