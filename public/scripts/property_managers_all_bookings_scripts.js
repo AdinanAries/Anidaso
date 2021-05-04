@@ -25,6 +25,10 @@ async function toggle_show_booked_rooms(){
     let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
+    get_all_bookings_config.property = "all";
+    get_all_bookings_config.room = "all";
+    get_all_bookings_config.room_number = "all";
+
     document.getElementById("booked_rooms_filter_by_properties_input").innerHTML = `
         <option value="all">
             All Properties

@@ -14,7 +14,12 @@ var global_is_room_closed = false;
 var search_result_current_room_id;
 
 function change_date_from_iso_to_long_date(isoString){
-    let the_date = new Date(isoString);
+    
+    let the_year = isoString.split("-")[0];
+    let the_month = isoString.split("-")[1];
+    let the_day = isoString.split("-")[2];
+
+    let the_date = new Date(the_year, the_month, the_day);
     let n = the_date.toString().split(" ");
     let formatted_date = `${n[1]} ${n[2]}, ${n[3]}`;
 
@@ -24,7 +29,16 @@ function change_date_from_iso_to_long_date(isoString){
 //console.log(change_date_from_iso_to_long_date("2021-12-15"));
 
 function convert_date_object_to_db_string_format(dateObj){
-    let date_string = dateObj.toISOString(); //eg. 2021-05-02T09:13:26.243Z
+    
+    let the_month = dateObj.toLocaleString().split(",")[0].split("/")[0];
+    let the_day = dateObj.toLocaleString().split(",")[0].split("/")[1];
+    let the_year = dateObj.toLocaleString().split(",")[0].split("/")[2];
+    //console.log(`${the_year}/${the_month}/${the_day}`)
+
+    let a_date = new Date(`${the_year}/${the_month}/${the_day}`);
+    //a_date = new Date(a_date.setDate(a_date.getDate() - 1));
+
+    let date_string = a_date.toISOString(); //eg. 2021-05-02T09:13:26.243Z*/
     return date_string.split("T")[0];
 
 }

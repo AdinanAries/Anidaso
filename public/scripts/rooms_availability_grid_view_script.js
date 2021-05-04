@@ -227,6 +227,7 @@ function bind_dates_to_rooms(rooms_list, dates_list){
         }
     });
 
+    console.log(rooms_with_dates)
     return rooms_with_dates;
 }
 
@@ -274,6 +275,7 @@ function show_selected_dates_on_selected_room(dates_list, selected_room){
 function check_if_date_is_booked_for_current_room(date, room_id, room_number, day, checking_checkout_dates_list){
 
     let the_date = convert_date_object_to_db_string_format(date);
+    console.log(date, ", ", the_date)
 
     return $.ajax({
         type: "GET",
