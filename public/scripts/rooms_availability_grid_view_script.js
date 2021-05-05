@@ -61,6 +61,7 @@ function add_a_guest_obj(type){
 function make_guests_list_from_number_input_values(){
 
     make_reservation_guests_list.innerHTML = "";
+    make_reservations_post_data.guests = [];
 
     let number_of_adults = document.getElementById("make_reservation_number_of_adults_input").value;
     let number_of_children = document.getElementById("make_reservation_number_of_children_input").value;
