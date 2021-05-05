@@ -1130,7 +1130,7 @@ async function continue_room_reservation(){
     rooms_grid_view_config.property_id = document.getElementById("make_reservation_property_select").value;
     rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
 
-    make_guests_list_from_number_input_values();
+    make_guests_list_from_number_input_values("make_reservation_number_of_adults_input", "make_reservation_number_of_children_input", true);
     generate_and_display_grid_view_bookings();
 
     toggle_show_make_room_reservation_div();

@@ -58,16 +58,20 @@ function add_a_guest_obj(type){
     }
 }
 
-function make_guests_list_from_number_input_values(){
+let global_guests_array_index_position = 0;
+
+function make_guests_list_from_number_input_values(adult_iput_fld, child_input_fld, initial){
 
     make_reservation_guests_list.innerHTML = "";
     make_reservations_post_data.guests = [];
 
-    let number_of_adults = document.getElementById("make_reservation_number_of_adults_input").value;
-    let number_of_children = document.getElementById("make_reservation_number_of_children_input").value;
+    let number_of_adults = document.getElementById(adult_iput_fld).value;
+    let number_of_children = document.getElementById(child_input_fld).value;
 
-    document.getElementById("make_reservation_popup_number_Of_adults_input").value = number_of_adults;
-    document.getElementById("make_reservation_popup_number_Of_children_input").value = number_of_children;
+    if(initial){
+        document.getElementById("make_reservation_popup_number_Of_adults_input").value = number_of_adults;
+        document.getElementById("make_reservation_popup_number_Of_children_input").value = number_of_children;
+    }
 
     document.getElementById("make_reservation_number_guests_display_p").innerHTML =
     `
@@ -77,16 +81,40 @@ function make_guests_list_from_number_input_values(){
 
     for(let i=0; i<number_of_adults; i++){
         make_reservations_post_data.guests.push(add_a_guest_obj("adult"));
-        make_reservation_guests_list.innerHTML += make_reservation_return_each_adult_guest_markup(i);
+        make_reservation_guests_list.innerHTML += make_reservation_return_each_adult_guest_markup(i, global_guests_array_index_position);
+        global_guests_array_index_position++;
     }
 
     for(let i=0; i<number_of_children; i++){
         make_reservations_post_data.guests.push(add_a_guest_obj("children"));
-        make_reservation_guests_list.innerHTML += make_reservation_return_each_child_guest_markup(i);
+        make_reservation_guests_list.innerHTML += make_reservation_return_each_child_guest_markup(i, global_guests_array_index_position);
+        global_guests_array_index_position++;
     }
+
 }
 
-function make_reservation_return_each_adult_guest_markup(number){
+//add guest information inputs onchange functions
+function add_a_guest_first_name(input, index){
+    make_reservations_post_data.guests[index].first_name = document.getElementById(input).value
+}
+function add_a_guest_last_name(input, index){
+    make_reservations_post_data.guests[index].last_name = document.getElementById(input).value
+}
+function add_a_guest_gender(input, index){
+    make_reservations_post_data.guests[index].gender = document.getElementById(input).value
+}
+function add_a_guest_age(input, index, type){
+
+    if(type === "adult"){
+        room_booking_enforce_adult_age_input(input);
+    }else{
+        room_booking_enforce_child_age_input(input);
+    }
+
+    make_reservations_post_data.guests[index].age = document.getElementById(input).value
+}
+
+function make_reservation_return_each_adult_guest_markup(number, index){
     return `
         <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
             <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Adult ${number + 1}</p>
@@ -94,25 +122,25 @@ function make_reservation_return_each_adult_guest_markup(number){
                 <div class="flex_child_of_two">
                     <div style="margin-top: 10px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
-                        <input id="mk_reservationS_adult_first_name_input_${number}" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
+                        <input id="mk_reservationS_adult_first_name_input_${number}" onchange="add_a_guest_first_name('mk_reservationS_adult_first_name_input_${number}', ${index});" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
                     </div>
                     <div style="margin-top: 20px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
-                        <input id="mk_reservationS_adult_last_name_input_${number}" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
+                        <input id="mk_reservationS_adult_last_name_input_${number}" onchange="add_a_guest_last_name('mk_reservationS_adult_last_name_input_${number}', ${index});" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
                     </div>
                 </div>
                 <div class="flex_child_of_two flex_non_first_child">
                     <div style="margin-top: 10px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                             Gender</p>
-                        <select id="mk_reservationS_adult_gender_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                        <select id="mk_reservationS_adult_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_adult_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                         <div style="margin-top: 20px;">
                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                                 Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
-                            <input id="mk_reservationS_adult_age_input_${number}" onchange="room_booking_enforce_adult_age_input('mk_reservationS_adult_age_input_${number}');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                            <input id="mk_reservationS_adult_age_input_${number}" onchange="add_a_guest_age('mk_reservationS_adult_age_input_${number}', ${index}, 'adult');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
                         </div>
                     </div>
                 </div>
@@ -121,7 +149,7 @@ function make_reservation_return_each_adult_guest_markup(number){
     `;
 }
 
-function make_reservation_return_each_child_guest_markup(number){
+function make_reservation_return_each_child_guest_markup(number, index){
     return `
         <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
             <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Child ${number + 1}</p>
@@ -129,25 +157,25 @@ function make_reservation_return_each_child_guest_markup(number){
                 <div class="flex_child_of_two">
                     <div style="margin-top: 10px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
-                        <input id="mk_reservationS_child_first_name_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
+                        <input id="mk_reservationS_child_first_name_input_${number}" onchange="add_a_guest_first_name('mk_reservationS_child_first_name_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
                     </div>
                     <div style="margin-top: 20px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
-                        <input id="mk_reservationS_child_last_name_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
+                        <input id="mk_reservationS_child_last_name_input_${number}" onchange="add_a_guest_last_name('mk_reservationS_child_last_name_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
                     </div>
                 </div>
                 <div class="flex_child_of_two flex_non_first_child">
                     <div style="margin-top: 10px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                             Gender</p>
-                        <select id="mk_reservationS_child_gender_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                        <select id="mk_reservationS_child_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_child_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                         <div style="margin-top: 20px;">
                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                                 Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
-                            <input id="mk_reservationS_child_age_input_${number}" oninput="room_booking_enforce_child_age_input('mk_reservationS_child_age_input_${number}')" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                            <input id="mk_reservationS_child_age_input_${number}" oninput="add_a_guest_age('mk_reservationS_child_age_input_${number}', ${index}, 'child');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
                         </div>
                     </div>
                 </div>
@@ -619,6 +647,8 @@ function submit_room_reservation(){
 
 document.getElementById("make_reservation_submit_button").addEventListener("click", e => {
 
+    make_reservations_post_data.hotel_brand_id = window.localStorage.getItem("ANDSBZID")
+
     console.log(make_reservations_post_data);
 
     if(is_there_overlap){
@@ -633,12 +663,23 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
         return null;
     }
 
-    if(check_if_reservation_guesst_data_is_completed()){
-        alert("making reservation");
-    }else{
-        alert("Please add guests information!")
+    if(make_reservations_post_data.rooms.length === 0){
+        alert("Please select a room for reservation");
+        if(document.getElementById("make_reservation_find_spot_pane").style.display === "none")
+            toggle_show_make_reservation_find_spot_pane()
+        return null;
+    }
+
+    if(!check_if_reservation_guesst_data_is_completed()){
+        alert("Please add all guests information")
         toggle_show_make_reservation_add_guests_pane();
     }
+
+    if(make_reservations_post_data.guests.length === 0){
+        alert("Please add how many adult and child guests")
+        toggle_show_make_reservation_add_guests_pane();
+    }
+
 });
 
 function check_if_reservation_guesst_data_is_completed(){
