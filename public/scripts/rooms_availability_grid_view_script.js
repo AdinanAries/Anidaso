@@ -156,7 +156,13 @@ function make_reservation_return_each_child_guest_markup(number){
 }
 
 rooms_grid_view_config.calendar.first = convert_date_object_to_db_string_format(todays_date);
+rooms_grid_view_config.picked_dates.checkin = convert_date_object_to_db_string_format(todays_date);
+rooms_grid_view_config.picked_dates.checkout = convert_date_object_to_db_string_format(todays_date);
+make_reservations_post_data.checkin_date = convert_date_object_to_db_string_format(todays_date);
+make_reservations_post_data.checkout_date = convert_date_object_to_db_string_format(todays_date);
+make_reservations_post_data.all_dates_of_occupancy.push(convert_date_object_to_db_string_format(todays_date));
 rooms_grid_view_config.calendar.last = convert_date_object_to_db_string_format(new Date(todays_date.setDate(todays_date.getDate() + 7)));
+
 
 function add_trailing_to_date_num(number){
 
@@ -435,6 +441,11 @@ async function generate_and_display_grid_view_bookings(){
     //YYYY-MM-DD -YYYY-MM-DDTHH:MM:SS
     let dates_list = build_dates_list_from_range(rooms_grid_view_config.calendar.first, rooms_grid_view_config.calendar.last);
     let checking_checkout_dates_list = build_dates_list_from_range(rooms_grid_view_config.picked_dates.checkin, rooms_grid_view_config.picked_dates.checkout);
+
+    for(let k=0; k<checking_checkout_dates_list.length; k++){
+        make_reservations_post_data.all_dates_of_occupancy.push(convert_date_object_to_db_string_format(checking_checkout_dates_list[k]));
+    }
+
     checking_checkout_dates_list = checking_checkout_dates_list.map(each => {
         return each.full_date.getDate() + ", " + each.full_date.getMonth();
     });
@@ -491,6 +502,12 @@ document.getElementById("make_reservation_property_select").addEventListener("ch
     rooms_grid_view_config.property_id = document.getElementById("make_reservation_property_select").value;
     rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
 
+    make_reservations_post_data.property_id = rooms_grid_view_config.property_id;
+    let room_number = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
+    make_reservations_post_data.rooms.push({
+        id: rooms_grid_view_config.rooms_id,
+        number: room_number,
+    });
     generate_and_display_grid_view_bookings();
 });
 
@@ -539,6 +556,9 @@ $(function() {
       rooms_grid_view_config.calendar.first = start.format('YYYY-MM-DD');
       rooms_grid_view_config.calendar.last = end.format('YYYY-MM-DD');
 
+      make_reservations_post_data.checkin_date = start.format('YYYY-MM-DD');
+      make_reservations_post_data.checkout_date = end.format('YYYY-MM-DD');
+
       generate_and_display_grid_view_bookings();
 
       //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
@@ -570,6 +590,9 @@ $(function() {
       rooms_grid_view_config.calendar.first = start.format('YYYY-MM-DD');
       rooms_grid_view_config.calendar.last = end.format('YYYY-MM-DD');
 
+      make_reservations_post_data.checkin_date = start.format('YYYY-MM-DD');
+      make_reservations_post_data.checkout_date = end.format('YYYY-MM-DD');
+      
       //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
       //fligh_search_data.return_date = end.format('YYYY-MM-DD');
   
