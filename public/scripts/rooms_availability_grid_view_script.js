@@ -133,7 +133,7 @@ function make_reservation_return_each_adult_guest_markup(number, index){
                     <div style="margin-top: 10px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                             Gender</p>
-                        <select id="mk_reservationS_adult_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_adult_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                        <select id="mk_reservationS_adult_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_adult_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
@@ -168,7 +168,7 @@ function make_reservation_return_each_child_guest_markup(number, index){
                     <div style="margin-top: 10px;">
                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                             Gender</p>
-                        <select id="mk_reservationS_child_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_child_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;" type="text">
+                        <select id="mk_reservationS_child_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_child_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
@@ -219,10 +219,21 @@ function add_trailing_to_date_num(number){
 
 function build_dates_list_from_range(first_date, last_date){
 
-    let startDate = new Date(first_date);
-    let endDate = new Date(last_date);
+    let the_year = first_date.split("-")[0];
+    let the_month = first_date.split("-")[1];
+    let the_day = first_date.split("-")[2];
 
-    endDate = new Date(endDate.setDate(endDate.getDate() + 1));
+    let the_year2 = last_date.split("-")[0];
+    let the_month2 = last_date.split("-")[1];
+    let the_day2 = last_date.split("-")[2];
+
+    //let startDate = new Date(`${the_year}/${the_month}/${the_day}`);
+    let endDate = new Date(`${the_year2}/${the_month2}/${the_day2}`);
+
+    let startDate = new Date(first_date);
+    /*let endDate = new Date(last_date);
+
+    //endDate = new Date(endDate.setDate(endDate.getDate() + 1));*/
 
     let currentDate = startDate;
     let datesList = [];
@@ -389,7 +400,8 @@ function return_bookings_grid_view_headers(grid_dates_list, checking_checkout_da
 
 function return_bookings_grid_view_current_room_markup(current_room){
 
-    let tr_tag = `<td style="color:rgb(95, 96, 225); font-weight: bolder;">${current_room.the_room.room_number}</td>`;
+    let tr_tag = `<td style="border-right: 5px solid rgba(0, 0, 0, 0.6); color: rgb(95, 96, 225); font-weight: bolder; font-size: 17px; border-left: 3px solid rgb(95, 96, 225) !important; padding-left: 10px;">
+    ${current_room.the_room.room_number}</td>`;
 
     for(let i=0; i<current_room.days.length; i++){
         
@@ -420,7 +432,7 @@ function return_bookings_grid_view_other_rooms_markup(rooms_list, current_room){
             continue;
         }
 
-        let tr_tag = `<tr><td>${rooms_list[k].the_room.room_number}</td>`;
+        let tr_tag = `<tr><td style="border-left: 3px solid rgba(255, 255, 225, 0.7) !important; color: rgba(255, 255, 225, 0.7); font-weight: bolder; padding-left: 10px;">${rooms_list[k].the_room.room_number}</td>`;
 
         for(let i=0; i<rooms_list[k].days.length; i++){
             
@@ -446,6 +458,8 @@ function return_bookings_grid_view_other_rooms_markup(rooms_list, current_room){
 }
 
 async function generate_and_display_grid_view_bookings(){
+
+    is_there_overlap = false;
 
     document.getElementById("room_availability_grid_view_tbody").innerHTML = `
         <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
@@ -474,6 +488,7 @@ async function generate_and_display_grid_view_bookings(){
         id: document.getElementById("make_reservation_room_select").value,
         number: room.room_number,
     });
+    make_reservations_post_data.price_paid = room.price;
 
     //YYYY-MM-DD -YYYY-MM-DDTHH:MM:SS
     let dates_list = build_dates_list_from_range(rooms_grid_view_config.calendar.first, rooms_grid_view_config.calendar.last);
@@ -547,6 +562,7 @@ document.getElementById("make_reservation_property_select").addEventListener("ch
         id: rooms_grid_view_config.rooms_id,
         number: room.room_number,
     });
+    make_reservations_post_data.price_paid = room.price;
     generate_and_display_grid_view_bookings();
 });
 
@@ -673,12 +689,16 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
     if(!check_if_reservation_guesst_data_is_completed()){
         alert("Please add all guests information")
         toggle_show_make_reservation_add_guests_pane();
+        return null
     }
 
     if(make_reservations_post_data.guests.length === 0){
         alert("Please add how many adult and child guests")
         toggle_show_make_reservation_add_guests_pane();
+        return null
     }
+
+    make_a_reservation_post_function()
 
 });
 
@@ -686,11 +706,27 @@ function check_if_reservation_guesst_data_is_completed(){
 
     for(let i=0; i<make_reservations_post_data.guests.length; i++){
         if(make_reservations_post_data.guests[i].first_name === "" || make_reservations_post_data.guests[i].last_name === "" ||
-            make_reservations_post_data.guests[i].age === 0 || make_reservations_post_data.guests[i].price_paid === 0 || 
-            make_reservations_post_data.guests[i].gender === ""){
+            make_reservations_post_data.guests[i].age === 0 || make_reservations_post_data.guests[i].gender === ""){
                 return false;
             }
     }
 
     return true;
+}
+
+function make_a_reservation_post_function(){
+
+    $.ajax({
+        type: "POST",
+        url: "/book_a_cheap_room",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(make_reservations_post_data),
+        success: data => {
+            console.log(data);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
 }
