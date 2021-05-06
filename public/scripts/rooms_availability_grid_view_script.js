@@ -53,7 +53,7 @@ function add_a_guest_obj(type){
         last_name: "",
         type: type,
         age: 0,
-        gender: "",
+        gender: "Male",
         price_paid: 0,
     }
 }
@@ -328,6 +328,9 @@ function check_if_date_is_booked_for_current_room(date, room_id, room_number, da
             }
             if(res.isChekin){
                 day.classes.push("booked_checkin");
+                if(res.all_dates_of_occupancy.length === 1){
+                    day.classes.push("booked_checkout");
+                }
                 for(let e=0; e<checking_checkout_dates_list.length; e++){
                     if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
                         day.classes.push("overlap");
@@ -367,6 +370,9 @@ function check_if_date_is_booked(date, room_id, room_number, day){
             }
             if(res.isChekin){
                 day.classes.push("booked_checkin");
+                if(res.all_dates_of_occupancy.length === 1){
+                    day.classes.push("booked_checkout");
+                }
             }
             if(res.isCheckout){
                 day.classes.push("booked_checkout");

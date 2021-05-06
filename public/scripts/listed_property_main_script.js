@@ -1907,22 +1907,43 @@ async function render_hotel_rooms(rooms_list){
 
         let room_number = rooms_sublist[r].room_number;
 
+        rooms_sublist[r].booked = false;
         let room_booked = `
             <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 5px;"></i> 
             vacant
         `;
 
+        let booking = await get_and_return_current_booking_by_room_id(rooms_sublist[r]._id, rooms_sublist[r].room_number);
+        for(let y=0; y<booking.length; y++){
+
+            for(let j=0; j < booking[y].all_dates_of_occupancy.length; j++){
+
+                let the_year = booking[y].all_dates_of_occupancy[j].split("-")[0];
+                let the_month = booking[y].all_dates_of_occupancy[j].split("-")[1];
+                let the_day = booking[y].all_dates_of_occupancy[j].split("-")[2];
+        
+                let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+                let today = new Date();
+        
+                console.log(rooms_sublist[r].room_number,`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`, "-", `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`)
+                
+                if(`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}` === `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`){
+                    checkin = change_date_from_iso_to_long_date(booking[y].checkin_date);
+                    checkout = change_date_from_iso_to_long_date(booking[y].checkout_date);
+                    rooms_sublist[r].booked = true;
+                }
+        
+            }
+        }
         if(rooms_sublist[r].booked){
             room_booked = `
                 <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 5px;"></i> 
                 occupied
             `;
-            
-            let booking = await get_and_return_current_booking_by_room_id(rooms_sublist[r]._id, rooms_sublist[r].room_number);
-            if(booking[0]){
+            /*if(booking[0]){
                 checkin = change_date_from_iso_to_long_date(booking[0].checkin_date);
                 checkout = change_date_from_iso_to_long_date(booking[0].checkout_date);
-            }
+            }*/
         }
 
         document.getElementById("dashboard_onload_displayed_rooms_list").innerHTML += `

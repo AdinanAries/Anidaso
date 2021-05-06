@@ -65,6 +65,7 @@
 .room_availability_grid_view .first_available {
   border-top-left-radius: 4px !important;
   border-bottom-left-radius: 4px !important;
+  border-left: 2px solid rgba(0, 0, 0, 0.3);
   font-size: 12px !important;
   color: white;
   font-weight: bolder;
@@ -75,6 +76,7 @@
 .room_availability_grid_view .last_available {
   border-top-right-radius: 4px !important;
   border-bottom-right-radius: 4px !important;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
   font-size: 12px !important;
   color: white;
   font-weight: bolder;
@@ -91,6 +93,7 @@
 .room_availability_grid_view .booked_checkin {
   border-top-left-radius: 4px !important;
   border-bottom-left-radius: 4px !important;
+  border-left: 2px solid rgba(0, 0, 0, 0.3);
   font-size: 12px !important;
   color: rgb(3, 31, 53);
   font-weight: bolder;
@@ -101,6 +104,7 @@
 .room_availability_grid_view .booked_checkout {
   border-top-right-radius: 4px !important;
   border-bottom-right-radius: 4px !important;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
   font-size: 12px !important;
   color: rgb(3, 31, 53);
   font-weight: bolder;
@@ -111,6 +115,7 @@
 .room_availability_grid_view .overlap {
   border-radius: 0 !important;
   background-color: crimson !important;
+  border: none !important;
 }
 .room_availability_grid_view .focused_on_room td {
   padding-top: 10px !important;

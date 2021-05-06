@@ -1247,6 +1247,9 @@ app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_d
 })
 
 app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next) => {
+
+  let room = await cheap_hotel_room.findById(req.params.room_id);
+
     let bookings = await cheap_hotel_booking.find({
       rooms: {
         "$all": {
@@ -1255,6 +1258,38 @@ app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next)
         }
       }
     }).exec();
+
+    let is_room_occupied = false;
+
+    for(let i=0; i< bookings.length; i++){
+
+      for(let j=0; j < bookings[i].all_dates_of_occupancy.length; j++){
+
+        let the_year = bookings[i].all_dates_of_occupancy[j].split("-")[0];
+        let the_month = bookings[i].all_dates_of_occupancy[j].split("-")[1];
+        let the_day = bookings[i].all_dates_of_occupancy[j].split("-")[2];
+
+        let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+        let today = new Date();
+
+        console.log(room.room_number,`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`, "-", `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`)
+        
+        if(`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}` === `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`){
+          is_room_occupied = true;
+        }
+
+      }
+
+    }
+
+    if(!is_room_occupied && room.booked){
+      room.booked = false;
+    }else if(is_room_occupied && !room.booked){
+      room.booked = true;
+    }
+
+    let updated_room = new cheap_hotel_room(room);
+    let room_save_res = await updated_room.save();
 
     res.send(bookings);
 });
