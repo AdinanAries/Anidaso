@@ -663,9 +663,9 @@ $(function() {
     });
 });
 
-function submit_room_reservation(){
+/*function submit_room_reservation(){
     
-}
+}*/
 
 document.getElementById("make_reservation_submit_button").addEventListener("click", e => {
 
@@ -737,6 +737,31 @@ function check_if_reservation_guesst_data_is_completed(){
     return true;
 }
 
+function after_reservation_clean_up_func(){
+     
+    make_reservations_post_data.hotel_brand_id = "";
+    make_reservations_post_data.property_id = "";
+    make_reservations_post_data.rooms = [];
+    //make_reservations_post_data.full_property_location = "New York, 1223 Mont Gomery, United States";
+    make_reservations_post_data.all_dates_of_occupancy = [];
+    make_reservations_post_data.price_paid = 0;
+    make_reservations_post_data.checkin_date = "";
+    make_reservations_post_data.checkout_date = "";
+    make_reservations_post_data.checkin_time = "12:00";
+    make_reservations_post_data.checkout_time = "12:00";
+    make_reservations_post_data.guests = [];
+    
+    document.getElementById("make_reservation_number_of_adults_input").value = 1;
+    document.getElementById("make_reservation_number_of_children_input").value = 0;
+    make_guests_list_from_number_input_values("make_reservation_number_of_adults_input", "make_reservation_number_of_children_input", true);
+
+    if(document.getElementById("make_reservation_find_spot_pane").style.display === "none")
+        toggle_show_make_reservation_find_spot_pane();
+    
+    generate_and_display_grid_view_bookings();
+
+}
+
 function make_a_reservation_post_function(){
 
     $.ajax({
@@ -747,6 +772,11 @@ function make_a_reservation_post_function(){
         data: JSON.stringify(make_reservations_post_data),
         success: data => {
             console.log(data);
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                 Finished Reservation`, 
+            "Your Reservation Finished Successfully!");
+            after_reservation_clean_up_func();
         },
         error: err => {
             console.log(err);
