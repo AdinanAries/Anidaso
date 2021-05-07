@@ -15,6 +15,16 @@ var current_op_cities_edit_elem_id;
 var global_is_room_closed = false;
 var search_result_current_room_id;
 
+function toggle_show_hide_page_full_screen_prompt(){
+    $("#page_full_screen_prompt").toggle("up");
+  }
+  
+  function show_prompt_to_user(title, msg){
+    toggle_show_hide_page_full_screen_prompt();
+    document.getElementById("page_full_screen_prompt_title").innerHTML = title;
+    document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
+  }
+
 function change_date_from_iso_to_long_date(isoString){
     
     let the_year = isoString.split("-")[0];

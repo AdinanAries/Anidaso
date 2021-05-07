@@ -945,6 +945,31 @@
             <p class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
         </div>
     </div-->
+    <div id="page_full_screen_prompt" style="z-index: 200; display: none;" class="page_pop_up_cover">
+
+        <div style="display: flex; height: 100%; flex-direction: column !important; justify-content: center; padding: 0 10px;">
+          <div style="background: white; padding: 20px; max-width: 500px; margin: auto; border-radius: 4px;">
+            <p id="page_full_screen_prompt_title" style="font-size: 14px; font-weight: bolder; letter-spacing: 1px;">
+              <i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              
+            </p>
+            <p id="page_full_screen_prompt_msg" style="margin: 20px; text-align: Justify; font-size: 14px; letter-spacing: 1px;">
+              
+            </p>
+            <div onclick="toggle_show_hide_page_full_screen_prompt();" style="text-align: center; font-size: 14px; padding: 15px; width: 100px; cursor: pointer; border-radius: 4px;
+             background-color: #2a4255; color: white; margin: auto; margin-top: 20px;">
+              OK
+            </div>
+            <p style="text-align: right; font-size: 10px; font-weight: bolder; letter-spacing: 1px; margin-top: 20px;">
+               all rights reserved &copy; 
+              <span style="color:rgb(228, 83, 0); font-size: 10px; font-weight: bolder; letter-spacing: 1px;">
+                Anidaso
+              </span>
+            </p>
+          </div>
+        </div>
+  
+      </div>
     <p style="display: none;" id="search_cheap_hotels_by_location_text_field"></p>
     <header>
         <div class="wrapper">
@@ -1601,10 +1626,10 @@
                     </p>
                 </div>
                 <div class="logged_in_hotel_reviews" style="padding-top: 20px;">
-                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-bottom: 10px;">
-                        Your last review <span style="color:rgb(127, 144, 175); font-size: 12px;">- January 21, 2022</span>
-                    </p>
                     <div style="padding: 20px; background-color: rgba(0,0,0,0.4); margin-bottom: 20px;">
+                        <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-bottom: 20px;">
+                            Your last review <span style="color:rgb(127, 144, 175); font-size: 12px;">- January 21, 2022</span>
+                        </p>
                         <div style="border-radius: 100%; overflow: hidden; width: 60px; height: 60px; margin: auto;">
                             <img id="logged_in_hotel_last_reviewer_img" src="./images/Anonymous_person3.jpg" style="width: 60px; height: auto; min-height: 60px;" alt="">
                         </div>
