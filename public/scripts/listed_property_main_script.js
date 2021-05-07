@@ -646,6 +646,33 @@ async function search_room_get_selected_room(){
 
     search_result_current_room_id = room._id;
 
+    
+    room.checkin = "N/A";
+    room.checkout = "N/A";
+
+    room.booked = false;
+
+    let booking = await get_and_return_current_booking_by_room_id(room._id, room.room_number);
+    for(let y=0; y<booking.length; y++){
+
+        for(let j=0; j < booking[y].all_dates_of_occupancy.length; j++){
+
+            let the_year = booking[y].all_dates_of_occupancy[j].split("-")[0];
+            let the_month = booking[y].all_dates_of_occupancy[j].split("-")[1];
+            let the_day = booking[y].all_dates_of_occupancy[j].split("-")[2];
+    
+            let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+            let today = new Date();
+    
+            if(`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}` === `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`){
+                room.checkin = change_date_from_iso_to_long_date(booking[y].checkin_date);
+                room.checkout = change_date_from_iso_to_long_date(booking[y].checkout_date);
+                room.booked = true;
+            }
+    
+        }
+    }
+
     document.getElementById("room_search_result_room_details").innerHTML =  
     room_search_result_return_markup(room);
 
