@@ -787,5 +787,5 @@ function make_a_reservation_post_function(){
 $(document).ready(function(){
     setTimeout(()=>{
         continue_room_reservation();
-    }, 300);
+    }, 400);
 })
