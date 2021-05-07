@@ -69,8 +69,19 @@ function is_first_less_than_second_iso_string_dates_comparison(date1, date2){
 
 function general_build_dates_list_from_range(first_date, last_date){
 
-    let startDate = new Date(first_date);
-    let endDate = new Date(last_date);
+    let the_year = first_date.split("-")[0];
+    let the_month = first_date.split("-")[1];
+    let the_day = first_date.split("-")[2];
+
+    let the_year2 = last_date.split("-")[0];
+    let the_month2 = last_date.split("-")[1];
+    let the_day2 = last_date.split("-")[2];
+
+    let startDate = new Date(`${the_year}/${the_month}/${the_day}`);
+    let endDate = new Date(`${the_year2}/${the_month2}/${the_day2}`);
+
+    //let startDate = new Date(first_date);
+    //let endDate = new Date(last_date);
 
     startDate = new Date(startDate.setDate(startDate.getDate() - 1));
 
@@ -685,12 +696,39 @@ async function get_all_room_of_property(property_id){
     document.getElementById("hotel_property_all_rooms_body_title").innerText = `${rooms.length} room(s) on this property`;
 
     for(let i=0; i < rooms.length; i++){
+
+        let checkin = "N/A";
+        let checkout = "N/A";
+
+        rooms[i].booked = false;
+
+        let booking = await get_and_return_current_booking_by_room_id(rooms[i]._id, rooms[i].room_number);
+        for(let y=0; y<booking.length; y++){
+
+            for(let j=0; j < booking[y].all_dates_of_occupancy.length; j++){
+
+                let the_year = booking[y].all_dates_of_occupancy[j].split("-")[0];
+                let the_month = booking[y].all_dates_of_occupancy[j].split("-")[1];
+                let the_day = booking[y].all_dates_of_occupancy[j].split("-")[2];
+        
+                let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+                let today = new Date();
+        
+                if(`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}` === `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`){
+                    checkin = change_date_from_iso_to_long_date(booking[y].checkin_date);
+                    checkout = change_date_from_iso_to_long_date(booking[y].checkout_date);
+                    rooms[i].booked = true;
+                }
+        
+            }
+        }
+
         document.getElementById("hotel_property_all_rooms_list").innerHTML += 
-            all_rooms_return_each_room_markup(rooms[i]);
+            all_rooms_return_each_room_markup(rooms[i], checkin, checkout);
     }
 }
 
-function all_rooms_return_each_room_markup(room){
+function all_rooms_return_each_room_markup(room, checkin, checkout){
 
     let room_id = room._id;
     let is_closed = room.closed;
@@ -783,11 +821,11 @@ function all_rooms_return_each_room_markup(room){
                     <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                         Checkin: 
                         <span style="font-size: 13px; color: white;">
-                            March 23, 2022</span></p>
+                            ${checkin}</span></p>
                     <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                         Checkout: 
                         <span style="font-size: 13px; color: white;">
-                            March 25, 2022</span></p>
+                            ${checkout}</span></p>
                     <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 20px;">
                         <div onclick="view_selected_room_full_details('${room_id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                             <i class="fa fa-eye" aria-hidden="true"></i> view this room
@@ -1913,6 +1951,7 @@ async function render_hotel_rooms(rooms_list){
             vacant
         `;
 
+        //
         let booking = await get_and_return_current_booking_by_room_id(rooms_sublist[r]._id, rooms_sublist[r].room_number);
         for(let y=0; y<booking.length; y++){
 
@@ -1925,7 +1964,7 @@ async function render_hotel_rooms(rooms_list){
                 let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
                 let today = new Date();
         
-                console.log(rooms_sublist[r].room_number,`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`, "-", `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`)
+                //console.log(rooms_sublist[r].room_number,`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`, "-", `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`)
                 
                 if(`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}` === `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`){
                     checkin = change_date_from_iso_to_long_date(booking[y].checkin_date);
