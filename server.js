@@ -1102,6 +1102,7 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
     let booking_obj = new cheap_hotel_booking({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
+      booking_date: req.body.booking_date,
       rooms: req.body.rooms,
       //full_property_location: req.body.full_property_location,
       all_dates_of_occupancy: req.body.all_dates_of_occupancy,

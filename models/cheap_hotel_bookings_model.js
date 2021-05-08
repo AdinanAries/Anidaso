@@ -14,6 +14,10 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ""
     },
+    booking_date: {
+        type: String,
+        required: true
+    },
     rooms: {
         type: Array
     },

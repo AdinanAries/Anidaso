@@ -55,6 +55,38 @@ function convert_date_object_to_db_string_format(dateObj){
 
 }
 
+function return_weeks_from_days(days){
+    let trailing_days = days%7;
+    if(trailing_days !== 0){
+        if(trailing_days === 1)
+            trailing_days = `, ${trailing_days} day`;
+        else
+            trailing_days = `, ${trailing_days} days`;
+    }else{
+        trailing_days = "";
+    }
+    let weeks = parseInt(days/7);
+    return weeks > 1 ? `${weeks} weeks${trailing_days}` : `${weeks} week${trailing_days}`
+}
+function return_months_from_days(){
+
+}
+
+function convert_days_counts_to_week_month_year_counts(days){
+    if(days === 1){
+        return "1 day";
+    }else if(days < 7){
+        return `${days} days`
+    }else if(days >= 7){
+        return return_weeks_from_days(days);
+    }
+    return null;
+}
+
+function get_cancellation_amount_from_percentage(percentage, total_amount){
+    return (percentage/100) * total_amount;
+}
+
 function is_first_greater_than_second_iso_string_dates_comparison(date1, date2){
     let dt1 = new Date(date1);
     let dt2 = new Date(date2);
@@ -703,10 +735,42 @@ async function view_selected_room_full_details(room_id){
     document.getElementById("search_room_select_room_input").value = room._id;
     document.getElementById("search_room_select_property_input").value = room.property_id;
     
+    room.checkin = "N/A";
+    room.checkout = "N/A";
+    let guest_name = "N/A";
+    let guest_age = "N/A";
+    let guest_gender = "N/A";
+
+    room.booked = false;
+
+    let booking = await get_and_return_current_booking_by_room_id(room._id, room.room_number);
+    for(let y=0; y<booking.length; y++){
+
+        for(let j=0; j < booking[y].all_dates_of_occupancy.length; j++){
+
+            let the_year = booking[y].all_dates_of_occupancy[j].split("-")[0];
+            let the_month = booking[y].all_dates_of_occupancy[j].split("-")[1];
+            let the_day = booking[y].all_dates_of_occupancy[j].split("-")[2];
+    
+            let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+            let today = new Date();
+    
+            if(`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}` === `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`){
+                room.checkin = change_date_from_iso_to_long_date(booking[y].checkin_date);
+                room.checkout = change_date_from_iso_to_long_date(booking[y].checkout_date);
+                guest_name = booking[y].guests[0].first_name + " " + booking[y].guests[0].last_name;
+                guest_age = booking[y].guests[0].age;
+                guest_gender = booking[y].guests[0].gender;
+                room.booked = true;
+            }
+    
+        }
+    }
+
     search_result_current_room_id = room._id;
     
     document.getElementById("room_search_result_room_details").innerHTML =  
-    room_search_result_return_markup(room);
+    room_search_result_return_markup(room, guest_name, guest_age, guest_gender);
 
 }
 
@@ -776,6 +840,10 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
     let bed_type = room.bed_type;
     let number_of_adults = room.guest_capacitance.adults;
     let number_of_children = room.guest_capacitance.children;
+    let cancellation = `
+        ${convert_days_counts_to_week_month_year_counts(room.cancellation_policy.time_period)}, $${parseFloat(get_cancellation_amount_from_percentage(room.cancellation_policy.percentage, room.price)).toFixed(2)} 
+        <span style="color:rgb(168, 195, 218); font-size: 12px;">(${room.cancellation_policy.percentage}%)</span>
+    `;
 
     let room_closed_status = `
     <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
@@ -847,14 +915,13 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
                     <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                         Cancellation: 
                         <span style="font-size: 13px; color: white;">
-                            1 week, $90.00 
-                            <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                            ${cancellation}
                         </span>
                     </p>
                 </div>
                 <div class="flex_child_of_two flex_non_first_child">
                     <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                        Last Booked</p>
+                        Current Stay</p>
                     <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                         Checkin: 
                         <span style="font-size: 13px; color: white;">
@@ -877,10 +944,10 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
     `;
 }
 
-function room_search_result_return_markup(room){
+function room_search_result_return_markup(room, guest_name, guest_age, guest_gender){
 
     //let room_desc = .replaceAll("'", "@apostrophe@").replaceAll(",", "@comma@");
-   
+    
     let is_booked = room.booked;
     let is_closed = room.closed;
     let room_number = room.room_number;
@@ -888,10 +955,27 @@ function room_search_result_return_markup(room){
     let bed_type =  room.bed_type;
     let room_price = room.price;
     let room_desc = room.description;
+    let checkin = room.checkin;
+    let checkout = room.checkout;
     let amenities_list = room.amenities;
     let guest_capacitance = room.guest_capacitance;
     let room_link = room.room_link;
+    let cancellation = `
+        ${convert_days_counts_to_week_month_year_counts(room.cancellation_policy.time_period)}, $${parseFloat(get_cancellation_amount_from_percentage(room.cancellation_policy.percentage, room.price)).toFixed(2)} 
+        <span style="color:rgb(168, 195, 218); font-size: 12px;">(${room.cancellation_policy.percentage}%)</span>
+    `;
 
+    let current_guest_info = "";
+    if(guest_name !== "N/A"){
+        current_guest_info = `
+            <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                Guest: 
+                <span style="font-size: 13px; color: white;">
+                    ${guest_name}, ${guest_age}yrs, ${guest_gender}
+                </span>
+            </p>
+        `;
+    }
     let the_room_link = room_link;
 
     if(the_room_link.length > 40){
@@ -988,25 +1072,22 @@ function room_search_result_return_markup(room){
             </div>
             <div class="flex_child_of_two flex_non_first_child">
                 <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                    Last Booked</p>
+                    Current Guest</p>
                 <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     Checkin: 
                     <span style="font-size: 13px; color: white;">
-                        March 23, 2022</span></p>
+                        ${checkin}</span></p>
                 <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     Checkout: 
                     <span style="font-size: 13px; color: white;">
-                        March 25, 2022</span></p>
-                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
-                    Guest: 
-                    <span style="font-size: 13px; color: white;">
-                        Adam, 25yrs, Male</span></p>
-                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                        ${checkout}</span></p>
+                ${current_guest_info}
+                <!--p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     Paid: 
                     <span style="font-size: 13px; color: white;">
-                        $75.00</span></p>
+                        $75.00</span></p-->
                 <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
-                    view room guests history
+                    view room ${room_number} bookings
                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                 </p>
                 <p style="color: white; margin-bottom: 10px; margin-top: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
@@ -1029,7 +1110,7 @@ function room_search_result_return_markup(room){
                     <span style="font-size: 13px; color: white;">
                     - 12:30PM</span></p>
                 <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
-                    see all availability
+                    view room ${room_number} availability
                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                 </p>
             </div>
@@ -1047,8 +1128,7 @@ function room_search_result_return_markup(room){
                 <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     Cancellation: 
                     <span style="font-size: 13px; color: white;">
-                        1 week, $90.00 
-                        <span style="color:rgb(168, 195, 218); font-size: 12px;">(100%)</span>
+                        ${cancellation}
                     </span>
                 </p>
                 <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">

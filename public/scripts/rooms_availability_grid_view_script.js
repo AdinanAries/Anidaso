@@ -31,6 +31,7 @@ var rooms_grid_view_config = {
 var make_reservations_post_data = {
     hotel_brand_id: "",
       property_id: "",
+      booking_date: "",
       rooms: [
         {
             id: "",
@@ -741,6 +742,7 @@ function after_reservation_clean_up_func(){
      
     make_reservations_post_data.hotel_brand_id = "";
     make_reservations_post_data.property_id = "";
+    make_reservations_post_data.booking_date = "";
     make_reservations_post_data.rooms = [];
     //make_reservations_post_data.full_property_location = "New York, 1223 Mont Gomery, United States";
     make_reservations_post_data.all_dates_of_occupancy = [];
@@ -763,6 +765,8 @@ function after_reservation_clean_up_func(){
 }
 
 function make_a_reservation_post_function(){
+
+    make_reservations_post_data.booking_date = convert_date_object_to_db_string_format(new Date());
 
     $.ajax({
         type: "POST",

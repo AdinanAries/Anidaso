@@ -737,6 +737,7 @@ function cheap_hotels_search_pick_search_type(search_type){
 var cheap_room_booking_obj = {
     hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
       property_id: "607304a562a84645bccdf40b",
+      booking_date: "",
       rooms: [
         {
             id: "6076abe0546a1e4b74be03fa",
