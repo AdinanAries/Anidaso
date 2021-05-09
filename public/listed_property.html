@@ -979,29 +979,68 @@
                       <p><span>An</span>i<span>d</span>a<span>s</span>o<sup style="font-size: 12px;">&reg;</sup></p>
                     </div>
                 </div>
-                <div id="main_top_nav_hotel_name_display" style="position: relative;" class="top_nav_hotel_name_display">
-                    <div style="width: 100%; text-align: center;" class="loader loader--style2" title="1">
-                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                          width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                        <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                          <animateTransform attributeType="xml"
-                            attributeName="transform"
-                            type="rotate"
-                            from="0 25 25"
-                            to="360 25 25"
-                            dur="0.6s"
-                            repeatCount="indefinite"/>
-                          </path>
-                        </svg>
-                        <p style="text-align: center; font-size: 10px; color:white;">
-                          loading...
+                <div class="wide_screen_top_nav" style="display: flex; flex-direction: row !important; justify-content:  space-between;">
+                    <div style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
+                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-search" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                            Search Room
+                        </p>
+                    </div>
+                    <div style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
+                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-hotel" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                            Reservation
+                        </p>
+                    </div>
+                    <div style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
+                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-calendar-check-o" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                            Bookings
                         </p>
                     </div>
                 </div>
-                <div style="display: none;" class="top_nav_login_btn">
-                    <p>
-                        <i class="fa fa-sign-in" aria-hidden="true"></i>login
-                    </p>
+                <div style="display: flex; flex-direction: row !important; justify-content:  space-between;">
+                    <div id="top_nave_mobile_make_reservation" style="cursor: pointer; display: none; flex-direction: column !important; justify-content: center;">
+                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-hotel" style="margin-right: 2px; font-size: 16px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                        </p>
+                    </div>
+                    <div style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
+                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-plus" style="margin-right: 2px; font-size: 16px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                            <i class="fa fa-caret-down" aria-hidden="true" style="font-size: 13px; margin-left: 2px; color: white;"></i>
+                        </p>
+                    </div>
+                    <div style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; margin-right: 10px;">
+                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 13px; position: relative;">
+                            <span style="width: 10px; height: 10px; position: absolute; border-radius: 100%; border:rgb(5, 57, 99) 2px solid; background-color: white; top: -5px; right: 0px;"></span>
+                            <i class="fa fa-bell-o" style="margin-right: 2px; font-size: 19px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                        </p>
+                    </div>
+                    <div id="main_top_nav_hotel_name_display" style="position: relative;" class="top_nav_hotel_name_display">
+                        <div style="width: 100%; text-align: center;" class="loader loader--style2" title="1">
+                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                            <animateTransform attributeType="xml"
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 25 25"
+                                to="360 25 25"
+                                dur="0.6s"
+                                repeatCount="indefinite"/>
+                            </path>
+                            </svg>
+                            <p style="text-align: center; font-size: 10px; color:white;">
+                            loading...
+                            </p>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="top_nav_login_btn">
+                        <p>
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>login
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

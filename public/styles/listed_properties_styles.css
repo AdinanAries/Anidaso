@@ -514,6 +514,13 @@ footer a {
   .wrapper {
     margin: 0;
   }
+  #main_top_nav_hotel_name_display,
+  .wide_screen_top_nav {
+    display: none !important;
+  }
+  #top_nave_mobile_make_reservation {
+    display: flex !important;
+  }
   .page_popup_content_header {
     height: 150px;
   }
