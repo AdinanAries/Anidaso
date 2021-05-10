@@ -254,7 +254,7 @@ function toggle_show_full_Screen_photo_viewer(){
 }
 
 function view_image_on_full_screen(img_url){
-    console.log(img_url);
+    //console.log(img_url);
     toggle_show_full_Screen_photo_viewer();
     document.getElementById("full_page_picture_viewer_img").src = img_url;
 }
@@ -726,7 +726,7 @@ async function search_room_get_selected_room(){
     let room = await get_and_return_hotel_room_by_id(document.getElementById("search_room_select_room_input").value);
 
     search_result_current_room_id = room._id;
-
+    global_is_room_closed = room.closed;
     
     room.checkin = "N/A";
     room.checkout = "N/A";
@@ -1039,9 +1039,20 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
 
     let amenities_display = amenities_list.join(", ");
 
+    let room_booked_status = `
+        <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
+        (vacant)
+    `;
+    if(is_booked){
+        room_booked_status = `
+            <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
+            (occupied)
+        `;
+    }
+
     let room_is_closed_msg_display = "none";
     let room_closed_status = `
-    <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
+    <input onclick="open_close_rooms_function('${room._id}');" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
     <label for="room_status_switch_toggle">
         <span style="font-size: 12px;" id="room_status_switch_toggle_display">
             Close Room
@@ -1051,29 +1062,25 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
     </label>
     `;
     if(is_closed){
+
         room_is_closed_msg_display = "block";
         global_is_room_closed = true;
         room_closed_status = `
-        <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" id="room_status_switch_toggle" type="checkbox" />
-        <label for="room_status_switch_toggle">
-            <span style="font-size: 12px;" id="room_status_switch_toggle_display">
-                Open Room
-                <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
-                (room is closed)</span>
-            </span>
-        </label>
-    `;
-    }
+            <input onclick="open_close_rooms_function('${room._id}');" style="margin-bottom: -1px;" id="room_status_switch_toggle" type="checkbox" />
+            <label for="room_status_switch_toggle">
+                <span style="font-size: 12px;" id="room_status_switch_toggle_display">
+                    Open Room
+                    <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
+                    (room is closed)</span>
+                </span>
+            </label>
+        `;
 
-    let room_booked_status = `
-        <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
-        (vacant)
-    `;
-    if(is_booked){
         room_booked_status = `
-        <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-        (occupied)
-    `;
+            <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
+            (closed)
+        `;
+
     }
 
     //let room_desc = description.replaceAll("@apostrophe@", "'").replaceAll("@comma@", ",");
@@ -1210,12 +1217,13 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
     `
 }
 
-function open_close_rooms_function(){
+async function open_close_rooms_function(room_id){
     
     $("#room_search_result_room_is_closed_status").toggle("up");
 
     if(global_is_room_closed){
         //open the room
+        await open_close_rooms_ajax(room_id, "open");
         global_is_room_closed = false;
         document.getElementById("room_status_switch_toggle_display").innerHTML = `
             Close Room
@@ -1225,6 +1233,7 @@ function open_close_rooms_function(){
     
     }else{
         //close the room
+        await open_close_rooms_ajax(room_id, "close");
         global_is_room_closed = true;
         document.getElementById("room_status_switch_toggle_display").innerHTML = `
             Open Room
@@ -1232,6 +1241,25 @@ function open_close_rooms_function(){
             (room is closed)</span>
         `;
     }
+}
+
+function open_close_rooms_ajax(room_id, close_or_open){
+    
+    return $.ajax({
+        type: "POST",
+        url: "/open_or_close_room/"+room_id+"/"+close_or_open,
+        /*data: "",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",*/
+        success: data => {
+            //console.log(data);
+            return data;
+        },
+        error: err => {
+            //console.log(err);
+            return err
+        }
+    });
 }
 
 async function toggle_show_add_room_pane(){

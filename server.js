@@ -1304,6 +1304,23 @@ app.get("/get_property_by_id/:property_id", async (req, res, next) => {
 });
 
 //update routes
+
+app.post("/open_or_close_room/:room_id/:close_or_open", async (req, res, next) => {
+
+  let room = await cheap_hotel_room.findById(req.params.room_id);
+  if(req.params.close_or_open === "open"){
+    room.closed = false;
+  }else{
+    room.closed = true;
+  }
+
+  let updated_room = new cheap_hotel_room(room);
+  let updated_room_res = await updated_room.save();
+
+  res.send(updated_room_res);
+
+});
+
 app.post("/update_cheap_hotel_email/:hotel_brand_id", async (req, res, next) => {
 
   let new_email = req.query.new_email;

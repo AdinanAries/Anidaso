@@ -227,47 +227,51 @@ async function render_all_bookings_markup(bookings){
 
         document.getElementById("booked_rooms_list").innerHTML += `
             <div class="each_booked_room" style="background-color:rgba(0, 0, 0, 0.8); padding-top: 10px; border-radius: 4px; margin-bottom: 5px;">
-                <div style="padding: 10px;">
-                    <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
-                        Room ${room_number}:
-                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
-                            Booked
-                            <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
-                        </span>
-                    </p>
-                    ${other_rooms_included}
-                    <p style="margin-top: 5px; margin-bottom: 20px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px;">
-                        ${property_city} 
-                        <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
-                            - ${property_street} (${property_country})
-                        </span>
-                    </p>
-                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                        Checkin:
-                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                        ${change_date_from_iso_to_long_date(booking_checkin_date)}</span>
-                    </p>
-                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                        Checkout:
-                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                        ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
-                    </p>
-                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                        Price paid:
-                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
-                        $${parseFloat(price_paid).toFixed(2)}</span>
-                    </p>
-                    <div style="width: 220px; cursor: pointer; margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
-                        <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgb(4, 120, 167); text-align: center; font-size: 13px;">
-                            <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-pencil" aria-hidden="true"></i>Change
-                        </div>
-                        <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: crimson; text-align: center; font-size: 13px;">
-                            <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-trash" aria-hidden="true"></i>Cancel
+                <div style="padding: 10px;" class="flex_row_default_flex_column_mobile">
+                    <div class="flex_child_of_two">
+                        <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                            Room ${room_number}:
+                            <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                                Booked
+                                <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
+                            </span>
+                        </p>
+                        ${other_rooms_included}
+                        <p style="margin-top: 5px; margin-bottom: 20px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px;">
+                            ${property_city} 
+                            <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                                - ${property_street} (${property_country})
+                            </span>
+                        </p>
+                        <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                            Checkin:
+                            <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                            ${change_date_from_iso_to_long_date(booking_checkin_date)}</span>
+                        </p>
+                        <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                            Checkout:
+                            <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                            ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
+                        </p>
+                        <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                            Price paid:
+                            <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                            $${parseFloat(price_paid).toFixed(2)}</span>
+                        </p>
+                        <div style="width: 220px; cursor: pointer; margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
+                            <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgb(4, 120, 167); text-align: center; font-size: 13px;">
+                                <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-pencil" aria-hidden="true"></i>Change
+                            </div>
+                            <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: crimson; text-align: center; font-size: 13px;">
+                                <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-trash" aria-hidden="true"></i>Cancel
+                            </div>
                         </div>
                     </div>
-                    <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
-                        Room Guest(s)</p>
-                        ${room_guests_markup}
+                    <div class="flex_child_of_two flex_non_first_child">
+                        <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                            Room Guest(s)</p>
+                            ${room_guests_markup}
+                    </div>
                 </div>
             </div>
         `;
