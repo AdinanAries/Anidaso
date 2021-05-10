@@ -899,39 +899,23 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
         <span style="color:rgb(168, 195, 218); font-size: 12px;">(${room.cancellation_policy.percentage}%)</span>
     `;
 
-    let room_closed_status = `
-    <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" checked="true" id="room_status_switch_toggle" type="checkbox" />
-    <label for="room_status_switch_toggle">
-        <span style="font-size: 12px;" id="room_status_switch_toggle_display">
-            Close Room
-            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
-            (room is open)</span>
-        </span>
-    </label>
-    `;
-    if(is_closed){
-        global_is_room_closed = true;
-        room_closed_status = `
-        <input onclick="open_close_rooms_function();" style="margin-bottom: -1px;" id="room_status_switch_toggle" type="checkbox" />
-        <label for="room_status_switch_toggle">
-            <span style="font-size: 12px;" id="room_status_switch_toggle_display">
-                Open Room
-                <span style="font-size: 12px; color: rgba(255, 255, 255, 0.7); font-weight: bolder; margin-left: 10px;">
-                (room is closed)</span>
-            </span>
-        </label>
-    `;
-    }
-
     let room_booked_status = `
         <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
         (vacant)
     `;
     if(is_booked){
         room_booked_status = `
-        <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-        (occupied)
-    `;
+            <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
+            (occupied)
+        `;
+    }
+
+    if(is_closed){
+        room_booked_status = `
+            <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
+            (<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 2px;"></i> 
+            closed)
+        `;
     }
 
     return `
@@ -944,10 +928,6 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
                             ${room_booked_status}
                         </span>
                     </p>
-                    <!--p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px; margin-bottom: 10px;">
-                        ${room_closed_status}
-                    </p-->
-                    
                     <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                         Room type: 
                         <span style="font-size: 13px; color: white;">
@@ -1078,7 +1058,8 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
 
         room_booked_status = `
             <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-            (closed)
+            (<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 2px;"></i> 
+            closed)
         `;
 
     }
@@ -1964,7 +1945,7 @@ function get_logged_in_hotel_infor(){
         url: `/get_logged_in_hotel_info/${ANDSBZID}`,
         success: data => {
             
-            console.log(data);
+            //console.log(data);
             let avg_room_price = `$${data.price}`;
 
             let reviewer_name = data.reviews[data.reviews.length - 1].person;
@@ -2077,7 +2058,7 @@ function get_logged_in_hotel_infor(){
             get_hotel_rooms(data._id);
 
             //getting hotel buildings
-            get_hotel_buildings(data._id);
+            //get_hotel_buildings(data._id);
 
             //getting hotel bookings
             get_hotel_bookings(data._id)
@@ -2233,6 +2214,17 @@ async function render_hotel_rooms(rooms_list){
             }*/
         }
 
+        if(rooms_sublist[r].closed){
+            room_booked = `
+                <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i> 
+                closed
+            `;
+            /*if(booking[0]){
+                checkin = change_date_from_iso_to_long_date(booking[0].checkin_date);
+                checkout = change_date_from_iso_to_long_date(booking[0].checkout_date);
+            }*/
+        }
+
         document.getElementById("dashboard_onload_displayed_rooms_list").innerHTML += `
             <tr>
                 <td>${room_number}</td>
@@ -2261,7 +2253,7 @@ function get_hotel_rooms(hotel_id){
         type: "GET",
         url: "/get_cheap_hotel_rooms/"+hotel_id,
         success: res =>{
-            console.log(res);
+            //console.log(res);
             render_hotel_rooms(res)
         },
         error: err => {
@@ -2276,7 +2268,7 @@ function get_and_return_rooms(hotel_id){
         type: "GET",
         url: "/get_cheap_hotel_rooms/"+hotel_id,
         success: res =>{
-            console.log(res);
+            //console.log(res);
             return res;
         },
         error: err => {
@@ -2291,7 +2283,7 @@ function get_hotel_buildings(hotel_id){
         type: "GET",
         url: "/get_cheap_hotel_properties/"+hotel_id,
         success: res =>{
-            console.log(res);
+            //console.log(res);
         },
         error: err => {
             console.log(err);
