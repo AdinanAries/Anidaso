@@ -45,7 +45,11 @@ var make_reservations_post_data = {
       checkout_date: "",
       checkin_time: "12:00",
       checkout_time: "12:00",
-      guests: []
+      guests: [],
+      guest_contact: {
+          mobile: "",
+          email: ""
+      }
 }
 
 function add_a_guest_obj(type){
@@ -713,6 +717,24 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
         return null
     }
 
+    if(document.getElementById("mk_reservation_guest_email_input").value === ""){
+        show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                 Guest Email Not Added`, 
+            "Please add guest email address");
+        toggle_show_make_reservation_add_guests_pane();
+        return null
+    }
+    
+    if(document.getElementById("mk_reservation_guest_mobile_input").value){
+        show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                 Guest Mobile Not Added`, 
+            "Please add guest mobile number");
+        toggle_show_make_reservation_add_guests_pane();
+        return null
+    }
+
     if(make_reservations_post_data.guests.length === 0){
         show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -767,6 +789,8 @@ function after_reservation_clean_up_func(){
 function make_a_reservation_post_function(){
 
     make_reservations_post_data.booking_date = convert_date_object_to_db_string_format(new Date());
+    make_reservations_post_data.guest_contact.email = document.getElementById("mk_reservation_guest_email_input").value;
+    make_reservations_post_data.guest_contact.mobile = document.getElementById("mk_reservation_guest_mobile_input").value;
 
     $.ajax({
         type: "POST",

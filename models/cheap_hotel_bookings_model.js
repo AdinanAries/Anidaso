@@ -44,6 +44,9 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
     },
     guests: {
       type: Array
+    },
+    guest_contact: {
+        type: Object
     }
 });
 

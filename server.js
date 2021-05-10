@@ -1111,7 +1111,8 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
       checkout_date: req.body.checkout_date,
       checkin_time: req.body.checkin_time,
       checkout_time: req.body.checkout_time,
-      guests: req.body.guests
+      guests: req.body.guests,
+      guest_contact: req.body.guest_contact
     });
 
     let save_booking_res = await booking_obj.save();

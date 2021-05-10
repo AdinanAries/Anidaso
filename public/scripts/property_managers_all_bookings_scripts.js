@@ -22,6 +22,8 @@ async function get_and_render_all_bookings(){
 
 async function toggle_show_booked_rooms(){
 
+    $("#booked_rooms_container").toggle("up");
+
     let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
@@ -89,9 +91,81 @@ async function toggle_show_booked_rooms(){
     
     render_all_bookings_markup(bookings)*/
     
+}
+
+async function view_a_room_bookings(room_id, room_number){
+
     $("#booked_rooms_container").toggle("up");
 
+    let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
+    get_all_bookings_config.property = "all";
+    get_all_bookings_config.room = room_id;
+    get_all_bookings_config.room_number = room_number;
+
+    document.getElementById("booked_rooms_filter_by_properties_input").innerHTML = `
+        <option value="all">
+            All Properties
+        </option>
+    `;
+
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("booked_rooms_filter_by_properties_input").innerHTML += `
+        <option value="${properties[i]._id}">
+            ${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}
+        </option>`;
+    }
+
+    document.getElementById("booked_rooms_filter_by_room_input").innerHTML = `
+        <option value="all%r%s%p%all">
+            All Rooms
+        </option>
+    `;
+
+    //let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById("booked_rooms_filter_by_properties_input").value);
+    for(let i=0; i < rooms.length; i++){
+        document.getElementById("booked_rooms_filter_by_room_input").innerHTML += `
+            <option value='${rooms[i]._id}%r%s%p%${rooms[i].room_number}'>${rooms[i].room_number}</option>
+        `; 
+    }
+
+    document.getElementById("booked_rooms_filter_by_room_input").value = `${room_id}%r%s%p%${room_number}`;
+
+    document.getElementById("booked_rooms_list").innerHTML = `
+        <div style="width: 100%; text-align: center; margin-top: 50px" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+            <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+            </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+            loading...
+            </p>
+        </div>
+    `;
+
+    let dates_list = general_build_dates_list_from_range(get_all_bookings_config.first_date, get_all_bookings_config.last_date);
+
+    get_all_bookings_config.dates = dates_list.map(date => {
+        return convert_date_object_to_db_string_format(date.obj);
+    });
+
+    get_and_render_all_bookings();
+
+    /*let bookings = await get_all_bookings_based_date_range_and_rooms_filter(window.localStorage.getItem("ANDSBZID"), 
+        get_all_bookings_config.first_date, get_all_bookings_config.last_date, get_all_bookings_config.room, 
+        get_all_bookings_config.property, get_all_bookings_config.dates);
+    
+    render_all_bookings_markup(bookings)*/
+    
 }
 
 async function render_all_bookings_markup(bookings){

@@ -15,6 +15,13 @@ var current_op_cities_edit_elem_id;
 var global_is_room_closed = false;
 var search_result_current_room_id;
 
+document.getElementById("top_nav_add_new_drop_down_btn").addEventListener("click", e => {
+    if(document.getElementById("top_nav_add_new_drop_down_menu").style.display === "none")
+        document.getElementById("top_nav_add_new_drop_down_menu").style.display = "block";
+    else
+        document.getElementById("top_nav_add_new_drop_down_menu").style.display = "none";
+});
+
 function toggle_show_hide_page_full_screen_prompt(){
     $("#page_full_screen_prompt").toggle("up");
   }
@@ -927,9 +934,9 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
                             ${room_booked_status}
                         </span>
                     </p>
-                    <p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px; margin-bottom: 10px;">
+                    <!--p style="cursor: pointer; font-size: 12px; color: rgb(245, 210, 210); letter-spacing: 1px; margin-bottom: 10px;">
                         ${room_closed_status}
-                    </p>
+                    </p-->
                     
                     <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                         Room type: 
@@ -1123,7 +1130,7 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                     Paid: 
                     <span style="font-size: 13px; color: white;">
                         $75.00</span></p-->
-                <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                <p onclick="view_a_room_bookings('${room._id}', '${room_number}');" style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
                     view room ${room_number} bookings
                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                 </p>
@@ -1146,7 +1153,7 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                     March 23, 2022 
                     <span style="font-size: 13px; color: white;">
                     - 12:30PM</span></p>
-                <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                <p onclick="show_room_availability('${room._id}', '${room.property_id}');" style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
                     view room ${room_number} availability
                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                 </p>
@@ -1288,6 +1295,8 @@ function toggle_show_make_room_reservation_div(){
 
 async function continue_room_reservation(){
     
+    toggle_show_make_room_reservation_div();
+
     let the_rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
@@ -1325,14 +1334,61 @@ async function continue_room_reservation(){
     make_guests_list_from_number_input_values("make_reservation_number_of_adults_input", "make_reservation_number_of_children_input", true);
     generate_and_display_grid_view_bookings();
 
+}
+
+async function show_room_availability(room_id, property_id){
+    
     toggle_show_make_room_reservation_div();
+
+    let the_rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    if(the_rooms){
+        if((the_rooms.length === 0)){
+            alert("You don't have any rooms in your account. Please add rooms first");
+            toggle_show_add_room_pane();
+            return null;
+        }
+    }else{
+        alert("You don't have any rooms in your account. Please add rooms first");
+        toggle_show_add_room_pane();
+        return null;
+    }
+
+    document.getElementById("make_reservation_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("make_reservation_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
+    document.getElementById("make_reservation_room_select").innerHTML = '';
+
+    let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById("make_reservation_property_select").value);
+    for(let i=0; i < rooms.length; i++){
+        document.getElementById("make_reservation_room_select").innerHTML += `
+            <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
+        `; 
+    }
+
+    rooms_grid_view_config.property_id = property_id;
+    document.getElementById("make_reservation_property_select").value = property_id;
+    rooms_grid_view_config.rooms_id = room_id;
+    document.getElementById("make_reservation_room_select").value = room_id;
+
+    make_guests_list_from_number_input_values("make_reservation_number_of_adults_input", "make_reservation_number_of_children_input", true);
+    generate_and_display_grid_view_bookings();
+
 }
 
 function toggle_show_make_reservation_add_guests_pane(){
 
     if(is_there_overlap){
-        alert("The spots you've chosen overlaps with exsiting bookings");
-        return null
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            Unavailable Spots`, 
+            "The spots you've chosen overlaps with exsiting bookings");
+        return null;
     }
 
     if(document.getElementById("make_reservation_add_guests_pane").style.display === "none"){

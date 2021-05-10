@@ -762,7 +762,11 @@ var cheap_room_booking_obj = {
                 gender: "Female",
                 price_paid: 69.00,
             }
-        ]
+      ],
+      guest_contact: {
+        mobile: "",
+        email: ""
+    }
 }
 
 function book_a_cheap_room(){
