@@ -3,6 +3,9 @@ let todays_date2 = new Date();
 
 var is_there_overlap = false;
 
+let global_is_room_for_update = false;
+let global_room_update_id = "";
+
 var logged_in_hotel_ratings_area = document.getElementById("logged_in_hotel_ratings_area");
 var logged_in_hotel_description_input = document.getElementById("logged_in_hotel_description_input");
 
@@ -968,7 +971,7 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
                         <div onclick="view_selected_room_full_details('${room_id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                             <i class="fa fa-eye" aria-hidden="true"></i> view this room
                         </div>
-                        <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                        <div onclick="edit_hotel_room_func('${room._id}');" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                             <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
                         </div>
                     </div>
@@ -1086,7 +1089,7 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                     <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                         <i class="fa fa-plus" aria-hidden="true"></i> add new room
                     </div>
-                    <div onclick="edit_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                    <div onclick="edit_hotel_room_func('${room._id}');" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                         <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
                     </div>
                 </div>
@@ -1284,10 +1287,6 @@ async function toggle_show_add_room_pane(){
 }
 
 function add_new_hotel_room_func(){
-    toggle_show_add_room_pane();
-}
-
-function edit_hotel_room_func(){
     toggle_show_add_room_pane();
 }
 
@@ -2106,6 +2105,25 @@ function add_new_cheap_room(room_obj){
     });
 }
 //add_new_cheap_room();
+
+function update_cheap_room(room_obj, room_id){
+    
+    return $.ajax({
+        type: "POST",
+        url: "/update_hotel_room/"+room_id,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(room_obj),
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
 
 async function render_hotel_rooms(rooms_list){
 
@@ -3005,16 +3023,19 @@ var add_room_form_room_cancellation_period_input = document.getElementById("add_
 var add_room_form_room_cancellation_percentage_select = document.getElementById("add_room_form_room_cancellation_percentage_select");
 var add_room_form_num_of_adults_input = document.getElementById("add_room_form_num_of_adults_input");
 var add_room_form_num_of_children_input = document.getElementById("add_room_form_num_of_children_input");
+var add_room_form_room_photo_input_btn = document.getElementById("add_room_form_room_photo_input_btn");
 
 function reset_all_add_room_inputs(){
+    global_is_room_for_update = false;
     //add_room_form_properties_select.value  = "";
     add_room_form_room_number_input.value = "";
     //add_room_form_room_type_select.value = "";
     //add_room_form_bed_type_select.value = "";
-    add_room_wifi_amen_check.value = "";
-    add_room_cable_amen_check.value = "";
-    add_room_other_amen_check.value = "";
+    add_room_wifi_amen_check.checked = false;
+    add_room_cable_amen_check.checked = false;
+    add_room_other_amen_check.checked = false;
     add_room_form_room_photo_input.value = "";
+    add_room_form_room_photo_input_btn.style.backgroundImage = "none";
     add_room_form_room_price_input.value = "";
     add_room_form_room_description_input.value = "";
     add_room_form_room_cancellation_period_input.value = 0;
@@ -3060,7 +3081,50 @@ function collect_all_add_new_room_inputs(){
 
 }
 
-async function save_room_new_room() {
+async function edit_hotel_room_func(room_id){
+
+    toggle_show_add_room_pane();
+    global_is_room_for_update = true;
+    global_room_update_id = room_id;
+
+    let room_to_update = await get_and_return_hotel_room_by_id(room_id)
+
+    /*cheap_hotel_room = {
+        hotel_brand_id: "6063dd3fb6dfe50bc800dd5f",
+        closed: "false",
+        booked: "false",
+        next_available_date: "3-5-2020",
+        next_available_time:  "10:15",
+        cancellation_requests: []
+    };*/
+
+    if(room_to_update.amenities.includes("Free Wifi")){
+        add_room_wifi_amen_check.checked = true;
+    }
+    if(room_to_update.amenities.includes("Cable Tv")){
+        add_room_cable_amen_check.checked = true;
+    }
+    if(room_to_update.amenities.includes("Other")){
+        add_room_other_amen_check.checked = true;
+    }
+
+    add_room_form_properties_select.value = room_to_update.property_id;
+    add_room_form_room_number_input.value = room_to_update.room_number;
+    add_room_form_room_type_select.value = room_to_update.room_type;
+    add_room_form_bed_type_select.value = room_to_update.bed_type;
+    add_room_form_room_price_input.value = room_to_update.price;
+    add_room_form_room_description_input.value = room_to_update.description;
+    add_room_form_num_of_adults_input.value = room_to_update.guest_capacitance.adults;
+    add_room_form_num_of_children_input.value = room_to_update.guest_capacitance.children;
+    add_room_form_room_cancellation_period_input.value = room_to_update.cancellation_policy.time_period
+    add_room_form_room_cancellation_percentage_select.value = room_to_update.cancellation_policy.percentage
+    cheap_hotel_room.photo_url = room_to_update.photo_url;
+    add_room_form_room_photo_input_btn.style.backgroundImage = 'url('+room_to_update.photo_url+')';
+    
+
+}
+
+async function save_room_new_room(type, room_id) {
 
     if(add_room_form_properties_select.value === ""){
         add_room_form_properties_select.focus();
@@ -3083,21 +3147,40 @@ async function save_room_new_room() {
     }else if(add_room_form_room_cancellation_percentage_select.value === ""){
         add_room_form_room_cancellation_percentage_select.focus();
         add_room_form_room_cancellation_percentage_select.placeholder = "please select cancellation percentage";
-    }else if(add_room_form_room_photo_input.value === ""){
+    }else if(add_room_form_room_photo_input.value === "" && !global_is_room_for_update){
         alert("please add a photo")
         add_room_form_room_photo_input.click();
     }else{
-       let new_room_obj = await collect_all_add_new_room_inputs();
-       let returned_added_room = await add_new_cheap_room(new_room_obj);
-       console.log(returned_added_room);
-       alert("room " + returned_added_room.data.room_number + " has been added successfully");
-       reset_all_add_room_inputs();
+        if(type === "update"){
+            let new_room_obj = await collect_all_add_new_room_inputs();
+            let returned_added_room = await update_cheap_room(new_room_obj, room_id);
+            console.log(returned_added_room);
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                 Update Finished`, 
+                 "room " + returned_added_room.data.room_number + " has been updated successfully");
+            reset_all_add_room_inputs();
+        }else{
+            let new_room_obj = await collect_all_add_new_room_inputs();
+            let returned_added_room = await add_new_cheap_room(new_room_obj);
+            console.log(returned_added_room);
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                 Room Added`, 
+                 "room " + returned_added_room.data.room_number + " has been added successfully");
+            reset_all_add_room_inputs();
+        }
+       
     }
 
 }
 
 document.getElementById("add_room_form_save_room_btn").addEventListener("click", e => {
-    save_room_new_room();
+    if(global_is_room_for_update){
+        save_room_new_room("update", global_room_update_id);
+    }else{
+        save_room_new_room("", "");
+    }
 });
 
 var add_hotel_property_form_city_country_select = document.getElementById("add_hotel_property_form_city_country_select");

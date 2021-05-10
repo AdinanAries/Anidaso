@@ -1052,7 +1052,7 @@ app.post("/create_new_hotel_room/", async (req, res, next) =>{
   }catch(e){
     res.send({success: false, data: e, msg: "Server Error!"});
   }
-})
+});
 
 //getting cheap hotel rooms
 app.get("/get_cheap_hotel_rooms/:id", async (req, res, next) =>{
@@ -1304,6 +1304,47 @@ app.get("/get_property_by_id/:property_id", async (req, res, next) => {
 });
 
 //update routes
+
+app.post("/update_hotel_room/:room_id", async (req, res, next) =>{
+
+  console.log(req.params.room_id);
+
+  try{
+
+    let the_room = await cheap_hotel_room.findById(req.params.room_id);
+
+    the_room.property_id = req.body.property_id;
+    the_room.hotel_brand_id = req.body.hotel_brand_id;
+    the_room.room_number = req.body.room_number;
+    the_room.closed = req.body.closed;
+    the_room.booked = req.body.booked;
+    the_room.room_type = req.body.room_type;
+    the_room.bed_type = req.body.bed_type;
+    the_room.guest_capacitance.adults = req.body.guest_capacitance.adults;
+    the_room.guest_capacitance.children = req.body.guest_capacitance.children;
+    the_room.price = req.body.price;
+    the_room.description = req.body.description;
+    the_room.amenities = req.body.amenities;
+    the_room.next_available_date = req.body.next_available_date;
+    the_room.next_available_time =  req.body.next_available_time;
+    the_room.cancellation_policy.time_period = req.body.cancellation_policy.time_period;
+    the_room.cancellation_policy.percentage =  req.body.cancellation_policy.percentage;
+    the_room.photo_url = req.body.photo_url;
+    the_room.cancellation_requests = req.body.cancellation_requests;
+    the_room.cancellation_history = req.body.cancellation_history;
+
+    
+
+    let room_obj = new cheap_hotel_room(the_room);
+    
+    let saved_room = await room_obj.save();
+
+    res.send({success: true, data: saved_room, msg: "room has been updated successfully!"});
+
+  }catch(e){
+    res.send({success: false, data: e, msg: "Server Error!"});
+  }
+});
 
 app.post("/open_or_close_room/:room_id/:close_or_open", async (req, res, next) => {
 
