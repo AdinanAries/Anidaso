@@ -249,6 +249,16 @@ var cheap_hotel_room = {
     cancellation_requests: []
 };
 
+function toggle_show_full_Screen_photo_viewer(){
+    $("#full_page_picture_viewer").toggle("up");
+}
+
+function view_image_on_full_screen(img_url){
+    console.log(img_url);
+    toggle_show_full_Screen_photo_viewer();
+    document.getElementById("full_page_picture_viewer_img").src = img_url;
+}
+
 function toggle_show_add_new_photo_div(){
     $("#add_new_photo_div").toggle("up");
 }
@@ -652,6 +662,9 @@ async function set_rooms_for_search_selection(){
 
 async function toggle_show_search_room_pane(){
     
+    document.getElementById("add_room_form_panel").style.display = "none";
+    $("#search_room_panel").toggle("up");
+
     let rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
@@ -706,9 +719,6 @@ async function toggle_show_search_room_pane(){
     document.getElementById("room_search_result_room_details").innerHTML =  
     room_search_result_return_markup(rooms[0], guest_name, guest_age, guest_gender);
     
-    document.getElementById("add_room_form_panel").style.display = "none";
-    $("#search_room_panel").toggle("up");
-
 }
 
 async function search_room_get_selected_room(){
@@ -1148,12 +1158,12 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                         Click to copy link</span>
                 </p>
                 <p style="margin-top: 20px; color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                    Next Availability</p>
-                <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
+                    Availability</p>
+                <!--p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     March 23, 2022 
                     <span style="font-size: 13px; color: white;">
-                    - 12:30PM</span></p>
-                <p onclick="show_room_availability('${room._id}', '${room.property_id}');" style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                    - 12:30PM</span></p-->
+                <p onclick="show_room_availability('${room._id}', '${room.property_id}');" style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; padding-top: 0; letter-spacing: 1px;">
                     view room ${room_number} availability
                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                 </p>
@@ -1175,7 +1185,7 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                         ${cancellation}
                     </span>
                 </p>
-                <p style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
+                <p onclick="view_image_on_full_screen('${room.photo_url}')" style="cursor: pointer; font-size: 13px; color: rgb(245, 210, 210); padding: 10px; letter-spacing: 1px;">
                     view room photo
                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                 </p>
@@ -2997,13 +3007,13 @@ function collect_all_add_new_room_inputs(){
 
     cheap_hotel_room.amenities = [];
 
-    if(add_room_wifi_amen_check.checked()){
+    if(add_room_wifi_amen_check.checked){
         cheap_hotel_room.amenities.push("Free Wifi")
     }
-    if(add_room_cable_amen_check.checked()){
+    if(add_room_cable_amen_check.checked){
         cheap_hotel_room.amenities.push("Cable Tv")
     }
-    if(add_room_other_amen_check.checked()){
+    if(add_room_other_amen_check.checked){
         cheap_hotel_room.amenities.push("Other")
     }
 

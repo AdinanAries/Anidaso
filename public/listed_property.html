@@ -34,6 +34,16 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+
+    <div id="full_page_picture_viewer">
+        <div onclick="toggle_show_full_Screen_photo_viewer();" class="page_popup_close_button" style="width: 30px; text-align: center; padding: 5px 0; margin: 10px; margin-right: 15px; background-color: rgba(0, 0, 0, 0.568); border-radius: 4px;">
+          <i style="color: white" class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <div style="width: fit-content; margin: auto;">
+          <img id="full_page_picture_viewer_img"  src="" alt=""/>
+        </div>
+      </div>
+
     <div id="add_new_photo_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div style="padding: 10px; width: calc(100% - 30px); max-width: 700px; margin: auto; border-radius: 4px; background-color: white;">
             <p style="color:rgb(5, 44, 59); font-weight: bolder; text-align: center; font-size: 14px; margin: 10px 0;">

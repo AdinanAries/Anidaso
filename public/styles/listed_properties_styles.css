@@ -20,6 +20,23 @@
     transform: translateY(0);
   }
 }
+#full_page_picture_viewer {
+  position: fixed;
+  z-index: 100;
+  background-color: #00000091;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  flex-direction: column !important;
+  justify-content: center;
+}
+#full_page_picture_viewer img {
+  width: 100%;
+  max-width: 850px;
+  height: auto;
+}
 .bubble_popup {
   display: none;
   top: -30px;

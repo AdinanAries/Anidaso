@@ -257,7 +257,7 @@ async function render_all_bookings_markup(bookings){
                         <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
                         $${parseFloat(price_paid).toFixed(2)}</span>
                     </p>
-                    <div style="cursor: pointer; margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
+                    <div style="width: 220px; cursor: pointer; margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
                         <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgb(4, 120, 167); text-align: center; font-size: 13px;">
                             <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-pencil" aria-hidden="true"></i>Change
                         </div>
