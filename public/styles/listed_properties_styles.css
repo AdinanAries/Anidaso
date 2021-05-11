@@ -356,7 +356,7 @@ header {
     url("../images/HotelPic.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 50vh;
+  min-height: 30vh;
   background-position: center;
   display: flex;
   flex-direction: column;
