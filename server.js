@@ -1303,6 +1303,22 @@ app.get("/get_property_by_id/:property_id", async (req, res, next) => {
 
 });
 
+app.post("/search_room_get_selected_room/:hotel_brand_id", async (req, res, next) => {
+
+  let hotel = await cheap_hotel.findById(req.params.hotel_brand_id);
+
+  hotel.policies_and_restrictions.put({
+    type: req.body.type,
+    description: req.body.description
+  });
+
+  let updated_hotel = new cheap_hotel(hotel);
+  let update_res = updated_hotel.save();
+  
+  res.send(update_res.policies_and_restrictions);
+
+});
+
 //update routes
 
 app.post("/update_hotel_room/:room_id", async (req, res, next) =>{

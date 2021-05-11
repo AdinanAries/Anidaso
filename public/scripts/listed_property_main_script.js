@@ -35,6 +35,19 @@ function toggle_show_hide_page_full_screen_prompt(){
     document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
   }
 
+function toggle_show_notifications_div(){
+    if(document.getElementById("view_notifications_div").style.display === "none"){
+        $("#view_notifications_div").show("slide", { direction: "right" }, 300);
+    }
+    else{
+        $("#view_notifications_div").hide("slide", { direction: "right" }, 300);
+    }
+}
+
+function show_notifications(){
+    toggle_show_notifications_div();
+}
+
 function change_date_from_iso_to_long_date(isoString){
     
     let the_year = isoString.split("-")[0];
@@ -661,6 +674,8 @@ async function set_rooms_for_search_selection(){
             <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
         `; 
     }
+
+    search_room_get_selected_room();
 }
 
 async function toggle_show_search_room_pane(){
@@ -1534,9 +1549,7 @@ async function toggle_show_all_cities(){
     }
 }
 
-async function toggle_show_all_policies(){
-
-    $("#all_policies_list_container").toggle("up");
+async function get_and_render_all_policies(){
 
     document.getElementById("all_hotel_policies_list").innerHTML = ``;
 
@@ -1557,6 +1570,14 @@ async function toggle_show_all_policies(){
             `;
         }
     }
+
+}
+
+function toggle_show_all_policies(){
+
+    $("#all_policies_list_container").toggle("up");
+    get_and_render_all_policies();
+
 }
 
 function all_policies_return_each_policy_markup(number, policy){
@@ -2676,6 +2697,29 @@ function get_all_cities(hotel_id){
             return err
         }
     });
+}
+
+function add_new_policy(type_param, description_param){
+
+    return $.ajax({
+        type: "POST",
+        url: "/add_new_cheap_hotel_policy",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: {
+            type: type_param,
+            description: description_param
+        },
+        success: data => {
+            console.log(data);
+            return data
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+
 }
 
 function get_all_policies(hotel_id){

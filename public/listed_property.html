@@ -35,6 +35,66 @@
 </head>
 <body>
 
+    <div id="view_notifications_div" class="page_pop_up_cover" style="display: none;">
+        <div style="height: 100%; width: 100%; max-width: 500px; background-color: white; position: absolute; right: 0;">
+            <p onclick="toggle_show_notifications_div();" style="color:rgb(240, 128, 1); right: 10px;" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <div style="background-color: steelblue; padding: 20px;">
+                <p style="text-align: center; font-size: 14px; font-weight: bolder; color:rgb(3, 27, 36);">Notifications</p>
+            </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 78px);">
+                <div id="notifications_list_container">
+                    <div style="padding: 10px; width: calc(100% - 40px); margin-left: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.288);">
+                        <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <p style="font-size: 14px; color:white; font-weight: bolder;">
+                                <i class="fa fa-circle" aria-hidden="true" style="color: wite; margin-right: 5px; font-size: 7px;"></i>
+                                Type Here
+                                <span style="font-weight: initial; color:rgb(186, 230, 250); font-size: 13px; margin-left: 5px;">
+                                   - 9:45 AM</span>
+                            </p>
+                            <p style="color:rgb(255, 179, 136); font-size: 12px;">March 23, 2022</p>
+                        </div>
+                        <div style="padding: 10px;">
+                            <p style="font-size: 13px; color:rgba(255, 255, 255, 0.781);">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aut expedita, qui mollitia consequatur quidem, sunt voluptatibus nemo eum...
+                            </p>
+                        </div>
+                    </div>
+                    <div style="padding: 10px; width: calc(100% - 40px); margin-left: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.288);">
+                        <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <p style="font-size: 14px; color:white; font-weight: bolder;">
+                                <i class="fa fa-circle" aria-hidden="true" style="color: wite; margin-right: 5px; font-size: 7px;"></i>
+                                Type Here
+                                <span style="font-weight: initial; color:rgb(186, 230, 250); font-size: 13px; margin-left: 5px;">
+                                   - 9:45 AM</span>
+                            </p>
+                            <p style="color:rgb(255, 179, 136); font-size: 12px;">March 23, 2022</p>
+                        </div>
+                        <div style="padding: 10px;">
+                            <p style="font-size: 13px; color:rgba(255, 255, 255, 0.781);">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aut expedita, qui mollitia consequatur quidem, sunt voluptatibus nemo eum...
+                            </p>
+                        </div>
+                    </div>
+                    <div style="padding: 10px; width: calc(100% - 40px); margin-left: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.288);">
+                        <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <p style="font-size: 14px; color:white; font-weight: bolder;">
+                                <i class="fa fa-circle" aria-hidden="true" style="color: wite; margin-right: 5px; font-size: 7px;"></i>
+                                Type Here
+                                <span style="font-weight: initial; color:rgb(186, 230, 250); font-size: 13px; margin-left: 5px;">
+                                   - 9:45 AM</span>
+                            </p>
+                            <p style="color:rgb(255, 179, 136); font-size: 12px;">March 23, 2022</p>
+                        </div>
+                        <div style="padding: 10px;">
+                            <p style="font-size: 13px; color:rgba(255, 255, 255, 0.781);">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aut expedita, qui mollitia consequatur quidem, sunt voluptatibus nemo eum...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="full_page_picture_viewer">
         <div onclick="toggle_show_full_Screen_photo_viewer();" class="page_popup_close_button" style="width: 30px; text-align: center; padding: 5px 0; margin: 10px; margin-right: 15px; background-color: rgba(0, 0, 0, 0.568); border-radius: 4px;">
           <i style="color: white" class="fa fa-times" aria-hidden="true"></i>
@@ -42,8 +102,7 @@
         <div style="width: fit-content; margin: auto;">
           <img id="full_page_picture_viewer_img"  src="" alt=""/>
         </div>
-      </div>
-
+    </div>
     <div id="add_new_photo_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div style="padding: 10px; width: calc(100% - 30px); max-width: 700px; margin: auto; border-radius: 4px; background-color: white;">
             <p style="color:rgb(5, 44, 59); font-weight: bolder; text-align: center; font-size: 14px; margin: 10px 0;">
@@ -450,7 +509,7 @@
             </div>
         </div>
     </div>
-    <div id="add_room_form_panel" style="display: none; z-index: 11;" class="page_pop_up_cover">
+    <div id="add_room_form_panel" style="display: none; z-index: 13;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <p onclick="toggle_show_add_room_pane();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div style="height: 100%;">
@@ -656,7 +715,7 @@
             </div>
         </div>
     </div>
-    <div id="add_hotel_property_form_panel" style="display: none; z-index: 11;" class="page_pop_up_cover">
+    <div id="add_hotel_property_form_panel" style="display: none; z-index: 13;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <p onclick="toggle_show_add_hotel_property_pane();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div style="height: 100%;">
@@ -1052,7 +1111,7 @@
                             <p onclick="toggle_show_all_policies();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Policy</p>
                         </div>
                     </div>
-                    <div style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; margin-right: 10px;">
+                    <div onclick="show_notifications();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; margin-right: 10px;">
                         <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 13px; position: relative;">
                             <span style="width: 10px; height: 10px; position: absolute; border-radius: 100%; border:rgb(5, 57, 99) 2px solid; background-color: white; top: -5px; right: 0px;"></span>
                             <i class="fa fa-bell-o" style="margin-right: 2px; font-size: 19px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
