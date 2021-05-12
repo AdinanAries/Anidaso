@@ -324,7 +324,7 @@ function return_cheap_hotel_rating_markup(rating_number = 1){
                     <p style="font-size: 12px; font-weight: bolder; text-align: right;">${rating_percentage}%</p>
                 </div>
             </div>
-            <div style="width: 250px; height: 40px; display: flex; flex-direction: row !important; margin: 10px 0;">
+            <div style="width: 250px; height: 20px; display: flex; flex-direction: row !important; margin: 10px 0; margin-top: 5px;">
                 <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
                     <div style="background-color: rgb(201, 43, 15);  height: 20%;"></div>
                 </div>
