@@ -1068,26 +1068,36 @@
         <div class="wrapper">
             <div class="header_content">
                 <div class="site_logo_container">
-                    <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                      <p><span>An</span>i<span>d</span>a<span>s</span>o<sup style="font-size: 12px;">&reg;</sup></p>
+                    <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; text-shadow: none !important;">
+                      <p style="text-shadow: none !important"><span style="text-shadow: none !important"
+                        >An</span style="text-shadow: none !important"
+                        >i<span style="text-shadow: none !important"
+                        >d</span>a<span style="text-shadow: none !important"
+                        >s</span>o<sup style="font-size: 12px;">&reg;</sup></p>
                     </div>
                 </div>
                 <div class="wide_screen_top_nav" style="display: flex; flex-direction: row !important; justify-content:  space-between;">
                     <div onclick="toggle_show_search_room_pane();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
-                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
-                            <i class="fa fa-search" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                            Search Room
+                        <p style="font-weight: bolder; color: rgb(255, 254, 172); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-search" style="margin-right: 2px; color:rgb(238, 255, 0);" aria-hidden="true"></i>
+                            Rooms
                         </p>
                     </div>
                     <div onclick="continue_room_reservation();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
-                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
-                            <i class="fa fa-hotel" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                            Reservation
+                        <p style="font-weight: bolder; color: rgb(255, 254, 172); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-hotel" style="margin-right: 2px; color:rgb(238, 255, 0);" aria-hidden="true"></i>
+                            Reservations
+                        </p>
+                    </div>
+                    <div onclick="toggle_show_search_room_pane();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
+                        <p style="font-weight: bolder; color: rgb(255, 254, 172); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-key" style="margin-right: 2px; color:rgb(238, 255, 0);" aria-hidden="true"></i>
+                            Arrivals
                         </p>
                     </div>
                     <div onclick="toggle_show_booked_rooms();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
-                        <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
-                            <i class="fa fa-calendar-check-o" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                        <p style="font-weight: bolder; color: rgb(255, 254, 172); margin: 0 10px; font-size: 14px;">
+                            <i class="fa fa-calendar-check-o" style="margin-right: 2px; color:rgb(238, 255, 0);" aria-hidden="true"></i>
                             Bookings
                         </p>
                     </div>
@@ -1095,13 +1105,13 @@
                 <div style="display: flex; flex-direction: row !important; justify-content:  space-between;">
                     <div onclick="continue_room_reservation();" id="top_nave_mobile_make_reservation" style="cursor: pointer; display: none; flex-direction: column !important; justify-content: center;">
                         <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
-                            <i class="fa fa-hotel" style="margin-right: 2px; font-size: 16px; color:rgb(173, 208, 255);" aria-hidden="true"></i>
+                            <i class="fa fa-hotel" style="margin-right: 2px; font-size: 16px; color:rgb(160, 201, 255);" aria-hidden="true"></i>
                         </p>
                     </div>
                     <div id="top_nav_add_new_drop_down_btn" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; position: relative;">
                         <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
-                            <i class="fa fa-plus" style="margin-right: 2px; font-size: 16px; color:rgb(173, 208, 255);" aria-hidden="true"></i>
-                            <i class="fa fa-caret-down" aria-hidden="true" style="font-size: 13px; margin-left: 2px; color: rgb(224, 0, 0);"></i>
+                            <i class="fa fa-plus" style="margin-right: 2px; font-size: 16px; color:rgb(160, 201, 255);" aria-hidden="true"></i>
+                            <i class="fa fa-caret-down" aria-hidden="true" style="font-size: 13px; margin-left: 2px; color: rgb(255, 67, 67);"></i>
                         </p>
                         <div id="top_nav_add_new_drop_down_menu" class="bubble_popup arrow_on_top" style="display: none; position: absolute; background-color: rgb(5, 44, 59); border: 1px solid rgb(80, 114, 129); border-radius: 4px; top: calc(100% - 10px); left: -55%; padding: 10px; width: 110px;">
                             <p onclick="toggle_show_add_room_pane();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Room</p>
@@ -1113,8 +1123,8 @@
                     </div>
                     <div onclick="show_notifications();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; margin-right: 10px;">
                         <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 13px; position: relative;">
-                            <span style="width: 10px; height: 10px; position: absolute; border-radius: 100%; border:rgb(3, 31, 53) 2px solid; background-color: rgb(224, 0, 0); top: -5px; right: 0px;"></span>
-                            <i class="fa fa-bell-o" style="margin-right: 2px; font-size: 19px; color:rgb(173, 208, 255);" aria-hidden="true"></i>
+                            <span style="width: 10px; height: 10px; position: absolute; border-radius: 100%; border:rgb(0, 112, 116) 2px solid; background-color: rgb(255, 67, 67); top: -5px; right: 0px;"></span>
+                            <i class="fa fa-bell-o" style="margin-right: 2px; font-size: 19px; color:rgb(160, 201, 255);" aria-hidden="true"></i>
                         </p>
                     </div>
                     <div id="main_top_nav_hotel_name_display" style="position: relative;" class="top_nav_hotel_name_display">
