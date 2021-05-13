@@ -21,7 +21,7 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <header>
+    <header style="border: none !important; padding-bottom: 20px;">
         <div class="wrapper">
             <div class="header_content">
                 <div class="site_logo_container">
@@ -39,7 +39,7 @@
     </header>
     <main>
         <!--style="background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(3, 31, 53)), url('./images/hotelsBackground.jpg');"-->
-        <div class="hero_section">
+        <div class="hero_section" style="display: none;">
             <div class="wrapper">
                 <h1 style="font-family: 'Courgette'; color: white; text-align: center; font-size: 24px; letter-spacing: 1px;">
                   Book Cheap Now</h1>
@@ -51,10 +51,10 @@
         <div class="wrapper">
             <div style="min-height: 300px; padding: 20px 0;">
                 <h1 style="color: white; font-size: 18px; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">Hotel Katanga</h1>
-                <p style="font-size: 14px; text-align: center; color: white; letter-spacing: 1px;">hotelkatanga@yahoo.com</p>
+                <p style="font-size: 14px; text-align: center; color: rgba(255, 255, 255, 0.822); letter-spacing: 1px;">hotelkatanga@yahoo.com</p>
                 <div style="width: fit-content; margin: auto; margin-top: 20px;">
                   <div id="page_popup_content_body">
-                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">See room details here</p>
+                    <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder; margin-top: 10px; margin-bottom: 20px;">See room details below</p>
                     <div class="flex_row_default_flex_column_mobile" id="room_search_result_room_details">
                         <div class="flex_child_of_two">
                           <div style="position: relative; height: 100%; min-height: 220px; background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url('/images/hotelsBackground.jpg');">
@@ -66,6 +66,7 @@
                           </div>
                         </div>
                         <div class="flex_child_of_two flex_non_first_child">
+                          <div style="padding: 0 5px;">
                           <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
                             Room 5D 
                             <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
@@ -110,9 +111,11 @@
                                     doloribus fugit obcaecati non a aperiam ex omnis dolorem veniam eve...
                                 </span></p>
                         </div>
+                      </div>
                     </div>
                     <div class="flex_row_default_flex_column_mobile">
                           <div class="flex_child_of_two" style="margin-top: 20px;">
+                            <div style="padding: 0 5px;">
                             <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
                                 Misc</p>
                             <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
@@ -142,7 +145,9 @@
                                     Click to copy link</span>
                             </p>
                           </div>
+                        </div>
                           <div style="margin-top: 20px;" class="flex_child_of_two flex_non_first_child">
+                            <div style="padding: 0 5px;">
                             <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
                               Hotel Information</p>
                             <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
@@ -165,6 +170,7 @@
                                 see more hotel info
                                 <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                             </p>
+                          </div>
                           </div>
                     </div>
                 </div>

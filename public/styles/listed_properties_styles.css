@@ -58,7 +58,7 @@
 .arrow_on_top::after {
   content: "";
   border: 8px solid transparent;
-  border-bottom-color: rgb(23, 46, 56);
+  border-bottom-color: rgb(35, 64, 77);
   border-top: 0;
   position: absolute;
   top: -9px;
@@ -282,9 +282,8 @@ body {
   background-color: rgb(13, 28, 51);
 }
 header {
-  /*background-color: rgb(3, 31, 53);*/
-  /*border-bottom: rgb(212, 113, 0) 4px solid;*/
-  background-color: rgb(0, 112, 116);
+  background-color: rgb(3, 31, 53);
+  border-bottom: rgb(212, 113, 0) 4px solid;
   padding: 0 20px;
 }
 .header_content {
@@ -353,13 +352,11 @@ header {
   color: rgb(233, 128, 0);
 }
 .hero_section {
-  /*background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(3, 31, 53)),
-    url("../images/HotelPic.jpg");*/
-  background: linear-gradient(rgb(0, 112, 116), rgb(3, 31, 53));
-
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(3, 31, 53)),
+    url("../images/HotelPic.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 20vh;
+  min-height: 50vh;
   background-position: center;
   display: flex;
   flex-direction: column;

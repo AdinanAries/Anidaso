@@ -82,9 +82,9 @@ function return_weeks_from_days(days){
     let trailing_days = days%7;
     if(trailing_days !== 0){
         if(trailing_days === 1)
-            trailing_days = `, ${trailing_days} day`;
+            trailing_days = `and ${trailing_days} day`;
         else
-            trailing_days = `, ${trailing_days} days`;
+            trailing_days = `and ${trailing_days} days`;
     }else{
         trailing_days = "";
     }
@@ -862,7 +862,9 @@ async function get_all_room_of_property(property_id){
     `;
 
     if(rooms.length === 0 ){
-        alert("no rooms were found!");
+        document.getElementById("hotel_property_all_rooms_body_title").innerHTML = `
+            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
+            no rooms were found`;
         return null;
     }
 
@@ -1463,7 +1465,7 @@ async function toggle_show_all_hotel_properties(){
     $("#all_hotel_properties_container").toggle("up");
     document.getElementById("add_hotel_property_form_panel").style.display = "none"
 
-    document.getElementById("hotel_properties_list").innerText = `${properties.length} property(s) found`;
+    document.getElementById("total_properties_count").innerText = `${properties.length} property(s) found`;
     document.getElementById("hotel_properties_list").innerHTML = '';
     for(let i=0; i < properties.length; i++){
         document.getElementById("hotel_properties_list").innerHTML += all_properties_return_each_property_markup(properties[i]);
