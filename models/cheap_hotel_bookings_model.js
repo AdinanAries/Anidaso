@@ -15,7 +15,7 @@ let cheap_hotel_bookings_schema = mongoose.Schema({
         ref: ""
     },
     booking_status: {
-        type: String //staying, before-stay, after-stay,
+        type: String //staying, before-stay, after-stay, no-show, cancelled
     },
     booking_date: {
         type: String,

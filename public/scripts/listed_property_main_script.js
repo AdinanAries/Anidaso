@@ -37,6 +37,15 @@ document.getElementById("top_nav_front_desk_drop_down_btn").addEventListener("cl
         document.getElementById("top_nav_front_desk_drop_down_menu").style.display = "none";
 });
 
+
+function toggle_show_in_house_guests_div(){
+    $("#in_house_guests_div").toggle("up");
+}
+
+function show_in_house_guests(){
+    toggle_show_in_house_guests_div();
+}
+
 function toggle_show_hide_arrival_guests_div(){
     $("#arrival_guests_div").toggle("up");
 }

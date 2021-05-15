@@ -31,7 +31,7 @@ var rooms_grid_view_config = {
 var make_reservations_post_data = {
     hotel_brand_id: "",
       property_id: "",
-      booking_status: "before-stay", //staying, before-stay, after-stay
+      booking_status: "before-stay", //staying, before-stay, after-stay, no-show, cancelled
       booking_date: "",
       rooms: [
         {
