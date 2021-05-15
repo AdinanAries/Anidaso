@@ -31,6 +31,7 @@ var rooms_grid_view_config = {
 var make_reservations_post_data = {
     hotel_brand_id: "",
       property_id: "",
+      booking_status: "before-stay", //staying, before-stay, after-stay
       booking_date: "",
       rooms: [
         {
@@ -54,6 +55,8 @@ var make_reservations_post_data = {
 
 function add_a_guest_obj(type){
     return {
+        id: 0,
+        profile_pic: "",
         first_name: "",
         last_name: "",
         type: type,

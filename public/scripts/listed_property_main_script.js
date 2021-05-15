@@ -24,16 +24,36 @@ document.getElementById("top_nav_add_new_drop_down_btn").addEventListener("click
     else
         document.getElementById("top_nav_add_new_drop_down_menu").style.display = "none";
 });
+document.getElementById("top_nav_more_menu_drop_down_btn").addEventListener("click", e => {
+    if(document.getElementById("top_nav_more_menu_drop_down_menu").style.display === "none")
+        document.getElementById("top_nav_more_menu_drop_down_menu").style.display = "block";
+    else
+        document.getElementById("top_nav_more_menu_drop_down_menu").style.display = "none";
+});
+document.getElementById("top_nav_front_desk_drop_down_btn").addEventListener("click", e => {
+    if(document.getElementById("top_nav_front_desk_drop_down_menu").style.display === "none")
+        document.getElementById("top_nav_front_desk_drop_down_menu").style.display = "block";
+    else
+        document.getElementById("top_nav_front_desk_drop_down_menu").style.display = "none";
+});
+
+function toggle_show_hide_arrival_guests_div(){
+    $("#arrival_guests_div").toggle("up");
+}
+
+function show_arrival_guests(){
+    toggle_show_hide_arrival_guests_div();
+}
 
 function toggle_show_hide_page_full_screen_prompt(){
     $("#page_full_screen_prompt").toggle("up");
-  }
-  
-  function show_prompt_to_user(title, msg){
-    toggle_show_hide_page_full_screen_prompt();
-    document.getElementById("page_full_screen_prompt_title").innerHTML = title;
-    document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
-  }
+}
+
+function show_prompt_to_user(title, msg){
+toggle_show_hide_page_full_screen_prompt();
+document.getElementById("page_full_screen_prompt_title").innerHTML = title;
+document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
+}
 
 function toggle_show_notifications_div(){
     if(document.getElementById("view_notifications_div").style.display === "none"){
@@ -82,9 +102,9 @@ function return_weeks_from_days(days){
     let trailing_days = days%7;
     if(trailing_days !== 0){
         if(trailing_days === 1)
-            trailing_days = `and ${trailing_days} day`;
+            trailing_days = ` and ${trailing_days} day`;
         else
-            trailing_days = `and ${trailing_days} days`;
+            trailing_days = ` and ${trailing_days} days`;
     }else{
         trailing_days = "";
     }
@@ -199,6 +219,47 @@ var all_hotel_amenity_options = [
     "Sprinklers",
     "Video Surveilance",
     "Fitness Center",
+]
+
+var all_hotel_services = [
+    "Car rental services",
+    "Catering services",
+    "Concierge services",
+    "Courier services",
+    "Doctor on call",
+    "Dry cleaning",
+    "Excursions and guided tours",
+    "Flower arrangement",
+    "Ironing service",
+    "Laundry and valet service",
+    "Mail services",
+    "Massages",
+    "Room service (24-hour)",
+    "Shoeshine service",
+    "Ticket service",
+    "Transfer and chauffeur driven limousine services",
+    "Turndown service",
+    "Valet parking",
+]
+
+var all_hotel_facilities = [
+    "Banquet facilities",
+    "Bar",
+    "Computer facility",
+    "Conference and meeting facilities",
+    "Disabled room",
+    "Fitness room",
+    "Health club",
+    "Sauna and steam bath",
+    "Lounge",
+    "Luggage storage",
+    "Non-smoking rooms",
+    "Parking outside the hotel at an extra charge",
+    "Pet friendly, at a surcharge",
+    "Restaurant",
+    "Smoking rooms",
+    "Summer terrace",
+    "Complimentary Wi-Fi internet throughout the entire hotel",
 ]
 
 function add_all_amenity_options_to_select_from_list(){
