@@ -37,7 +37,17 @@ document.getElementById("top_nav_front_desk_drop_down_btn").addEventListener("cl
         document.getElementById("top_nav_front_desk_drop_down_menu").style.display = "none";
 });
 
+function toggle_show_mobile_menu(){
+    $("#mobile_menu_div").toggle("up");
+}
 
+function toggle_show_guests_checkout_div(){
+    $("#in_guests_checkout_div").toggle("up");
+}
+
+function show_guests_checkout(){
+    toggle_show_guests_checkout_div();
+}
 function toggle_show_in_house_guests_div(){
     $("#in_house_guests_div").toggle("up");
 }
