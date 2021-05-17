@@ -1,3 +1,78 @@
+var all_hotel_amenity_options = [
+    "Business Center",
+    "Coffee Shop",
+    "Disabled Facilities",
+    "Wheelchair Accessible Elevators",
+    "Handrails Bathroom",
+    "Adapt Room Doors",
+    "Wheelchair Accessible Room",
+    "Wheelchair Accessible Public Area",
+    "Baby-Sitting",
+    "Internet Hotspots",
+    "Free Internet",
+    "Laundry Service",
+    "Air Conditioning",
+    "Hair Dryer",
+    "Non Smoking Rooms",
+    "Direct Dial Phone",
+    "Television",
+    "Wi-fi in Room",
+    "First Aid Staf",
+    "Interior Room Entry",
+    "Emergency Lighting",
+    "Fire Detectors",
+    "Extinguishers",
+    "Fire Safety",
+    "Restricted Public Access",
+    "Safe Deposit Box",
+    "Smoke Detector",
+    "Sprinklers",
+    "Video Surveilance",
+    "Fitness Center",
+]
+
+var all_hotel_services = [
+    "Car rental services",
+    "Catering services",
+    "Concierge services",
+    "Courier services",
+    "Doctor on call",
+    "Dry cleaning",
+    "Excursions and guided tours",
+    "Flower arrangement",
+    "Ironing service",
+    "Laundry and valet service",
+    "Mail services",
+    "Massages",
+    "Room service (24-hour)",
+    "Shoeshine service",
+    "Ticket service",
+    "Transfer and chauffeur driven limousine services",
+    "Turndown service",
+    "Valet parking",
+]
+
+var all_hotel_facilities = [
+    "Banquet facilities",
+    "Bar",
+    "Computer facility",
+    "Conference and meeting facilities",
+    "Disabled room",
+    "Fitness room",
+    "Health club",
+    "Sauna and steam bath",
+    "Lounge",
+    "Luggage storage",
+    "Non-smoking rooms",
+    "Parking outside the hotel at an extra charge",
+    "Pet friendly, at a surcharge",
+    "Restaurant",
+    "Smoking rooms",
+    "Summer terrace",
+    "Complimentary Wi-Fi internet throughout the entire hotel",
+]
+
+
 let todays_date = new Date();
 let todays_date2 = new Date();
 
@@ -36,6 +111,91 @@ document.getElementById("top_nav_front_desk_drop_down_btn").addEventListener("cl
     else
         document.getElementById("top_nav_front_desk_drop_down_menu").style.display = "none";
 });
+
+function toggle_show_add_services_from_list_div(){
+    $("#add_services_from_list_div").toggle("up");
+}
+
+function show_add_services(){
+    toggle_show_add_services_from_list_div();
+
+    for(let i=0; i < all_hotel_services.length; i++){
+        if(i > (all_hotel_services.length/2)){
+            document.getElementById("select_services_list2").innerHTML += 
+            `
+                <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
+                    <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" type="checkbox" />
+                    <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list">${all_hotel_services[i]}</label>
+                    <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
+                        Unit Price
+                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                        </p>
+                        <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                    </div>
+                </div>
+            `; 
+        }else{
+            document.getElementById("select_services_list1").innerHTML += 
+            `
+                <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
+                    <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" type="checkbox" />
+                    <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list">${all_hotel_services[i]}</label>
+                    <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
+                        Unit Price
+                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                        </p>
+                        <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                    </div>
+                </div>
+            `; 
+        }
+    }
+}
+
+function toggle_show_add_facilities_from_list_div(){
+    $("#add_facilities_from_list_div").toggle("up");
+}
+
+function show_add_facilities(){
+    toggle_show_add_facilities_from_list_div();
+
+    for(let i=0; i < all_hotel_facilities.length; i++){
+        if(i > (all_hotel_facilities.length/2)){
+            document.getElementById("select_facilities_list2").innerHTML += 
+            `
+                <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
+                    <input onclick="toggle_hide_show_anything('${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list" type="checkbox" />
+                    <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list">${all_hotel_facilities[i]}</label>
+                    <div id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
+                        Unit Price
+                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                        </p>
+                        <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                    </div>
+                </div>
+            `; 
+        }else{
+            document.getElementById("select_facilities_list1").innerHTML += 
+            `
+                <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
+                    <input onclick="toggle_hide_show_anything('${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list" type="checkbox" />
+                    <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list">${all_hotel_facilities[i]}</label>
+                    <div id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
+                        Unit Price
+                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                        </p>
+                        <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                    </div>
+                </div>
+            `; 
+        }
+    }
+
+}
 
 function toggle_show_mobile_menu(){
     $("#mobile_menu_div").toggle("up");
@@ -206,80 +366,6 @@ function general_build_dates_list_from_range(first_date, last_date){
 }
 
 //show_all_hotel_property_rooms(propety_id) use this function to show  rooms of each property;
-
-var all_hotel_amenity_options = [
-    "Business Center",
-    "Coffee Shop",
-    "Disabled Facilities",
-    "Wheelchair Accessible Elevators",
-    "Handrails Bathroom",
-    "Adapt Room Doors",
-    "Wheelchair Accessible Room",
-    "Wheelchair Accessible Public Area",
-    "Baby-Sitting",
-    "Internet Hotspots",
-    "Free Internet",
-    "Laundry Service",
-    "Air Conditioning",
-    "Hair Dryer",
-    "Non Smoking Rooms",
-    "Direct Dial Phone",
-    "Television",
-    "Wi-fi in Room",
-    "First Aid Staf",
-    "Interior Room Entry",
-    "Emergency Lighting",
-    "Fire Detectors",
-    "Extinguishers",
-    "Fire Safety",
-    "Restricted Public Access",
-    "Safe Deposit Box",
-    "Smoke Detector",
-    "Sprinklers",
-    "Video Surveilance",
-    "Fitness Center",
-]
-
-var all_hotel_services = [
-    "Car rental services",
-    "Catering services",
-    "Concierge services",
-    "Courier services",
-    "Doctor on call",
-    "Dry cleaning",
-    "Excursions and guided tours",
-    "Flower arrangement",
-    "Ironing service",
-    "Laundry and valet service",
-    "Mail services",
-    "Massages",
-    "Room service (24-hour)",
-    "Shoeshine service",
-    "Ticket service",
-    "Transfer and chauffeur driven limousine services",
-    "Turndown service",
-    "Valet parking",
-]
-
-var all_hotel_facilities = [
-    "Banquet facilities",
-    "Bar",
-    "Computer facility",
-    "Conference and meeting facilities",
-    "Disabled room",
-    "Fitness room",
-    "Health club",
-    "Sauna and steam bath",
-    "Lounge",
-    "Luggage storage",
-    "Non-smoking rooms",
-    "Parking outside the hotel at an extra charge",
-    "Pet friendly, at a surcharge",
-    "Restaurant",
-    "Smoking rooms",
-    "Summer terrace",
-    "Complimentary Wi-Fi internet throughout the entire hotel",
-]
 
 function add_all_amenity_options_to_select_from_list(){
     for(let i=0; i < all_hotel_amenity_options.length; i++){

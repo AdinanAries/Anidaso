@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("mongoose-type-url");
 
-let cheap_hotel_extra_services_schema = mongoose.Schema({
+let cheap_hotel_facilities_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
         reqiured: true,
@@ -10,7 +10,7 @@ let cheap_hotel_extra_services_schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ""
     },
-    services: {
+    facilities: {
         type: Array
     }
     /*name: {
@@ -19,10 +19,10 @@ let cheap_hotel_extra_services_schema = mongoose.Schema({
     description: {
         type: String
     },
-    price_per_order: {
+    cost_of_usage: {
         type: Number
     }*/
 
 });
 
-module.exports = new mongoose.model("cheap_hotel_extra_services", cheap_hotel_extra_services_schema);
+module.exports = new mongoose.model("cheap_hotel_facilities", cheap_hotel_facilities_schema);

@@ -10,19 +10,21 @@ let cheap_hotel_inventory_schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ""
     },
-    service_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: ""
-    },
-    item_name: {
+    items: {
+        type: Array
+    }
+    /*name: {
         type: String
     },
     unit_price: {
         type: Number
     },
+    category: {
+        type: String
+    },
     stock_quantity: {
         type: Number
-    }
+    }*/
 
 });
 

@@ -711,6 +711,56 @@
             </div>
         </div>
     </div>
+    <div id="add_services_from_list_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="padding: 10px; height: 80px;">
+                <p onclick="toggle_show_add_services_from_list_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
+                    Select Services to Add
+                </p>
+                <div style="text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
+                    Save Selected
+                </div>
+            </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
+                <div style="padding: 10px;">
+                    <div class="flex_row_default_flex_column_mobile">
+                        <div id="select_services_list1" class="flex_child_of_two">
+                            
+                        </div>
+                        <div id="select_services_list2" style="margin-top: 0;" class="flex_child_of_two flex_non_first_child">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="add_facilities_from_list_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="padding: 10px; height: 80px;">
+                <p onclick="toggle_show_add_facilities_from_list_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
+                    Select Facilities to Add
+                </p>
+                <div style="text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
+                    Save Selected
+                </div>
+            </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
+                <div style="padding: 10px;">
+                    <div class="flex_row_default_flex_column_mobile">
+                        <div id="select_facilities_list1" class="flex_child_of_two">
+                            
+                        </div>
+                        <div id="select_facilities_list2" style="margin-top: 0;" class="flex_child_of_two flex_non_first_child">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="make_reservation_pane" style="display: none; z-index: 100;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <p onclick="toggle_show_make_room_reservation_div();" style="z-index: 11;" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
@@ -1667,8 +1717,8 @@
                             <p onclick="show_all_amenities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Amenity</p>
                             <p onclick="show_all_cities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New City</p>
                             <p onclick="toggle_show_all_policies();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Policy</p>
-                            <p onclick="" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Extra</p>
-                            <p onclick="" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Facility</p>
+                            <p onclick="show_add_services();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Service</p>
+                            <p onclick="show_add_facilities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Facility</p>
                         </div>
                     </div>
                     <div onclick="show_notifications();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; margin-right: 10px;">
