@@ -838,6 +838,7 @@ function toggle_show_edit_desc_info_form(){
     }, 500);
 }
 
+var is_after_search_pane_opened = false;
 async function set_rooms_for_search_selection(){
 
     document.getElementById("search_room_select_room_input").innerHTML = '';
@@ -849,7 +850,16 @@ async function set_rooms_for_search_selection(){
         `; 
     }
 
-    search_room_get_selected_room();
+    //run the search_room_get_selected_room function only after the first time
+    if(is_after_search_pane_opened)
+        search_room_get_selected_room();
+    
+    is_after_search_pane_opened = true;
+
+}
+
+function hide_room_search_pane(){
+    $("#search_room_panel").toggle("up");
 }
 
 async function toggle_show_search_room_pane(){
@@ -970,6 +980,8 @@ function set_search_room_inputs_options(properties){
 
 async function view_selected_room_full_details(room_id){
 
+    is_after_search_pane_opened = false;
+
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     set_search_room_inputs_options(properties);
@@ -1015,10 +1027,8 @@ async function view_selected_room_full_details(room_id){
 
     search_result_current_room_id = room._id;
     
-    /*document.getElementById("room_search_result_room_details").innerHTML =  
-    room_search_result_return_markup(room, guest_name, guest_age, guest_gender);*/
-
-    search_room_get_selected_room();
+    document.getElementById("room_search_result_room_details").innerHTML =  
+    room_search_result_return_markup(room, guest_name, guest_age, guest_gender);
 
 }
 
