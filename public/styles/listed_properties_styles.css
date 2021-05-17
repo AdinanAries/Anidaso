@@ -20,6 +20,18 @@
     transform: translateY(0);
   }
 }
+#cheap_hotel_inventory_list_table td {
+  border-radius: 4px;
+  background-color: rgb(40, 51, 61);
+  color: #e25a00;
+  font-size: 14px;
+  padding: 5px;
+}
+#cheap_hotel_inventory_list_table .its_inventory_header {
+  background: none !important;
+  color: white !important;
+  font-weight: bolder;
+}
 #full_page_picture_viewer {
   position: fixed;
   z-index: 100;

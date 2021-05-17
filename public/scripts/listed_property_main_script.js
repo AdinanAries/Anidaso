@@ -44,7 +44,7 @@ var all_hotel_services = [
     "Laundry and valet service",
     "Mail services",
     "Massages",
-    "Room service (24-hour)",
+    "Room service",
     "Shoeshine service",
     "Ticket service",
     "Transfer and chauffeur driven limousine services",
@@ -203,6 +203,14 @@ function toggle_show_mobile_menu(){
 
 function toggle_show_guests_checkout_div(){
     $("#in_guests_checkout_div").toggle("up");
+}
+
+function toggle_show_inventory_div(){
+    $("#inventory_manager_div").toggle("up");
+}
+
+function show_inventory_div(){
+    toggle_show_inventory_div()
 }
 
 function show_guests_checkout(){

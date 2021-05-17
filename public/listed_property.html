@@ -34,6 +34,69 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+    <div id="inventory_manager_div" style="display: none; z-index: 1111;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden; background-color: rgb(0, 82, 121); max-width: 800px;">
+            <div style="padding: 10px; height: 50px;">
+                <p onclick="toggle_show_inventory_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="color: white; font-weight: bolder; font-size: 14px; text-align: center; margin-top: 10px;">
+                    Inventory Manager
+                </p>
+                <p style="text-align: center; margin: 10px; margin-top: 3px; color:rgb(255, 200, 200); font-size: 11px;">
+                    <span style="font-size: 12px; color:rgb(255, 94, 0); font-weight: bolder;">
+                    Anidaso<span style="color: white; font-size: 12px; font-weight: initial;">.com</span></span> 
+                    &copy; all rights reserved
+                </p>
+            </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 90px);">
+                <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                    <div style="padding: 10px; border-radius: 4px; background-color:rgb(33, 72, 88); color: white; font-size: 13px;">
+                        <i aria-hidden="true" class='fa fa-plus' style="color:rgb(255, 59, 59); margin-right: 5px;"></i>
+                        Add New
+                    </div>
+                    <div>
+                        <p style="color: white; font-size: 13px; font-weight: bolder; margin-bottom: 5px;">Search Item</p>
+                        <input type="text" style="padding: 10px; border: none;" />
+                    </div>
+                </div>
+                <div style="margin-top: 10px; padding: 10px; border-top: rgb(255, 97, 6) 1px solid; overflow: auto;">
+                    <table id="cheap_hotel_inventory_list_table" style="width: 100%; border-spacing: 5px;">
+                        <tbody>
+                            <tr>
+                                <td class="its_inventory_header">Item</td>
+                                <td class="its_inventory_header">Code</td>
+                                <td class="its_inventory_header">Quantity</td>
+                                <td class="its_inventory_header">Price</td>
+                            </tr>
+                            <tr>
+                                <td class="its_inventory_item_name">Coke is one of the best</td>
+                                <td>1353CK</td>
+                                <td>500</td>
+                                <td>$6.00</td>
+                                <td style="text-align: center; cursor: pointer; background: none;"><i aria-hidden="true" style="color:rgb(6, 205, 255);" class="fa fa-pencil"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Bread</td>
+                                <td>3344BD</td>
+                                <td>78</td>
+                                <td>$1.00</td>
+                                <td style="text-align: center; cursor: pointer; background: none;"><i aria-hidden="true" style="color:rgb(6, 205, 255);" class="fa fa-pencil"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding: 10px;">
+                    <div class="flex_row_default_flex_column_mobile">
+                        <div id="" class="flex_child_of_two">
+                            
+                        </div>
+                        <div id="" style="margin-top: 0;" class="flex_child_of_two flex_non_first_child">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="mobile_menu_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden; background-color: rgba(0, 0, 0, 0.863);">
             <div style="padding: 10px; height: 40px;">
@@ -127,7 +190,7 @@
                                 <i class="fa fa-dot-circle-o" style="font-size: 20px; margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 Extra Services
                             </p>
-                            <p onclick="" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                            <p onclick="show_inventory_div();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-dot-circle-o" style="font-size: 20px; margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 Inventory
                             </p>
@@ -158,11 +221,11 @@
                                 <i class="fa fa-plus" style="font-size: 20px; margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 New Policy
                             </p>
-                            <p onclick="" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                            <p onclick="show_add_services();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-plus" style="font-size: 20px; margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Add Extra
+                                Add Service
                             </p>
-                            <p onclick="" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                            <p onclick="show_add_facilities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-plus" style="font-size: 20px; margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 Add Facility
                             </p>
@@ -1699,7 +1762,7 @@
                             <p onclick="" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 Extra Services
                             </p>
-                            <p onclick="" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                            <p onclick="show_inventory_div();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 Inventory
                             </p>
                         </div>
