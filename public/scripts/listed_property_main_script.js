@@ -1015,8 +1015,10 @@ async function view_selected_room_full_details(room_id){
 
     search_result_current_room_id = room._id;
     
-    document.getElementById("room_search_result_room_details").innerHTML =  
-    room_search_result_return_markup(room, guest_name, guest_age, guest_gender);
+    /*document.getElementById("room_search_result_room_details").innerHTML =  
+    room_search_result_return_markup(room, guest_name, guest_age, guest_gender);*/
+
+    search_room_get_selected_room();
 
 }
 
