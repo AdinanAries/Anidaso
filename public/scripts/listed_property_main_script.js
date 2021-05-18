@@ -32,44 +32,44 @@ var all_hotel_amenity_options = [
 ]
 
 var all_hotel_services = [
-    "Car rental services",
-    "Catering services",
-    "Concierge services",
-    "Courier services",
-    "Doctor on call",
-    "Dry cleaning",
-    "Excursions and guided tours",
-    "Flower arrangement",
-    "Ironing service",
-    "Laundry and valet service",
-    "Mail services",
+    "Car Rental Services",
+    "Catering Services",
+    "Concierge Services",
+    "Courier Services",
+    "Doctor on Call",
+    "Dry Cleaning",
+    "Excursions & Guided Tours",
+    "Flower Arrangement",
+    "Ironing Service",
+    "Laundry and Valet Service",
+    "Mail Services",
     "Massages",
-    "Room service",
-    "Shoeshine service",
-    "Ticket service",
-    "Transfer and chauffeur driven limousine services",
-    "Turndown service",
-    "Valet parking",
+    "Room Service",
+    "Shoeshine Service",
+    "Ticket Service",
+    "Chauffeur - Limousine Services",
+    "Turndown Service",
+    "Valet Parking",
 ]
 
 var all_hotel_facilities = [
-    "Banquet facilities",
+    "Banquet Facilities",
     "Bar",
-    "Computer facility",
-    "Conference and meeting facilities",
-    "Disabled room",
-    "Fitness room",
-    "Health club",
-    "Sauna and steam bath",
+    "Computer Facility",
+    "Conference & Meeting Facilities",
+    "Disabled Room",
+    "Fitness Room",
+    "Health Club",
+    "Sauna and Steam Bath",
     "Lounge",
-    "Luggage storage",
-    "Non-smoking rooms",
-    "Parking outside the hotel at an extra charge",
-    "Pet friendly, at a surcharge",
+    "Luggage Storage",
+    "Non-smoking Rooms",
+    "Parking Outside Hotel",
+    "Pet Friendly",
     "Restaurant",
-    "Smoking rooms",
-    "Summer terrace",
-    "Complimentary Wi-Fi internet throughout the entire hotel",
+    "Smoking Rooms",
+    "Summer Terrace",
+    "Throughout Hotel Wifi",
 ]
 
 
@@ -126,12 +126,16 @@ function show_add_services(){
                 <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
                     <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" type="checkbox" />
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list">${all_hotel_services[i]}</label>
-                    <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
-                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
+                    <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; padding: 10px; margin-top: 10px; border-top: 1px solid rgb(92, 195, 255); background-color: rgba(255,255,255,0.3);">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgb(92, 195, 255);">
                         Unit Price
-                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                        <span style="font-size: 12px; color: orange;"> - in dollars ($)</span>
                         </p>
                         <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                        <p style="font-size: 11px; color: rgb(255, 199, 99); margin-top: 10px;">
+                            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
+                            leave as 0 if price is not applicable
+                        </p>
                     </div>
                 </div>
             `; 
@@ -141,12 +145,16 @@ function show_add_services(){
                 <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
                     <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" type="checkbox" />
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list">${all_hotel_services[i]}</label>
-                    <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
-                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
+                    <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; padding: 10px; margin-top: 10px; border-top: 1px solid rgb(92, 195, 255); background-color: rgba(255,255,255,0.3);">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgb(92, 195, 255);">
                         Unit Price
-                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                        <span style="font-size: 12px; color: orange;"> - in dollars ($)</span>
                         </p>
                         <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                        <p style="font-size: 11px; color: rgb(255, 199, 99); margin-top: 10px;">
+                            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
+                            leave as 0 if price is not applicable
+                        </p>
                     </div>
                 </div>
             `; 
@@ -168,12 +176,16 @@ function show_add_facilities(){
                 <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
                     <input onclick="toggle_hide_show_anything('${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list" type="checkbox" />
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list">${all_hotel_facilities[i]}</label>
-                    <div id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
-                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
-                        Unit Price
-                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                    <div id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input" style="display: none; padding: 10px; margin-top: 10px; border-top: 1px solid rgb(92, 195, 255); background-color: rgba(255,255,255,0.3);">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgb(92, 195, 255);">
+                        Price
+                        <span style="font-size: 12px; color: orange;"> - in dollars ($)</span>
                         </p>
                         <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                        <p style="font-size: 11px; color: rgb(255, 199, 99); margin-top: 10px;">
+                            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
+                            leave as 0 if price is not applicable
+                        </p>
                     </div>
                 </div>
             `; 
@@ -183,12 +195,16 @@ function show_add_facilities(){
                 <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
                     <input onclick="toggle_hide_show_anything('${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list" type="checkbox" />
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_from_add_from_list">${all_hotel_facilities[i]}</label>
-                    <div id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input" style="display: none; margin: 10px; border-top: 1px solid white;">
-                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgba(255, 255, 255, 0.7);">
+                    <div id="${all_hotel_facilities[i].replaceAll(" ", "_").trim()}_facility_unit_price_input" style="display: none; padding: 10px; margin-top: 10px; border-top: 1px solid rgb(92, 195, 255); background-color: rgba(255,255,255,0.3);">
+                        <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgb(92, 195, 255);">
                         Unit Price
-                        <span style="font-size: 10px; color: orange;"> (Leave as 0 if not applicable)</span>
+                        <span style="font-size: 12px; color: orange;"> - in dollars ($)</span>
                         </p>
                         <input style="padding: 5px; font-size: 14px; border: none; width: calc(100% - 10px);" type="number" value="0" />
+                        <p style="font-size: 11px; color: rgb(255, 199, 99); margin-top: 10px;">
+                            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
+                            leave as 0 if price is not applicable
+                        </p>
                     </div>
                 </div>
             `; 

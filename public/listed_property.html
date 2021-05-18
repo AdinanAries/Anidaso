@@ -48,14 +48,23 @@
                 </p>
             </div>
             <div class="page_popup_content_body" style="height: calc(100% - 90px);">
-                <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
-                    <div style="padding: 10px; border-radius: 4px; background-color:rgb(33, 72, 88); color: white; font-size: 13px;">
-                        <i aria-hidden="true" class='fa fa-plus' style="color:rgb(255, 59, 59); margin-right: 5px;"></i>
-                        Add New
+                <div class="flex_row_default_flex_column_mobile" style="">
+                    <div class="flex_child_of_two">
+                        <div style="display: flex; flex-direction: row !important;">
+                            <div style="cursor: pointer; padding: 10px; border-radius: 4px; background-color:rgb(33, 72, 88); color: white; font-size: 13px;">
+                                <i aria-hidden="true" class='fa fa-plus' style="color:rgb(255, 59, 59); margin-right: 5px;"></i>
+                                Add New
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <p style="color: white; font-size: 13px; font-weight: bolder; margin-bottom: 5px;">Search Item</p>
-                        <input type="text" style="padding: 10px; border: none;" />
+                    <div class="flex_child_of_two flex_non_first_child">
+                        <!--p style="color: white; font-size: 13px; font-weight: bolder; margin-bottom: 5px;">Search Item</p-->
+                        <div style="display: flex; flex-direction: row !important;">
+                            <input type="text" style="padding: 10px; border: none; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 110px); font-size: 14px;" placeholder="enter product name/code"/>
+                            <div style="cursor: pointer; width: 90px; font-size: 14px; color: white; background-color: rgb(136, 17, 17); text-align: center; padding: 10px; border-top-right-radius: 4px; border-bottom-right-radius: 4px;">
+                                Search
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div style="margin-top: 10px; padding: 10px; border-top: rgb(255, 97, 6) 1px solid; overflow: auto;">
@@ -213,11 +222,11 @@
                             </p>
                             <p onclick="show_add_services();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-plus" style="font-size: 20px; margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Add Service
+                                Add Services
                             </p>
                             <p onclick="show_add_facilities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-plus" style="font-size: 20px; margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Add Facility
+                                Add Facilities
                             </p>
                         </div>
                     </li>
@@ -435,7 +444,7 @@
                                     </div>
                                     <div style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                                        Add Service
+                                        Include Service
                                     </div>
                                 </div>
                                 <div style="display: flex; flex-direction: row !important;">
@@ -474,7 +483,7 @@
                                     </div>
                                     <div style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                                        Add Service
+                                        Include Service
                                     </div>
                                 </div>
                                 <div style="display: flex; flex-direction: row !important;">
@@ -565,7 +574,7 @@
                                     </div>
                                     <div style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                                        Add Service
+                                        Include Service
                                     </div>
                                 </div>
                                 <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
@@ -596,7 +605,7 @@
                                     </div>
                                     <div style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                                        Add Service
+                                        Include Service
                                     </div>
                                 </div>
                                 <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
@@ -1770,8 +1779,8 @@
                             <p onclick="show_all_amenities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Amenity</p>
                             <p onclick="show_all_cities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New City</p>
                             <p onclick="toggle_show_all_policies();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Policy</p>
-                            <p onclick="show_add_services();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Service</p>
-                            <p onclick="show_add_facilities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Facility</p>
+                            <p onclick="show_add_services();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Services</p>
+                            <p onclick="show_add_facilities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Facilities</p>
                         </div>
                     </div>
                     <div onclick="show_notifications();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; margin-right: 10px;">
