@@ -72,6 +72,58 @@ var all_hotel_facilities = [
     "Throughout Hotel Wifi",
 ]
 
+var all_room_types = [
+    "Single Room",
+    "Double Room",
+    "Triple Room",
+    "Quad Room",
+    "Queen Room",
+    "King Room",
+    "Twin Room",
+    "Hollywood Twin Room",
+    "Double-Double Room",
+    "Studio Room",
+    "Suites",
+    "Junior Suites",
+    "The Presidential Suite",
+    "Apartments",
+    "Connecting Rooms",
+    "The Murphy Room",
+    "A Cabana Room",
+    "Villas"
+]
+
+var all_bed_types = [
+    "Single (36 x 75)",
+    "Twin (39 x 75)",
+    "Twin XL (39 x 80)",
+    "Double/Full (54 x 74)",
+    "Queen (60 x 84)",
+    "King (76 x 80)",
+    "California King (72 x 84)"
+]
+
+var add_services_post_data = {
+    hotel_brand_id: "",
+    services: [
+        {
+            name: "",
+            description: "",
+            price_per_order: 0
+        }
+    ]
+}
+
+var add_facilities_post_data = {
+    hotel_brand_id: "",
+    facilities: [
+        {
+            name: "",
+            description: "",
+            cost_of_usage: 0
+        }
+    ]
+}
 
 let todays_date = new Date();
 let todays_date2 = new Date();
@@ -111,6 +163,10 @@ document.getElementById("top_nav_front_desk_drop_down_btn").addEventListener("cl
     else
         document.getElementById("top_nav_front_desk_drop_down_menu").style.display = "none";
 });
+
+function toggle_show_add_inventory_form_div(){
+    $("#add_inventory_form_div").toggle("up");
+}
 
 function toggle_show_add_services_from_list_div(){
     $("#add_services_from_list_div").toggle("up");
@@ -211,6 +267,38 @@ function show_add_facilities(){
         }
     }
 
+}
+
+function toggle_show_all_services(){
+    $("#all_services_list_container").toggle("up");
+}
+
+function show_all_services(){
+    toggle_show_all_services()
+}
+
+function toggle_show_all_facilites(){
+    $("#all_facilities_list_container").toggle("up");
+}
+
+function show_all_facilities(){
+    toggle_show_all_facilites();
+}
+
+function toggle_show_front_desk_accounts(){
+    $("#front_desk_accounts_container").toggle("up");
+}
+
+function show_front_desk_accounts(){
+    toggle_show_front_desk_accounts()
+}
+
+function toggle_show_inventory_sales(){
+    $("#front_inventory_sales_container").toggle("up");
+}
+
+function show_inventory_sales(){
+    toggle_show_inventory_sales();
 }
 
 function toggle_show_mobile_menu(){

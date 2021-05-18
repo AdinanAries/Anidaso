@@ -19,7 +19,7 @@ let cheap_hotel_inventory_schema = mongoose.Schema({
     unit_price: {
         type: Number
     },
-    category: {
+    service_department: {
         type: String
     },
     stock_quantity: {
