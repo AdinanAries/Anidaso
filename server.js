@@ -56,6 +56,7 @@ var cheap_hotel_property = require("./models/each_cheap_hotel_building_model");
 var cheap_hotel_room = require("./models/cheap_hotel_rooms_model");
 var login_user = require("./models/login_user_model");
 var signup_user = require("./models/signup_user_model");
+var cheap_hotel_inventory_model = require("./models/cheap_hotel_inventory_model");
 var hotel_deals = require("./models/hotel_deals_model");
 
 app.use(passport.initialize());
@@ -1316,6 +1317,74 @@ app.post("/search_room_get_selected_room/:hotel_brand_id", async (req, res, next
   let update_res = updated_hotel.save();
   
   res.send(update_res.policies_and_restrictions);
+
+});
+
+app.post("/add_new_inventory_item/", async (req, res, next) => {
+  
+  let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.body.hotel_brand_id});
+  let new_inventory;
+
+  let new_item = {
+    code: req.body.item.code,
+    name: req.body.item.name,
+    unit_price: req.body.item.unit_price,
+    service_department: req.body.item.service_department,
+    property_id: req.body.item.property_id,
+    stock_quantity: req.body.item.stock_quantity,
+    description: req.body.item.description,
+  }
+
+  console.log(new_item);
+
+  if(inventory){
+    inventory.items.push(new_item);
+    let the_inventory = await new cheap_hotel_inventory_model(inventory);
+     new_inventory = await the_inventory.save();
+  }else{
+    let items_arr = [];
+    items_arr.push(new_item);
+    let the_inventory = await new cheap_hotel_inventory_model({
+      hotel_brand_id: req.body.hotel_brand_id,
+      items: items_arr
+    });
+    new_inventory = await the_inventory.save();
+  }
+
+  res.send(new_inventory);
+});
+
+app.get("/get_all_hotel_inventory/:hotel_brand_id/:property_id", async (req, res, next) => {
+
+  let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.params.hotel_brand_id});
+
+  if(inventory){
+
+    inventory.items = inventory.items.filter( each => {
+      return (each.property_id === req.params.property_id);
+    });
+
+    res.send(inventory);
+
+  }else{
+    res.send({nonAdded: true});
+  }
+
+});
+
+app.post("/search_inventory_item/", async (req, res, next) => {
+
+  let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.body.hotel_brand_id});
+
+  let property_inventory = inventory.items.filter( each => {
+     return (each.property_id === req.body.property_id)
+  });
+
+  let items = property_inventory.filter( each => {
+      return ((each.name === req.body.search_param) || (each.code === req.body.search_param))
+  });
+
+  res.send(items);
 
 });
 

@@ -168,6 +168,20 @@ function toggle_show_add_inventory_form_div(){
     $("#add_inventory_form_div").toggle("up");
 }
 
+async function show_add_inventory_item_form(){
+
+    toggle_show_add_inventory_form_div();
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("add_new_inventory_property_input").innerHTML = "";
+
+    for(let i = 0; i < properties.length; i++){
+        document.getElementById("add_new_inventory_property_input").innerHTML += `
+        <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+        `;
+    }
+}
+
 function toggle_show_add_services_from_list_div(){
     $("#add_services_from_list_div").toggle("up");
 }
@@ -313,8 +327,42 @@ function toggle_show_inventory_div(){
     $("#inventory_manager_div").toggle("up");
 }
 
+async function show_inventory_select_property(){
+    
+    $("#inventory_manager_select_property_div").toggle("up");
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("inventory_manager_select_property").innerHTML = `
+        <div style="padding: 10px; background-color: white; border-radius: 4px; margin-bottom: 5px;">
+            <p style="color: rgb(0, 82, 121); font-weight: bolder; font-size: 14px;">
+                <i style="margin-right: 5px; color:rgb(235, 86, 0); font-size: 22px;" class="fa fa-building" aria-hidden="true"></i>
+                All Properties</p>
+            <div onclick="get_and_show_all_inventory('all');" style="cursor: pointer; font-size: 14px; color: white; margin-top: 10px; width: fit-content; background-color:rgb(0, 28, 54); border-radius: 4px; padding: 10px;">
+                manage inventory
+            </div>
+        </div>
+    `;
+    for(let i = 0; i < properties.length; i++ ){
+        document.getElementById("inventory_manager_select_property").innerHTML += `
+            <div style="padding: 10px; background-color: white; border-radius: 4px; margin-bottom: 5px;">
+                <p style="color: rgb(0, 82, 121); font-weight: bolder; font-size: 14px;">
+                    <i style="margin-right: 5px; color:rgb(235, 86, 0); font-size: 22px;" class="fa fa-building" aria-hidden="true"></i>
+                    ${properties[i].city}</p>
+                <p style="margin-top: 5px; font-size: 13px; color:rgb(25, 90, 90);">
+                    ${properties[i].street_address}, ${properties[i].country}
+                </p>
+                <div onclick="get_and_show_all_inventory('${properties[i]._id}');" style="cursor: pointer; font-size: 14px; color: white; margin-top: 10px; width: fit-content; background-color:rgb(0, 28, 54); border-radius: 4px; padding: 10px;">
+                    manage inventory
+                </div>
+            </div>
+        `;
+    }
+}
+
 function show_inventory_div(){
-    toggle_show_inventory_div()
+    toggle_show_inventory_div();
+    show_inventory_select_property();
 }
 
 function show_guests_checkout(){
