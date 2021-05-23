@@ -164,6 +164,14 @@ document.getElementById("top_nav_front_desk_drop_down_btn").addEventListener("cl
         document.getElementById("top_nav_front_desk_drop_down_menu").style.display = "none";
 });
 
+function toggle_show_include_services_in_booking_div(){
+    $("#include_services_in_booking_div").toggle("up");
+}
+
+function show_include_services_in_booking_div(){
+    toggle_show_include_services_in_booking_div()
+}
+
 function toggle_show_add_inventory_form_div(){
     $("#add_inventory_form_div").toggle("up");
 }

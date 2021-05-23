@@ -42,6 +42,9 @@ let cheap_hotel_guests_schema = mongoose.Schema({
     },
     assigned_room: {
         type: Object //if guests status is set to staying - {booking_id: id, room_id: id, room_number: number}
+    },
+    home_address: {
+        type: Object
     }
 
 });

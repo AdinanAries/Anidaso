@@ -346,7 +346,7 @@
     </div>
     <div id="inventory_manager_div" style="display: none; z-index: 111;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden; background-color: rgb(0, 82, 121); max-width: 800px;">
-            <div id="inventory_manager_select_property_div" style="display: none; position: absolute;  width: 100%; height: 100%; z-index: 1; background-color: rgb(0, 28, 54);">
+            <div id="inventory_manager_select_property_div" style="display: none; position: absolute;  width: 100%; height: 100%; background-color: rgb(0, 28, 54); z-index: 1;">
                 <div style="padding: 10px;">
                     <p style="text-align: center; font-size: 14px; color:rgb(216, 74, 74); font-weight: bolder; margin-top: 10px; margin-bottom: 5px;">
                         Inventory Manager</p>
@@ -358,7 +358,7 @@
                 </div>
             </div>
             <div style="padding: 10px; height: 50px;">
-                <p onclick="toggle_show_inventory_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p onclick="toggle_show_inventory_div();" style="z-index: 1;" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
                 <p style="color: white; font-weight: bolder; font-size: 14px; text-align: center; margin-top: 10px;">
                     Inventory Manager
                 </p>
@@ -399,7 +399,12 @@
                 <div style="margin-top: 10px; padding: 10px; overflow: auto;">
                     <table id="cheap_hotel_inventory_list_table" style="width: 100%; border-spacing: 5px;">
                         <tbody id="cheap_hotel_inventory_list_table_body">
-                            <tr>
+                            <div id="property_not_selected_status" style="padding: 30px 10px;">
+                                <p style="font-size: 13px; color: white; text-align: center; font-weight: bolder;">
+                                    <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                    Select property to view inventory</p>
+                            </div>
+                            <!--tr>
                                 <td class="its_inventory_header">Item</td>
                                 <td class="its_inventory_header">Code</td>
                                 <td class="its_inventory_header">Quantity</td>
@@ -453,7 +458,7 @@
                                 <td>55</td>
                                 <td>$3.00</td>
                                 <td style="text-align: center; cursor: pointer; background: none;"><i aria-hidden="true" style="color:rgb(6, 205, 255);" class="fa fa-pencil"></i></td>
-                            </tr>
+                            </tr-->
                         </tbody>
                     </table>
                 </div>
@@ -716,7 +721,7 @@
                                     <div style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         View Running Bill
                                     </div>
-                                    <div style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                    <div onclick="show_include_services_in_booking_div();" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
                                         Include Service
                                     </div>
@@ -755,7 +760,7 @@
                                     <div style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         View Running Bill
                                     </div>
-                                    <div style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                    <div onclick="show_include_services_in_booking_div();" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
                                         Include Service
                                     </div>
@@ -770,6 +775,196 @@
                                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="include_services_in_booking_div" class="page_pop_up_cover" style="display: none; z-index: 12;">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="position: relative; background-color: rgb(0, 69, 97); width: calc(100% - 10px); height: 100%; padding: 10px 5px;">
+                <p onclick="toggle_show_include_services_in_booking_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="font-size: 15px; color: rgb(248, 112, 0); text-align: center; margin-top: 5px; font-weight: bolder;;">
+                    Include Service</p>
+                <p style="font-size: 14px; text-align: center; color: white; margin-top: 5px;">
+                    Select services to include
+                </p>
+                <div style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(0, 166, 243); width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 20px;">
+                    Include Selected</div>
+                <div class="page_popup_content_body" style="height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
+                    <div>
+                        <p style="font-size: 13px; font-weight: bolder; color: white; margin-bottom: 5px; margin-top: 10px;">
+                            Type of Service</p>
+                        <select style="padding: 10px; border-radius: 4px; background-color: floralwhite; width: 100%;">
+                            <option>Inventory</option>
+                            <option>Services</option>
+                            <option>Facilities</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p style="font-size: 13px; font-weight: bolder; color: white; margin-bottom: 5px; margin-top: 10px;">
+                            Search Service Item</p>
+                        <div style="display: flex; flex-direction: row !important;">
+                            <input id="search_inventory_item_input_fld" type="text" style="padding: 10px; border: none; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 110px); font-size: 14px;" placeholder="enter product name/code"/>
+                            <div id="search_inventory_item_search_btn" style="cursor: pointer; width: 90px; font-size: 14px; color: white; background-color: rgb(136, 17, 17); text-align: center; padding: 10px; border-top-right-radius: 4px; border-bottom-right-radius: 4px;">
+                                Search
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: rgb(255, 147, 147); margin-top: 15px; margin-bottom: 10px; font-weight: bolder; margin-left: 10px;">
+                        See Items Below</p>
+                    <div id="arrival_guest_add_services_list">
+                        <div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
+                            <div style="margin-right: 5px; display: flex; flex-direction: row !important;">
+                                <div style="margin-right: 10px;">
+                                    <input type="checkbox"/>
+                                </div>
+                                <div>
+                                    <p style="color: rgb(255, 94, 0); font-size: 14px; font-weight: bolder; margin-bottom: 5px;">
+                                        Neat Fufu</p>
+                                    <p style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
+                                        $19.99</p>
+                                        <div style="margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-top: rgba(255, 208, 187, 0.815) 1px solid; padding-top: 10px;">
+                                            <div style="margin-right: 20px;">
+                                                <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
+                                                    How many?</p>
+                                                <input style="border: none; padding: 10px; max-width: 100px;" type="number" value="1" />
+                                            </div>
+                                            <div>
+                                                <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
+                                                    Total:</p>
+                                                <p style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
+                                                    $19.99</p>
+                                            </div>
+                                        </div>
+                                </div>
+                                
+                            </div>
+                            <div>
+                                <div style="cursor: pointer; font-size: 14px; border: rgb(248, 16, 16) 1px solid; color: rgb(248, 16, 16); padding: 10px; border-radius: 4px;">
+                                    <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-minus" aria-hidden="true"></i>
+                                    Remove
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
+                            <div style="margin-right: 5px; display: flex; flex-direction: row !important;">
+                                <div style="margin-right: 10px;">
+                                    <input type="checkbox"/>
+                                </div>
+                                <div>
+                                    <p style="color: rgb(255, 94, 0); font-size: 14px; font-weight: bolder; margin-bottom: 5px;">
+                                        Neat Fufu</p>
+                                    <p style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
+                                        $19.99</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="cursor: pointer; font-size: 14px; border:rgb(137, 235, 174) 1px solid; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
+                                    <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
+                                    Include
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="include_services_in_booking_div" class="page_pop_up_cover" style=" z-index: 12;">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="position: relative; background-color: rgb(0, 69, 97); width: calc(100% - 10px); height: 100%; padding: 10px 5px;">
+                <p onclick="toggle_show_include_services_in_booking_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="font-size: 15px; color: rgb(248, 112, 0); text-align: center; margin-top: 5px; font-weight: bolder;;">
+                    Invoice Preview</p>
+                <p style="text-align: center; margin: 10px; margin-top: 0; color:rgb(138, 138, 138); font-size: 11px;">
+                    <span style="font-size: 12px; color:rgb(235, 86, 0); font-weight: bolder;">
+                    Anidaso<span style="color: white; font-size: 12px; font-weight: initial;">.com</span></span> 
+                    &copy; all rights reserved
+                </p>
+                <div style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(0, 166, 243); width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 20px;">
+                    Print Invoice</div>
+                <div class="page_popup_content_body" style="height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
+                    <div style="padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div>
+                            <p style="color: rgb(215, 255, 205); font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                                Invoice Number: 2421242122</p>
+                            <p style="color: rgb(205, 245, 255); font-size: 13px; margin-bottom: 5px;">
+                                <span style="font-size: 13px; color:rgb(255, 132, 132);">Email: </span>
+                                adinanaries@outlook.com</p>
+                            <div style="text-align: center; padding: 10px; background-color:rgb(7, 60, 85); color: white; font-size: 13px; border-radius: 4px; cursor: pointer;">
+                                Send to Email
+                            </div>
+                        </div>
+                        <div>
+                            <p style="color: rgb(215, 255, 205); font-weight: bolder; font-size: 13px; margin-bottom: 5px;">
+                                Date: March 23, 2022</p>
+                            
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: rgb(255, 147, 147); margin-top: 15px; margin-bottom: 5px; font-weight: bolder;">
+                        Guest</p>
+                    <p style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
+                        Mohammed Adinan</p>
+                    <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
+                    Male, 29yrs</p>
+                    <div style="padding: 10px;">
+                        <table style="width: 100%; border-spacing: 5px;">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Item
+                                    </td>
+                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Quantity
+                                    </td>
+                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Unit Cost
+                                    </td>
+                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Total
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                        Item
+                                    </td>
+                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                        Quantity
+                                    </td>
+                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                        Unit Cost
+                                    </td>
+                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                        Total
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="padding: 10px; display: flex; flex-direction: row !; justify-content: flex-end;">
+                        <div style="min-width: 150px;">
+                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
+                                <span style="font-size: 14px; color:rgb(233, 128, 0);">SUB TOTAL:</span>
+                                <span style="font-size: 14px; color: white; margin-left: 10px;">$185.99</span>
+                            </p>
+                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
+                                <span style="font-size: 14px; color:rgb(233, 128, 0);">TAX:</span>
+                                <span style="font-size: 14px; color: white; margin-left: 10px;">$15.43</span>
+                            </p>
+                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
+                                <span style="font-size: 14px; color:rgb(233, 128, 0);">DISCOUNT:</span>
+                                <span style="font-size: 14px; color: white; margin-left: 10px;">$0</span>
+                            </p>
+                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-top: 2px; margin-bottom: 3px;">
+                                <span style="font-size: 14px; color:rgb(0, 179, 233); font-weight: bolder;">TOTAL:</span>
+                                <span style="font-size: 14px; color: white; margin-left: 10px;">$15.43</span>
+                            </p>
+                            <div style="text-align: center; margin-top: 5px; cursor: pointer; background-color: rgb(0, 59, 70); color: white; font-size: 13px; padding: 10px; border-radius: 4px;">
+                                <i style="margin-right: 5px; color:rgb(137, 204, 235)" class="fa fa-credit-card" aria-hidden="true"></i>
+                                Charge Now
                             </div>
                         </div>
                     </div>
@@ -846,7 +1041,7 @@
                                     <div style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         Check Guest In
                                     </div>
-                                    <div style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                    <div onclick="show_include_services_in_booking_div();" style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
                                         Include Service
                                     </div>
@@ -877,7 +1072,7 @@
                                     <div style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         Check Guest In
                                     </div>
-                                    <div style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                    <div onclick="show_include_services_in_booking_div();" style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
                                         Include Service
                                     </div>

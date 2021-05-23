@@ -44,6 +44,7 @@ function get_and_return_all_inventory(hotel_id, property_id){
 
 async function get_and_show_all_inventory(property_id){
 
+    document.getElementById("property_not_selected_status").style.display = "none";
     $("#inventory_manager_select_property_div").toggle("up");
     search_inventory_item_post_data.property_id = property_id;
 
@@ -219,6 +220,18 @@ document.getElementById("search_inventory_item_search_btn").addEventListener("cl
         search_inventory_item_post_data.search_param = document.getElementById("search_inventory_item_input_fld").value;
         let items = await search_inventory_post();
         console.log(items);
+
+        if(items.length === 0){
+            cheap_hotel_inventory_list_table_body.innerHTML = `
+                <div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                    <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                        <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        Nothing was found!
+                    </p>
+                </div>`;
+            return null;
+        }
+
         cheap_hotel_inventory_list_table_body.innerHTML = `
             <tr>
                 <td class="its_inventory_header">Item</td>

@@ -1381,7 +1381,7 @@ app.post("/search_inventory_item/", async (req, res, next) => {
   });
 
   let items = property_inventory.filter( each => {
-      return ((each.name === req.body.search_param) || (each.code === req.body.search_param))
+      return ((each.name.toLowerCase() === req.body.search_param.toLowerCase()) || (each.code.toLowerCase() === req.body.search_param.toLowerCase()))
   });
 
   res.send(items);
