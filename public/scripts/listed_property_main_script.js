@@ -291,6 +291,22 @@ function show_add_facilities(){
 
 }
 
+function toggle_show_guests_invoice_div(){
+    $("#guests_invoice_div").toggle("up");
+}
+
+function show_guests_invoice_div(){
+    toggle_show_guests_invoice_div();
+}
+
+function view_each_guest_running_bill(){
+    show_guests_invoice_div();
+}
+
+function view_many_guests_running_invoice(){
+    show_guests_invoice_div();
+}
+
 function toggle_show_all_services(){
     $("#all_services_list_container").toggle("up");
 }

@@ -594,7 +594,7 @@
                                     </div>
                                 </div>
                                 <div style="display: flex; flex-direction: row !important;">
-                                    <div style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                         view running invoice
                                         <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                     </div>s
@@ -633,7 +633,7 @@
                                     </div>
                                 </div>
                                 <div style="display: flex; flex-direction: row !important;">
-                                    <div style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                         view running invoice
                                         <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                     </div>
@@ -718,7 +718,7 @@
                             </div>
                             <div class="flex_child_of_two flex_non_first_child">
                                 <div style="display: flex; flex-direction: row !important;">
-                                    <div style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                    <div onclick="view_each_guest_running_bill();" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         View Running Bill
                                     </div>
                                     <div onclick="show_include_services_in_booking_div();" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
@@ -757,7 +757,7 @@
                             </div>
                             <div class="flex_child_of_two flex_non_first_child">
                                 <div style="display: flex; flex-direction: row !important;">
-                                    <div style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                    <div onclick="view_each_guest_running_bill();" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                                         View Running Bill
                                     </div>
                                     <div onclick="show_include_services_in_booking_div();" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
@@ -873,10 +873,10 @@
             </div>
         </div>
     </div>
-    <div id="include_services_in_booking_div" class="page_pop_up_cover" style=" z-index: 12;">
+    <div id="guests_invoice_div" class="page_pop_up_cover" style="display: none; z-index: 12;">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <div style="position: relative; background-color: rgb(0, 69, 97); width: calc(100% - 10px); height: 100%; padding: 10px 5px;">
-                <p onclick="toggle_show_include_services_in_booking_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p onclick="toggle_show_guests_invoice_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
                 <p style="font-size: 15px; color: rgb(248, 112, 0); text-align: center; margin-top: 5px; font-weight: bolder;;">
                     Invoice Preview</p>
                 <p style="text-align: center; margin: 10px; margin-top: 0; color:rgb(138, 138, 138); font-size: 11px;">
