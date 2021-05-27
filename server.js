@@ -57,6 +57,7 @@ var cheap_hotel_room = require("./models/cheap_hotel_rooms_model");
 var login_user = require("./models/login_user_model");
 var signup_user = require("./models/signup_user_model");
 var cheap_hotel_inventory_model = require("./models/cheap_hotel_inventory_model");
+var cheap_hotel_guest = require("./models/cheap_hotel_guests_Model");
 var hotel_deals = require("./models/hotel_deals_model");
 
 app.use(passport.initialize());
@@ -1388,9 +1389,108 @@ app.post("/search_inventory_item/", async (req, res, next) => {
 
 });
 
+app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
+  console.log(req.body);
+
+  let res_objects = [];
+  
+  let first_name = req.body.first_name;
+  let last_name = req.body.last_name;
+  let req_email = req.body.email;
+  let req_mobile = req.body.mobile;
+
+  let bookings = null;
+  let the_guest = null;
+
+  if(first_name !== "" && last_name !== "" && req_email !== "" && req_mobile !== ""){
+
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      email: req_email,
+      mobile: req_mobile,
+      status: "staying"
+    }).exec();
+
+    for(let g=0; g < the_guests.length; g++){
+      res_objects.push({
+        guest: the_guests[g],
+        booking: "",
+        invoice: ""
+      })
+    };
+    
+    for(let i=0; i<res_objects.length; i++){
+      console.log(res_objects[i].guest._id);
+      bookings = await cheap_hotel_booking.find({
+        hotel_brand_id: req.body.hotel_brand_id,
+        property_id: req.body.property_id,
+        "guests.id": res_objects[i].guest._id.toString(),
+        /*"guests.first_name": first_name,
+        "guests.last_name": last_name,
+        guest_contact: {
+          mobile: req_mobile,
+          email: req_email
+        },
+        guests: {
+          "$all": {
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            mobile: mobile,
+          }
+        }*/
+      }).exec();
+
+      for(let b=0; b < bookings.length; b++){
+        if(bookings[b].all_dates_of_occupancy.includes(req.body.date)){
+          res_objects[i].booking = bookings[b];
+        }else{
+          //res_objects.splice(i,i);
+        }
+      }
+
+    }
+  }
+
+  console.log(bookings);
+
+  res.send(res_objects);
+
+});
+
+app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {
+
+  let new_guest = await new cheap_hotel_guest({
+    hotel_brand_id: req.body.hotel_brand_id,
+    property_id: req.body.property_id,
+    profile_pic: req.body.profile_pic,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    guest_type: req.body.guest_type,
+    age: req.body.age,
+    gender: req.body.gender,
+    email: req.body.email,
+    mobile: req.body.mobile,
+    price_paid: req.body.price_paid,
+    status: req.body.status,
+    assigned_room: req.body.assigned_room,
+    home_address: req.body.home_address
+  });
+
+  let saved_guest = await new_guest.save();
+
+  res.send(saved_guest);
+
+});
+
+app.post("/add_new_cheap_hotel_guest_invoice/", async (req, res, next)=> {
+  
+})
+
 //update routes
 
-app.post("/update_hotel_room/:room_id", async (req, res, next) =>{
+app.post("/update_hotel_room/:room_id", async (req, res, next) => {
 
   console.log(req.params.room_id);
 

@@ -145,6 +145,37 @@ var current_op_cities_edit_elem_id;
 var global_is_room_closed = false;
 var search_result_current_room_id;
 
+function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
+    guest_type_param, age_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+    room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param){
+    return {
+        hotel_brand_id: hotel_brand_id_param,
+        property_id: property_id_param,
+        profile_pic: profile_pic_param,
+        first_name: first_name_param,
+        last_name: last_name_param,
+        guest_type: guest_type_param,
+        age: age_param,
+        gender: gender_param,
+        email: email_param,
+        mobile: mobile_param,
+        price_paid: price_paid_param,
+        status: status_param,
+        assigned_room: {
+            booking_id: booking_id_param, 
+            room_id: room_id_param, 
+            room_number: room_number_param
+        },
+        home_address: {
+            street_address: street_address_param,
+            city: city_param,
+            town: town_param,
+            country: country_param,
+            zipcode: zipcode_param
+        }
+    }
+}
+
 document.getElementById("top_nav_add_new_drop_down_btn").addEventListener("click", e => {
     if(document.getElementById("top_nav_add_new_drop_down_menu").style.display === "none")
         document.getElementById("top_nav_add_new_drop_down_menu").style.display = "block";
@@ -291,6 +322,19 @@ function show_add_facilities(){
 
 }
 
+function go_to_checkout_from_inhouse_guests(guest_id, booking_id){
+    toggle_show_in_house_guests_div();
+    toggle_show_guests_checkout_div();
+}
+
+function toggle_show_view_booking_div(){
+    $("#view_booking_div").toggle("up");
+}
+
+function show_view_booking_div(booking_id){
+    toggle_show_view_booking_div()
+}
+
 function toggle_show_guests_invoice_div(){
     $("#guests_invoice_div").toggle("up");
 }
@@ -389,23 +433,53 @@ function show_inventory_div(){
     show_inventory_select_property();
 }
 
-function show_guests_checkout(){
+async function show_guests_checkout(){
     toggle_show_guests_checkout_div();
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("checkout_guests_search_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("checkout_guests_search_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
 }
 function toggle_show_in_house_guests_div(){
     $("#in_house_guests_div").toggle("up");
 }
 
-function show_in_house_guests(){
+async function show_in_house_guests(){
     toggle_show_in_house_guests_div();
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("in_house_guests_search_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("in_house_guests_search_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
 }
 
 function toggle_show_hide_arrival_guests_div(){
     $("#arrival_guests_div").toggle("up");
 }
 
-function show_arrival_guests(){
+async function show_arrival_guests(){
     toggle_show_hide_arrival_guests_div();
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("arrival_guests_search_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("arrival_guests_search_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
 }
 
 function toggle_show_hide_page_full_screen_prompt(){

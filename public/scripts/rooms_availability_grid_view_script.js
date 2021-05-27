@@ -675,9 +675,9 @@ $(function() {
     
 }*/
 
-document.getElementById("make_reservation_submit_button").addEventListener("click", e => {
+document.getElementById("make_reservation_submit_button").addEventListener("click", async e => {
 
-    make_reservations_post_data.hotel_brand_id = window.localStorage.getItem("ANDSBZID")
+    make_reservations_post_data.hotel_brand_id = window.localStorage.getItem("ANDSBZID");
 
     console.log(make_reservations_post_data);
 
@@ -729,7 +729,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
         return null
     }
     
-    if(document.getElementById("mk_reservation_guest_mobile_input").value){
+    if(document.getElementById("mk_reservation_guest_mobile_input").value === ""){
         show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Guest Mobile Not Added`, 
@@ -745,6 +745,19 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
             "Please add how many adult and child guests");
         toggle_show_make_reservation_add_guests_pane();
         return null
+    }
+
+    for(let g=0; g< make_reservations_post_data.guests.length; g++){
+
+        let new_guest = await create_guest_record(window.localStorage.getItem("ANDSBZID"), make_reservations_post_data.property_id, "", 
+        make_reservations_post_data.guests[g].first_name, make_reservations_post_data.guests[g].last_name,
+        make_reservations_post_data.guests[g].type, make_reservations_post_data.guests[g].age, 
+        make_reservations_post_data.guests[g].gender, document.getElementById("mk_reservation_guest_email_input").value, 
+        document.getElementById("mk_reservation_guest_mobile_input").value, 0, "booked"/*status*/, ""/*booking_id*/, 
+            make_reservations_post_data.rooms[0].id, make_reservations_post_data.rooms[0].number, 
+            ""/*street_address*/, ""/*city*/, ""/*town*/, ""/*country*/, ""/*zipcode*/);
+
+        make_reservations_post_data.guests[g].id = new_guest._id;
     }
 
     make_a_reservation_post_function()
@@ -811,6 +824,31 @@ function make_a_reservation_post_function(){
         },
         error: err => {
             console.log(err);
+        }
+    });
+}
+
+function create_guest_record(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
+    guest_type_param, age_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+    room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param){
+
+    let the_guest = return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
+        guest_type_param, age_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+        room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param);
+
+    return $.ajax({
+        type: "POST",
+        url: "/add_new_cheap_hotel_guest/",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(the_guest),
+        success: data => {
+            console.log(data);
+            return data;
+        },
+        error: err => {
+            console.log(err);
+            return err;
         }
     });
 }

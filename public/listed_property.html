@@ -516,139 +516,6 @@
             </div>
         </div>
     </div>
-    <div id="in_guests_checkout_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
-        <div class="page_popup_content_container" style="overflow: hidden;">
-            <div style="padding: 10px; height: 40px;">
-                <p onclick="toggle_show_guests_checkout_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
-                    Checkout Guests
-                </p>
-            </div>
-            <div class="page_popup_content_body" style="height: calc(100% - 80px);">
-                <p style="color: white; text-align: center; font-size: 14px; margin: 10px 0;">
-                    Search Guest Below</p>
-                <div>
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
-                        </div>
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
-                        </div>
-                    </div>
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Mobile</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter mobile here" value="" />
-                        </div>
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
-                            <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
-                                <opttion>All</opttion>
-                                <option>Kumasi - 2122 Estate Junc (Ghana)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-top: 20px;">
-                        <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">
-                            Email</p>
-                        <div style="display: flex; flex-direction: row !important;">
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="email" placeholder="enter guest name here" value="" />
-                            <div onclick="" style="cursor: pointer; width: 120px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
-                                Search
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="padding: 10px; margin-top: 20px; border-top: 1px solid rgb(221, 88, 0); background-color: rgba(0, 0, 0, 0.4);">
-                    <p style="font-size: 14px; color: white; margin: 10px; margin-bottom: 20px;">
-                        See Guest(s) Below</p>
-                    <div id="Arrival_guests_list">
-                        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
-                            <div class="flex_child_of_two">
-                                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
-                                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
-                                    Mohammed Adinan</p>
-                                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
-                                    29yrs, Male</p>
-                                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
-                                    Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
-                                        March 09 - March 12</span></p>
-                                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
-                                    Kumasi - 2122 Estate Junc (Ghana)</P>  
-                                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
-                                    see full profile
-                                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                </p>
-                            </div>
-                            <div class="flex_child_of_two flex_non_first_child">
-                                <div style="display: flex; flex-direction: row !important;">
-                                    <div style="background-color: crimson; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
-                                        Checkout Guest
-                                    </div>
-                                    <div style="background-color: cornflowerblue; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
-                                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                                        Add to Running Invoice
-                                    </div>
-                                </div>
-                                <div style="display: flex; flex-direction: row !important;">
-                                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
-                                        view running invoice
-                                        <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                    </div>s
-                                    <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
-                                        view booking
-                                        <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
-                            <div class="flex_child_of_two">
-                                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
-                                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
-                                    Mohammed Adinan</p>
-                                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
-                                    29yrs, Male</p>
-                                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
-                                    Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
-                                        March 09 - March 12</span></p>
-                                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
-                                    Kumasi - 2122 Estate Junc (Ghana)</P> 
-                                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
-                                    see full profile
-                                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                </p>
-                            </div>
-                            <div class="flex_child_of_two flex_non_first_child">
-                                <div style="display: flex; flex-direction: row !important;">
-                                    <div style="background-color: crimson; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
-                                        Checkout Guest
-                                    </div>
-                                    <div style="background-color: cornflowerblue; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
-                                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                                        Add to Running Invoice
-                                    </div>
-                                </div>
-                                <div style="display: flex; flex-direction: row !important;">
-                                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
-                                        view running invoice
-                                        <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                    </div>
-                                    <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
-                                        view booking
-                                        <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="in_house_guests_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <div style="padding: 10px; height: 40px;">
@@ -664,21 +531,21 @@
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                            <input id="in_house_guests_search_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                            <input id="in_house_guests_search_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
                         </div>
                     </div>
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Mobile</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter mobile here" value="" />
+                            <input id="in_house_guests_search_mobile_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter mobile here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
-                            <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                            <select id="in_house_guests_search_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
                                 <opttion>All</opttion>
                                 <option>Kumasi - 2122 Estate Junc (Ghana)</option>
                             </select>
@@ -688,8 +555,8 @@
                         <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">
                             Email</p>
                         <div style="display: flex; flex-direction: row !important;">
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="email" placeholder="enter guest name here" value="" />
-                            <div onclick="" style="cursor: pointer; width: 120px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            <input id="in_house_guests_search_email_input" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="email" placeholder="enter guest name here" value="" />
+                            <div onclick="hotel_guests_search_function('inhouse');" style="cursor: pointer; width: 120px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                 Search
                             </div>
                         </div>
@@ -698,7 +565,7 @@
                 <div style="padding: 10px; margin-top: 20px; border-top: 1px solid rgb(221, 88, 0); background-color: rgba(0, 0, 0, 0.4);">
                     <p style="font-size: 14px; color: white; margin: 10px; margin-bottom: 20px;">
                         See Guest(s) Below</p>
-                    <div id="Arrival_guests_list">
+                    <div id="inhouse_guests_list">
                         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
                             <div class="flex_child_of_two">
                                 <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
@@ -727,11 +594,11 @@
                                     </div>
                                 </div>
                                 <div style="display: flex; flex-direction: row !important;">
-                                    <div style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                    <div onclick="go_to_checkout_from_inhouse_guests('guest_id', 'booking_id');" style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                         go to checkout
                                         <i style="color:rgb(255, 46, 46); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                     </div>
-                                    <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                         view booking
                                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                     </div>
@@ -766,11 +633,144 @@
                                     </div>
                                 </div>
                                 <div style="display: flex; flex-direction: row !important;">
-                                    <div style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                    <div onclick="go_to_checkout_from_inhouse_guests('guest_id', 'booking_id');" style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                         go to checkout
                                         <i style="color:rgb(255, 46, 46); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                     </div>
-                                    <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                        view booking
+                                        <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="in_guests_checkout_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="padding: 10px; height: 40px;">
+                <p onclick="toggle_show_guests_checkout_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
+                    Checkout Guests
+                </p>
+            </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 80px);">
+                <p style="color: white; text-align: center; font-size: 14px; margin: 10px 0;">
+                    Search Guest Below</p>
+                <div>
+                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
+                            <input id="checkout_guests_search_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                        </div>
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
+                            <input id="checkout_guests_search_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Mobile</p>
+                            <input id="checkout_guests_search_mobile_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter mobile here" value="" />
+                        </div>
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
+                            <select id="checkout_guests_search_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                <opttion>All</opttion>
+                                <option>Kumasi - 2122 Estate Junc (Ghana)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">
+                            Email</p>
+                        <div style="display: flex; flex-direction: row !important;">
+                            <input id="checkout_guests_search_email_input" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="email" placeholder="enter guest name here" value="" />
+                            <div onclick="hotel_guests_search_function('checkout');" style="cursor: pointer; width: 120px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                Search
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 10px; margin-top: 20px; border-top: 1px solid rgb(221, 88, 0); background-color: rgba(0, 0, 0, 0.4);">
+                    <p style="font-size: 14px; color: white; margin: 10px; margin-bottom: 20px;">
+                        See Guest(s) Below</p>
+                    <div id="checkout_guests_list">
+                        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+                            <div class="flex_child_of_two">
+                                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
+                                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
+                                    Mohammed Adinan</p>
+                                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                                    29yrs, Male</p>
+                                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+                                    Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
+                                        March 09 - March 12</span></p>
+                                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
+                                    Kumasi - 2122 Estate Junc (Ghana)</P>  
+                                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                                    see full profile
+                                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                </p>
+                            </div>
+                            <div class="flex_child_of_two flex_non_first_child">
+                                <div style="display: flex; flex-direction: row !important;">
+                                    <div style="background-color: crimson; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                        Checkout Guest
+                                    </div>
+                                    <div style="background-color: cornflowerblue; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
+                                        Add to Running Invoice
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: row !important;">
+                                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                        view running invoice
+                                        <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                    </div>
+                                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                        view booking
+                                        <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+                            <div class="flex_child_of_two">
+                                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
+                                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
+                                    Mohammed Adinan</p>
+                                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                                    29yrs, Male</p>
+                                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+                                    Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
+                                        March 09 - March 12</span></p>
+                                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
+                                    Kumasi - 2122 Estate Junc (Ghana)</P> 
+                                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                                    see full profile
+                                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                </p>
+                            </div>
+                            <div class="flex_child_of_two flex_non_first_child">
+                                <div style="display: flex; flex-direction: row !important;">
+                                    <div style="background-color: crimson; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                        Checkout Guest
+                                    </div>
+                                    <div style="background-color: cornflowerblue; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
+                                        Add to Running Invoice
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: row !important;">
+                                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                        view running invoice
+                                        <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                    </div>
+                                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                         view booking
                                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                     </div>
@@ -873,6 +873,26 @@
             </div>
         </div>
     </div>
+    <div id="view_booking_div" class="page_pop_up_cover" style="display: none; z-index: 12;">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="position: relative; background-color: rgb(0, 69, 97); width: calc(100% - 10px); height: 100%; padding: 10px 5px;">
+                <p onclick="toggle_show_view_booking_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="font-size: 15px; color: rgb(248, 112, 0); text-align: center; margin-top: 5px; font-weight: bolder;;">
+                    View Booking</p>
+                <p style="text-align: center; margin: 10px; margin-top: 0; color:rgb(138, 138, 138); font-size: 11px;">
+                    <span style="font-size: 12px; color:rgb(235, 86, 0); font-weight: bolder;">
+                    Anidaso<span style="color: white; font-size: 12px; font-weight: initial;">.com</span></span> 
+                    &copy; all rights reserved
+                </p>
+                <div style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(8, 42, 58); color: white; width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 20px;">
+                    <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    Change booking details</div>
+                <div class="page_popup_content_body" style="height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="guests_invoice_div" class="page_pop_up_cover" style="display: none; z-index: 12;">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <div style="position: relative; background-color: rgb(0, 69, 97); width: calc(100% - 10px); height: 100%; padding: 10px 5px;">
@@ -884,7 +904,8 @@
                     Anidaso<span style="color: white; font-size: 12px; font-weight: initial;">.com</span></span> 
                     &copy; all rights reserved
                 </p>
-                <div style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(0, 166, 243); width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 20px;">
+                <div style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; color: white; background-color:  rgb(0, 105, 153); width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 20px;">
+                    <i style="margin-right: 5px; color:rgb(255, 102, 0);" class="fa fa-print" aria-hidden="true"></i>
                     Print Invoice</div>
                 <div class="page_popup_content_body" style="height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
                     <div style="padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
@@ -904,45 +925,103 @@
                             
                         </div>
                     </div>
-                    <p style="font-size: 13px; color: rgb(255, 147, 147); margin-top: 15px; margin-bottom: 5px; font-weight: bolder;">
-                        Guest</p>
-                    <p style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
-                        Mohammed Adinan</p>
-                    <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
-                    Male, 29yrs</p>
-                    <div style="padding: 10px;">
-                        <table style="width: 100%; border-spacing: 5px;">
-                            <tbody>
-                                <tr>
-                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                        Item
-                                    </td>
-                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                        Quantity
-                                    </td>
-                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                        Unit Cost
-                                    </td>
-                                    <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                        Total
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                                        Item
-                                    </td>
-                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                                        Quantity
-                                    </td>
-                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                                        Unit Cost
-                                    </td>
-                                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                                        Total
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div id="guests_invoice_div_all_guests_items_list">
+                        <div>
+                            <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px; font-weight: bolder;">
+                                <span style="font-size: 13px; color: rgb(255, 147, 147); ">
+                                    Guest 1</span>
+                                <span style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
+                                    <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
+                                    Remove Guest
+                                </span>
+                            </p>
+                            <p style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
+                                Mohammed Adinan</p>
+                            <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
+                            Male, 29yrs</p>
+                            <div style="padding: 10px;">
+                                <table style="width: 100%; border-spacing: 5px;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Item
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Quantity
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Unit Cost
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Total
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Item
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Quantity
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Unit Cost
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Total
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px; font-weight: bolder;">
+                                <span style="font-size: 13px; color: rgb(255, 147, 147); ">
+                                    Guest 1</span>
+                                <span style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px;">
+                                    <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
+                                    Remove Guest
+                                </span>
+                            </p>
+                            <p style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
+                                Mohammed Adinan</p>
+                            <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
+                            Male, 29yrs</p>
+                            <div style="padding: 10px;">
+                                <table style="width: 100%; border-spacing: 5px;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Item
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Quantity
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Unit Cost
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                                Total
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Item
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Quantity
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Unit Cost
+                                            </td>
+                                            <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                                                Total
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div style="padding: 10px; display: flex; flex-direction: row !; justify-content: flex-end;">
                         <div style="min-width: 150px;">
@@ -987,21 +1066,21 @@
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                            <input id="arrival_guests_search_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                            <input id="arrival_guests_search_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
                         </div>
                     </div>
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Mobile</p>
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter mobile here" value="" />
+                            <input id="arrival_guests_search_mobile_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter mobile here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
-                            <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                            <select id="arrival_guests_search_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
                                 <option>Kumasi - 2122 Estate Junc (Ghana)</option>
                             </select>
                         </div>
@@ -1010,8 +1089,8 @@
                         <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">
                             Email</p>
                         <div style="display: flex; flex-direction: row !important;">
-                            <input id="" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="email" placeholder="enter guest name here" value="" />
-                            <div onclick="" style="cursor: pointer; width: 120px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            <input id="arrival_guests_search_email_input" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="email" placeholder="enter guest name here" value="" />
+                            <div onclick="hotel_guests_search_function('arrival');" style="cursor: pointer; width: 120px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                 Search
                             </div>
                         </div>
@@ -1020,7 +1099,7 @@
                 <div style="padding: 10px; margin-top: 20px; border-top: 1px solid rgb(221, 88, 0); background-color: rgba(0, 0, 0, 0.4);">
                     <p style="font-size: 14px; color: white; margin: 10px; margin-bottom: 20px;">
                         See Guest(s) Below</p>
-                    <div id="Arrival_guests_list">
+                    <div id="arrival_guests_list">
                         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
                             <div class="flex_child_of_two">
                                 <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
@@ -1046,7 +1125,7 @@
                                         Include Service
                                     </div>
                                 </div>
-                                <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                     view booking
                                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                 </div>
@@ -1077,7 +1156,7 @@
                                         Include Service
                                     </div>
                                 </div>
-                                <div style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                                <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                                     view booking
                                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                 </div>

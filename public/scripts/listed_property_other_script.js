@@ -1,3 +1,264 @@
+var running_invoice = {
+    hotel_brand_id: "",
+    bookings: [], //this will make it easy to find invoice document
+    invoice_items:  [
+        {
+            guest_id: "",
+            booking_id: "", //this will make it easy to associate guest with booking
+            guest_items: [
+                {
+                    name: "",
+                    price: 0,
+                    quantity: 0,
+                    total: this.price * this.quantity
+                }
+            ]
+            
+        }
+    ]
+};
+
+var guest_search_post_data = {
+    hotel_brand_id: "",
+    property_id: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    mobile: "",
+    date: "",
+}
+
+async function hotel_guests_search_function(type){
+
+    if(type === "inhouse"){
+        
+        document.getElementById("inhouse_guests_list").innerHTML = `
+            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:white;">
+                loading...
+                </p>
+            </div>
+        `;
+
+        await collect_inhouse_guests_search_post_data();
+        let search_results = await search_and_return_cheap_hotel_guest(type);
+
+        document.getElementById("inhouse_guests_list").innerHTML = "";
+        for(let i=0; i<search_results.length; i++){
+            document.getElementById("inhouse_guests_list").innerHTML += return_inhouse_guest_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice);
+        }
+
+    }else if(type === "arrival"){
+        
+        document.getElementById("arrival_guests_list").innerHTML = `
+            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:white;">
+                loading...
+                </p>
+            </div>
+        `;
+
+        await collect_arrival_guests_search_post_data();
+        let search_results = await search_and_return_cheap_hotel_guest(type);
+
+        document.getElementById("arrival_guests_list").innerHTML = "";
+        for(let i=0; i<search_results.length; i++){
+            document.getElementById("arrival_guests_list").innerHTML += return_arrival_guests_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice);
+        }
+
+    }else if(type === "checkout"){
+
+        document.getElementById("checkout_guests_list").innerHTML = `
+            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:white;">
+                loading...
+                </p>
+            </div>
+        `;
+
+        await collect_checkout_guests_search_post_data();
+        let search_results = await search_and_return_cheap_hotel_guest(type);
+
+        document.getElementById("checkout_guests_list").innerHTML = "";
+        for(let i=0; i<search_results.length; i++){
+            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice);
+        }
+
+    }
+}
+
+function collect_inhouse_guests_search_post_data(){
+
+    let first_name_input = document.getElementById("in_house_guests_search_first_name_input");
+    let last_name_input = document.getElementById("in_house_guests_search_last_name_input");
+    let mobile_input = document.getElementById("in_house_guests_search_mobile_input");
+    let email_input = document.getElementById("in_house_guests_search_email_input");
+    let building_input = document.getElementById("in_house_guests_search_property_select");
+
+    guest_search_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+    guest_search_post_data.property_id = building_input.value;
+    guest_search_post_data.first_name = first_name_input.value;
+    guest_search_post_data.last_name = last_name_input.value;
+    guest_search_post_data.email = email_input.value;
+    guest_search_post_data.mobile = mobile_input.value;
+
+    return null;
+}
+
+function collect_arrival_guests_search_post_data(){
+
+    let first_name_input = document.getElementById("arrival_guests_search_first_name_input");
+    let last_name_input = document.getElementById("arrival_guests_search_last_name_input");
+    let mobile_input = document.getElementById("arrival_guests_search_mobile_input");
+    let email_input = document.getElementById("arrival_guests_search_email_input");
+    let building_input = document.getElementById("arrival_guests_search_property_select");
+
+    guest_search_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+    guest_search_post_data.property_id = building_input.value;
+    guest_search_post_data.first_name = first_name_input.value;
+    guest_search_post_data.last_name = last_name_input.value;
+    guest_search_post_data.email = email_input.value;
+    guest_search_post_data.mobile = mobile_input.value;
+
+    return null
+}
+
+function collect_checkout_guests_search_post_data(){
+
+    let first_name_input = document.getElementById("checkout_guests_search_first_name_input");
+    let last_name_input = document.getElementById("checkout_guests_search_last_name_input");
+    let mobile_input = document.getElementById("checkout_guests_search_mobile_input");
+    let email_input = document.getElementById("checkout_guests_search_email_input");
+    let building_input = document.getElementById("checkout_guests_search_property_select");
+
+    guest_search_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+    guest_search_post_data.property_id = building_input.value;
+    guest_search_post_data.first_name = first_name_input.value;
+    guest_search_post_data.last_name = last_name_input.value;
+    guest_search_post_data.email = email_input.value;
+    guest_search_post_data.mobile = mobile_input.value;
+
+    return null;
+}
+
+function return_inhouse_guest_markup(guest, booking, invoice){
+    return `
+        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+            <div class="flex_child_of_two">
+                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
+                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
+                    ${guest.first_name} ${guest.last_name}</p>
+                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    ${guest.age}yrs, ${guest.gender}</p>
+                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+                    Room ${guest.assigned_room.room_number}, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
+                        March 09 - March 12</span></p>
+                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
+                    Kumasi - 2122 Estate Junc (Ghana)</P>  
+                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                    see full profile
+                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </p>
+            </div>
+            <div class="flex_child_of_two flex_non_first_child">
+                <div style="display: flex; flex-direction: row !important;">
+                    <div onclick="view_each_guest_running_bill();" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        View Running Bill
+                    </div>
+                    <div onclick="show_include_services_in_booking_div();" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
+                        Include Service
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: row !important;">
+                    <div onclick="go_to_checkout_from_inhouse_guests('guest_id', 'booking_id');" style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                        go to checkout
+                        <i style="color:rgb(255, 46, 46); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                        view booking
+                        <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function return_guest_checkout_markup(guest, booking, invoice){
+
+}
+
+function return_arrival_guests_markup(guest, booking, invoice){
+
+}
+
+function search_and_return_cheap_hotel_guest(type){
+
+    guest_search_post_data.hotel_brand_id = window.localStorage.getItem("ANDSBZID");
+    guest_search_post_data.date = convert_date_object_to_db_string_format(new Date());
+
+    let post_url = "";
+    if(type === "inhouse"){
+        post_url = "/search_cheap_hotel_inhouse_guests/";
+    }else if(type === "arrival"){
+        post_url = "/search_cheap_hotel_arrival_guests/";
+    }else if(type === "checkout"){
+        post_url = "/search_cheap_hotel_checkout_guests/";
+    }
+
+    return $.ajax({
+        type: "POST",
+        url: post_url,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(guest_search_post_data),
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
 
 function return_dom_for_all_cities_add_city_input(cities_arr){
 
