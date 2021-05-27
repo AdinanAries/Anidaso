@@ -199,46 +199,6 @@ function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, pro
     }
 }
 
-function return_new_hotel_guest_invoice(hotel_brand_id_param, property_id_param, date_created_param, date_checkedout_param, first_booking_obj){
-   
-    let invoice_items_param = [];
-
-    for(let i=0; i<first_booking_obj.guests.length; i++){
-
-        let price_paid = first_booking_obj.price_paid;
-        if(i > 0){
-            price_paid = 0;
-        }
-
-        invoice_items_param.push(
-            {
-                guest_id: first_booking_obj.guests[i].id,
-                booking_id: first_booking_obj._id.toString(), //this will make it easy to associate guest with booking
-                guest_items: [
-                    {
-                        name: "Room "+first_booking_obj.rooms.number,
-                        price: price_paid,
-                        quantity: 1,
-                        total: price_paid
-                    }
-                ]
-                
-            }
-        );
-    }
-
-    return {
-        hotel_brand_id: hotel_brand_id_param,
-        property_id: property_id_param,
-        date_created: date_created_param,
-        date_checkedout: date_checkedout_param,
-        bookings: [
-            first_booking_obj._id
-        ], //this will make it easy to find invoice document
-        invoice_items:  invoice_items_param
-    }
-}
-
 document.getElementById("top_nav_add_new_drop_down_btn").addEventListener("click", e => {
     if(document.getElementById("top_nav_add_new_drop_down_menu").style.display === "none")
         document.getElementById("top_nav_add_new_drop_down_menu").style.display = "block";

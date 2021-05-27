@@ -10,27 +10,41 @@ let cheap_hotel_invoices_schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ""
     },
-    bookings: {
-        type: Array //array of booking_ids
+    property_id: {
+        type: String
     },
-    items: {
-        type: Array  //array of item objects described below
+    date_created: {
+        type: String
+    },
+    date_checkedout: {
+        type: String
+    },
+    bookings: {
+        type: Array
+    }, //this will make it easy to find invoice document
+    invoice_items: {
+        type: Array
     }
-    //item object
-    /*
+});
+
+/*{
+    hotel_brand_id: "",
+    bookings: [], //this will make it easy to find invoice document
+    invoice_items:  [
         {
             guest_id: "",
-            items: [
+            booking_id: "", //this will make it easy to associate guest with booking
+            guest_items: [
                 {
-                    name: "", //from services, facilities used, inventory and room
+                    name: "",
                     price: 0,
-                    quantity: 0, //quantity of items used
-                    total: price * quantity
+                    quantity: 0,
+                    total: this.price * this.quantity
                 }
             ]
             
         }
-    */
-});
+    ]
+}*/
 
 module.exports = new mongoose.model("cheap_hotel_invoices", cheap_hotel_invoices_schema);

@@ -854,9 +854,46 @@ function create_guest_record(hotel_brand_id_param, property_id_param, profile_pi
     });
 }
 
-function create_guest_invoice(booking){
-    let new_invoice = return_new_hotel_guest_invoice(booking.hotel_brand_id, booking.property_id, booking.booking_date, 
-        ""/*checkout_date*/, booking);
+async function create_guest_invoice(booking){
+
+    let invoice_items_param = [];
+
+    for(let i=0; i<booking.guests.length; i++){
+
+        let price_paid = booking.price_paid;
+        if(i > 0){
+            price_paid = 0;
+        }
+
+        let new_item = {
+            guest_id: booking.guests[i].id,
+            booking_id: booking._id.toString(), //this will make it easy to associate guest with booking
+            guest_items: [
+                {
+                    name: "Room "+booking.rooms[0].number,
+                    price: price_paid,
+                    quantity: 1,
+                    total: price_paid
+                }
+            ]
+            
+        }
+
+        invoice_items_param.push(new_item);
+    }
+    
+    let new_invoice = {
+        hotel_brand_id: booking.hotel_brand_id,
+        property_id: booking.property_id,
+        date_created: booking.booking_date,
+        date_checkedout: "",
+        bookings: [
+            booking._id
+        ], //this will make it easy to find invoice document
+        invoice_items:  invoice_items_param
+    }
+
+    console.log(new_invoice);
 
     return $.ajax({
         type: "POST",
