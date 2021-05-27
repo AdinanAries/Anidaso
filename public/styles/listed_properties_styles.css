@@ -351,7 +351,7 @@ body {
 }
 header {
   background-color: rgb(3, 31, 53);
-  border-bottom: rgb(212, 113, 0) 4px solid;
+  /*border-bottom: rgb(212, 113, 0) 4px solid;*/
   padding: 0 20px;
 }
 .header_content {
@@ -420,7 +420,11 @@ header {
   color: rgb(233, 128, 0);
 }
 .hero_section {
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(3, 31, 53)),
+  background-image: linear-gradient(
+      rgb(3, 31, 53),
+      rgba(0, 0, 0, 0),
+      rgb(3, 31, 53)
+    ),
     url("../images/HotelPic.jpg");
   background-size: cover;
   background-repeat: no-repeat;
