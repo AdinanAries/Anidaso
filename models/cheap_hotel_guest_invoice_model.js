@@ -26,7 +26,8 @@ let cheap_hotel_guests_invoice_schema = mongoose.Schema({
     }
 });
 
-/*{
+/*
+{
     hotel_brand_id: "",
     bookings: [], //this will make it easy to find invoice document
     invoice_items:  [
