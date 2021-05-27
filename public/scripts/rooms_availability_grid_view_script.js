@@ -816,6 +816,7 @@ function make_a_reservation_post_function(){
         data: JSON.stringify(make_reservations_post_data),
         success: data => {
             console.log(data);
+            create_guest_invoice(data.data);
             show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
                  Finished Reservation`, 
@@ -851,6 +852,27 @@ function create_guest_record(hotel_brand_id_param, property_id_param, profile_pi
             return err;
         }
     });
+}
+
+function create_guest_invoice(booking){
+    let new_invoice = return_new_hotel_guest_invoice(booking.hotel_brand_id, booking.property_id, booking.booking_date, 
+        ""/*checkout_date*/, booking);
+
+    return $.ajax({
+        type: "POST",
+        url: "/add_new_cheap_hotel_guest_invoice/",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(new_invoice),
+        success: res =>{
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    })
 }
 
 $(document).ready(function(){

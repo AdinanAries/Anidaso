@@ -1,22 +1,3 @@
-var running_invoice = {
-    hotel_brand_id: "",
-    bookings: [], //this will make it easy to find invoice document
-    invoice_items:  [
-        {
-            guest_id: "",
-            booking_id: "", //this will make it easy to associate guest with booking
-            guest_items: [
-                {
-                    name: "",
-                    price: 0,
-                    quantity: 0,
-                    total: this.price * this.quantity
-                }
-            ]
-            
-        }
-    ]
-};
 
 var guest_search_post_data = {
     hotel_brand_id: "",
@@ -54,10 +35,11 @@ async function hotel_guests_search_function(type){
 
         await collect_inhouse_guests_search_post_data();
         let search_results = await search_and_return_cheap_hotel_guest(type);
-
+        
         document.getElementById("inhouse_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
-            document.getElementById("inhouse_guests_list").innerHTML += return_inhouse_guest_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice);
+            let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
+            document.getElementById("inhouse_guests_list").innerHTML += return_inhouse_guest_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
         }
 
     }else if(type === "arrival"){
@@ -87,7 +69,8 @@ async function hotel_guests_search_function(type){
 
         document.getElementById("arrival_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
-            document.getElementById("arrival_guests_list").innerHTML += return_arrival_guests_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice);
+            let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
+            document.getElementById("arrival_guests_list").innerHTML += return_arrival_guests_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
         }
 
     }else if(type === "checkout"){
@@ -117,7 +100,8 @@ async function hotel_guests_search_function(type){
 
         document.getElementById("checkout_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
-            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice);
+            let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
+            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
         }
 
     }
@@ -177,7 +161,7 @@ function collect_checkout_guests_search_post_data(){
     return null;
 }
 
-function return_inhouse_guest_markup(guest, booking, invoice){
+function return_inhouse_guest_markup(guest, booking, invoice, property){
     return `
         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
@@ -188,9 +172,10 @@ function return_inhouse_guest_markup(guest, booking, invoice){
                     ${guest.age}yrs, ${guest.gender}</p>
                 <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
                     Room ${guest.assigned_room.room_number}, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
-                        March 09 - March 12</span></p>
+                    ${change_date_from_iso_to_long_date(booking.checkin_date)} - 
+                    ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
-                    Kumasi - 2122 Estate Junc (Ghana)</P>  
+                    ${property.city} - ${property.street_address} (${property.country})</P>  
                 <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
@@ -221,11 +206,11 @@ function return_inhouse_guest_markup(guest, booking, invoice){
     `;
 }
 
-function return_guest_checkout_markup(guest, booking, invoice){
+function return_guest_checkout_markup(guest, booking, invoice, property){
 
 }
 
-function return_arrival_guests_markup(guest, booking, invoice){
+function return_arrival_guests_markup(guest, booking, invoice, property){
 
 }
 

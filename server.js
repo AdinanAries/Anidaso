@@ -59,6 +59,7 @@ var signup_user = require("./models/signup_user_model");
 var cheap_hotel_inventory_model = require("./models/cheap_hotel_inventory_model");
 var cheap_hotel_guest = require("./models/cheap_hotel_guests_Model");
 var hotel_deals = require("./models/hotel_deals_model");
+var cheap_hotel_invoice = require("./models/cheap_hotel_invoices_model");
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -1400,7 +1401,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
   let req_mobile = req.body.mobile;
 
   let bookings = null;
-  let the_guest = null;
+  let the_guests = null;
 
   if(first_name !== "" && last_name !== "" && req_email !== "" && req_mobile !== ""){
 
@@ -1453,7 +1454,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     }
   }
 
-  console.log(bookings);
+  res_objects = res_objects.filter( each => each.booking !== "");
 
   res.send(res_objects);
 
@@ -1486,6 +1487,18 @@ app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {
 
 app.post("/add_new_cheap_hotel_guest_invoice/", async (req, res, next)=> {
   
+  let invoice = await new cheap_hotel_invoice({
+    hotel_brand_id: req.body.hotel_brand_id,
+    property_id: req.body.property_id,
+    date_created: req.body.date_created,
+    date_checkedout: req.body.date_checkedout,
+    bookings: req.body.bookings, //this will make it easy to find invoice document
+    invoice_items: req.body.invoice_items
+  });
+
+  let new_invoice = await invoice.save();
+  res.send(new_invoice);
+
 })
 
 //update routes
