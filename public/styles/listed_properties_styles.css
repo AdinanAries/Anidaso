@@ -422,7 +422,7 @@ header {
 .hero_section {
   background-image: linear-gradient(
       rgb(0, 16, 43),
-      rgba(3, 31, 53, 0.4),
+      rgba(3, 31, 53, 0.5),
       rgb(0, 16, 43)
     ),
     url("../images/HotelPic.jpg");
