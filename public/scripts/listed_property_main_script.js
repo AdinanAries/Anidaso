@@ -2899,7 +2899,9 @@ function get_hotel_bookings(hotel_id){
         success: res => {
             //console.log(res);
             let recent_booking = res[res.length - 1];
-            render_recent_hotel_booking(recent_booking)
+            if(recent_booking){
+                render_recent_hotel_booking(recent_booking);
+            }
         },
         error: err => {
             console.log(err);
