@@ -42,7 +42,7 @@ let cheap_hotel_guests_schema = mongoose.Schema({
         type: Number
     },
     status: {
-        type: String //unbooked, staying, booked
+        type: String //unbooked, staying, not_staying, booked
     },
     assigned_room: {
         type: Object //if guests status is set to staying - {booking_id: id, room_id: id, room_number: number}

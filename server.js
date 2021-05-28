@@ -1391,8 +1391,7 @@ app.post("/search_inventory_item/", async (req, res, next) => {
 });
 
 app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
-  console.log(req.body);
-
+  
   let res_objects = [];
   
   let first_name = req.body.first_name;
@@ -1444,13 +1443,113 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
             }
           }*/
         }).exec();
-
+        
         for(let b=0; b < bookings.length; b++){
+          
           if(bookings[b].all_dates_of_occupancy.includes(req.body.date)){
             res_objects[i].booking = bookings[b];
           }else{
+            let this_guest = await cheap_hotel_guest.findById(res_objects[i].guest._id);
+            this_guest.status = "not_staying";
+            let updt_guest = await new cheap_hotel_guest(this_guest);
+            let saved_updt_guest = await updt_guest.save();
             //res_objects.splice(i,i);
           }
+        }
+
+      }
+    }
+
+    if(res_objects.length > 0){
+      for(let i=0; i<res_objects.length; i++){
+        
+        if(res_objects[i].booking !== ""){
+          the_invoices = await cheap_hotel_invoice.find({
+            hotel_brand_id: req.body.hotel_brand_id,
+            property_id: req.body.property_id,
+            "invoice_items.booking_id": res_objects[i].booking._id.toString(),
+            "invoice_items.guest_id": res_objects[i].guest._id.toString()
+          }).exec();
+          res_objects[i].invoice = the_invoices[0];
+        }
+
+      }
+    }
+
+  }
+
+  res_objects = res_objects.filter( each => each.booking !== "");
+
+  res.send(res_objects);
+
+});
+
+app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
+  
+  let res_objects = [];
+  
+  let first_name = req.body.first_name;
+  let last_name = req.body.last_name;
+  let req_email = req.body.email;
+  let req_mobile = req.body.mobile;
+  
+  let bookings = null;
+  let the_guests = null;
+  let the_invoices = null;
+
+  if(first_name !== "" && last_name !== "" && req_email !== "" && req_mobile !== ""){
+
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      email: req_email,
+      mobile: req_mobile,
+      status: "booked"
+    }).exec();
+
+    for(let g=0; g < the_guests.length; g++){
+      res_objects.push({
+        guest: the_guests[g],
+        booking: "",
+        invoice: ""
+      })
+    };
+    
+    if(res_objects.length > 0){
+      for(let i=0; i<res_objects.length; i++){
+        
+        bookings = await cheap_hotel_booking.find({
+          hotel_brand_id: req.body.hotel_brand_id,
+          property_id: req.body.property_id,
+          "guests.id": res_objects[i].guest._id.toString(),
+          /*"guests.first_name": first_name,
+          "guests.last_name": last_name,
+          guest_contact: {
+            mobile: req_mobile,
+            email: req_email
+          },
+          guests: {
+            "$all": {
+              first_name: first_name,
+              last_name: last_name,
+              email: email,
+              mobile: mobile,
+            }
+          }*/
+        }).exec();
+        
+        for(let b=0; b < bookings.length; b++){
+          
+          if(bookings[b].checkin_date === req.body.date){
+            res_objects[i].booking = bookings[b];
+          }else{
+            let this_guest = await cheap_hotel_guest.findById(res_objects[i].guest._id);
+            this_guest.status = "not_staying";
+            let updt_guest = await new cheap_hotel_guest(this_guest);
+            let saved_updt_guest = await updt_guest.save();
+            //res_objects.splice(i,i);
+          }
+          
         }
 
       }

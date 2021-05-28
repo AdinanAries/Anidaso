@@ -36,6 +36,16 @@ async function hotel_guests_search_function(type){
         await collect_inhouse_guests_search_post_data();
         let search_results = await search_and_return_cheap_hotel_guest(type);
         
+        if(search_results.length === 0){
+            document.getElementById("inhouse_guests_list").innerHTML =  `
+                <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white;">
+                    <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i>
+                    guest not found
+                </div>
+            `;
+            return null;
+        }
+
         document.getElementById("inhouse_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
             let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
@@ -67,6 +77,16 @@ async function hotel_guests_search_function(type){
         await collect_arrival_guests_search_post_data();
         let search_results = await search_and_return_cheap_hotel_guest(type);
 
+        if(search_results.length === 0){
+            document.getElementById("arrival_guests_list").innerHTML =  `
+                <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white;">
+                    <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i>
+                    guest not found
+                </div>
+            `;
+            return null;
+        }
+
         document.getElementById("arrival_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
             let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
@@ -97,6 +117,16 @@ async function hotel_guests_search_function(type){
 
         await collect_checkout_guests_search_post_data();
         let search_results = await search_and_return_cheap_hotel_guest(type);
+
+        if(search_results.length === 0){
+            document.getElementById("checkout_guests_list").innerHTML =  `
+                <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white;">
+                    <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i>
+                    guest not found
+                </div>
+            `;
+            return null;
+        }
 
         document.getElementById("checkout_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
@@ -207,11 +237,86 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
 }
 
 function return_guest_checkout_markup(guest, booking, invoice, property){
-
+    return `
+        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+            <div class="flex_child_of_two">
+                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
+                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
+                    ${guest.first_name} ${guest.last_name}</p>
+                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    ${guest.age}yrs, ${guest.gender}</p>
+                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+                    Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
+                    ${change_date_from_iso_to_long_date(booking.checkin_date)} - 
+                    ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
+                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
+                    ${property.city} - ${property.street_address} (${property.country})</P>  
+                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                    see full profile
+                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </p>
+            </div>
+            <div class="flex_child_of_two flex_non_first_child">
+                <div style="display: flex; flex-direction: row !important;">
+                    <div style="background-color: crimson; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        Checkout Guest
+                    </div>
+                    <div style="background-color: cornflowerblue; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
+                        Add to Running Invoice
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: row !important;">
+                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                        view running invoice
+                        <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                        view booking
+                        <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function return_arrival_guests_markup(guest, booking, invoice, property){
-
+    return `
+        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+            <div class="flex_child_of_two">
+                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
+                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
+                    ${guest.first_name} ${guest.last_name}</p>
+                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    ${guest.age}yrs, ${guest.gender}</p>
+                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+                    Room ${guest.assigned_room.room_number}, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
+                        leaves on ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
+                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
+                    ${property.city} - ${property.street_address} (${property.country})</P>
+                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                    see full profile
+                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </p>
+            </div>
+            <div class="flex_child_of_two flex_non_first_child">
+                <div style="display: flex; flex-direction: row !important;">
+                    <div style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        Check Guest In
+                    </div>
+                    <div onclick="show_include_services_in_booking_div();" style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
+                        Include Service
+                    </div>
+                </div>
+                <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                    view booking
+                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function search_and_return_cheap_hotel_guest(type){
@@ -225,7 +330,7 @@ function search_and_return_cheap_hotel_guest(type){
     }else if(type === "arrival"){
         post_url = "/search_cheap_hotel_arrival_guests/";
     }else if(type === "checkout"){
-        post_url = "/search_cheap_hotel_checkout_guests/";
+        post_url = "/search_cheap_hotel_inhouse_guests/";
     }
 
     return $.ajax({

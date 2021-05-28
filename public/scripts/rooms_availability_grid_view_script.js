@@ -893,8 +893,6 @@ async function create_guest_invoice(booking){
         invoice_items:  invoice_items_param
     }
 
-    console.log(new_invoice);
-
     return $.ajax({
         type: "POST",
         url: "/add_new_cheap_hotel_guest_invoice/",
