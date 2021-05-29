@@ -169,7 +169,7 @@ var global_is_room_closed = false;
 var search_result_current_room_id;
 
 function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
-    guest_type_param, age_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+    guest_type_param, DOB_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
     room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param){
     return {
         hotel_brand_id: hotel_brand_id_param,
@@ -178,7 +178,8 @@ function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, pro
         first_name: first_name_param,
         last_name: last_name_param,
         guest_type: guest_type_param,
-        age: age_param,
+        age: 0,
+        DOB: DOB_param,
         gender: gender_param,
         email: email_param,
         mobile: mobile_param,
@@ -196,6 +197,40 @@ function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, pro
             country: country_param,
             zipcode: zipcode_param
         }
+    }
+}
+
+async function set_properties_and_rooms_for_select_inputs(properties_select, rooms_select){
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById(properties_select).innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById(properties_select).innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
+    let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById(properties_select).value);
+
+    document.getElementById(rooms_select).innerHTML = '';
+    for(let i=0; i < rooms.length; i++){
+        document.getElementById(rooms_select).innerHTML += `
+            <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
+        `; 
+    }
+
+    document.getElementById(properties_select).onchange = async e => {
+
+        let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById(properties_select).value);
+
+        document.getElementById(rooms_select).innerHTML = '';
+        for(let i=0; i < rooms.length; i++){
+            document.getElementById(rooms_select).innerHTML += `
+                <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
+            `; 
+        }
+
     }
 }
 
@@ -368,6 +403,9 @@ function toggle_show_edit_booking_search_page(){
     if(document.getElementById("edit_booking_search_page").style.display === "none"){
         $("#edit_booking_search_page").toggle("up");
     }
+
+    set_properties_and_rooms_for_select_inputs("search_booking_property_select", "search_booking_room_number_select");
+
 }
 
 function toggle_show_edit_booking_results_page(){
@@ -378,15 +416,237 @@ function toggle_show_edit_booking_results_page(){
     }
 }
 
-function search_booking_onclick(){
+
+let search_booking_checkin = convert_date_object_to_db_string_format(new Date());
+let search_booking_checkout = convert_date_object_to_db_string_format(new Date());
+let search_booking_DOB = "";
+$(function() {
+    $('#search_booking_checkin_checkout_input').daterangepicker({
+      opens: 'left',
+      locale: {
+        cancelLabel: 'Clear'
+      }
+    }, function(start, end, label) {
+  
+      setTimeout(()=>{
+        document.getElementById("search_booking_checkin_checkout_input").value = start.toString().substring(0,11) +"  -  "+ end.toString().substring(0,11);
+      }, 100);
+  
+      search_booking_checkin = start.format('YYYY-MM-DD');
+      search_booking_checkout = end.format('YYYY-MM-DD');
+
+    });
+});
+
+$(function() {
+    $('#search_booking_DOB_input').daterangepicker({
+      singleDatePicker: true,
+      autoUpdateInput: false,
+      showDropdowns: true,
+
+      minYear: 1901,
+      maxYear: parseInt(moment().format('YYYY'),10)
+    }, function(start, end, label) {
+        setTimeout(()=>{
+            //document.getElementById("search_booking_DOB_input").value = start.toString().substring(4,15);
+            document.getElementById("search_booking_DOB_input").value = start.format('YYYY-MM-DD');
+          }, 100);
+      
+          search_booking_DOB = start.format('YYYY-MM-DD');
+    });
+  });
+
+async function search_booking_onclick(){
+
+    document.getElementById("view_booking_result_details").innerHTML = `
+        <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+            <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+            </path>
+            </svg>
+            <p style="text-align: center; font-size: 14px; color:white;">
+            loading...
+            </p>
+        </div>
+    `;
+
     toggle_show_edit_booking_results_page();
+
+    let first_name = document.getElementById("search_booking_first_name_input").value;
+    let last_name = document.getElementById("search_booking_last_name_input").value;
+    let DOB = search_booking_DOB;
+    let gender = document.getElementById("search_booking_gender_input").value;
+    let property_id = document.getElementById("search_booking_property_select").value;
+    let room_id = document.getElementById("search_booking_room_number_select").value;
+
+    let search_booking_post_obj = return_search_booking_post_object(window.localStorage.getItem("ANDSBZID"), first_name, last_name, DOB, gender, property_id, room_id, search_booking_checkin, search_booking_checkout);
+    let booking = await search_booking_post_function(search_booking_post_obj);
+    if(booking.empty){
+        document.getElementById("view_booking_result_details").innerHTML = `
+        <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.2);">
+            <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i>
+            booking not found
+        </div>
+        `;
+    }else{
+        render_search_booking_results_markup(booking);
+    }
+
 }
 
-function start_search_booking(){
+function return_search_booking_post_object(hotel_id, f_name, l_name, DOB_p, gender_p, prop_id, room_id_p, checkin, checkout){
+    return {
+        hotel_brand_id: hotel_id,
+        guest: {
+            first_name: f_name,
+            last_name: l_name,
+            DOB: DOB_p,
+            gender: gender_p,
+        },
+        room: {
+            property_id: prop_id,
+            room_id: room_id_p,
+        },
+        dates: {
+            checkin_date: checkin,
+            checkout_date: checkout
+        }
+    }
+}
+
+async function start_search_booking(){
+
     if(document.getElementById("view_booking_div").style.display === "none"){
         toggle_show_view_booking_div();
     }
-    toggle_show_edit_booking_search_page()
+    toggle_show_edit_booking_search_page();
+
+}
+
+function search_booking_post_function(post_obj){
+    return $.ajax({
+        type: "POST",
+        url: "/search_booking_by_booking_info/",
+        data: JSON.stringify(post_obj),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
+async function render_search_booking_results_markup(booking){
+
+    let property = await get_and_return_hotel_property_by_id(booking.property_id);
+    let property_city = property.city;
+    let property_country = property.country;
+    let property_street = property.street_address;
+
+    let rooms = booking.rooms;
+    let booking_checkin_date = booking.checkin_date;
+    let booking_checkout_date = booking.checkout_date;
+    let price_paid = booking.price_paid;
+    let room_guests = booking.guests;
+
+    let room_number = rooms[0].number;
+    let room_guests_markup = "";
+
+    let other_rooms_included = "";
+
+    if(rooms.length > 1){
+        other_rooms_included = "<p style='margin: 10px 0; font-size: 12px; text-align: center; color: white; letter-spacing: 1px;'> Rooms Included: ";
+        
+        for(let r=0; r < rooms.length; r++){
+            other_rooms_included += "<span style='color: orangered; font-size: 12px;'>" + rooms[r].number + "</span>, ";
+        }
+
+        other_rooms_included = other_rooms_included.substring(0, other_rooms_included.length - 2);
+
+        other_rooms_included += "</p>"
+    }
+
+    for(let g=0; g < room_guests.length; g++){
+        room_guests_markup += `
+            <div style="padding-bottom: 10px;">
+                <p style="letter-spacing: 1px; color: slateblue; font-size: 13px; margin-bottom: 5px;">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                    <span style="letter-spacing: 1px; margin-left: 5px; font-size: 15px; color:rgb(245, 196, 151);">
+                        ${room_guests[g].first_name} ${room_guests[g].last_name}</span>
+                </p>
+                <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">
+                        <span style="font-size: 12px; color: white;">DOB:</span> ${change_date_from_iso_to_long_date(room_guests[g].DOB)}, 
+                    </p>
+                    <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);"> 
+                        <span style="font-size: 12px; color: white;">Gender:</span> ${room_guests[g].gender}
+                    </p>
+            </div>
+        `
+    }
+
+    document.getElementById("view_booking_result_details").innerHTML = `
+        <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555);">
+            <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
+            <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                Room ${room_number}:
+                <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                    Booked
+                    <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
+                </span>
+            </p>
+            ${other_rooms_included}
+            <p style="margin-top: 5px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
+                ${property_city}
+                <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                    - ${property_street} (${property_country})
+                </span>
+            </p>
+            <div style="margin-top: 20px;">
+                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                    Checkin:
+                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                        ${change_date_from_iso_to_long_date(booking_checkin_date)}</span>
+                </p>
+                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                    Checkout:
+                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                        ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
+                </p>
+                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                    Price paid:
+                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                        $${parseFloat(price_paid).toFixed(2)}</span>
+                </p>
+                <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                    Room Guest(s)</p>
+                    ${room_guests_markup}
+            </div>
+            <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.3);">
+                <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(8, 42, 58); color: white;">
+                    <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    edit booking
+                </div>
+                <div style="cursor: pointer; padding: 10px; color: white; font-size: 14px;">
+                    <i aria-hidden="true" class="fa fa-trash" style="margin-right: 5px; color:rgb(255, 53, 53);"></i>
+                    delete booking
+                </div>
+            </div>
+            
+        </div>
+    `;
 }
 
 function start_edit_booking(){
@@ -2952,7 +3212,11 @@ async function render_recent_hotel_booking(recent_booking){
                         ${room_guests[g].first_name} ${room_guests[g].last_name}</span>
                 </p>
                 <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">
-                ${room_guests[g].age}yrs, ${room_guests[g].gender}</p>
+                        <span style="font-size: 12px; color: white;">DOB:</span> ${change_date_from_iso_to_long_date(room_guests[g].DOB)}, 
+                    </p>
+                    <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);"> 
+                        <span style="font-size: 12px; color: white;">Gender:</span> ${room_guests[g].gender}
+                    </p>
             </div>
         `
     }

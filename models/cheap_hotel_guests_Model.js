@@ -29,6 +29,9 @@ let cheap_hotel_guests_schema = mongoose.Schema({
     age: {
         type: Number
     },
+    DOB: {
+        type: String
+    },
     gender: {
         type: String
     },

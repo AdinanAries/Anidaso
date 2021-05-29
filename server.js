@@ -1591,6 +1591,31 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
 
 });
 
+app.post("/search_booking_by_booking_info/", async(req, res, next)=>{
+
+  console.log(req.body);
+
+  let booking = await cheap_hotel_booking.findOne({
+    hotel_brand_id: req.body.hotel_brand_id,
+    property_id: req.body.room.property_id,
+    "rooms.id": req.body.room.room_id,
+    checkin_date: req.body.dates.checkin_date,
+    checkout_date: req.body.dates.checkout_date,
+    "guests.first_name": req.body.guest.first_name,
+    "guests.last_name": req.body.guest.last_name,
+    "guests.DOB": req.body.guest.DOB,
+    "guests.gender": req.body.guest.gender
+  });
+
+  console.log(booking);
+  if(booking){
+    res.send(booking);
+  }else{
+    res.send({empty: true})
+  }
+
+});
+
 app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {
 
   let new_guest = await new cheap_hotel_guest({
@@ -1601,6 +1626,7 @@ app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {
     last_name: req.body.last_name,
     guest_type: req.body.guest_type,
     age: req.body.age,
+    DOB: req.body.DOB,
     gender: req.body.gender,
     email: req.body.email,
     mobile: req.body.mobile,

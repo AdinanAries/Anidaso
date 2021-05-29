@@ -61,6 +61,7 @@ function add_a_guest_obj(type){
         last_name: "",
         type: type,
         age: 0,
+        DOB: "",
         gender: "Male",
         price_paid: 0,
     }
@@ -111,15 +112,15 @@ function add_a_guest_last_name(input, index){
 function add_a_guest_gender(input, index){
     make_reservations_post_data.guests[index].gender = document.getElementById(input).value
 }
-function add_a_guest_age(input, index, type){
+function add_a_guest_DOB(input, index, type){
 
-    if(type === "adult"){
+    /*if(type === "adult"){
         room_booking_enforce_adult_age_input(input);
     }else{
         room_booking_enforce_child_age_input(input);
-    }
+    }*/
 
-    make_reservations_post_data.guests[index].age = document.getElementById(input).value
+    make_reservations_post_data.guests[index].DOB = document.getElementById(input).value
 }
 
 function make_reservation_return_each_adult_guest_markup(number, index){
@@ -147,8 +148,8 @@ function make_reservation_return_each_adult_guest_markup(number, index){
                         </select>
                         <div style="margin-top: 20px;">
                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
-                            <input id="mk_reservationS_adult_age_input_${number}" onchange="add_a_guest_age('mk_reservationS_adult_age_input_${number}', ${index}, 'adult');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                                Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
+                            <input id="mk_reservationS_adult_DOB_input_${number}"  onchange="add_a_guest_DOB('mk_reservationS_adult_DOB_input_${number}', ${index}, 'adult');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
                         </div>
                     </div>
                 </div>
@@ -182,8 +183,8 @@ function make_reservation_return_each_child_guest_markup(number, index){
                         </select>
                         <div style="margin-top: 20px;">
                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                Age: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
-                            <input id="mk_reservationS_child_age_input_${number}" oninput="add_a_guest_age('mk_reservationS_child_age_input_${number}', ${index}, 'child');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add guest age here"/>
+                                Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
+                            <input id="mk_reservationS_child_DOB_input_${number}" onchange="add_a_guest_DOB('mk_reservationS_child_age_input_${number}', ${index}, 'child');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
                         </div>
                     </div>
                 </div>
@@ -751,7 +752,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
 
         let new_guest = await create_guest_record(window.localStorage.getItem("ANDSBZID"), make_reservations_post_data.property_id, "", 
         make_reservations_post_data.guests[g].first_name, make_reservations_post_data.guests[g].last_name,
-        make_reservations_post_data.guests[g].type, make_reservations_post_data.guests[g].age, 
+        make_reservations_post_data.guests[g].type, make_reservations_post_data.guests[g].DOB, 
         make_reservations_post_data.guests[g].gender, document.getElementById("mk_reservation_guest_email_input").value, 
         document.getElementById("mk_reservation_guest_mobile_input").value, 0, "booked"/*status*/, ""/*booking_id*/, 
             make_reservations_post_data.rooms[0].id, make_reservations_post_data.rooms[0].number, 
@@ -768,7 +769,7 @@ function check_if_reservation_guesst_data_is_completed(){
 
     for(let i=0; i<make_reservations_post_data.guests.length; i++){
         if(make_reservations_post_data.guests[i].first_name === "" || make_reservations_post_data.guests[i].last_name === "" ||
-            make_reservations_post_data.guests[i].age === 0 || make_reservations_post_data.guests[i].gender === ""){
+            make_reservations_post_data.guests[i].DOB === "" || make_reservations_post_data.guests[i].gender === ""){
                 return false;
             }
     }
@@ -830,11 +831,11 @@ function make_a_reservation_post_function(){
 }
 
 function create_guest_record(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
-    guest_type_param, age_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+    guest_type_param, DOB_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
     room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param){
 
     let the_guest = return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
-        guest_type_param, age_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+        guest_type_param, DOB_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
         room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param);
 
     return $.ajax({

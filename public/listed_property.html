@@ -113,6 +113,13 @@
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
                                     View Rooms</p>
                             </div>
+                            <div onclick="start_search_booking();" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
+                                <p style="text-align: center;">
+                                    <i class="fa fa-search" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                </p>
+                                <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
+                                    Search Booking</p>
+                            </div>
                         </div>
                     </li>
                     <li>
@@ -904,21 +911,24 @@
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
-                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                                <input id="search_booking_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
                             </div>
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
-                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                                <input id="search_booking_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
                             </div>
                         </div>
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
-                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Mobile</p>
-                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter mobile here" value="" />
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
+                                <input id="search_booking_DOB_input" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
                             </div>
                             <div style="width: calc(50% - 5px);">
-                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Email</p>
-                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="enter email here" value="" />
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
+                                <select id="search_booking_gender_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
                         </div>
                         <p style="margin-left: 10px; font-size: 13px; color:rgb(127, 144, 175); margin-top: 20px; font-weight: bolder;">
@@ -926,14 +936,14 @@
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
-                                <select id="checkout_guests_search_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                <select id="search_booking_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
                                     <opttion>All</opttion>
                                     <option>Kumasi - 2122 Estate Junc (Ghana)</option>
                                 </select>
                             </div>
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Room</p>
-                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                <select id="search_booking_room_number_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
                                     <opttion>All</opttion>
                                     <option>Kumasi - 2122 Estate Junc (Ghana)</option>
                                 </select>
@@ -945,7 +955,7 @@
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">
                                 Checkin - Checkout</p>
                             <div style="display: flex; flex-direction: row !important;">
-                                <input id="checkout_guests_search_email_input" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="text" placeholder="checkin - checkout" value="" />
+                                <input id="search_booking_checkin_checkout_input" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 140px);" type="text" placeholder="checkin - checkout" value="" />
                                 <div onclick="search_booking_onclick();" style="cursor: pointer; width: 120px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                     Search
                                 </div>
@@ -955,7 +965,7 @@
                 </div>
                 <div id="edit_booking_results_page" class="page_popup_content_body" style="display: none; height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px 5px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
                     <div id="view_booking_result_details">
-                        <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555);">
+                        <!--div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555);">
                             <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
                                 Room 5D:
                                 <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
@@ -1003,7 +1013,11 @@
                             <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(8, 42, 58); color: white; width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 20px;">
                                 <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
                                 Change booking details</div>
-                        </div>
+                        </div-->
+                    </div>
+                    <div onclick="start_search_booking();" style="cursor: pointer; padding: 10px; border-radius: 4px; background-color:rgb(0, 25, 54); border: 1px solid rgb(33, 64, 99); color: white; font-size: 14px; text-align: center; margin: 20px 0;">
+                        <i aria-hidden="true" class="fa fa-search" style="margin-right: 5px; color:rgba(255, 212, 212, 0.8)"></i>
+                        Search another
                     </div>
                 </div>
                 <div id="edit_booking_edit_page" class="page_popup_content_body" style="display: none; height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px 5px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">

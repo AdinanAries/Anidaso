@@ -225,7 +225,11 @@ async function render_all_bookings_markup(bookings){
                             ${room_guests[g].first_name} ${room_guests[g].last_name}</span>
                     </p>
                     <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">
-                    ${room_guests[g].age}yrs, ${room_guests[g].gender}</p>
+                        <span style="font-size: 12px; color: white;">DOB:</span> ${change_date_from_iso_to_long_date(room_guests[g].DOB)}, 
+                    </p>
+                    <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);"> 
+                        <span style="font-size: 12px; color: white;">Gender:</span> ${room_guests[g].gender}
+                    </p>
                 </div>
             `
         }

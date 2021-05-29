@@ -200,7 +200,10 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
                     <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
                     ${guest.first_name} ${guest.last_name}</p>
                 <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
-                    ${guest.age}yrs, ${guest.gender}</p>
+                    <span style="color: rgb(215,255,255); font-size: 12px;">DOB:</span> 
+                    ${change_date_from_iso_to_long_date(guest.DOB)}</p>
+                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    <span style="color: rgb(215,255,255); font-size: 12px;">Gender:</span> ${guest.gender}</p>
                 <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
                     Room ${guest.assigned_room.room_number}, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
                     ${change_date_from_iso_to_long_date(booking.checkin_date)} - 
@@ -244,8 +247,11 @@ function return_guest_checkout_markup(guest, booking, invoice, property){
                 <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
                     <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
                     ${guest.first_name} ${guest.last_name}</p>
+                    <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    <span style="color: rgb(215,255,255); font-size: 12px;">DOB:</span> 
+                    ${change_date_from_iso_to_long_date(guest.DOB)}</p>
                 <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
-                    ${guest.age}yrs, ${guest.gender}</p>
+                    <span style="color: rgb(215,255,255); font-size: 12px;">Gender:</span> ${guest.gender}</p>
                 <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
                     Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
                     ${change_date_from_iso_to_long_date(booking.checkin_date)} - 
@@ -290,7 +296,10 @@ function return_arrival_guests_markup(guest, booking, invoice, property){
                     <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
                     ${guest.first_name} ${guest.last_name}</p>
                 <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
-                    ${guest.age}yrs, ${guest.gender}</p>
+                    <span style="color: rgb(215,255,255); font-size: 12px;">DOB:</span> 
+                    ${change_date_from_iso_to_long_date(guest.DOB)}</p>
+                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    <span style="color: rgb(215,255,255); font-size: 12px;">Gender:</span> ${guest.gender}</p>
                 <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
                     Room ${guest.assigned_room.room_number}, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
                         leaves on ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
