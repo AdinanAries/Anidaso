@@ -354,8 +354,53 @@ function toggle_show_view_booking_div(){
     $("#view_booking_div").toggle("up");
 }
 
+function toggle_show_edit_booking_edit_page(){
+    document.getElementById("edit_booking_search_page").style.display = "none";
+    document.getElementById("edit_booking_results_page").style.display = "none";
+    if(document.getElementById("edit_booking_edit_page").style.display === "none"){
+        $("#edit_booking_edit_page").toggle("up");
+    }
+}
+
+function toggle_show_edit_booking_search_page(){
+    document.getElementById("edit_booking_results_page").style.display = "none";
+    document.getElementById("edit_booking_edit_page").style.display = "none";
+    if(document.getElementById("edit_booking_search_page").style.display === "none"){
+        $("#edit_booking_search_page").toggle("up");
+    }
+}
+
+function toggle_show_edit_booking_results_page(){
+    document.getElementById("edit_booking_search_page").style.display = "none";
+    document.getElementById("edit_booking_edit_page").style.display = "none";
+    if(document.getElementById("edit_booking_results_page").style.display === "none"){
+        $("#edit_booking_results_page").toggle("up");
+    }
+}
+
+function search_booking_onclick(){
+    toggle_show_edit_booking_results_page();
+}
+
+function start_search_booking(){
+    if(document.getElementById("view_booking_div").style.display === "none"){
+        toggle_show_view_booking_div();
+    }
+    toggle_show_edit_booking_search_page()
+}
+
+function start_edit_booking(){
+    if(document.getElementById("view_booking_div").style.display === "none"){
+        toggle_show_view_booking_div();
+    }
+    toggle_show_edit_booking_edit_page()
+}
+
 function show_view_booking_div(booking_id){
-    toggle_show_view_booking_div()
+    if(document.getElementById("view_booking_div").style.display === "none"){
+        toggle_show_view_booking_div();
+    }
+    toggle_show_edit_booking_results_page();
 }
 
 function toggle_show_guests_invoice_div(){
@@ -366,8 +411,72 @@ function show_guests_invoice_div(){
     toggle_show_guests_invoice_div();
 }
 
-function view_each_guest_running_bill(){
+async function view_each_guest_running_bill(){
     show_guests_invoice_div();
+    console.log(running_invoice);
+
+    document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML = "";
+    for(let i=0; i<running_invoice.invoice_items.length; i++){
+
+        let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), running_invoice.property_id, running_invoice.invoice_items[i].guest_id);
+
+        document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML += `
+            <div>
+                <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px; font-weight: bolder;">
+                    <span style="font-size: 13px; color: rgb(255, 147, 147); ">
+                        Guest ${i+1}</span>
+                    <span style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
+                        <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
+                        Remove Guest
+                    </span>
+                </p>
+                <p style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
+                    ${guest.first_name} ${guest.last_name}</p>
+                <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
+                    ${guest.gender}, ${guest.age}yrs</p>
+                <div style="padding: 10px;">
+                    <table style="width: 100%; border-spacing: 5px;">
+                        <tbody id="each_guest_invoice_items_list">
+                            <tr>
+                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                    Item
+                                </td>
+                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                    Quantity
+                                </td>
+                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                    Unit Cost
+                                </td>
+                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                    Total
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
+        for(let k=0; k<running_invoice.invoice_items[i].guest_items.length; k++){
+            document.getElementById("each_guest_invoice_items_list").innerHTML += `
+                <tr>
+                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                        ${running_invoice.invoice_items[i].guest_items[k].name}
+                    </td>
+                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                        ${running_invoice.invoice_items[i].guest_items[k].quantity}
+                    </td>
+                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                        ${running_invoice.invoice_items[i].guest_items[k].price}
+                    </td>
+                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+                        ${running_invoice.invoice_items[i].guest_items[k].total}
+                    </td>
+                </tr>
+            `;
+        }
+
+    }
 }
 
 function view_many_guests_running_invoice(){
@@ -2950,6 +3059,21 @@ function get_and_return_hotel_room_by_id(id){
         },
         error: err => {
             //console.log(err);
+            return err;
+        }
+    });
+}
+
+function get_and_return_hotel_guest_by_id(hotel_brand_id, property_id, guest_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_and_return_guest_by_id/"+hotel_brand_id+"/"+property_id+"/"+guest_id,
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
             return err;
         }
     });

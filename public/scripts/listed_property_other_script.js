@@ -192,6 +192,7 @@ function collect_checkout_guests_search_post_data(){
 }
 
 function return_inhouse_guest_markup(guest, booking, invoice, property){
+    running_invoice = invoice;
     return `
         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">

@@ -1299,6 +1299,18 @@ app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next)
     res.send(bookings);
 });
 
+app.get("/get_and_return_guest_by_id/:hotel_brand_id/:property_id/:guest_id", async (req, res, next) => {
+  
+  let the_guest = await cheap_hotel_guest.findOne({
+    _id: req.params.guest_id,
+    hotel_brand_id: req.params.hotel_brand_id,
+    property_id: req.params.property_id,
+  }).exec();
+
+  res.send(the_guest);
+
+})
+
 app.get("/get_property_by_id/:property_id", async (req, res, next) => {
   let building = await cheap_hotel_property.findById(req.params.property_id).exec();
 
@@ -1549,7 +1561,7 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
             let saved_updt_guest = await updt_guest.save();
             //res_objects.splice(i,i);
           }
-          
+
         }
 
       }
