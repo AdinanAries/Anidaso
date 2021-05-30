@@ -1051,8 +1051,16 @@
                     <div style="padding: 10px 0; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.3)">
                         <p style="font-size: 14px; color:rgb(235, 137, 137); margin-bottom: 10px;">
                             Rooms and Guests</p>
-                        <div>
-                            <div>
+                        <div id="edit_booking_rooms_and_guestslist">
+                            <div style="padding: 20px 0; margin-bottom: 5px;">
+                                <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                                    <p style="margin-left: 5px; font-size: 16px; color:rgb(168, 195, 218); font-weight: bolder;">
+                                        <i style="margin-right: 5px; color:rgb(255, 97, 6);" aria-hidden="true" class="fa fa-building"></i>
+                                        Room 1</p>
+                                    <p style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
+                                        <i style="margin-right: 5px; color:rgb(255, 61, 61);" aria-hidden="true" class="fa fa-trash"></i>
+                                        Remove</p>
+                                </div>
                                 <div>
                                     <div>
                                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
@@ -1135,8 +1143,76 @@
                                     Add Guest
                                 </div>
                             </div>
+                            <div style="padding: 20px 0; margin-bottom: 5px;">
+                                <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+                                    <p style="margin-left: 5px; font-size: 16px; color:rgb(168, 195, 218); font-weight: bolder;">
+                                        <i style="margin-right: 5px; color:rgb(255, 97, 6);" aria-hidden="true" class="fa fa-building"></i>
+                                        Room 2</p>
+                                    <p style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
+                                        <i style="margin-right: 5px; color:rgb(255, 61, 61);" aria-hidden="true" class="fa fa-trash"></i>
+                                        Remove</p>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
+                                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                                    <opttion>All</opttion>
+                                                    <option>Kumasi - 2122 Estate Junc (Ghana)</option>
+                                                </select>
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Room</p>
+                                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                                    <opttion>All</opttion>
+                                                    <option>Kumasi - 2122 Estate Junc (Ghana)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; margin-left: 10px; color:rgb(255, 97, 6); font-weight: bolder;">
+                                        Up to 1 Adult, 4 Children
+                                    </p>
+                                    <div style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
+                                        <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                                            Adult 1</p>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
+                                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
+                                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
+                                                <input id="" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
+                                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="color: white; cursor: pointer; margin-top: 10px; padding: 10px; border-radius: 4px; text-align: center; font-size: 14px; background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255, 0.3);">
+                                    <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
+                                    Add Guest
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <p style="color:rgb(212, 228, 241); font-size: 13px; background-color: rgba(0, 0, 0, 0.4); padding: 10px;">
+                        <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
+                        This booking has 2 rooms 3 guests
+                    </p>
                     <div style="color: white; cursor: pointer; padding: 10px; font-size: 14px; margin-top: 10px;">
                         <i style="margin-right: 5px; color:rgb(255, 191, 154);" class="fa fa-plus" aria-hidden="true"></i>
                         New Room

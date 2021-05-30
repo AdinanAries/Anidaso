@@ -1140,6 +1140,30 @@ app.post("/book_a_cheap_room/", async (req, res, next) => {
 
 });
 
+app.post("/update_cheap_hotel_booking/", async (req, res, next) => {
+
+  let booking = await cheap_hotel_booking.findById(req.body._id);
+
+  booking.all_dates_of_occupancy = all_dates_of_occupancy;
+  booking.booking_date = booking_date;
+  booking.checkin_date = checkin_date
+  booking.checkin_time = checkin_time;
+  booking.checkout_date = checkout_date;
+  booking.checkout_time = checkout_time;
+  booking.guest_contact = guest_contact
+  booking.guests = guests;
+  booking.hotel_brand_id = hotel_brand_id;
+  booking.price_paid = price_paid;
+  booking.property_id = property_id;
+  booking.rooms = rooms;
+
+  let updated_booking = await new cheap_hotel_booking(booking);
+  let saved_booking = await updated_booking.save();
+
+  res.send(saved_booking);
+
+});
+
 app.get("/is_room_booked_on_a_certain_date/:booking_date/:room_id/:room_number", async (req, res, next) =>{
 
   let answer = {

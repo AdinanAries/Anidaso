@@ -71,6 +71,8 @@ let global_guests_array_index_position = 0;
 
 function make_guests_list_from_number_input_values(adult_iput_fld, child_input_fld, initial){
 
+    global_guests_array_index_position = 0;
+
     make_reservation_guests_list.innerHTML = "";
     make_reservations_post_data.guests = [];
 
@@ -91,12 +93,14 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
     for(let i=0; i<number_of_adults; i++){
         make_reservations_post_data.guests.push(add_a_guest_obj("adult"));
         make_reservation_guests_list.innerHTML += make_reservation_return_each_adult_guest_markup(i, global_guests_array_index_position);
+        bind_guest_dob_chooser("adult", `mk_reservationS_adult_DOB_input_${i}`);
         global_guests_array_index_position++;
     }
 
     for(let i=0; i<number_of_children; i++){
         make_reservations_post_data.guests.push(add_a_guest_obj("children"));
         make_reservation_guests_list.innerHTML += make_reservation_return_each_child_guest_markup(i, global_guests_array_index_position);
+        bind_guest_dob_chooser("children", `mk_reservationS_child_DOB_input_${i}`);
         global_guests_array_index_position++;
     }
 

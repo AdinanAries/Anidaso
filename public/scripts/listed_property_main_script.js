@@ -912,6 +912,54 @@ function change_date_from_iso_to_long_date(isoString){
 
 //console.log(change_date_from_iso_to_long_date("2021-12-15"));
 
+function calculate_age(dob) { 
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms); 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+
+//console.log(calculate_age(new Date(1992, 03, 23)));
+
+function bind_guest_dob_chooser(type, input){
+    $(function() {
+        $('#'+input).daterangepicker({
+          singleDatePicker: true,
+          autoUpdateInput: false,
+          showDropdowns: true,
+          minYear: 1901,
+          maxYear: parseInt(moment().format('YYYY'),10)
+        }, function(start, end, label) {
+            setTimeout(()=>{
+
+                let year = start.format('YYYY-MM-DD').split("-")[0];
+                let month = start.format('YYYY-MM-DD').split("-")[1];
+                let d_date = start.format('YYYY-MM-DD').split("-")[2];
+
+                let age = calculate_age(new Date(parseInt(year), parseInt(month), parseInt(d_date)));
+
+                if(type === "adult"){
+                    if(age < 18){
+                        document.getElementById(input).value = "";
+                        document.getElementById(input).placeholder = "adults must be atleast 18";
+                    }else{
+                        document.getElementById(input).value = start.format('YYYY-MM-DD');
+                    }
+                }else{
+                    if(age > 17){
+                        document.getElementById(input).value = "";
+                        document.getElementById(input).placeholder = "children must be below 18";
+                    }else{
+                        document.getElementById(input).value = start.format('YYYY-MM-DD');
+                    }
+                }
+              }, 100);
+          
+              search_booking_DOB = start.format('YYYY-MM-DD');
+        });
+    });
+}
+
 function convert_date_object_to_db_string_format(dateObj){
     
     let the_month = dateObj.toLocaleString().split(",")[0].split("/")[0];
