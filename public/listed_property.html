@@ -176,7 +176,7 @@
                         </div>
                     </li>
                 </ul>
-                <div onlick="" style="text-align: center; background-color: crimson; color: white; border-radius: 4px; padding: 10px; margin: 20px 0;">
+                <div onclick="hotel_manager_logout();" style="text-align: center; background-color: crimson; color: white; border-radius: 4px; padding: 10px; margin: 20px 0;">
                     logout
                 </div>
             </div>
@@ -1021,7 +1021,130 @@
                     </div>
                 </div>
                 <div id="edit_booking_edit_page" class="page_popup_content_body" style="display: none; height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px 5px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
-
+                    <div style="padding: 10px 0; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.3)">
+                        <div>
+                            <p style="font-size: 14px; color:rgb(235, 137, 137); margin-bottom: 10px;">
+                                Checkin - Checkout</p>
+                            <input id="" style="border: none; padding: 10px; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="checkin - checkout" value="" />
+                        </div>
+                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Email</p>
+                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="enter email here" value="" />
+                            </div>
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Mobile</p>
+                                <div style="display: flex; flex-direction: row !important;">
+                                    <select style="padding: 10px; width: 75px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px;">
+                                        <option value="1">
+                                            1 (USA)
+                                        </option>
+                                        <option value="233">
+                                            233 (Ghana)
+                                        </option>
+                                    </select>
+                                    <input id="" style="border: none; padding: 10px; border-radius: 0; border-top-right-radius: 4px; border-bottom-right-radius: 4px; width: calc(100% - 95px);" type="number" placeholder="enter mobile here" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 10px 0; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.3)">
+                        <p style="font-size: 14px; color:rgb(235, 137, 137); margin-bottom: 10px;">
+                            Rooms and Guests</p>
+                        <div>
+                            <div>
+                                <div>
+                                    <div>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
+                                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                                    <opttion>All</opttion>
+                                                    <option>Kumasi - 2122 Estate Junc (Ghana)</option>
+                                                </select>
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Room</p>
+                                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                                    <opttion>All</opttion>
+                                                    <option>Kumasi - 2122 Estate Junc (Ghana)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; margin-left: 10px; color:rgb(255, 97, 6); font-weight: bolder;">
+                                        Up to 1 Adult, 4 Children
+                                    </p>
+                                    <div style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
+                                        <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                                            Adult 1</p>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
+                                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
+                                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
+                                                <input id="" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
+                                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3)">
+                                        <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                                            Child 1</p>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
+                                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
+                                                <input id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
+                                                <input id="" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
+                                            </div>
+                                            <div style="width: calc(50% - 5px);">
+                                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
+                                                <select id="" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="color: white; cursor: pointer; margin-top: 10px; padding: 10px; border-radius: 4px; text-align: center; font-size: 14px; background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255, 0.3);">
+                                    <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
+                                    Add Guest
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="color: white; cursor: pointer; padding: 10px; font-size: 14px; margin-top: 10px;">
+                        <i style="margin-right: 5px; color:rgb(255, 191, 154);" class="fa fa-plus" aria-hidden="true"></i>
+                        New Room
+                    </div>
+                    <div style="padding: 10px; border-radius: 4px; text-align: center; color: white; cursor: pointer; background-color: rgba(11, 132, 12, 0.6); border: 1px solid rgba(25, 255, 255, 0.3); font-size: 14px; margin-top: 20px;">
+                        <i style="color:rgba(255, 208, 187, 0.815); margin-right: 5px;" class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Save
+                    </div>
                 </div>
             </div>
         </div>

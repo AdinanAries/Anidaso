@@ -89,7 +89,20 @@ const PORT = process.env.PORT || 5000;
 
 
 
+function convert_date_object_to_db_string_format(dateObj){
+    
+  let the_month = dateObj.toLocaleString().split(",")[0].split("/")[0];
+  let the_day = dateObj.toLocaleString().split(",")[0].split("/")[1];
+  let the_year = dateObj.toLocaleString().split(",")[0].split("/")[2];
+  //console.log(`${the_year}/${the_month}/${the_day}`)
 
+  let a_date = new Date(`${the_year}/${the_month}/${the_day}`);
+  //a_date = new Date(a_date.setDate(a_date.getDate() - 1));
+
+  let date_string = a_date.toISOString(); //eg. 2021-05-02T09:13:26.243Z*/
+  return date_string.split("T")[0];
+
+}
 
 
 //getting Amadues OAuth2 access token
@@ -1251,11 +1264,34 @@ app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_d
 
 })
 
+app.get("/is_room_booked_on_a_date/:room_id/:room_number/:the_date", async (req, res, next)=>{
+
+  let bookings = await cheap_hotel_booking.find({
+    all_dates_of_occupancy: the_date,
+    rooms: {
+      "$all": {
+        id: req.params.room_id,
+        number: req.params.room_number
+      }
+    }
+  }).exec();
+
+  if(bookings.length > 0){
+    res.send({booked: true});
+  }else{
+    res.send({booked: false});
+  }
+
+});
+
 app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next) => {
 
   let room = await cheap_hotel_room.findById(req.params.room_id);
 
+    let todays_db_date = convert_date_object_to_db_string_format(new Date());
+
     let bookings = await cheap_hotel_booking.find({
+      all_dates_of_occupancy: todays_db_date,
       rooms: {
         "$all": {
           id: req.params.room_id,
@@ -1266,7 +1302,11 @@ app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next)
 
     let is_room_occupied = false;
 
-    for(let i=0; i< bookings.length; i++){
+    if(bookings.length > 0){
+      is_room_occupied = true;
+    }
+
+    /*for(let i=0; i< bookings.length; i++){
 
       for(let j=0; j < bookings[i].all_dates_of_occupancy.length; j++){
 
@@ -1285,7 +1325,7 @@ app.get("/get_bookings_by_room_id/:room_id/:room_number", async (req, res, next)
 
       }
 
-    }
+    }*/
 
     if(!is_room_occupied && room.booked){
       room.booked = false;
