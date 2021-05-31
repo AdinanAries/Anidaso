@@ -2207,6 +2207,7 @@ function toggle_show_make_room_reservation_div(){
 async function continue_room_reservation(){
     
     toggle_show_make_room_reservation_div();
+    toggle_show_make_reservation_find_spot_pane();
 
     let the_rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
@@ -2241,6 +2242,12 @@ async function continue_room_reservation(){
 
     rooms_grid_view_config.property_id = document.getElementById("make_reservation_property_select").value;
     rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
+
+    let room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
+    make_reservations_post_data.current_room.capacitance.adults = room.guest_capacitance.adults;
+    make_reservations_post_data.current_room.capacitance.children = room.guest_capacitance.children;
+    make_reservations_post_data.current_room.id = room._id;
+    make_reservations_post_data.current_room.number = room.room_number;
 
     make_guests_list_from_number_input_values("make_reservation_number_of_adults_input", "make_reservation_number_of_children_input", true);
     generate_and_display_grid_view_bookings();
@@ -2308,6 +2315,8 @@ function toggle_show_make_reservation_add_guests_pane(){
         document.getElementById("make_reservation_pane_next_btn").style.opacity = 0.2;
         document.getElementById("make_reservation_pane_back_btn").style.opacity = 1;
     }
+
+    //make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false);
 }
 
 function toggle_show_make_reservation_find_spot_pane(){

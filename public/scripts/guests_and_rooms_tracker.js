@@ -1,4 +1,5 @@
 let rooms_and_guests = {
+    booking_id: "", 
     booking_total_adults: 3,
     booking_total_children: 6,
     room_guests: [
@@ -53,7 +54,7 @@ function get_remain_booking_guests(){
 
 }
 
-function validate_add_new_guest_guest_type(type/*["adult", "child"]*/, room_index){
+function validate_allow_add_new_guest(type/*["adult", "child"]*/, room_index){
 
     let room_guests = rooms_and_guests.room_guests[room_index];
 

@@ -50,7 +50,15 @@ var make_reservations_post_data = {
       guest_contact: {
           mobile: "",
           email: ""
-      }
+      },
+    current_room: {
+        number: '',
+        id: '',
+        capacitance: {
+            adults: 0,
+            children: 0,
+        }
+    }
 }
 
 function add_a_guest_obj(type){
@@ -78,17 +86,73 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
 
     let number_of_adults = document.getElementById(adult_iput_fld).value;
     let number_of_children = document.getElementById(child_input_fld).value;
+    let remainder = {
+        adults: 0,
+        children: 0
+    }
+
+    if(make_reservations_post_data.current_room.capacitance.adults < number_of_adults){
+        remainder.adults = (number_of_adults - make_reservations_post_data.current_room.capacitance.adults);
+        number_of_adults = make_reservations_post_data.current_room.capacitance.adults;
+    }
+
+    if(make_reservations_post_data.current_room.capacitance.children < number_of_children){
+        remainder.children = (number_of_children - make_reservations_post_data.current_room.capacitance.children);
+        number_of_children = make_reservations_post_data.current_room.capacitance.children;
+    }
 
     if(initial){
         document.getElementById("make_reservation_popup_number_Of_adults_input").value = number_of_adults;
         document.getElementById("make_reservation_popup_number_Of_children_input").value = number_of_children;
     }
 
-    document.getElementById("make_reservation_number_guests_display_p").innerHTML =
-    `
-        <span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
-        ${number_of_adults} Adult, ${number_of_children} children
-    `; 
+    let children_text_display = number_of_children > 1 ? ` ${number_of_children} Children` : ` ${number_of_children} Child`;
+    let adults_text_display = number_of_adults > 1 ? `${number_of_adults} Adults` : `${number_of_adults} Adult`;
+
+    let remainder_children_text_display = remainder.adults > 1 ? `${remainder.adults} adults` : `${remainder.adults} adult`;
+    let remainder_adults_text_display = remainder.children > 1 ? `${remainder.children} children` : `${remainder.children} child`;
+    let reaminder_guests_text_display = (remainder.children + remainder.adults) > 1 ? `${(remainder.children + remainder.adults)} guests` : `${(remainder.children + remainder.adults)} guest`;
+
+    if(remainder.children > 0 && remainder.adults > 0){
+        document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
+            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p>
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px;">
+                <p style="padding-right: 5px;">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
+                <p style="color: white; font-size: 13px;">
+                All guests cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
+                for remaining ${reaminder_guests_text_display}</p>
+            </div>
+        `;
+    }else if(remainder.adults > 0){
+        document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
+            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p>
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px;">
+                <p style="padding-right: 5px;">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
+                <p style="color: white; font-size: 13px;">All adults cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
+                for remaining ${remainder_children_text_display}</p>
+            </div>
+        `;
+    }else if(remainder.children > 0){
+        document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
+            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p>
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px;">
+                <p style="padding-right: 5px;">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
+                <p style="color: white; font-size: 13px;">All children cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
+                for remaining ${remainder_adults_text_display}</p>
+            </div>
+        `;
+    }else{
+        document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
+            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p>
+        `; 
+    }
 
     for(let i=0; i<number_of_adults; i++){
         make_reservations_post_data.guests.push(add_a_guest_obj("adult"));
@@ -555,9 +619,20 @@ async function generate_and_display_grid_view_bookings(){
     }*/
 }
 
-document.getElementById("make_reservation_room_select").addEventListener("change", e => {
+document.getElementById("make_reservation_room_select").addEventListener("change", async e => {
+
     rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
+
+    let room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
+    make_reservations_post_data.current_room.capacitance.adults = room.guest_capacitance.adults;
+    make_reservations_post_data.current_room.capacitance.children = room.guest_capacitance.children;
+    make_reservations_post_data.current_room.id = room._id;
+    make_reservations_post_data.current_room.number = room.room_number;
+
+    make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false);
+    toggle_show_make_reservation_find_spot_pane();
     generate_and_display_grid_view_bookings();
+
 });
 
 document.getElementById("make_reservation_property_select").addEventListener("change", async e => {
@@ -581,8 +656,16 @@ document.getElementById("make_reservation_property_select").addEventListener("ch
         id: rooms_grid_view_config.rooms_id,
         number: room.room_number,
     });
+    make_reservations_post_data.current_room.capacitance.adults = room.guest_capacitance.adults;
+    make_reservations_post_data.current_room.capacitance.children = room.guest_capacitance.children;
+    make_reservations_post_data.current_room.id = room._id;
+    make_reservations_post_data.current_room.number = room.room_number;
     make_reservations_post_data.price_paid = room.price;
+
+    make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false);
+    toggle_show_make_reservation_find_spot_pane();
     generate_and_display_grid_view_bookings();
+
 });
 
 $(function() {
