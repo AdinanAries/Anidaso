@@ -148,6 +148,27 @@ var running_invoice = {
     ]
 }
 
+var current_edit_booking_object = {
+    rooms_and_guests = {
+        booking_id: "", 
+        booking_total_adults: 3,
+        booking_total_children: 6,
+        room_guests: [
+            {
+                id: "",
+                number: "",
+                total_adults: 0,
+                total_children: 0,
+                guests: [
+                    "adult",
+                    "child",
+                ]
+            }
+        ]
+    },
+    booking: {}
+};
+
 let todays_date = new Date();
 let todays_date2 = new Date();
 

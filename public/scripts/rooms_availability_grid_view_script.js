@@ -117,54 +117,66 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
             <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
             ${adults_text_display},${children_text_display}</p>
-            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px;">
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
                 <p style="padding-right: 5px;">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
-                <p style="color: white; font-size: 13px;">
+                <p style="color: white; font-size: 13px;  margin-left: 5px;">
                 All guests cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
                 for remaining ${reaminder_guests_text_display}</p>
             </div>
         `;
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,120,120)";
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,120,120)";
     }else if(remainder.adults > 0){
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
             <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
             ${adults_text_display},${children_text_display}</p>
-            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px;">
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
                 <p style="padding-right: 5px;">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
-                <p style="color: white; font-size: 13px;">All adults cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
+                <p style="color: white; font-size: 13px; margin-left: 5px;">All adults cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
                 for remaining ${remainder_children_text_display}</p>
             </div>
         `;
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,120,120)";
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,255,255)";
     }else if(remainder.children > 0){
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
             <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
             ${adults_text_display},${children_text_display}</p>
-            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px;">
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
                 <p style="padding-right: 5px;">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
-                <p style="color: white; font-size: 13px;">All children cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
+                <p style="color: white; font-size: 13px; margin-left: 5px;">All children cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
                 for remaining ${remainder_adults_text_display}</p>
             </div>
         `;
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,120,120)";
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,255,255)";
     }else{
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
             <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
             ${adults_text_display},${children_text_display}</p>
         `; 
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,255,255)";
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,255,255)";
     }
 
     for(let i=0; i<number_of_adults; i++){
         make_reservations_post_data.guests.push(add_a_guest_obj("adult"));
         make_reservation_guests_list.innerHTML += make_reservation_return_each_adult_guest_markup(i, global_guests_array_index_position);
-        bind_guest_dob_chooser("adult", `mk_reservationS_adult_DOB_input_${i}`);
+        setTimeout(()=>{
+            bind_guest_dob_chooser("adult", `mk_reservationS_adult_DOB_input_${i}`);
+        }, 50);
         global_guests_array_index_position++;
     }
 
     for(let i=0; i<number_of_children; i++){
         make_reservations_post_data.guests.push(add_a_guest_obj("children"));
         make_reservation_guests_list.innerHTML += make_reservation_return_each_child_guest_markup(i, global_guests_array_index_position);
-        bind_guest_dob_chooser("children", `mk_reservationS_child_DOB_input_${i}`);
+        setTimeout(()=>{
+            bind_guest_dob_chooser("children", `mk_reservationS_child_DOB_input_${i}`);
+        }, 50);
         global_guests_array_index_position++;
     }
 
