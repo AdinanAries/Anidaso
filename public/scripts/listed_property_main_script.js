@@ -149,7 +149,7 @@ var running_invoice = {
 }
 
 var current_edit_booking_object = {
-    rooms_and_guests = {
+    rooms_and_guests: {
         booking_id: "", 
         booking_total_adults: 3,
         booking_total_children: 6,

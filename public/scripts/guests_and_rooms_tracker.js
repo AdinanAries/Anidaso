@@ -65,7 +65,8 @@ console.log(get_remain_booking_guests());
 //Edit booking functions
 let rooms_for_test = [{},{},{}];
 function add_new_room_to_edit_booking(){
-    edit_booking_render_new_room_markup("rooms", "properties", 1);
+    let new_index = rooms_for_test.length;
+    edit_booking_render_new_room_markup("rooms", "properties", new_index);
 }
 
 async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, new_index){
@@ -141,6 +142,8 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
 
     set_properties_and_rooms_for_select_inputs(`edit_booking_properties_select_${new_index}`, `edit_booking_rooms_select_${new_index}`);
     //let room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
+
+    rooms_for_test.push({});
 
 }
 
