@@ -151,10 +151,10 @@ var running_invoice = {
 var current_edit_booking_object = {
     rooms_and_guests: {
         booking_id: "", 
-        booking_total_adults: 3,
-        booking_total_children: 6,
+        booking_total_adults: 0,
+        booking_total_children: 0,
         room_guests: [
-            {
+            /*{
                 id: "",
                 number: "",
                 total_adults: 0,
@@ -163,7 +163,7 @@ var current_edit_booking_object = {
                     "adult",
                     "child",
                 ]
-            }
+            }*/
         ]
     },
     booking: {}
@@ -411,11 +411,13 @@ function toggle_show_view_booking_div(){
 }
 
 function toggle_show_edit_booking_edit_page(){
+
     document.getElementById("edit_booking_search_page").style.display = "none";
     document.getElementById("edit_booking_results_page").style.display = "none";
     if(document.getElementById("edit_booking_edit_page").style.display === "none"){
         $("#edit_booking_edit_page").toggle("up");
     }
+    preprocess_bookings_rooms_and_guests();
 }
 
 function toggle_show_edit_booking_search_page(){
@@ -519,6 +521,7 @@ async function search_booking_onclick(){
         `;
     }else{
         render_search_booking_results_markup(booking);
+        current_edit_booking_object.booking = booking;
     }
 
 }
