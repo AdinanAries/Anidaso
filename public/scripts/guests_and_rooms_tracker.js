@@ -189,6 +189,12 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
     document.getElementById(`edit_booking_rooms_select_${new_index}`).addEventListener("change", e => {
         edit_booking_onchange_rooms_select_render_room_markup("skip_rooms", "skip_properties", new_index);
     });
+
+    document.getElementById(`edit_booking_properties_select_${new_index}`).addEventListener("change", e => {
+        setTimeout(()=>{
+            edit_booking_onchange_rooms_select_render_room_markup("skip_rooms", "skip_properties", new_index);
+        }, 100);
+    });
     
 }
 
@@ -272,7 +278,7 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="${rooms[i].guests[g].DOB}" />
+                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
                             </div>
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
@@ -309,7 +315,7 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="${rooms[i].guests[g].DOB}" />
+                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
                             </div>
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
@@ -348,6 +354,12 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
         document.getElementById(`edit_booking_rooms_select_${i}`).addEventListener("change", e => {
             edit_booking_onchange_rooms_select_render_room_markup("skip_rooms", "skip_properties", i);
         });
+
+        document.getElementById(`edit_booking_properties_select_${i}`).addEventListener("change", e => {
+            setTimeout(()=>{
+                edit_booking_onchange_rooms_select_render_room_markup("skip_rooms", "skip_properties", i);
+            }, 100);
+        });
         
 
     }
@@ -367,7 +379,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
             return (guest.guest_type === "adult");
         });
 
-        console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_adults, added_adults.length)
+        //console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_adults, added_adults.length)
         if(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_adults <= added_adults.length){
             alert("Room's adult capacitance reached");
             return null;
@@ -423,7 +435,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
             return (guest.guest_type === "child");
         });
 
-        console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_children, added_children.length)
+        //console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_children, added_children.length)
         if(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_children <= added_children.length){
             alert("Room's child capacitance reached");
             return null;
@@ -532,11 +544,20 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
 
     document.getElementById(`edit_booking_rooms_capacitance_display_${i}`).innerHTML = `Up to ${number_of_adults_display}, ${number_of_children_display}`;
 
+    /*let added_adults = current_edit_booking_object.rooms_and_guests.room_guests[i].guests.filter( guest => {
+        return (guest.guest_type === "adult");
+    });*/
+
     document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML = '';
     let adult_number = 0;
     let child_number = 0;
     for(let g=0; g<room.guests.length; g++){
+        
         if(room.guests[g].guest_type === "adult"){
+
+            if(current_edit_booking_object.rooms_and_guests.room_guests[i].total_adults <= adult_number){
+                continue;
+            }
 
             document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML += `
                 <div id="edit_booking_room_guest_form_${i}_${g}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
@@ -555,7 +576,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="${room.guests[g].DOB}" />
+                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
@@ -575,6 +596,10 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
 
         }else{
 
+            if(current_edit_booking_object.rooms_and_guests.room_guests[i].total_children <= child_number){
+                continue;
+            }
+
             document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML += `
                 <div id="edit_booking_room_guest_form_${i}_${g}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
                     <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
@@ -592,7 +617,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="${room.guests[g].DOB}" />
+                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
