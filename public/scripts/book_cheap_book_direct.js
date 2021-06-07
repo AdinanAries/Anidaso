@@ -190,6 +190,12 @@ var search_cheap_hotels_post_data = {
     hotel_name: "",
     city: "",
     country: "",
+    checkin_date: "",
+    checkout_date: "",
+    guests_number: {
+        adults: 1,
+        children: 0
+    }
 }
 
 var book_cheap_book_direct_hotels_list = document.getElementById("book_cheap_book_direct_hotels_list");

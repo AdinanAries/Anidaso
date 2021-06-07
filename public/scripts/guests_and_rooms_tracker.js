@@ -1,8 +1,16 @@
 async function preprocess_bookings_rooms_and_guests(){
 
+    //current_edit_booking_object.rooms_and_guests.booking_id = "";
+    current_edit_booking_object.rooms_and_guests.booking_total_adults = 0;
+    current_edit_booking_object.rooms_and_guests.booking_total_children = 0;
+    current_edit_booking_object.rooms_and_guests.room_guests = [];
+
     current_edit_booking_object.rooms_and_guests.booking_total_adults = 0;
     current_edit_booking_object.rooms_and_guests.booking_total_children = 0;
     current_edit_booking_object.rooms_and_guests.booking_id = current_edit_booking_object.booking._id;
+    document.getElementById("edit_booking_guest_email_input").value = current_edit_booking_object.booking.guest_contact.email;
+    document.getElementById("edit_booking_guest_mobile_input").value = current_edit_booking_object.booking.guest_contact.mobile;
+    document.getElementById("edit_booking_checkin_checkout_input").placeholder = `${current_edit_booking_object.booking.checkin_date} - ${current_edit_booking_object.booking.checkout_date}`;
     
     for(let i=0; i <current_edit_booking_object.booking.rooms.length; i++){
 
@@ -19,28 +27,102 @@ async function preprocess_bookings_rooms_and_guests(){
             total_children: room.guest_capacitance.children,
             guests: []
         });
-    }
 
-    for(let g=0; g<current_edit_booking_object.booking.guests.length; g++){
+        for(let g=0; g<current_edit_booking_object.booking.guests.length; g++){
 
-        let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), current_edit_booking_object.booking.property_id, current_edit_booking_object.booking.guests[g].id);
-        if(guest.assigned_room.room_id){
-            for(let k=0; k<current_edit_booking_object.rooms_and_guests.room_guests.length; k++){
-                if(current_edit_booking_object.rooms_and_guests.room_guests[g].id === guest.assigned_room.room_id){
-                    current_edit_booking_object.rooms_and_guests.room_guests[g].guests.push(guest);
+            let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), current_edit_booking_object.booking.property_id, current_edit_booking_object.booking.guests[g].id);
+            if(guest.assigned_room.room_id){
+                for(let k=0; k<current_edit_booking_object.rooms_and_guests.room_guests.length; k++){
+                    if(current_edit_booking_object.rooms_and_guests.room_guests[i].id === guest.assigned_room.room_id){
+                        current_edit_booking_object.rooms_and_guests.room_guests[i].guests.push(guest);
+                    }
                 }
+            }
+    
+            if(guest.guest_type === "adult"){
+                current_edit_booking_object.rooms_and_guests.booking_total_adults += 1;
+            }else{
+                current_edit_booking_object.rooms_and_guests.booking_total_children += 1;
             }
         }
 
-        if(guest.guest_type === "adult"){
-            current_edit_booking_object.rooms_and_guests.booking_total_adults += 1;
-        }else{
-            current_edit_booking_object.rooms_and_guests.booking_total_children += 1;
-        }
     }
 
     console.log(current_edit_booking_object);
     edit_booking_render_initial_rooms_markup("rooms", "properties", current_edit_booking_object.rooms_and_guests.room_guests);
+}
+
+//final step before post to api
+async function prepare_edit_booking_post_object_for_db(){
+
+    current_edit_booking_object.booking.rooms = [];
+    current_edit_booking_object.booking.guests = [];
+    for(let i=0; i<current_edit_booking_object.rooms_and_guests.room_guests.length; i++){
+
+        current_edit_booking_object.booking.rooms.push({
+            id: current_edit_booking_object.rooms_and_guests.room_guests[i].id,
+            number: current_edit_booking_object.rooms_and_guests.room_guests[i].number
+        });
+
+        let added_adults_number = 0;
+        let added_children_number = 0;
+        for(let g=0; g<current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length; g++){
+
+            if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].guest_type === "adult"){
+                added_adults_number++;
+                if(current_edit_booking_object.rooms_and_guests.room_guests[i].total_adults < added_adults_number){
+                    continue;
+                }
+            }
+            if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].guest_type === "child"){
+                added_children_number++;
+                if(current_edit_booking_object.rooms_and_guests.room_guests[i].total_children < added_children_number){
+                    continue;
+                }
+            }
+
+            //creating guest records in DB
+            if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id){
+                //do nothing for now
+            }else{
+                let new_guest_rec = await create_guest_record_in_DB(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]);
+                current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id = new_guest_rec._id;
+            }
+            
+
+            current_edit_booking_object.booking.guests.push({
+                id: current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id,
+                first_name: current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].first_name,
+                last_name: current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].last_name,
+                DOB: current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].DOB,
+                age: 0,
+                gender: current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].gender,
+                price_paid: 0,
+                profile_pic: "",
+                type: current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].guest_type,
+            });
+        }
+    }
+
+    return {done: true};
+}
+
+function create_guest_record_in_DB(guest){
+    return $.ajax({
+        type: "POST",
+        url: "/add_new_cheap_hotel_guest/",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(guest),
+        success: data => {
+            console.log(data);
+            return data;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
 }
 
 function check_is_rooms_capacitance_violated(room_index){
@@ -105,7 +187,21 @@ function validate_allow_add_new_guest(type/*["adult", "child"]*/, room_index){
 
 }
 
-console.log(get_remain_booking_guests());
+function edit_booking_check_all_guest_inputs_added(){
+    let pass = true;
+
+    for(let i=0; i<current_edit_booking_object.rooms_and_guests.room_guests.length; i++){
+        for(let g=0; current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length; g++){
+            if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].first_name === "" || 
+            current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].last_name === "" ||
+            current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].DOB === ""){
+                pass = false;
+            }
+        }
+        
+    }
+    return pass;
+}
 
 //Edit booking functions
 async function add_new_room_to_edit_booking(){
@@ -201,6 +297,7 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
 async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_properties, rooms){
 
     document.getElementById("edit_booking_rooms_and_guestslist").innerHTML = "";
+    dt_i = 0;
     for(let i=0; i<rooms.length; i++){
 
         let number_of_adults_display = rooms[i].total_adults > 1 ? `${rooms[i].total_adults} Adults` : `${rooms[i].total_adults} Adult`;
@@ -258,6 +355,7 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
 
         let adult_number = 0;
         let child_number = 0;
+        let dt_g = 0;
         for(let g=0; g<rooms[i].guests.length; g++){
             if(rooms[i].guests[g].guest_type === "adult"){
 
@@ -293,8 +391,9 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                 `;
 
                 setTimeout(()=>{
-                    bind_guest_dob_chooser("adult", `edit_booking_room_guest_DOB_input_${i}_${g}`);
-                }, 50);
+                    edit_booking_bind_guest_dob_chooser("adult", `edit_booking_room_guest_DOB_input_${i}_${dt_g}`, i, dt_g);
+                    dt_g++;
+                }, 10);
 
             }else{
 
@@ -315,7 +414,7 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
+                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${rooms[i].guests[g].DOB}" value="" />
                             </div>
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
@@ -330,8 +429,9 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                 `;
 
                 setTimeout(()=>{
-                    bind_guest_dob_chooser("child", `edit_booking_room_guest_DOB_input_${i}_${g}`);
-                }, 50);
+                    edit_booking_bind_guest_dob_chooser("child", `edit_booking_room_guest_DOB_input_${i}_${dt_g}`, i, dt_g);
+                    dt_g++;
+                }, 10);
 
             }
 
@@ -345,11 +445,15 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
             document.getElementById(`edit_booking_room_guest_gender_input_${i}_${g}`).addEventListener('change', e=>{
                 add_guest_gender_to_edit_booking_object(`edit_booking_room_guest_gender_input_${i}_${g}`, i, g);
             });
-            document.getElementById(`edit_booking_room_guest_DOB_input_${i}_${g}`).addEventListener('change', e=>{
+            /*document.getElementById(`edit_booking_room_guest_DOB_input_${i}_${g}`).addEventListener('change', e=>{
                 add_guest_DOB_to_edit_booking_object(`edit_booking_room_guest_DOB_input_${i}_${g}`, i, g);
-            });
+            });*/
 
         }
+
+        setTimeout(()=>{
+            dt_i++;
+        }, 10);
 
         document.getElementById(`edit_booking_rooms_select_${i}`).addEventListener("change", e => {
             edit_booking_onchange_rooms_select_render_room_markup("skip_rooms", "skip_properties", i);
@@ -361,7 +465,6 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
             }, 100);
         });
         
-
     }
 
     //let room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
@@ -381,15 +484,19 @@ function edit_booking_add_new_guest(guest_type, room_index){
 
         //console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_adults, added_adults.length)
         if(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_adults <= added_adults.length){
-            alert("Room's adult capacitance reached");
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                 Action Not Allowed`, 
+            "Room's adult capacitance reached");
             return null;
         }
 
         let new_guest = return_new_hotel_guest_obj(window.localStorage.getItem("ANDSBZID"), document.getElementById(`edit_booking_properties_select_${room_index}`).value,
-        'profile_pic_param', 'first_name_param', 'last_name_param', 'adult', 'DOB_param', 'gender_param', 
-        'email_param', 'mobile_param', 'price_paid_param', 'status_param', current_edit_booking_object.booking._id, 
-        document.getElementById(`edit_booking_rooms_select_${room_index}`).value, 'room_number_param',
-        'street_address_param', 'city_param', 'town_param', 'country_param', 'zipcode_param');
+        ''/*profile_pic*/, ''/*first_name*/, ''/*last_name*/, 'adult', ''/*DOB*/, 'Male'/*gender*/, 
+        ''/*email*/, ''/*mobile*/, ''/*price_paid*/, 'booked'/*status*/, current_edit_booking_object.booking._id, 
+        document.getElementById(`edit_booking_rooms_select_${room_index}`).value/*room_id*/, 
+        current_edit_booking_object.rooms_and_guests.room_guests[room_index].number/*room_number*/,
+        ''/*street_address*/, ''/*city*/, ''/*town*/, ''/*country*/, ''/*zipcode*/);
 
         current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.push(new_guest);
 
@@ -424,8 +531,8 @@ function edit_booking_add_new_guest(guest_type, room_index){
         `;
 
         setTimeout(()=>{
-            bind_guest_dob_chooser("adult", `edit_booking_room_guest_DOB_input_${room_index}_${guest_index}`);
-        }, 50);
+            edit_booking_bind_guest_dob_chooser("adult", `edit_booking_room_guest_DOB_input_${room_index}_${guest_index}`, room_index, guest_index);
+        }, 10);
 
         current_edit_booking_object.rooms_and_guests.booking_total_adults += 1;
 
@@ -437,15 +544,19 @@ function edit_booking_add_new_guest(guest_type, room_index){
 
         //console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_children, added_children.length)
         if(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_children <= added_children.length){
-            alert("Room's child capacitance reached");
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                 Action Not Allowed`, 
+            "Room's child capacitance reached");
             return null;
         }
 
         let new_guest = return_new_hotel_guest_obj(window.localStorage.getItem("ANDSBZID"), document.getElementById(`edit_booking_properties_select_${room_index}`).value,
-        'profile_pic_param', 'first_name_param', 'last_name_param', 'child', 'DOB_param', 'gender_param', 
-        'email_param', 'mobile_param', 'price_paid_param', 'status_param', current_edit_booking_object.booking._id, 
-        document.getElementById(`edit_booking_rooms_select_${room_index}`).value, 'room_number_param',
-        'street_address_param', 'city_param', 'town_param', 'country_param', 'zipcode_param');
+        ''/*profile_pic*/, ''/*first_name*/, ''/*last_name*/, 'child', ''/*DOB*/, 'Male'/*gender*/, 
+        ''/*email*/, ''/*mobile*/, ''/*price_paid*/, 'booked'/*status*/, current_edit_booking_object.booking._id, 
+        document.getElementById(`edit_booking_rooms_select_${room_index}`).value/*room_id*/, 
+        current_edit_booking_object.rooms_and_guests.room_guests[room_index].number/*room_number*/,
+        ''/*street_address*/, ''/*city*/, ''/*town*/, ''/*country*/, ''/*zipcode*/);
 
         current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.push(new_guest);
 
@@ -480,8 +591,8 @@ function edit_booking_add_new_guest(guest_type, room_index){
         `;
 
         setTimeout(()=>{
-            bind_guest_dob_chooser("children", `edit_booking_room_guest_DOB_input_${room_index}_${guest_index}`);
-        }, 50);
+            edit_booking_bind_guest_dob_chooser("children", `edit_booking_room_guest_DOB_input_${room_index}_${guest_index}`, room_index, guest_index);
+        }, 10);
 
         current_edit_booking_object.rooms_and_guests.booking_total_children += 1;
     }
@@ -496,9 +607,9 @@ function edit_booking_add_new_guest(guest_type, room_index){
     document.getElementById(`edit_booking_room_guest_gender_input_${room_index}_${guest_index}`).addEventListener('change', e=>{
         add_guest_gender_to_edit_booking_object(`edit_booking_room_guest_gender_input_${room_index}_${guest_index}`, room_index, guest_index);
     });
-    document.getElementById(`edit_booking_room_guest_DOB_input_${room_index}_${guest_index}`).addEventListener('change', e=>{
+    /*document.getElementById(`edit_booking_room_guest_DOB_input_${room_index}_${guest_index}`).addEventListener('change', e=>{
         add_guest_DOB_to_edit_booking_object(`edit_booking_room_guest_DOB_input_${room_index}_${guest_index}`, room_index, guest_index);
-    });
+    });*/
 
     console.log(current_edit_booking_object);
 }
@@ -518,10 +629,38 @@ function add_guest_gender_to_edit_booking_object(input_id, room_index, guest_ind
     current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests[guest_index].gender = gender;
 }
 
-function add_guest_DOB_to_edit_booking_object(input_id, room_index, guest_index){
+function add_new_mobile_number_to_edit_booking_obj(){
+    let country_code = document.getElementById("edit_booking_guest_mobile_country_code_select").value;
+    let number = document.getElementById("edit_booking_guest_mobile_input").value;
+    current_edit_booking_object.booking.guest_contact.mobile = `(${country_code}) ${number}`;
+}
+function add_new_email_to_edit_booking_obj(){
+    let e_mail = document.getElementById("edit_booking_guest_email_input").value;
+    current_edit_booking_object.booking.guest_contact.email = e_mail;
+}
+
+$(function() {
+    $('#edit_booking_checkin_checkout_input').daterangepicker({
+      opens: 'left',
+      autoUpdateInput: false,
+      locale: {
+        cancelLabel: 'Clear'
+      }
+    }, function(start, end, label) {
+  
+      setTimeout(()=>{
+        document.getElementById("edit_booking_checkin_checkout_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
+        current_edit_booking_object.booking.checkin_date = start.format('YYYY-MM-DD');
+        current_edit_booking_object.booking.checkout_date = end.format('YYYY-MM-DD');
+      }, 100);
+      
+      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+  });
+/*function add_guest_DOB_to_edit_booking_object(input_id, room_index, guest_index){
     let DOB = document.getElementById(input_id).value;
     current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests[guest_index].DOB = DOB;
-}
+}*/
 
 async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms, skip_properties, i){
 
@@ -551,6 +690,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
     document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML = '';
     let adult_number = 0;
     let child_number = 0;
+    let dt_g = 0;
     for(let g=0; g<room.guests.length; g++){
         
         if(room.guests[g].guest_type === "adult"){
@@ -591,8 +731,9 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
             `;
 
             setTimeout(()=>{
-                bind_guest_dob_chooser("adult", `edit_booking_room_guest_DOB_input_${i}_${g}`);
-            }, 50);
+                edit_booking_bind_guest_dob_chooser("adult", `edit_booking_room_guest_DOB_input_${i}_${dt_g}`, i, dt_g);
+                dt_g++;
+            }, 10);
 
         }else{
 
@@ -632,8 +773,9 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
             `;
 
             setTimeout(()=>{
-                bind_guest_dob_chooser("child", `edit_booking_room_guest_DOB_input_${i}_${g}`);
-            }, 50);
+                edit_booking_bind_guest_dob_chooser("child", `edit_booking_room_guest_DOB_input_${i}_${dt_g}`, i, dt_g);
+                dt_g++
+            }, 10);
 
         }
 
@@ -647,13 +789,80 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
         document.getElementById(`edit_booking_room_guest_gender_input_${i}_${g}`).addEventListener('change', e=>{
             add_guest_gender_to_edit_booking_object(`edit_booking_room_guest_gender_input_${i}_${g}`, i, g);
         });
-        document.getElementById(`edit_booking_room_guest_DOB_input_${i}_${g}`).addEventListener('change', e=>{
+        /*document.getElementById(`edit_booking_room_guest_DOB_input_${i}_${g}`).addEventListener('change', e=>{
             add_guest_DOB_to_edit_booking_object(`edit_booking_room_guest_DOB_input_${i}_${g}`, i, g);
-        });
+        });*/
 
     }
 
 
     //let room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
 
+}
+
+async function save_updated_hotel_booking(){
+
+    let is_good_to_go = await edit_booking_check_all_guest_inputs_added();
+    if(!is_good_to_go){
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+            Not Finished`, 
+            "Please add all guest(s) information");
+        return null;
+    }
+
+    if(document.getElementById("edit_booking_guest_email_input").value === ""){
+        if(!is_good_to_go){
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                Not Finished`, 
+                "Please add guest emial");
+            return null;
+        }
+    }
+
+    if(document.getElementById("edit_booking_guest_mobile_input").value === ""){
+        if(!is_good_to_go){
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                Not Finished`, 
+                "Please add guest mobile");
+            return null;
+        }
+    }
+
+    the_full_screen_loader.style.display = "block";
+    
+    //let dates_list = build_dates_list_from_range(rooms_grid_view_config.calendar.first, rooms_grid_view_config.calendar.last);
+    let checking_checkout_dates_list = build_dates_list_from_range(current_edit_booking_object.booking.checkin_date, current_edit_booking_object.booking.checkout_date);
+
+    current_edit_booking_object.booking.all_dates_of_occupancy = [];
+    for(let k=0; k<checking_checkout_dates_list.length; k++){
+        current_edit_booking_object.booking.all_dates_of_occupancy.push(convert_date_object_to_db_string_format(checking_checkout_dates_list[k].full_date));
+    }
+
+    await prepare_edit_booking_post_object_for_db();
+    console.log(current_edit_booking_object.booking);
+    $.ajax({
+        type: "POST",
+        url: "/update_cheap_hotel_booking/",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(current_edit_booking_object.booking),
+        success: data => {
+            console.log(data);
+            the_full_screen_loader.style.display = "none";
+            toggle_show_view_booking_div();
+            //document.getElementById("view_booking_div").style.display = "none";
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                 Booking Update`, 
+            "Booking Update Finished Successfully!");
+            
+        },
+        error: err => {
+            the_full_screen_loader.style.display = "none";
+            console.log(err);
+        }
+    });
 }

@@ -15,52 +15,6 @@
 
 var make_reservation_guests_list = document.getElementById("make_reservation_guests_list");
 
-var rooms_grid_view_config = {
-    calendar: {
-        first: "",
-        last: ""
-    },
-    picked_dates: {
-        checkin: "",
-        checkout: ""
-    },
-    rooms_id: "",
-    property_id: ""
-}
-
-var make_reservations_post_data = {
-    hotel_brand_id: "",
-      property_id: "",
-      booking_status: "before-stay", //staying, before-stay, after-stay, no-show, cancelled
-      booking_date: "",
-      rooms: [
-        {
-            id: "",
-            number: ""
-        }
-      ],
-      //full_property_location: "New York, 1223 Mont Gomery, United States",
-      all_dates_of_occupancy: [],
-      price_paid: 0,
-      checkin_date: "",
-      checkout_date: "",
-      checkin_time: "12:00",
-      checkout_time: "12:00",
-      guests: [],
-      guest_contact: {
-          mobile: "",
-          email: ""
-      },
-    current_room: {
-        number: '',
-        id: '',
-        capacitance: {
-            adults: 0,
-            children: 0,
-        }
-    }
-}
-
 function add_a_guest_obj(type){
     return {
         id: 0,
@@ -76,10 +30,12 @@ function add_a_guest_obj(type){
 }
 
 let global_guests_array_index_position = 0;
+let global_guests_array_date_index_position = 0;
 
 function make_guests_list_from_number_input_values(adult_iput_fld, child_input_fld, initial){
 
     global_guests_array_index_position = 0;
+    global_guests_array_date_index_position = 0;
 
     make_reservation_guests_list.innerHTML = "";
     make_reservations_post_data.guests = [];
@@ -166,8 +122,9 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
         make_reservations_post_data.guests.push(add_a_guest_obj("adult"));
         make_reservation_guests_list.innerHTML += make_reservation_return_each_adult_guest_markup(i, global_guests_array_index_position);
         setTimeout(()=>{
-            bind_guest_dob_chooser("adult", `mk_reservationS_adult_DOB_input_${i}`);
-        }, 50);
+            reservation_bind_guest_dob_chooser("adult", `mk_reservationS_adult_DOB_input_${i}`, global_guests_array_date_index_position);
+            global_guests_array_date_index_position++
+        }, 10);
         global_guests_array_index_position++;
     }
 
@@ -175,8 +132,9 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
         make_reservations_post_data.guests.push(add_a_guest_obj("children"));
         make_reservation_guests_list.innerHTML += make_reservation_return_each_child_guest_markup(i, global_guests_array_index_position);
         setTimeout(()=>{
-            bind_guest_dob_chooser("children", `mk_reservationS_child_DOB_input_${i}`);
-        }, 50);
+            reservation_bind_guest_dob_chooser("children", `mk_reservationS_child_DOB_input_${i}`, global_guests_array_date_index_position);
+            global_guests_array_date_index_position++
+        }, 10);
         global_guests_array_index_position++;
     }
 
@@ -229,7 +187,7 @@ function make_reservation_return_each_adult_guest_markup(number, index){
                         <div style="margin-top: 20px;">
                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                                 Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
-                            <input id="mk_reservationS_adult_DOB_input_${number}"  onchange="add_a_guest_DOB('mk_reservationS_adult_DOB_input_${number}', ${index}, 'adult');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
+                            <input id="mk_reservationS_adult_DOB_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
                         </div>
                     </div>
                 </div>
@@ -264,7 +222,7 @@ function make_reservation_return_each_child_guest_markup(number, index){
                         <div style="margin-top: 20px;">
                             <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
                                 Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
-                            <input id="mk_reservationS_child_DOB_input_${number}" onchange="add_a_guest_DOB('mk_reservationS_child_age_input_${number}', ${index}, 'child');" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
+                            <input id="mk_reservationS_child_DOB_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
                         </div>
                     </div>
                 </div>

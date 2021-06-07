@@ -1,3 +1,5 @@
+var the_full_screen_loader = document.getElementById("full_screen_loader");
+
 var all_hotel_amenity_options = [
     "Business Center",
     "Coffee Shop",
@@ -168,6 +170,52 @@ var current_edit_booking_object = {
     },
     booking: {}
 };
+
+var rooms_grid_view_config = {
+    calendar: {
+        first: "",
+        last: ""
+    },
+    picked_dates: {
+        checkin: "",
+        checkout: ""
+    },
+    rooms_id: "",
+    property_id: ""
+}
+
+var make_reservations_post_data = {
+    hotel_brand_id: "",
+      property_id: "",
+      booking_status: "before-stay", //staying, before-stay, after-stay, no-show, cancelled
+      booking_date: "",
+      rooms: [
+        {
+            id: "",
+            number: ""
+        }
+      ],
+      //full_property_location: "New York, 1223 Mont Gomery, United States",
+      all_dates_of_occupancy: [],
+      price_paid: 0,
+      checkin_date: "",
+      checkout_date: "",
+      checkin_time: "12:00",
+      checkout_time: "12:00",
+      guests: [],
+      guest_contact: {
+          mobile: "",
+          email: ""
+      },
+    current_room: {
+        number: '',
+        id: '',
+        capacitance: {
+            adults: 0,
+            children: 0,
+        }
+    }
+}
 
 let todays_date = new Date();
 let todays_date2 = new Date();
@@ -880,6 +928,24 @@ async function show_in_house_guests(){
 
 }
 
+function toggle_show_guests_manager_div(){
+    $("#guests_manager_div").toggle("up");
+}
+
+async function show_guests_manager(){
+    toggle_show_guests_manager_div();
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("guests_manager_search_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("guests_manager_search_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
+}
+
 function toggle_show_hide_arrival_guests_div(){
     $("#arrival_guests_div").toggle("up");
 }
@@ -944,6 +1010,83 @@ function calculate_age(dob) {
 }
 
 //console.log(calculate_age(new Date(1992, 03, 23)));
+function reservation_bind_guest_dob_chooser(type, input, index){
+    $(function() {
+        $('#'+input).daterangepicker({
+          singleDatePicker: true,
+          autoUpdateInput: false,
+          showDropdowns: true,
+          minYear: 1901,
+          maxYear: parseInt(moment().format('YYYY'),10)
+        }, function(start, end, label) {
+            setTimeout(()=>{
+
+                let year = start.format('YYYY-MM-DD').split("-")[0];
+                let month = start.format('YYYY-MM-DD').split("-")[1];
+                let d_date = start.format('YYYY-MM-DD').split("-")[2];
+
+                let age = calculate_age(new Date(parseInt(year), parseInt(month), parseInt(d_date)));
+
+                if(type === "adult"){
+                    if(age < 18){
+                        document.getElementById(input).value = "";
+                        document.getElementById(input).placeholder = "adults must be atleast 18";
+                    }else{
+                        document.getElementById(input).value = start.format('YYYY-MM-DD');
+                        make_reservations_post_data.guests[index].DOB = start.format('YYYY-MM-DD');
+                    }
+                }else{
+                    if(age > 17){
+                        document.getElementById(input).value = "";
+                        document.getElementById(input).placeholder = "children must be below 18";
+                    }else{
+                        document.getElementById(input).value = start.format('YYYY-MM-DD');
+                        make_reservations_post_data.guests[index].DOB = start.format('YYYY-MM-DD');
+                    }
+                }
+              }, 100);
+        });
+    });
+}
+
+function edit_booking_bind_guest_dob_chooser(type, input, room_index, guest_index){
+    $(function() {
+        $('#'+input).daterangepicker({
+          singleDatePicker: true,
+          autoUpdateInput: false,
+          showDropdowns: true,
+          minYear: 1901,
+          maxYear: parseInt(moment().format('YYYY'),10)
+        }, function(start, end, label) {
+            setTimeout(()=>{
+
+                let year = start.format('YYYY-MM-DD').split("-")[0];
+                let month = start.format('YYYY-MM-DD').split("-")[1];
+                let d_date = start.format('YYYY-MM-DD').split("-")[2];
+
+                let age = calculate_age(new Date(parseInt(year), parseInt(month), parseInt(d_date)));
+
+                if(type === "adult"){
+                    if(age < 18){
+                        document.getElementById(input).value = "";
+                        document.getElementById(input).placeholder = "adults must be atleast 18";
+                    }else{
+                        document.getElementById(input).value = start.format('YYYY-MM-DD');
+                        current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests[guest_index].DOB = start.format('YYYY-MM-DD');
+                    }
+                }else{
+                    if(age > 17){
+                        document.getElementById(input).value = "";
+                        document.getElementById(input).placeholder = "children must be below 18";
+                    }else{
+                        document.getElementById(input).value = start.format('YYYY-MM-DD');
+                        current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests[guest_index].DOB = start.format('YYYY-MM-DD');
+                    }
+                }
+              }, 100);
+        });
+    });
+}
 
 function bind_guest_dob_chooser(type, input){
     $(function() {

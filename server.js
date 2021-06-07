@@ -1144,18 +1144,18 @@ app.post("/update_cheap_hotel_booking/", async (req, res, next) => {
 
   let booking = await cheap_hotel_booking.findById(req.body._id);
 
-  booking.all_dates_of_occupancy = all_dates_of_occupancy;
-  booking.booking_date = booking_date;
-  booking.checkin_date = checkin_date
-  booking.checkin_time = checkin_time;
-  booking.checkout_date = checkout_date;
-  booking.checkout_time = checkout_time;
-  booking.guest_contact = guest_contact
-  booking.guests = guests;
-  booking.hotel_brand_id = hotel_brand_id;
-  booking.price_paid = price_paid;
-  booking.property_id = property_id;
-  booking.rooms = rooms;
+  booking.all_dates_of_occupancy = req.body.all_dates_of_occupancy;
+  booking.booking_date = req.body.booking_date;
+  booking.checkin_date = req.body.checkin_date
+  booking.checkin_time = req.body.checkin_time;
+  booking.checkout_date = req.body.checkout_date;
+  booking.checkout_time = req.body.checkout_time;
+  booking.guest_contact = req.body.guest_contact
+  booking.guests = req.body.guests;
+  booking.hotel_brand_id = req.body.hotel_brand_id;
+  booking.price_paid = req.body.price_paid;
+  booking.property_id = req.body.property_id;
+  booking.rooms = req.body.rooms;
 
   let updated_booking = await new cheap_hotel_booking(booking);
   let saved_booking = await updated_booking.save();
