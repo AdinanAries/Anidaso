@@ -686,25 +686,31 @@ async function render_search_booking_results_markup(booking){
                     - ${property_street} (${property_country})
                 </span>
             </p>
-            <div style="margin-top: 20px;">
-                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                    Checkin:
-                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                        ${change_date_from_iso_to_long_date(booking_checkin_date)}</span>
-                </p>
-                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                    Checkout:
-                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
-                        ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
-                </p>
-                <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                    Price paid:
-                    <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
-                        $${parseFloat(price_paid).toFixed(2)}</span>
-                </p>
-                <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
-                    Room Guest(s)</p>
-                    ${room_guests_markup}
+            <div class="flex_row_default_flex_column_mobile" style="margin-top: 20px;">
+                <div class="flex_child_of_two">
+                    <p style="letter-spacing: 1px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                        Details</p>
+                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                        Checkin:
+                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                            ${change_date_from_iso_to_long_date(booking_checkin_date)}</span>
+                    </p>
+                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                        Checkout:
+                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
+                            ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
+                    </p>
+                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                        Price paid:
+                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                            $${parseFloat(price_paid).toFixed(2)}</span>
+                    </p>
+                </div>
+                <div class="flex_child_of_two flex_non_first_child">
+                    <p style="letter-spacing: 1px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                        Room Guest(s)</p>
+                        ${room_guests_markup}
+                </div>
             </div>
             <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.3);">
                 <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(8, 42, 58); color: white;">

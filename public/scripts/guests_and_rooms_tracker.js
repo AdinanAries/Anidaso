@@ -189,9 +189,9 @@ function validate_allow_add_new_guest(type/*["adult", "child"]*/, room_index){
 
 function edit_booking_check_all_guest_inputs_added(){
     let pass = true;
-
+    
     for(let i=0; i<current_edit_booking_object.rooms_and_guests.room_guests.length; i++){
-        for(let g=0; current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length; g++){
+        for(let g=0; g<current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length; g++){
             if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].first_name === "" || 
             current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].last_name === "" ||
             current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].DOB === ""){
@@ -376,7 +376,7 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
+                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${rooms[i].guests[g].DOB}" value="" />
                             </div>
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
@@ -716,7 +716,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
+                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${room.guests[g].DOB}" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
@@ -758,7 +758,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23" value="" />
+                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${room.guests[g].DOB}" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>

@@ -1175,23 +1175,23 @@
                                 Checkin - Checkout</p>
                             <input id="edit_booking_checkin_checkout_input" style="border: none; padding: 10px; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="checkin - checkout" value="" />
                         </div>
-                        <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                            <div style="width: calc(50% - 5px);">
+                        <div class="flex_row_default_flex_column_mobile" style="margin-top: 20px; justify-content: space-between;">
+                            <div class="flex_child_of_two" style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Email</p>
                                 <input id="edit_booking_guest_email_input" onchange="add_new_email_to_edit_booking_obj();" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="enter email here" value="" />
                             </div>
-                            <div style="width: calc(50% - 5px);">
+                            <div class="flex_child_of_two flex_non_first_child" style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Mobile</p>
                                 <div style="display: flex; flex-direction: row !important;">
-                                    <select onchange="add_new_mobile_number_to_edit_booking_obj();" id="edit_booking_guest_mobile_country_code_select" style="padding: 10px; width: 75px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px;">
+                                    <select onchange="add_new_mobile_number_to_edit_booking_obj();" id="edit_booking_guest_mobile_country_code_select" style="border: none; padding: 10px; width: 80px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px;">
                                         <option value="1">
-                                            1 (USA)
+                                            +1
                                         </option>
                                         <option value="233">
-                                            233 (Ghana)
+                                            +233
                                         </option>
                                     </select>
-                                    <input id="edit_booking_guest_mobile_input" onchange="add_new_mobile_number_to_edit_booking_obj();" style="border: none; padding: 10px; border-radius: 0; border-top-right-radius: 4px; border-bottom-right-radius: 4px; width: calc(100% - 95px);" type="number" placeholder="enter mobile here" value="" />
+                                    <input id="edit_booking_guest_mobile_input" onchange="add_new_mobile_number_to_edit_booking_obj();" style="border: none; padding: 10px; border-radius: 0; border-top-right-radius: 4px; border-bottom-right-radius: 4px; width: calc(100% - 100px);" type="number" placeholder="enter mobile here" value="" />
                                 </div>
                             </div>
                         </div>
@@ -2044,17 +2044,26 @@
                         <div>
                             <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 15px 0; margin-top: 20px;">
                                 Contanct Information</p>
-                            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                                <div style="width: calc(50% - 5px);">
+                            <div class="flex_row_default_flex_column_mobile" style="margin-top: 10px;">
+                                <div class="flex_child_of_two" style="width: calc(50% - 5px);">
                                     <div>
                                         <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Email:</p>
                                         <input id="mk_reservation_guest_email_input" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="add email here"/>
                                     </div>
                                 </div>
-                                <div style="width: calc(50% - 5px); margin-left: 10px;">
-                                    <div>
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Mobile:</p>
-                                        <input id="mk_reservation_guest_mobile_input" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="add mobile here"/>
+                                <div class="flex_child_of_two flex_non_first_child" style="width: calc(50% - 5px);">
+                                    <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Mobile:</p>
+                                    <div style="display: flex; flex-direction: row !important;">
+                                        <select id="mk_reservation_guest_mobile_country_code_select" style="border: none; padding: 10px; width: 75px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 14px;">
+                                            <option value="1">
+                                                +1
+                                            </option>
+                                            <option value="233">
+                                                +233
+                                            </option>
+                                        </select>
+                                        <input id="mk_reservation_guest_mobile_input" style="width: calc(100% - 95px); border: none; padding: 10px; border-radius: 0; border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 14px;" type="number" placeholder="add mobile here"/>
+                                        <!--input id="edit_booking_guest_mobile_input" onchange="add_new_mobile_number_to_edit_booking_obj();" style="" type="number" placeholder="enter mobile here" value="" /-->
                                     </div>
                                 </div>
                             </div>
