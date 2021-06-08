@@ -458,13 +458,17 @@ function toggle_show_view_booking_div(){
     $("#view_booking_div").toggle("up");
 }
 
-function toggle_show_edit_booking_edit_page(){
+async function toggle_show_edit_booking_edit_page(){
+
+    document.getElementById("full_screen_loader").style.display = "flex";
 
     document.getElementById("edit_booking_search_page").style.display = "none";
     document.getElementById("edit_booking_results_page").style.display = "none";
     if(document.getElementById("edit_booking_edit_page").style.display === "none"){
         $("#edit_booking_edit_page").toggle("up");
     }
+
+    await load_country_calling_codes_on_select_input("edit_booking_guest_mobile_country_code_select");
     preprocess_bookings_rooms_and_guests();
 }
 
@@ -486,7 +490,6 @@ function toggle_show_edit_booking_results_page(){
         $("#edit_booking_results_page").toggle("up");
     }
 }
-
 
 let search_booking_checkin = convert_date_object_to_db_string_format(new Date());
 let search_booking_checkout = convert_date_object_to_db_string_format(new Date());
@@ -939,6 +942,7 @@ function toggle_show_guests_manager_div(){
 }
 
 async function show_guests_manager(){
+    show_guest_manager_menu();
     toggle_show_guests_manager_div();
 
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
@@ -950,6 +954,38 @@ async function show_guests_manager(){
         `; 
     }
 
+}
+
+function toggle_show_guest_manager_find_guest(){
+    $("#guest_manager_search_guest_div").toggle("up");
+}
+
+function show_guest_manager_find_guest(){
+    document.getElementById("guest_manager_menu_div").style.display = "none";
+    document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
+    toggle_show_guest_manager_find_guest()
+}
+
+function toggle_show_guest_manager_menu(){
+    $("#guest_manager_menu_div").toggle("up");
+}
+
+function show_guest_manager_menu(){
+    document.getElementById("guest_manager_search_guest_div").style.display = "none";
+    document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
+    if(document.getElementById("guest_manager_menu_div").style.display = "none"){
+        toggle_show_guest_manager_menu();
+    }
+}
+
+function toggle_show_guest_manager_add_new_guest(){
+    $("#guest_manager_add_new_guest_div").toggle("up");
+}
+
+function show_guest_manager_add_new_guest(){
+    document.getElementById("guest_manager_search_guest_div").style.display = "none";
+    document.getElementById("guest_manager_menu_div").style.display = "none";
+    toggle_show_guest_manager_add_new_guest();
 }
 
 function toggle_show_hide_arrival_guests_div(){
@@ -2382,6 +2418,7 @@ async function continue_room_reservation(){
     toggle_show_make_room_reservation_div();
     toggle_show_make_reservation_find_spot_pane();
 
+    await load_country_calling_codes_on_select_input("mk_reservation_guest_mobile_country_code_select");
     let the_rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 

@@ -9,7 +9,8 @@ async function preprocess_bookings_rooms_and_guests(){
     current_edit_booking_object.rooms_and_guests.booking_total_children = 0;
     current_edit_booking_object.rooms_and_guests.booking_id = current_edit_booking_object.booking._id;
     document.getElementById("edit_booking_guest_email_input").value = current_edit_booking_object.booking.guest_contact.email;
-    document.getElementById("edit_booking_guest_mobile_input").value = current_edit_booking_object.booking.guest_contact.mobile;
+    document.getElementById("edit_booking_guest_mobile_input").value = current_edit_booking_object.booking.guest_contact.mobile.split(" ")[1];
+    document.getElementById("edit_booking_guest_mobile_country_code_select").value = current_edit_booking_object.booking.guest_contact.mobile.split(" ")[0];
     document.getElementById("edit_booking_checkin_checkout_input").placeholder = `${current_edit_booking_object.booking.checkin_date} - ${current_edit_booking_object.booking.checkout_date}`;
     
     for(let i=0; i <current_edit_booking_object.booking.rooms.length; i++){
@@ -49,7 +50,15 @@ async function preprocess_bookings_rooms_and_guests(){
     }
 
     console.log(current_edit_booking_object);
+    let total_added_all_guests = (current_edit_booking_object.rooms_and_guests.booking_total_adults + current_edit_booking_object.rooms_and_guests.booking_total_children);
+    let rooms_display_txt = current_edit_booking_object.rooms_and_guests.room_guests.length > 1 ? `${current_edit_booking_object.rooms_and_guests.room_guests.length} rooms` : `${current_edit_booking_object.rooms_and_guests.room_guests.length} room`;
+    let guests_display_txt = total_added_all_guests > 1 ? `${total_added_all_guests} guests` : `${total_added_all_guests} guest`;
+    document.getElementById("total_rooms_and_guest_counter").innerHTML = `
+        <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
+        This booking has  ${rooms_display_txt} ${guests_display_txt}
+    `;
     edit_booking_render_initial_rooms_markup("rooms", "properties", current_edit_booking_object.rooms_and_guests.room_guests);
+    document.getElementById("full_screen_loader").style.display = "none";
 }
 
 //final step before post to api
@@ -68,6 +77,10 @@ async function prepare_edit_booking_post_object_for_db(){
         let added_children_number = 0;
         for(let g=0; g<current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length; g++){
 
+            //adding contacts to each guest
+            current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].mobile = current_edit_booking_object.booking.guest_contact.mobile;
+            current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].email = current_edit_booking_object.booking.guest_contact.email;
+            
             if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].guest_type === "adult"){
                 added_adults_number++;
                 if(current_edit_booking_object.rooms_and_guests.room_guests[i].total_adults < added_adults_number){
@@ -83,7 +96,7 @@ async function prepare_edit_booking_post_object_for_db(){
 
             //creating guest records in DB
             if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id){
-                //do nothing for now
+                //update guest here
             }else{
                 let new_guest_rec = await create_guest_record_in_DB(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]);
                 current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id = new_guest_rec._id;
@@ -225,6 +238,59 @@ async function add_new_room_to_edit_booking(){
 
     let new_index = (current_edit_booking_object.rooms_and_guests.room_guests.length - 1);
     edit_booking_render_new_room_markup("rooms", "properties", new_index);
+    let total_added_all_guests = (current_edit_booking_object.rooms_and_guests.booking_total_adults + current_edit_booking_object.rooms_and_guests.booking_total_children);
+    let rooms_display_txt = current_edit_booking_object.rooms_and_guests.room_guests.length > 1 ? `${current_edit_booking_object.rooms_and_guests.room_guests.length} rooms` : `${current_edit_booking_object.rooms_and_guests.room_guests.length} room`;
+    let guests_display_txt = total_added_all_guests > 1 ? `${total_added_all_guests} guests` : `${total_added_all_guests} guest`;
+    document.getElementById("total_rooms_and_guest_counter").innerHTML = `
+        <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
+        This booking has  ${rooms_display_txt} ${guests_display_txt}
+    `;
+}
+
+function remove_existing_room_from_edit_booking(i){
+
+    for(let g=0; g<current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length; g++){
+
+        if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].guest_type === "adult"){
+            current_edit_booking_object.rooms_and_guests.booking_total_adults -= 1;
+        }else{
+            current_edit_booking_object.rooms_and_guests.booking_total_children -= 1;
+        }
+    }
+
+    current_edit_booking_object.rooms_and_guests.room_guests.splice(i,1);
+
+    edit_booking_render_initial_rooms_markup("rooms", "properties", current_edit_booking_object.rooms_and_guests.room_guests);
+    //$(`#edit_booking_another_room_${i}`).toggle("up");
+
+    let total_added_all_guests = (current_edit_booking_object.rooms_and_guests.booking_total_adults + current_edit_booking_object.rooms_and_guests.booking_total_children);
+    let rooms_display_txt = current_edit_booking_object.rooms_and_guests.room_guests.length > 1 ? `${current_edit_booking_object.rooms_and_guests.room_guests.length} rooms` : `${current_edit_booking_object.rooms_and_guests.room_guests.length} room`;
+    let guests_display_txt = total_added_all_guests > 1 ? `${total_added_all_guests} guests` : `${total_added_all_guests} guest`;
+    document.getElementById("total_rooms_and_guest_counter").innerHTML = `
+        <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
+        This booking has  ${rooms_display_txt} ${guests_display_txt}
+    `;
+}
+
+function remove_existing_guest_from_edit_booking(room_index, guest_index){
+
+    if(current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests[guest_index].guest_type === "adult"){
+        current_edit_booking_object.rooms_and_guests.booking_total_adults -= 1;
+    }else{
+        current_edit_booking_object.rooms_and_guests.booking_total_children -= 1;
+    }
+
+    current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.splice(guest_index, 1);
+    edit_booking_render_initial_rooms_markup("rooms", "properties", current_edit_booking_object.rooms_and_guests.room_guests);
+    //$(`#edit_booking_room_guest_form_${room_index}_${guest_index}`).toggle("up");
+
+    let total_added_all_guests = (current_edit_booking_object.rooms_and_guests.booking_total_adults + current_edit_booking_object.rooms_and_guests.booking_total_children);
+    let rooms_display_txt = current_edit_booking_object.rooms_and_guests.room_guests.length > 1 ? `${current_edit_booking_object.rooms_and_guests.room_guests.length} rooms` : `${current_edit_booking_object.rooms_and_guests.room_guests.length} room`;
+    let guests_display_txt = total_added_all_guests > 1 ? `${total_added_all_guests} guests` : `${total_added_all_guests} guest`;
+    document.getElementById("total_rooms_and_guest_counter").innerHTML = `
+        <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
+        This booking has  ${rooms_display_txt} ${guests_display_txt}
+    `;
 }
 
 async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, new_index){
@@ -238,7 +304,7 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
                 <p style="margin-left: 5px; font-size: 16px; color:rgb(168, 195, 218); font-weight: bolder;">
                     <i style="margin-right: 5px; color:rgb(255, 97, 6);" aria-hidden="true" class="fa fa-building"></i>
                     Room ${new_index + 1}</p>
-                <p style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
+                <p onclick="remove_existing_room_from_edit_booking(${new_index});" style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
                     <i style="margin-right: 5px; color:rgb(255, 61, 61);" aria-hidden="true" class="fa fa-trash"></i>
                     Remove</p>
             </div>
@@ -309,7 +375,7 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                     <p style="margin-left: 5px; font-size: 16px; color:rgb(168, 195, 218); font-weight: bolder;">
                         <i style="margin-right: 5px; color:rgb(255, 97, 6);" aria-hidden="true" class="fa fa-building"></i>
                         Room ${i + 1}</p>
-                    <p style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
+                    <p onclick="remove_existing_room_from_edit_booking(${i});" style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
                         <i style="margin-right: 5px; color:rgb(255, 61, 61);" aria-hidden="true" class="fa fa-trash"></i>
                         Remove</p>
                 </div>
@@ -387,6 +453,12 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                                 </select>
                             </div>
                         </div>
+                        <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                            <p style="font-size: 14px; color: white; text-align: center;">
+                                <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                                remove adult ${adult_number}
+                            </p>
+                        </div>
                     </div>
                 `;
 
@@ -424,6 +496,12 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
+                        </div>
+                        <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                            <p style="font-size: 14px; color: white; text-align: center;">
+                                <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                                remove child ${child_number}
+                            </p>
                         </div>
                     </div>
                 `;
@@ -501,7 +579,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
         current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.push(new_guest);
 
         document.getElementById("edit_booking_room_guests_forms_list_"+room_index).innerHTML += `
-            <div style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
+            <div id="edit_booking_room_guest_form_${room_index}_${guest_index}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
                 <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
                     Adult ${added_adults.length+1}</p>
                 <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
@@ -526,6 +604,12 @@ function edit_booking_add_new_guest(guest_type, room_index){
                             <option value="Female">Female</option>
                         </select>
                     </div>
+                </div>
+                <div onclick="remove_existing_guest_from_edit_booking(${room_index}, ${guest_index});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                    <p style="font-size: 14px; color: white; text-align: center;">
+                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                        remove adult ${added_adults.length+1}
+                    </p>
                 </div>
             </div>
         `;
@@ -561,7 +645,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
         current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.push(new_guest);
 
         document.getElementById("edit_booking_room_guests_forms_list_"+room_index).innerHTML += `
-            <div style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
+            <div id="edit_booking_room_guest_form_${room_index}_${guest_index}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
                 <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
                     Child ${added_children.length+1}</p>
                 <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
@@ -586,6 +670,12 @@ function edit_booking_add_new_guest(guest_type, room_index){
                             <option value="Female">Female</option>
                         </select>
                     </div>
+                </div>
+                <div onclick="remove_existing_guest_from_edit_booking(${room_index}, ${guest_index});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                    <p style="font-size: 14px; color: white; text-align: center;">
+                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                        remove child ${added_children.length+1}
+                    </p>
                 </div>
             </div>
         `;
@@ -612,6 +702,13 @@ function edit_booking_add_new_guest(guest_type, room_index){
     });*/
 
     console.log(current_edit_booking_object);
+    let total_added_all_guests = (current_edit_booking_object.rooms_and_guests.booking_total_adults + current_edit_booking_object.rooms_and_guests.booking_total_children);
+    let rooms_display_txt = current_edit_booking_object.rooms_and_guests.room_guests.length > 1 ? `${current_edit_booking_object.rooms_and_guests.room_guests.length} rooms` : `${current_edit_booking_object.rooms_and_guests.room_guests.length} room`;
+    let guests_display_txt = total_added_all_guests > 1 ? `${total_added_all_guests} guests` : `${total_added_all_guests} guest`;
+    document.getElementById("total_rooms_and_guest_counter").innerHTML = `
+        <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
+        This booking has  ${rooms_display_txt} ${guests_display_txt}
+    `;
 }
 
 function add_guest_first_name_to_edit_booking_object(input_id, room_index, guest_index){
@@ -632,7 +729,7 @@ function add_guest_gender_to_edit_booking_object(input_id, room_index, guest_ind
 function add_new_mobile_number_to_edit_booking_obj(){
     let country_code = document.getElementById("edit_booking_guest_mobile_country_code_select").value;
     let number = document.getElementById("edit_booking_guest_mobile_input").value;
-    current_edit_booking_object.booking.guest_contact.mobile = `(${country_code}) ${number}`;
+    current_edit_booking_object.booking.guest_contact.mobile = `${country_code} ${number}`;
 }
 function add_new_email_to_edit_booking_obj(){
     let e_mail = document.getElementById("edit_booking_guest_email_input").value;
@@ -727,6 +824,12 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                             </select>
                         </div>
                     </div>
+                    <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                    <p style="font-size: 14px; color: white; text-align: center;">
+                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                        remove adult ${adult_number}
+                    </p>
+                </div>
                 </div>
             `;
 
@@ -769,6 +872,12 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                             </select>
                         </div>
                     </div>
+                    <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                    <p style="font-size: 14px; color: white; text-align: center;">
+                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                        remove child ${child_number}
+                    </p>
+                </div>
                 </div>
             `;
 
@@ -795,7 +904,13 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
 
     }
 
-
+    let total_added_all_guests = (current_edit_booking_object.rooms_and_guests.booking_total_adults + current_edit_booking_object.rooms_and_guests.booking_total_children);
+    let rooms_display_txt = current_edit_booking_object.rooms_and_guests.room_guests.length > 1 ? `${current_edit_booking_object.rooms_and_guests.room_guests.length} rooms` : `${current_edit_booking_object.rooms_and_guests.room_guests.length} room`;
+    let guests_display_txt = total_added_all_guests > 1 ? `${total_added_all_guests} guests` : `${total_added_all_guests} guest`;
+    document.getElementById("total_rooms_and_guest_counter").innerHTML = `
+        <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
+        This booking has  ${rooms_display_txt} ${guests_display_txt}
+    `;
     //let room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
 
 }

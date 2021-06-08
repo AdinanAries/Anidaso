@@ -811,7 +811,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
         make_reservations_post_data.guests[g].first_name, make_reservations_post_data.guests[g].last_name,
         make_reservations_post_data.guests[g].type, make_reservations_post_data.guests[g].DOB, 
         make_reservations_post_data.guests[g].gender, document.getElementById("mk_reservation_guest_email_input").value, 
-        document.getElementById("mk_reservation_guest_mobile_input").value, 0, "booked"/*status*/, ""/*booking_id*/, 
+        `${document.getElementById("mk_reservation_guest_mobile_country_code_select").value} ${document.getElementById("mk_reservation_guest_mobile_input").value}`, 0, "booked"/*status*/, ""/*booking_id*/, 
             make_reservations_post_data.rooms[0].id, make_reservations_post_data.rooms[0].number, 
             ""/*street_address*/, ""/*city*/, ""/*town*/, ""/*country*/, ""/*zipcode*/);
 
@@ -864,7 +864,7 @@ function make_a_reservation_post_function(){
 
     make_reservations_post_data.booking_date = convert_date_object_to_db_string_format(new Date());
     make_reservations_post_data.guest_contact.email = document.getElementById("mk_reservation_guest_email_input").value;
-    make_reservations_post_data.guest_contact.mobile = document.getElementById("mk_reservation_guest_mobile_input").value;
+    make_reservations_post_data.guest_contact.mobile = `${document.getElementById("mk_reservation_guest_mobile_country_code_select").value} ${document.getElementById("mk_reservation_guest_mobile_input").value}`;
 
     $.ajax({
         type: "POST",

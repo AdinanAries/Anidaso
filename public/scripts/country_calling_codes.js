@@ -235,7 +235,7 @@ var calling_codes = [
     {country: "Tromelin Island", code: ""},
     {country: "Tunisia", code: "+216"},
     {country: "Turkey", code: "+90"},
-    {country: "Turkmenistan	+993"},
+    {country: "Turkmenistan", code: "+993"},
     {country: "Turks and Caicos Islands", code: "+1 649"},
     {country: "Tuvalu", code: "+688"},
     {country: "Uganda", code: "+256"},
@@ -257,3 +257,22 @@ var calling_codes = [
     {country: "Zambia", code: "+260"},
     {country: "Zimbabwe", code: "+263"}
 ]
+
+function load_country_calling_codes_on_select_input(input_id){
+
+    let select_input = document.getElementById(input_id);
+    select_input.innerHTML = "";
+
+    for(let i=0; i<calling_codes.length; i++){
+
+        if(calling_codes[i].code === "")
+            continue;
+
+        select_input.innerHTML += `
+            <option value="${calling_codes[i].code}">${calling_codes[i].code} - ${calling_codes[i].country}</option>
+        `;
+    }
+
+    return {done: true};
+
+}
