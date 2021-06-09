@@ -142,6 +142,7 @@ function collect_inhouse_guests_search_post_data(){
     let first_name_input = document.getElementById("in_house_guests_search_first_name_input");
     let last_name_input = document.getElementById("in_house_guests_search_last_name_input");
     let mobile_input = document.getElementById("in_house_guests_search_mobile_input");
+    let calling_code_input = document.getElementById("inhouse_guests_search_country_calling_code_select");
     let email_input = document.getElementById("in_house_guests_search_email_input");
     let building_input = document.getElementById("in_house_guests_search_property_select");
 
@@ -150,7 +151,7 @@ function collect_inhouse_guests_search_post_data(){
     guest_search_post_data.first_name = first_name_input.value;
     guest_search_post_data.last_name = last_name_input.value;
     guest_search_post_data.email = email_input.value;
-    guest_search_post_data.mobile = mobile_input.value;
+    guest_search_post_data.mobile = `${calling_code_input.value} ${mobile_input.value}`;
 
     return null;
 }
@@ -160,6 +161,7 @@ function collect_arrival_guests_search_post_data(){
     let first_name_input = document.getElementById("arrival_guests_search_first_name_input");
     let last_name_input = document.getElementById("arrival_guests_search_last_name_input");
     let mobile_input = document.getElementById("arrival_guests_search_mobile_input");
+    let calling_code_input = document.getElementById("arrival_guests_search_country_calling_code_select");
     let email_input = document.getElementById("arrival_guests_search_email_input");
     let building_input = document.getElementById("arrival_guests_search_property_select");
 
@@ -168,7 +170,7 @@ function collect_arrival_guests_search_post_data(){
     guest_search_post_data.first_name = first_name_input.value;
     guest_search_post_data.last_name = last_name_input.value;
     guest_search_post_data.email = email_input.value;
-    guest_search_post_data.mobile = mobile_input.value;
+    guest_search_post_data.mobile = `${calling_code_input.value} ${mobile_input.value}`;
 
     return null
 }
@@ -178,6 +180,7 @@ function collect_checkout_guests_search_post_data(){
     let first_name_input = document.getElementById("checkout_guests_search_first_name_input");
     let last_name_input = document.getElementById("checkout_guests_search_last_name_input");
     let mobile_input = document.getElementById("checkout_guests_search_mobile_input");
+    let calling_code_input = document.getElementById("checkout_guests_search_country_calling_code_select");
     let email_input = document.getElementById("checkout_guests_search_email_input");
     let building_input = document.getElementById("checkout_guests_search_property_select");
 
@@ -186,7 +189,7 @@ function collect_checkout_guests_search_post_data(){
     guest_search_post_data.first_name = first_name_input.value;
     guest_search_post_data.last_name = last_name_input.value;
     guest_search_post_data.email = email_input.value;
-    guest_search_post_data.mobile = mobile_input.value;
+    guest_search_post_data.mobile = `${calling_code_input.value} ${mobile_input.value}`;
 
     return null;
 }
