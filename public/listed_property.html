@@ -763,6 +763,7 @@
                                 cancel
                             </div>
                         </div>
+                        <input id="guest_manager_new_or_existing_guest_photo_file_input" type="file" style="display: none;"/>
                     </div>
                     <div id="guest_manager_add_guest_address" style="display: none; top: 10px; box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.5), 0px 0px 2.9px rgba(0, 0, 0, 0.4);position: absolute; background-color: rgb(0, 68, 100); width: calc(100% - 20px); padding: 10px; border-radius: 4px;">
                         <p onclick="toggle_show_guest_manager_add_new_guest_address();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
@@ -771,27 +772,27 @@
                             <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                                 <div style="width: calc(50% - 5px);">
                                     <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Street Address</p>
-                                    <input id="in_house_guests_search_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="eg. 225 Hilton St." value="" />
+                                    <input id="guest_manager_new_or_existing_guest_street_address_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="eg. 225 Hilton St." value="" />
                                 </div>
                                 <div style="width: calc(50% - 5px);">
                                     <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Town</p>
-                                    <input id="in_house_guests_search_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter town here" value="" />
+                                    <input id="guest_manager_new_or_existing_guest_town_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter town here" value="" />
                                 </div>
                             </div>
                             <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                                 <div style="width: calc(50% - 5px);">
                                     <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">City</p>
-                                    <input id="in_house_guests_search_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter city here" value="" />
+                                    <input id="guest_manager_new_or_existing_guest_city_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter city here" value="" />
                                 </div>
                                 <div style="width: calc(50% - 5px);">
                                     <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Country</p>
-                                    <input id="in_house_guests_search_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter country here" value="" />
+                                    <input id="guest_manager_new_or_existing_guest_country_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter country here" value="" />
                                 </div>
                             </div>
                             <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                                 <div style="width: calc(50% - 5px);">
                                     <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Zipcode</p>
-                                    <input id="in_house_guests_search_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter zipcode here" value="" />
+                                    <input id="guest_manager_new_or_existing_guest_zipcode_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter zipcode here" value="" />
                                 </div>
                                 <div style="width: calc(50% - 5px); display: flex; flex-direction: column; justify-content: flex-end;">
                                     <div onclick="guest_manager_save_new_guest_address();" style="cursor: pointer; text-align: center; color: white; background-color:rgb(0, 124, 83); padding: 10px; border-radius: 4px;">
@@ -820,21 +821,21 @@
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
-                            <input id="in_house_guests_search_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
+                            <input id="guest_manager_new_or_existing_guest_first_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
-                            <input id="in_house_guests_search_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
+                            <input id="guest_manager_new_or_existing_guest_last_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="" />
                         </div>
                     </div>
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Email</p>
-                            <input id="in_house_guests_search_email_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="enter mobile here" value="" />
+                            <input id="guest_manager_new_or_existing_guest_email_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="enter mobile here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
-                            <select id="guests_manager_search_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                            <select id="guest_manager_new_or_existing_guest_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
                                 <opttion>All</opttion>
                                 <option>Kumasi - 2122 Estate Junc (Ghana)</option>
                             </select>
@@ -843,13 +844,13 @@
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date of Birth</p>
-                            <input id="in_house_guests_search_email_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="enter mobile here" value="" />
+                            <input id="guest_manager_new_or_existing_guest_DOB_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="enter mobile here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
-                            <select id="guests_manager_search_property_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
-                                <option>Male</option>
-                                <option>Female</option>
+                            <select id="guest_manager_new_or_existing_guest_gender_select" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
                         </div>
                     </div>
@@ -859,16 +860,16 @@
                         <div style="display: flex; flex-direction: row !important;">
                             <div style="width: calc(100% - 80px); display: flex; flex-direction: row !important;">
                                 <div style="width: 90px;">
-                                    <select style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: 100%;">
+                                    <select id="guest_manager_new_or_existing_guest_country_calling_code_input" style="border: none; padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: 100%;">
                                         <option>
                                             +233
                                         </option>
                                     </select>
                                 </div>
-                                <input id="in_house_guests_search_mobile_input" style="border: none; padding: 10px; border-radius: 0; width: calc(100% - 110px);" type="number" placeholder="enter mobile here" value="" />
+                                <input id="guest_manager_new_or_existing_guest_mobile_input" style="border: none; padding: 10px; border-radius: 0; width: calc(100% - 110px);" type="number" placeholder="enter mobile here" value="" />
                             </div>
-                            <div onclick="" style="cursor: pointer; width: 80px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(0, 124, 83); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
-                                Search
+                            <div onclick="guest_manager_save_new_guest_onsubmit('save');" style="cursor: pointer; width: 80px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(0, 124, 83); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                                Save
                             </div>
                         </div>
                     </div>

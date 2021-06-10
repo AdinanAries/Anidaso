@@ -993,10 +993,23 @@ function toggle_show_guest_manager_add_new_guest(){
     $("#guest_manager_add_new_guest_div").toggle("up");
 }
 
-function show_guest_manager_add_new_guest(){
+async function show_guest_manager_add_new_guest(){
     document.getElementById("guest_manager_search_guest_div").style.display = "none";
     document.getElementById("guest_manager_menu_div").style.display = "none";
     toggle_show_guest_manager_add_new_guest();
+
+    setTimeout(()=>{
+        load_country_calling_codes_on_select_input("guest_manager_new_or_existing_guest_country_calling_code_input");
+    },510);
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("guest_manager_new_or_existing_guest_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("guest_manager_new_or_existing_guest_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
 }
 
 function toggle_show_guest_manager_add_new_guest_address(){

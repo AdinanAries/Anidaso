@@ -662,4 +662,100 @@ document.getElementById("logged_in_hotel_add_new_photo_cancel_btn").addEventList
         document.getElementById("logged_in_hotel_add_new_photo_file_input_btn").style.backgroundColor = 'rgba(0,0,0,0.4)';
         last_added_photo_url = "";
     }
-})
+});
+
+//guest manager
+var add_or_edit_guest_current_age;
+var add_or_edit_guest_DOB;
+var add_or_edit_guest_photo_url = "";
+var edit_guest_existing_guest;
+$(function() {
+    $('#guest_manager_new_or_existing_guest_DOB_input').daterangepicker({
+      singleDatePicker: true,
+      autoUpdateInput: false,
+      showDropdowns: true,
+      minYear: 1901,
+      maxYear: parseInt(moment().format('YYYY'),10)
+    }, function(start, end, label) {
+        setTimeout(()=>{
+
+            let year = start.format('YYYY-MM-DD').split("-")[0];
+            let month = start.format('YYYY-MM-DD').split("-")[1];
+            let d_date = start.format('YYYY-MM-DD').split("-")[2];
+
+            add_or_edit_guest_current_age = calculate_age(new Date(parseInt(year), parseInt(month), parseInt(d_date)));
+
+            document.getElementById("guest_manager_new_or_existing_guest_DOB_input").value = start.format('YYYY-MM-DD');
+            add_or_edit_guest_DOB = start.format('YYYY-MM-DD');
+                
+            
+          }, 100);
+    });
+});
+async function guest_manager_save_new_or_existing_guest_onsubmit(type){
+
+    let first_name = document.getElementById("guest_manager_new_or_existing_guest_first_name_input").value;
+    let last_name = document.getElementById("guest_manager_new_or_existing_guest_last_name_input").value;
+    let property_id = document.getElementById("guest_manager_new_or_existing_guest_property_select").value;
+    let email = document.getElementById("guest_manager_new_or_existing_guest_email_input").value;
+    let gender = document.getElementById("guest_manager_new_or_existing_guest_gender_select").value;
+    let mobile = `${document.getElementById("guest_manager_new_or_existing_guest_country_calling_code_input").value} ${document.getElementById("guest_manager_new_or_existing_guest_mobile_input").value}`;
+    //address
+    let Street_address = document.getElementById("guest_manager_new_or_existing_guest_street_address_input").value;
+    let town = document.getElementById("guest_manager_new_or_existing_guest_town_input").value;
+    let city = document.getElementById("guest_manager_new_or_existing_guest_city_input").value;
+    let country = document.getElementById("guest_manager_new_or_existing_guest_country_input").value;
+    let zipcode = document.getElementById("guest_manager_new_or_existing_guest_zipcode_input").value;
+
+    let guest_type = "adult"; 
+    if(add_or_edit_guest_current_age < 18){
+        guest_type = "child"
+    }
+
+    let hotel_id = window.localStorage.getItem("ANDSBZID");
+
+    if(type === "save"){
+        let saved_guest = await create_guest_record(hotel_id, property_id, add_or_edit_guest_photo_url, first_name, last_name,
+            guest_type, add_or_edit_guest_DOB, gender, email, mobile, 0, "unbooked", ""/*booking_id*/, 
+            /*room_id_param*/"", /*room_number_param*/"", Street_address, city, town, country, zipcode);
+    }else{
+        let saved_guest = await edit_existing_guest_record(edit_guest_existing_guest._id, hotel_id, property_id, add_or_edit_guest_photo_url, first_name, last_name,
+            guest_type_param, add_or_edit_guest_DOB, gender, email, mobile, 0, status_param, booking_id_param, 
+            room_id_param, room_number_param, Street_address, city, town, country, zipcode)
+    }
+}
+
+function edit_existing_guest_record(guest_id, hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
+    guest_type_param, DOB_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+    room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param){
+
+    let the_guest = return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
+        guest_type_param, DOB_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
+        room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param);
+
+    return $.ajax({
+        type: "POST",
+        url: "/edit_existing_cheap_hotel_guest/"+guest_id,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(the_guest),
+        success: data => {
+            console.log(data);
+            return data;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
+function guest_manager_save_new_guest_onsubmit(type){
+    //type === save
+    guest_manager_save_new_or_existing_guest_onsubmit(type)
+}
+
+function guest_manager_edit_existing_guest_onsubmit(type){
+    //type === edit
+    guest_manager_save_new_or_existing_guest_onsubmit(type)
+}
