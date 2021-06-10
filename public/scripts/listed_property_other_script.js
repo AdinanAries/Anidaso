@@ -666,7 +666,7 @@ document.getElementById("logged_in_hotel_add_new_photo_cancel_btn").addEventList
 
 //guest manager
 var add_or_edit_guest_current_age;
-var add_or_edit_guest_DOB;
+var add_or_edit_guest_DOB = "";
 var add_or_edit_guest_photo_url = "";
 var edit_guest_existing_guest;
 $(function() {
@@ -699,13 +699,57 @@ async function guest_manager_save_new_or_existing_guest_onsubmit(type){
     let property_id = document.getElementById("guest_manager_new_or_existing_guest_property_select").value;
     let email = document.getElementById("guest_manager_new_or_existing_guest_email_input").value;
     let gender = document.getElementById("guest_manager_new_or_existing_guest_gender_select").value;
-    let mobile = `${document.getElementById("guest_manager_new_or_existing_guest_country_calling_code_input").value} ${document.getElementById("guest_manager_new_or_existing_guest_mobile_input").value}`;
+    let mobile_last_nums = document.getElementById("guest_manager_new_or_existing_guest_mobile_input").value;
+    let mobile_calling_code = document.getElementById("guest_manager_new_or_existing_guest_country_calling_code_input").value
+    let mobile = `${mobile_calling_code} ${mobile_last_nums}`;
     //address
     let Street_address = document.getElementById("guest_manager_new_or_existing_guest_street_address_input").value;
     let town = document.getElementById("guest_manager_new_or_existing_guest_town_input").value;
     let city = document.getElementById("guest_manager_new_or_existing_guest_city_input").value;
     let country = document.getElementById("guest_manager_new_or_existing_guest_country_input").value;
     let zipcode = document.getElementById("guest_manager_new_or_existing_guest_zipcode_input").value;
+
+    if(first_name === ""){
+
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Not Finished`, 
+            "please add guest first name");
+        
+        return null;
+    }else if(last_name === ""){
+
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Not Finished`, 
+            "please add guest last name");
+        
+        return null;
+    }else if( email === ""){
+
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Not Finished`, 
+            "please add guest email");
+        
+        return null;
+    }else if(add_or_edit_guest_DOB === ""){
+
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Not Finished`, 
+            "please add guest date of birth");
+        
+        return null;
+    }else if(mobile_last_nums === ""){
+
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Not Finished`, 
+            "please add guest mobile");
+        
+        return null;
+    }
 
     let guest_type = "adult"; 
     if(add_or_edit_guest_current_age < 18){
@@ -714,15 +758,38 @@ async function guest_manager_save_new_or_existing_guest_onsubmit(type){
 
     let hotel_id = window.localStorage.getItem("ANDSBZID");
 
+    the_full_screen_loader.style.display = "flex";
+
     if(type === "save"){
+
         let saved_guest = await create_guest_record(hotel_id, property_id, add_or_edit_guest_photo_url, first_name, last_name,
             guest_type, add_or_edit_guest_DOB, gender, email, mobile, 0, "unbooked", ""/*booking_id*/, 
             /*room_id_param*/"", /*room_number_param*/"", Street_address, city, town, country, zipcode);
+
+            the_full_screen_loader.style.display = "none";
+
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                    Guest Added`, 
+                "New Guest Added Successfully!");
+
     }else{
+
         let saved_guest = await edit_existing_guest_record(edit_guest_existing_guest._id, hotel_id, property_id, add_or_edit_guest_photo_url, first_name, last_name,
-            guest_type_param, add_or_edit_guest_DOB, gender, email, mobile, 0, status_param, booking_id_param, 
-            room_id_param, room_number_param, Street_address, city, town, country, zipcode)
+            guest_type, add_or_edit_guest_DOB, gender, email, mobile, 0, ""/*status_param*/, ""/*booking_id_param*/, 
+            ""/*room_id_param*/, ""/*room_number_param*/, Street_address, city, town, country, zipcode);
+
+            the_full_screen_loader.style.display = "none";
+
+            show_prompt_to_user(`
+                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                    Guest Updated`, 
+                "Guest Record Updated Successfully!");
+
     }
+
+    show_guest_manager_menu();
+    
 }
 
 function edit_existing_guest_record(guest_id, hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
@@ -758,4 +825,20 @@ function guest_manager_save_new_guest_onsubmit(type){
 function guest_manager_edit_existing_guest_onsubmit(type){
     //type === edit
     guest_manager_save_new_or_existing_guest_onsubmit(type)
+}
+
+function clean_up_after_saving_new_guest(){
+    document.getElementById("guest_manager_new_or_existing_guest_first_name_input").value = "";
+    document.getElementById("guest_manager_new_or_existing_guest_last_name_input").value = "";
+    //document.getElementById("guest_manager_new_or_existing_guest_property_select").value;
+    document.getElementById("guest_manager_new_or_existing_guest_email_input").value = "";
+    document.getElementById("guest_manager_new_or_existing_guest_gender_select").value = "Male";
+    //document.getElementById("guest_manager_new_or_existing_guest_country_calling_code_input").value;
+    document.getElementById("guest_manager_new_or_existing_guest_mobile_input").value = "";
+    //address
+    document.getElementById("guest_manager_new_or_existing_guest_street_address_input").value = "";
+    document.getElementById("guest_manager_new_or_existing_guest_town_input").value = "";
+    document.getElementById("guest_manager_new_or_existing_guest_city_input").value = "";
+    document.getElementById("guest_manager_new_or_existing_guest_country_input").value = "";
+    document.getElementById("guest_manager_new_or_existing_guest_zipcode_input").value = "";
 }

@@ -1706,6 +1706,32 @@ app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {
 
 });
 
+app.post("/edit_existing_cheap_hotel_guest/:guest_id", async (req, res, next)=> {
+  let the_guest = await cheap_hotel_guest.findById(req.params.guest_id);
+
+  the_guest.hotel_brand_id = req.body.hotel_brand_id;
+  the_guest.property_id = req.body.property_id;
+  the_guest.profile_pic = req.body.profile_pic;
+  the_guest.first_name = req.body.first_name;
+  the_guest.last_name = req.body.last_name;
+  the_guest.guest_type = req.body.guest_type;
+  the_guest.age = req.body.age;
+  the_guest.DOB = req.body.DOB;
+  the_guest.gender = req.body.gender;
+  the_guest.email = req.body.email;
+  the_guest.mobile = req.body.mobile;
+  /*the_guest.price_paid = req.body.price_paid;
+  the_guest.status = req.body.status;
+  the_guest.assigned_room = req.body.assigned_room;*/
+  the_guest.home_address = req.body.home_address;
+
+  let new_updated_guest = await new cheap_hotel_guest(the_guest);
+  let saved_updated_guest = await new_updated_guest.save();
+
+  res.send(saved_updated_guest);
+
+});
+
 app.post("/add_new_cheap_hotel_guest_invoice/", async (req, res, next)=> {
   
   let invoice = await new cheap_hotel_invoice({
@@ -1720,7 +1746,7 @@ app.post("/add_new_cheap_hotel_guest_invoice/", async (req, res, next)=> {
   let new_invoice = await invoice.save();
   res.send(new_invoice);
 
-})
+});
 
 //update routes
 
