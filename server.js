@@ -1732,6 +1732,28 @@ app.post("/edit_existing_cheap_hotel_guest/:guest_id", async (req, res, next)=> 
 
 });
 
+app.post("/search_cheap_hotel_guest/", async (req, res, next)=> {
+
+  let f_name = req.body.first_name;
+  let l_name = req.body.last_name;
+  let mobile_p = req.body.mobile;
+  let DOB_p = req.body.DOB;
+  let property_id_p = req.body.property_id;
+  let hotel_brand_id_p = req.body.hotel_id;
+
+  let guest = await cheap_hotel_guest.find({
+    first_name: f_name,
+    last_name: l_name,
+    DOB: DOB_p,
+    mobile: mobile_p,
+    hotel_brand_id: hotel_brand_id_p,
+    property_id: property_id_p,
+  });
+
+  res.send(guest);
+
+});
+
 app.post("/add_new_cheap_hotel_guest_invoice/", async (req, res, next)=> {
   
   let invoice = await new cheap_hotel_invoice({

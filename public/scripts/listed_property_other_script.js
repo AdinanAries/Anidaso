@@ -692,6 +692,7 @@ $(function() {
           }, 100);
     });
 });
+
 async function guest_manager_save_new_or_existing_guest_onsubmit(type){
 
     let first_name = document.getElementById("guest_manager_new_or_existing_guest_first_name_input").value;
@@ -841,4 +842,125 @@ function clean_up_after_saving_new_guest(){
     document.getElementById("guest_manager_new_or_existing_guest_city_input").value = "";
     document.getElementById("guest_manager_new_or_existing_guest_country_input").value = "";
     document.getElementById("guest_manager_new_or_existing_guest_zipcode_input").value = "";
+}
+
+function search_and_return_cheap_hotel_guest(post_data){
+    return $.ajax({
+        type: "POST",
+        url: "/search_cheap_hotel_guest/",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(post_data),
+        success: data => {
+            console.log(data);
+            return data;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
+let guest_manager_search_guest_DOB = "";
+$(function() {
+    $('#guests_manager_search_guest_DOB_input').daterangepicker({
+      singleDatePicker: true,
+      autoUpdateInput: false,
+      showDropdowns: true,
+      minYear: 1901,
+      maxYear: parseInt(moment().format('YYYY'),10)
+    }, function(start, end, label) {
+        setTimeout(()=>{
+
+            let year = start.format('YYYY-MM-DD').split("-")[0];
+            let month = start.format('YYYY-MM-DD').split("-")[1];
+            let d_date = start.format('YYYY-MM-DD').split("-")[2];
+
+            //add_or_edit_guest_current_age = calculate_age(new Date(parseInt(year), parseInt(month), parseInt(d_date)));
+
+            document.getElementById("guests_manager_search_guest_DOB_input").value = start.format('YYYY-MM-DD');
+            guest_manager_search_guest_DOB = start.format('YYYY-MM-DD');
+                
+            
+          }, 100);
+    });
+});
+async function search_guest_on_submit_function(){
+
+    let f_name = document.getElementById("guests_manager_search_guest_first_name_input").value;
+    let l_name = document.getElementById("guests_manager_search_guest_last_name_input").value;
+    let country_calling_code = document.getElementById("guests_manager_search_guest_calling_code_select").value;
+    let mobile_last_nums = document.getElementById("guests_manager_search_mobile_input").value;
+    let mobile_p = `${country_calling_code} ${mobile_last_nums}`;
+    let property_id_p = document.getElementById("guests_manager_search_property_select").value;
+
+    let post_obj = {
+        first_name: f_name,
+        last_name: l_name,
+        mobile: mobile_p,
+        DOB: guest_manager_search_guest_DOB,
+        property_id: property_id_p,
+        hotel_id: window.localStorage.getItem("ANDSBZID")
+    }
+
+    let guests = await search_and_return_cheap_hotel_guest(post_obj);
+
+    document.getElementById("guest_mamager_search_guests_list").innerHTML = ``;
+    for(let i=0; i<guests.length; i++){
+        document.getElementById("guest_mamager_search_guests_list").innerHTML += return_each_guest_manager_guest_markup(guests[i]);
+    }
+
+}
+
+function return_each_guest_manager_guest_markup(guest){
+    return `
+        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+            <div class="flex_child_of_two">
+                <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
+                    <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
+                    ${guest.first_name} ${guest.last_name}</p>
+                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    <span style="color: rgb(215,255,255); font-size: 12px;">DOB:</span> 
+                    ${change_date_from_iso_to_long_date(guest.DOB)}</p>
+                <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
+                    <span style="color: rgb(215,255,255); font-size: 12px;">Gender:</span> ${guest.gender}
+                    <span style="margin-left: 10px; color:rgb(235, 137, 137); font-size: 14px;">
+                        (Unbooked)
+                    </span>
+                </p>
+                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+                    Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
+                        March 09 - March 12</span></p>
+                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
+                    Kumasi - 2122 Estate Junc (Ghana)</P>  
+                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                    see full profile
+                    <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </p>
+            </div>
+            <div class="flex_child_of_two flex_non_first_child">
+                <div style="display: flex; flex-direction: row !important;">
+                    <div onclick="" style="border: 1px solid rgb(55, 107, 75); background-color: rgba(0, 0, 0, 0.4); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(136, 191, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
+                        Edit Guests
+                    </div>
+                    <div onclick="" style="border: 1px solid rgb(55, 97, 107); background-color: rgba(0, 0, 0, 0.4); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-ticket" aria-hidden="true"></i>
+                        Make Reservation
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: row !important;">
+                    <div onclick="" style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                        <i style="color:rgb(255, 46, 46); margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                        delete guest
+                    </div>
+                    <div onclick="" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                        booking history
+                        <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }

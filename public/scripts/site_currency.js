@@ -71,9 +71,48 @@ function show_site_currency_list(){
             site_language_select_options_as_id.style.display = "none";
         }, 300);
     }
+
+    //adding currency to filights, cars and hotel search post objects
+    flight_search_data.currencyCode = currency;
+    flight_multi_city_search_data.currencyCode = currency;
+    hotel_search_data.currencyCode = currency;
+    window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+    window.localStorage.setItem("flight_multi_city_search_data", JSON.stringify(flight_multi_city_search_data));
+    window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
+    
 }
 
 function site_currency_coverter(holding_currency, currency_needed, money_amount){
+
+
+    /*let currentExchange = {
+    "USD": 1,
+    "EUR" : 0.82,
+    "JPY" : 103.39,
+    "GBP" : 0.74,
+    "BRL" : 3.51,
+    "GHC" : 5.85673,
+    "CNY" : 6.53
+    }
+
+    //steps
+    //1. Multiply currency needed by money amount
+    let currency_needed_rate = currentExchange[currency_needed];
+    let product = money_amount * currency_needed_rate;
+    
+    //2. Devide product from .1 by holding currency
+    let holding_currency_rate = currentExchange[holding_currency];
+    let exchange_amount = product / holding_currency_rate
+    //console.log(addCommas(exchange_amount.toFixed(2)));
+    //console.log("The converted amount is $ " + (exchange_value.toFixed(2)) + "in " + currencyNeeded+ ".");
+
+    return addCommas(exchange_amount.toFixed(2));*/
+
+    return addCommas(parseFloat(money_amount).toFixed(2));
+
+}
+
+function site_currency_coverter_func_proto(holding_currency, currency_needed, money_amount){
 
 
     let currentExchange = {

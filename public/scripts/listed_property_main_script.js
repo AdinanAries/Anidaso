@@ -955,6 +955,20 @@ function toggle_show_guests_manager_div(){
 async function show_guests_manager(){
     show_guest_manager_menu();
     toggle_show_guests_manager_div();
+}
+
+function toggle_show_guest_manager_find_guest(){
+    $("#guest_manager_search_guest_div").toggle("up");
+}
+
+async function show_guest_manager_find_guest(){
+    document.getElementById("guest_manager_menu_div").style.display = "none";
+    document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
+    toggle_show_guest_manager_find_guest()
+    
+    setTimeout(()=>{
+        load_country_calling_codes_on_select_input("guests_manager_search_guest_calling_code_select");
+    },510);
 
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
@@ -964,17 +978,6 @@ async function show_guests_manager(){
             <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
         `; 
     }
-
-}
-
-function toggle_show_guest_manager_find_guest(){
-    $("#guest_manager_search_guest_div").toggle("up");
-}
-
-function show_guest_manager_find_guest(){
-    document.getElementById("guest_manager_menu_div").style.display = "none";
-    document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
-    toggle_show_guest_manager_find_guest()
 }
 
 function toggle_show_guest_manager_menu(){
