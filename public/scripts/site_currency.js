@@ -10,7 +10,7 @@ var site_currency_chevron_up = document.getElementById("site_currency_chevron_up
 
 var current_currency = {
     currency: "USD",
-    country_flag:  "USflag2.png",
+    country_flag:  "./images/currency_country_flags/United_States.svg.png",
     element_id:  "USD_each_site_language_select_option",
     country_name: "United States",
     sign: "&#x24;"
@@ -43,7 +43,7 @@ function set_site_currency(country_name, flag_pic, currency, element_Id, hex_cod
     active_selected_currency_option_flag_and_name.innerHTML = 
         `<p><img
             class="site_currency_flag"
-            src="images/${flag_pic}" alt=""
+            src="${flag_pic}" alt=""
             /></p>
             <p>${country_name} (${currency})</p>
         `;
@@ -53,6 +53,14 @@ function set_site_currency(country_name, flag_pic, currency, element_Id, hex_cod
         setTimeout(()=>{
             site_language_select_options_as_id.style.display = "none";
         }, 300);
+
+        //adding currency to filights, cars and hotel search post objects
+        flight_search_data.currencyCode = currency;
+        flight_multi_city_search_data.currencyCode = currency;
+        hotel_search_data.currencyCode = currency;
+        window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+        window.localStorage.setItem("flight_multi_city_search_data", JSON.stringify(flight_multi_city_search_data));
+        window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
 
 }
 
@@ -71,14 +79,6 @@ function show_site_currency_list(){
             site_language_select_options_as_id.style.display = "none";
         }, 300);
     }
-
-    //adding currency to filights, cars and hotel search post objects
-    flight_search_data.currencyCode = currency;
-    flight_multi_city_search_data.currencyCode = currency;
-    hotel_search_data.currencyCode = currency;
-    window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
-    window.localStorage.setItem("flight_multi_city_search_data", JSON.stringify(flight_multi_city_search_data));
-    window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
     
 }
 
@@ -139,11 +139,6 @@ function site_currency_coverter_func_proto(holding_currency, currency_needed, mo
     return addCommas(exchange_amount.toFixed(2));
 
 }
-
-
-$(document).ready(()=>{
-    set_site_currency(current_currency.country_name, current_currency.country_flag, current_currency.currency, current_currency.element_id, current_currency.sign);
-});
 
 //function to add commas to money values
 function addCommas(nStr){
