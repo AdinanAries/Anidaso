@@ -207,6 +207,52 @@ var submit_flight_ticket_booking_loader = document.getElementById("submit_flight
 
 var booking_forms_current_travelers_index = 0;
 var booking_travelers;
+var amadues_create_flight_order_post_data = {
+    data: {
+        type: "flight-order",
+        flightOffers: [],
+        travelers: [],
+        remarks: {
+            general: [
+                {
+                    subType: "GENERAL_MISCELLANEOUS",
+                    text: "ONLINE BOOKING FROM ANIDASO.COM"
+                }
+            ]
+        },
+        contacts: [
+            {
+              addresseeName: {
+                firstName: "Mohammed",
+                lastName: "Adinan"
+              },
+              companyName: "Anidaso.com",
+              purpose: "STANDARD",
+              phones: [
+                {
+                  deviceType: "LANDLINE",
+                  countryCallingCode: "34",
+                  number: "480080071"
+                },
+                {
+                  deviceType: "MOBILE",
+                  countryCallingCode: "33",
+                  number: "480080072"
+                }
+              ],
+              emailAddress: "support@increibleviajes.es",
+              address: {
+                lines: [
+                  "Calle Prado, 16"
+                ],
+                postalCode: "28014",
+                cityName: "Madrid",
+                countryCode: "ES"
+              }
+            }
+        ]
+    }
+}
 
 function view_flight_deal(isAnidasoBookable, data_or_link){
 
@@ -283,6 +329,7 @@ function view_flight_deal(isAnidasoBookable, data_or_link){
                 document.getElementById("full_page_loader_container").style.display = "none";
                 document.getElementById("full_page_loader_container").style.opacity = 0;
                 console.log(res);
+                amadues_create_flight_order_post_data.data.flightOffers = res.data.flightOffers;
                 toggle_show_finish_booking_form();
             },
             error: (err)=>{
@@ -573,6 +620,8 @@ function book_ticket(){
 
     if(isClear){
 
+        amadues_create_flight_order_post_data.data.travelers = booking_travelers;
+
         submit_flight_ticket_booking_loader.style.display = "flex";
 
         setTimeout(()=>{
@@ -581,6 +630,27 @@ function book_ticket(){
         
         submit_booking_travelers_info_status_containter.innerHTML = '';
         console.log("booking your flight");
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(amadues_create_flight_order_post_data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            url: "/amadues_flight_create_order/",
+            success: res => {
+                console.log(res);
+
+                submit_flight_ticket_booking_loader.style.opacity = 1;
+                setTimeout(()=>{
+                    submit_flight_ticket_booking_loader.style.display = "none";
+                },100);
+
+            },
+            error: err => {
+                console.log(err);
+            }
+        });
+
     }else{
         
         submit_booking_travelers_info_status_containter.style.display = "block";

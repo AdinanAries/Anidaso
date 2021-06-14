@@ -163,6 +163,7 @@ if(window.localStorage.getItem("flights_post_data")){
     //travelerTypes = [ ADULT, CHILD, SENIOR, YOUNG, HELD_INFANT, SEATED_INFANT, STUDENT ]
     //one origin and destination pair flight search data 
     fligh_search_data = {
+        currencyCode: "USD",
         trip_round: "one-way",
         origin_iata: "",
         destination_iata: "",
@@ -185,6 +186,7 @@ if(window.localStorage.getItem("flights_post_data")){
     flight_multi_city_search_data = {
           trip_round: "multi-city",
           itinerary: {
+            currencyCode: "USD",
               originDestinations: [ 
                 { 
                     id: 1, 

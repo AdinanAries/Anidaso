@@ -1564,6 +1564,10 @@ function show_finish_booking_form_contacts_fieldset(){
   order_ticket_form_container_review_and_submit.style.display = "none";
   order_ticket_form_container_review_and_submit.style.opacity = 0;
 
+  setTimeout(()=>{
+      load_country_calling_codes_on_select_input("login_fld_11");
+  },200);
+
 }
 
 //hotels

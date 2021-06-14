@@ -258,9 +258,11 @@ app.post('/searchflight/', (req, res, next)=>{
     let num_of_children = req.body.number_of_children;
     let num_of_infants = req.body.number_of_infants;
     let flight_class = req.body.flight_class;
+    let currency = req.body.currencyCode;
     
     search_obj = {
 
+      currencyCode: currency,
       originLocationCode: origin,
       destinationLocationCode: destination,
       departureDate: depart_date,
@@ -302,26 +304,47 @@ app.post('/searchflight/', (req, res, next)=>{
 //Amadues - Getting Final Flight Price
 app.post('/getfinalflightprice/', async (req, res, next)=>{
 
-    //res.json(req.body);
+  //res.json(req.body);
 
-    let inputFlight = [req.body];
+  let inputFlight = [req.body];
 
-    console.log(inputFlight)
+  console.log(inputFlight)
 
-    const responsePricing = await amadeus.shopping.flightOffers.pricing.post(
-        JSON.stringify({
-          data: {
-            type: 'flight-offers-pricing',
-            flightOffers: inputFlight
-        }})).catch(err=>{
-          console.log(err)
-        });
-          
-    try {
-      await res.json(JSON.parse(responsePricing.body));
-    } catch (err) {
-      await res.json(err);
-    }
+  const responsePricing = await amadeus.shopping.flightOffers.pricing.post(
+      JSON.stringify({
+        data: {
+          type: 'flight-offers-pricing',
+          flightOffers: inputFlight
+      }})).catch(err=>{
+        console.log(err)
+      });
+        
+  try {
+    await res.json(JSON.parse(responsePricing.body));
+  } catch (err) {
+    await res.json(err);
+  }
+
+});
+
+//Amadues - Creating Fligh Order
+app.post('/amadues_flight_create_order/', async (req, res, next)=>{
+
+  let flight_offers = req.body.data.flightOffers;
+  let flight_travelers = req.body.data.travelers;
+
+  let responseOrder = await amadeus.booking.flightOrders.post(
+    JSON.stringify({
+      'type': 'flight-order',
+      'flightOffers': flight_offers,
+      'travelers': flight_travelers
+    }));
+
+  try{
+    await res.json(JSON.parse(responseOrder.body));
+  }catch(err){
+    await res.json(err)
+  }
 
 });
 
