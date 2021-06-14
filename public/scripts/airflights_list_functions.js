@@ -528,15 +528,15 @@ document.getElementById("login_fld_12").addEventListener('input', (evnt) => {
     booking_travelers[booking_forms_current_travelers_index].documents[0].number = evnt.target.value;
 });
 
-document.getElementById("login_fld_15").addEventListener('input', (evnt) => {
+document.getElementById("login_fld_15").addEventListener('change', (evnt) => {
     booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceCountry = evnt.target.value;
 });
 
-document.getElementById("login_fld_16").addEventListener('input', (evnt) => {
+document.getElementById("login_fld_16").addEventListener('change', (evnt) => {
     booking_travelers[booking_forms_current_travelers_index].documents[0].validityCountry = evnt.target.value;
 });
 
-document.getElementById("login_fld_17").addEventListener('input', (evnt) => {
+document.getElementById("login_fld_17").addEventListener('change', (evnt) => {
     booking_travelers[booking_forms_current_travelers_index].documents[0].nationality = evnt.target.value;
 });
 
@@ -626,8 +626,9 @@ function book_ticket(){
 
         setTimeout(()=>{
             submit_flight_ticket_booking_loader.style.opacity = 1;
-        },100)
-        
+        },100);
+
+        submit_booking_travelers_info_status_containter.style.display = "none";
         submit_booking_travelers_info_status_containter.innerHTML = '';
         console.log("booking your flight");
 

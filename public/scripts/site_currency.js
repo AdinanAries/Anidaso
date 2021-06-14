@@ -55,7 +55,7 @@ function set_site_currency(country_name, flag_pic, currency, element_Id, hex_cod
         }, 300);
 
         //adding currency to filights, cars and hotel search post objects
-        flight_search_data.currencyCode = currency;
+        fligh_search_data.currencyCode = currency;
         flight_multi_city_search_data.itinerary.currencyCode = currency;
         //hotel_search_data.currencyCode = currency;
         window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));

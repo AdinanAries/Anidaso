@@ -1631,6 +1631,15 @@ function show_finish_booking_form_documents_fieldset(){
     order_ticket_form_container_documents_info.style.opacity = 1;
   }, 10);
 
+  setTimeout(()=>{
+    //insuance country
+    load_country_codes_on_select_input("login_fld_15");
+    //validity country
+    load_country_codes_on_select_input("login_fld_16");
+    //nationality
+    load_country_codes_on_select_input("login_fld_17");
+  }, 100);
+
 }
 
 //hotels
