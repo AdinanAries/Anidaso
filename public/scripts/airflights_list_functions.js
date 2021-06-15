@@ -220,6 +220,10 @@ var amadues_create_flight_order_post_data = {
                 }
             ]
         },
+        ticketingAgreement: {
+            option: "DELAY_TO_CANCEL",
+            delay: "6D"
+        },
         contacts: [
             {
               addresseeName: {
@@ -289,7 +293,7 @@ function view_flight_deal(isAnidasoBookable, data_or_link){
               "emailAddress": "N/A",
               "phones": [
                 {
-                  "deviceType": "Mobile",
+                  "deviceType": "MOBILE",
                   "countryCallingCode": "N/A",
                   "number": "N/A"
                 }
@@ -297,7 +301,7 @@ function view_flight_deal(isAnidasoBookable, data_or_link){
             },
             "documents": [
               {
-                "documentType": "Passport",
+                "documentType": "PASSPORT",
                 "birthPlace": "N/A",
                 "issuanceLocation": "N/A",
                 "issuanceDate": document.getElementById("login_fld_13").value,
@@ -470,7 +474,7 @@ $(function() {
       showDropdowns: true
     }, function(start, end, label) {
         
-        booking_travelers[booking_forms_current_travelers_index].documents.issuanceDate = start.format('YYYY-MM-DD');
+        booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceDate = start.format('YYYY-MM-DD');
 
         //start.format('YYYY-MM-DD');
 
@@ -485,7 +489,7 @@ $(function() {
       showDropdowns: true
     }, function(start, end, label) {
         
-        booking_travelers[booking_forms_current_travelers_index].documents.expiryDate = start.format('YYYY-MM-DD');
+        booking_travelers[booking_forms_current_travelers_index].documents[0].expiryDate = start.format('YYYY-MM-DD');
 
         //start.format('YYYY-MM-DD');
 
@@ -513,7 +517,8 @@ document.getElementById("login_fld_6").addEventListener('input', (evnt) => {
 });
 
 document.getElementById("login_fld_11").addEventListener('change', (evnt) => {
-    booking_travelers[booking_forms_current_travelers_index].contact.phones[0].countryCallingCode = evnt.target.value;
+    let code = evnt.target.value;
+    booking_travelers[booking_forms_current_travelers_index].contact.phones[0].countryCallingCode = code.substring(1,code.length);
 });
 
 document.getElementById("login_fld_7").addEventListener('input', (evnt) => {
@@ -631,6 +636,7 @@ function book_ticket(){
         submit_booking_travelers_info_status_containter.style.display = "none";
         submit_booking_travelers_info_status_containter.innerHTML = '';
         console.log("booking your flight");
+        console.log(amadues_create_flight_order_post_data);
 
         $.ajax({
             type: "POST",

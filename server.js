@@ -330,15 +330,17 @@ app.post('/getfinalflightprice/', async (req, res, next)=>{
 //Amadues - Creating Fligh Order
 app.post('/amadues_flight_create_order/', async (req, res, next)=>{
 
-  let flight_offers = req.body.data.flightOffers;
-  let flight_travelers = req.body.data.travelers;
-
   let responseOrder = await amadeus.booking.flightOrders.post(
     JSON.stringify({
-      'type': 'flight-order',
-      'flightOffers': flight_offers,
-      'travelers': flight_travelers
-    }));
+      data: {
+        type: 'flight-order',
+        flightOffers: req.body.data.flightOffers,
+        travelers: req.body.data.travelers,
+        remarks: req.body.data.remarks,
+        contacts: req.body.data.contacts
+    }})).catch(err=>{
+      console.log(err);
+    });
 
   try{
     await res.json(JSON.parse(responseOrder.body));

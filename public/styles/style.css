@@ -6,6 +6,14 @@
 }
 
 /*-------------------------------*/
+.flex_row_default_flex_column_mobile {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+}
+.flex_child_of_two {
+  width: 48%;
+}
 .room_sharing_link {
   letter-spacing: 1px;
   margin-bottom: 5px;
@@ -2473,6 +2481,15 @@ footer a {
   }
   .book_cheap_book_direct_register_hotel_main_forms .each_side {
     border-radius: 0 !important;
+  }
+  .flex_row_default_flex_column_mobile {
+    display: block !important;
+  }
+  .flex_child_of_two {
+    width: 100% !important;
+  }
+  .flex_non_first_child {
+    margin-top: 20px;
   }
 }
 @media only screen and (max-width: 413px) {

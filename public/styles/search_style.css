@@ -5,7 +5,14 @@
   font-size: 16px;
 }
 /*-------------------------------*/
-
+.flex_row_default_flex_column_mobile {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+}
+.flex_child_of_two {
+  width: 49%;
+}
 .logged_in_user_nav_info {
   display: flex;
   flex-direction: row !important;
@@ -2263,6 +2270,15 @@ footer a {
   }
   #book_hotel_view_full_profile_info {
     overflow: auto !important;
+  }
+  .flex_row_default_flex_column_mobile {
+    display: block !important;
+  }
+  .flex_child_of_two {
+    width: 100% !important;
+  }
+  .flex_non_first_child {
+    margin-top: 20px;
   }
 }
 @media only screen and (max-width: 413px) {
