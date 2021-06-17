@@ -374,7 +374,7 @@ function booking_forms_set_current_traveler(number){
             document.getElementById("login_fld_8").value = booking_travelers[number].name.lastName;
             document.getElementById("login_fld_10").value = booking_travelers[number].gender === "N/A" ? "" : booking_travelers[number].gender;
             document.getElementById("login_fld_6").value = booking_travelers[number].contact.emailAddress === "N/A" ? "" : booking_travelers[number].contact.emailAddress;
-            document.getElementById("login_fld_11").value = booking_travelers[number].contact.phones[0].countryCallingCode === "N/A" ? "" : booking_travelers[number].contact.phones[0].countryCallingCode;
+            document.getElementById("login_fld_11").value = booking_travelers[number].contact.phones[0].countryCallingCode === "N/A" ? "" : `+${booking_travelers[number].contact.phones[0].countryCallingCode}`;
             document.getElementById("login_fld_7").value = booking_travelers[number].contact.phones[0].number === "N/A" ? "" : booking_travelers[number].contact.phones[0].number;
             document.getElementById("login_fld_110").value = booking_travelers[number].documents[0].documentType === "N/A" ? "" : booking_travelers[number].documents[0].documentType;
             document.getElementById("login_fld_12").value = booking_travelers[number].documents[0].number === "N/A" ? "" : booking_travelers[number].documents[0].number;
@@ -458,7 +458,8 @@ function booking_forms_render_all_travelers(){
 $(function() {
     $("#login_fld_9").daterangepicker({
       singleDatePicker: true,
-      showDropdowns: true
+      showDropdowns: true,
+      autoUpdateInput: false,
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].dateOfBirth = start.format('YYYY-MM-DD');
@@ -471,7 +472,8 @@ $(function() {
   $(function() {
     $("#login_fld_13").daterangepicker({
       singleDatePicker: true,
-      showDropdowns: true
+      showDropdowns: true,
+      autoUpdateInput: false,
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceDate = start.format('YYYY-MM-DD');
@@ -486,7 +488,8 @@ $(function() {
   $(function() {
     $("#login_fld_14").daterangepicker({
       singleDatePicker: true,
-      showDropdowns: true
+      showDropdowns: true,
+      autoUpdateInput: false,
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].documents[0].expiryDate = start.format('YYYY-MM-DD');
@@ -651,6 +654,9 @@ function book_ticket(){
                 setTimeout(()=>{
                     submit_flight_ticket_booking_loader.style.display = "none";
                 },100);
+
+                toggle_show_finish_booking_form();
+                show_flight_booking_success_review_page(res);
 
             },
             error: err => {
@@ -877,4 +883,178 @@ function show_loader_flight_cards(){
         </div>`;
 
     }
+}
+
+function toggle_hide_show_flight_booking_success_confirmation_pane(){
+    $("#flight_booking_success_confirmation_pane").toggle("up");
+}
+
+function show_flight_booking_success_review_page(obj){
+    toggle_hide_show_flight_booking_success_confirmation_pane();
+    render_booking_confirmation_review_markup(obj)
+}
+
+function render_booking_confirmation_review_markup(obj){
+
+    //itenirery information
+    document.getElementById("flight_booking_success_itenirery_review").innerHTML = `
+        <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; width: calc(100% - 20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3);">
+            <div>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Departure:</span>
+                Madrid(MAD) - Paris(CDG) 
+                <span style="color:rgb(144, 255, 222); font-size: 13px;">(4h:20m)</span>
+                </p>
+                <p style="margin-left: 10px; color:rgb(255, 102, 0); font-size: 13px; margin-top: 20px;">
+                Segments/Stops
+                </p>
+                <div style="margin-top: 10px;">
+                <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                    Madrid(MAD) - Accra(ACC)
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                    March 23, 2021 - 10:15:00
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                    March 24, 2021 - 10:15:00
+                </p>
+                <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                    <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                    American Airlines 
+                    <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                    Airbus 320H</p>
+                </div>
+                <div style="margin-top: 10px;">
+                <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                    Accra(ACC) - Paris(CDG)
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                    March 25, 2021 - 11:53:00
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                    March 24, 2021 - 04:24:00
+                </p>
+                <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                    <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                    American Airlines 
+                    <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                    Airbus 320H</p>
+                </div>
+                <div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
+                <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                <span style="color:rgb(190, 223, 233); font-size: 13px;">Your departure flight makes 2 Stops (Accra, Abuja) before its destination</span>
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Return:</span>
+                    Paris(CDG) - Madrid(MAD) 
+                <span style="color:rgb(144, 255, 222); font-size: 13px;">(4h:20m)</span>
+                </p>
+                <p style="margin-left: 10px; color:rgb(255, 102, 0); font-size: 13px; margin-top: 20px;">
+                Segments/Stops
+                </p>
+                <div style="margin-top: 10px;">
+                <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                    Madrid(MAD) - Accra(ACC)
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                    March 23, 2021 - 10:15:00
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                    March 24, 2021 - 10:15:00
+                </p>
+                <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                    <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                    American Airlines 
+                    <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                    Airbus 320H</p>
+                </div>
+                <div style="margin-top: 10px;">
+                <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                    Accra(ACC) - Paris(CDG)
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                    March 25, 2021 - 11:53:00
+                </p>
+                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                    March 24, 2021 - 04:24:00
+                </p>
+                <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                    <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                    American Airlines 
+                    <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                    Airbus 320H</p>
+                </div>
+                <div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
+                <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes 2 Stops (Accra, Abuja) before its destination</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    //travelers information
+    document.getElementById("flight_booking_success_travelers_review").innerHTML = `
+        <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; width: calc(100% - 20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3);">
+            <div style="display: flex; flex-direction: row !important;">
+            <div>
+                <i style="color:rgb(253, 158, 158); margin-right: 10px;" class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(0, 204, 255); margin-right: 5px;">
+                    Mohammed Adinan</span>
+                (DOB: March 23, 1992)
+                </p>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>2392839223</p>
+            </div>
+            </div>
+            <div style="display: flex; flex-direction: row !important; margin-top: 15px;">
+            <div>
+                <i style="color:rgb(253, 158, 158); margin-right: 10px;" class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(0, 204, 255); margin-right: 5px;">
+                    Micheal Essien</span>
+                (DOB: April 12, 1892)</p>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                    <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>none</p>
+            </div>
+            </div>
+        </div>
+    `;
+
+    //Price Information
+    document.getElementById("flight_booking_success_price_review").innerHTML = `
+        <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; width: calc(100% - 20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3);">
+            <div style="display: flex; flex-direction: row !important;">
+            <div>
+                <i style="color:rgb(253, 158, 158); margin-right: 10px;" class="fa fa-credit-card" aria-hidden="true"></i>
+            </div>
+            <div>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Base:</span>$239.00</p>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Checked Bags:</span>$100.00</p>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Seats:</span>$200.00</p>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Total:</span>439.00</p>
+                <p style="font-weight: bolder; color:rgb(0, 195, 255); font-size: 14px; margin-bottom: 3px; margin-top: 10px;">
+                <span style="color:rgb(174, 212, 255); margin-right: 5px;">Grand Total:</span>$239.00</p>
+            </div>
+            </div>
+        </div>
+    `;
 }

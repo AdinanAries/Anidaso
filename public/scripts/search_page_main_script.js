@@ -1033,8 +1033,6 @@ if(document.getElementById(flight_ticket_item_details).style.display === "block"
 }
 }
 
-
-
 //Add Flight functions
 var globalFlightId = 0;
 var current_onchange_func = function(){
@@ -1420,6 +1418,24 @@ function activate_login_fld(number){
    if(document.getElementById("order_ticket_form_container").style.display === "block"){
     document.getElementById("order_ticket_form_container").style.display = "flex";
   }
+
+  setTimeout(async ()=>{
+    await load_country_calling_codes_on_select_input("login_fld_11");
+    document.getElementById("login_fld_11").value = "";
+  }, 400);
+
+  setTimeout(async ()=>{
+    //insuance country
+    await load_country_codes_on_select_input("login_fld_15");
+    document.getElementById("login_fld_15").value = "";
+    //validity country
+    await load_country_codes_on_select_input("login_fld_16");
+    document.getElementById("login_fld_16").value = "";
+    //nationality
+    await load_country_codes_on_select_input("login_fld_17");
+    document.getElementById("login_fld_17").value = "";
+  }, 500);
+
  }
 
  function toggle_show_hotel_booking_form(){
@@ -1564,10 +1580,6 @@ function show_finish_booking_form_contacts_fieldset(){
   order_ticket_form_container_review_and_submit.style.display = "none";
   order_ticket_form_container_review_and_submit.style.opacity = 0;
 
-  setTimeout(()=>{
-      load_country_calling_codes_on_select_input("login_fld_11");
-  },200);
-
 }
 
 //hotels
@@ -1630,15 +1642,6 @@ function show_finish_booking_form_documents_fieldset(){
   setTimeout(()=>{
     order_ticket_form_container_documents_info.style.opacity = 1;
   }, 10);
-
-  setTimeout(()=>{
-    //insuance country
-    load_country_codes_on_select_input("login_fld_15");
-    //validity country
-    load_country_codes_on_select_input("login_fld_16");
-    //nationality
-    load_country_codes_on_select_input("login_fld_17");
-  }, 100);
 
 }
 

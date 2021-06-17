@@ -537,10 +537,10 @@ function render_flights(){
 
                 let each_traveler_price = parseFloat((parseFloat(flight_price.replaceAll(",",""))/data[w].travelerPricings.length).toFixed(2));
                 
-                if(data[w].itineraries.length > 1){
+                /*if(data[w].itineraries.length > 1){
                     each_traveler_price = each_traveler_price/data[w].itineraries.length;
                     //console.log(each_traveler_price);
-                }
+                }*/
                 
                 let current_price_percentage = 0;
                 if(price_metrics_max !== 0){
@@ -1152,7 +1152,7 @@ function render_flights(){
                             </p>
                             <div style=" background-color: rgba(0,0,0,0.08); position: relative; padding: 5px 0; padding-left: 5px; margin: 10px; border-left: 10px solid; border-image-source: linear-gradient(orange, orangered, crimson); border-image-slice: 1;">
                                 <p style="font-size: 13px; text-align: left; position: relative; z-index: 1;">
-                                    <span style="font-weight: bolder; color: white; font-size: 11px; margin: 0 !important; letter-spacing: 0.5px; padding: 0 !important;">Minimum: <span style="font-size: 11px; color: rgb(255, 23, 166); padding: 0 !important;">${current_currency.sign} ${addCommas(price_metrics_min.toFixed(2))}</span></span>
+                                    <span style="font-weight: bolder; color: white; font-size: 11px; margin: 0 !important; letter-spacing: 0.5px; padding: 0 !important;">Best Price: <span style="font-size: 11px; color: rgb(255, 23, 166); padding: 0 !important;">${current_currency.sign} ${addCommas(price_metrics_min.toFixed(2))}</span></span>
                                 </p>
                                 <div style="display: flex; flex-direction: column !important; font-size: 12px; margin: 3px 10px; position: relative; z-index: 1;">
                                     <i style="margin-bottom: 5px; font-size: 10px; margin-left: 20px; opacity: 0;" class="fa fa-arrow-down" aria-hidden="true"></i>
@@ -1160,7 +1160,7 @@ function render_flights(){
                                     <i style="margin-top: 5px; font-size: 10px; margin-left: 20px; opacity: 0;" class="fa fa-arrow-down" aria-hidden="true"></i>
                                 </div>
                                 <p style="position: relative; z-index: 1;">
-                                    <span style="font-weight: bolder; color: white; font-size: 11px; letter-spacing: 0.5px; padding: 0 !important;">Medium: <span style="font-size: 11px; color: rgb(255, 23, 166); padding: 0 !important;">${current_currency.sign} ${addCommas(price_metrics_medium.toFixed(2))}</span></span>
+                                    <span style="font-weight: bolder; color: white; font-size: 11px; letter-spacing: 0.5px; padding: 0 !important;">Average Price: <span style="font-size: 11px; color: rgb(255, 23, 166); padding: 0 !important;">${current_currency.sign} ${addCommas(price_metrics_medium.toFixed(2))}</span></span>
                                 </p>
                                 <div style="display: flex; flex-direction: column !important; font-size: 12px; margin: 3px 10px; position: relative; z-index: 1;">
                                     <i style="margin-bottom: 5px; font-size: 10px; margin-left: 20px; opacity: 0;" class="fa fa-arrow-down" aria-hidden="true"></i>
@@ -1168,7 +1168,7 @@ function render_flights(){
                                     <i style="margin-top: 5px; font-size: 10px; margin-left: 20px; opacity: 0;" class="fa fa-arrow-down" aria-hidden="true"></i>
                                 </div>
                                 <p style="position: relative; z-index: 1;">
-                                    <span style="font-weight: bolder; color: white; font-size: 11px; letter-spacing: 0.5px; padding: 0 !important;">Maximum: <span style="font-size: 11px; color: rgb(255, 23, 166); padding: 0 !important;">${current_currency.sign} ${addCommas(price_metrics_max.toFixed(2))}</span></span>
+                                    <span style="font-weight: bolder; color: white; font-size: 11px; letter-spacing: 0.5px; padding: 0 !important;">Last Price: <span style="font-size: 11px; color: rgb(255, 23, 166); padding: 0 !important;">${current_currency.sign} ${addCommas(price_metrics_max.toFixed(2))}</span></span>
                                 </p>
                                 
                                 <div style="position: absolute; left: 0; top: 0; height: 100% !important; width: 100% !important;
@@ -1180,7 +1180,7 @@ function render_flights(){
                                     
                                 </div>
                                 <div style="position: absolute; left: -20px; top: 0; width: calc(100% + 30px) !important; height: ${current_price_percentage}% !important; display: flex; flex-direction: column;
-                                    justify-content: flex-end; border-bottom: 1px solid rgb(235, 86, 0);">
+                                    justify-content: flex-end; border-bottom: 1px solid rgb(235, 86, 0); border-top: 1px solid red; box-shadow: inset 2px -7px 11px rgba(0,0,0,0.4);">
                                     <p style="text-align: right; font-weight: bolder; font-size: 11px; margin: 3px 10px; letter-spacing: 1; color: white;">
                                     this price: <span style="font-size: 11px; color: rgb(235, 86, 0); padding: 0 !important;">${current_currency.sign} ${addCommas(each_traveler_price.toFixed(2))}</span></p>
                                 </div>
@@ -1511,10 +1511,33 @@ function render_flights(){
 }
 
 var get_flight_price_analysis = async ()=>{
+
+    //no search price analysis for multi-city searches
+    if(localStorage.getItem("is_multi_city_search") === "yes"){
+        return [];
+    }
+
+    //no search price analysis for non Economy flights
+    if(localStorage.getItem("is_round_trip") === "yes"){
+        if(flight_multi_city_search_data.itinerary.searchCriteria.cabinRestrictions[0].cabin !== "ECONOMY"){
+            return [];
+        }
+    }
+
+    if(fligh_search_data.flight_class !== "ECONOMY"){
+        return [];
+    }
+
+    if(localStorage.getItem("is_multi_city_search") === "yes" || localStorage.getItem("is_round_trip") === "yes"){
+        object_to_send = flight_multi_city_search_data;
+    }else{
+        object_to_send = fligh_search_data;
+    }
+
     return $.ajax({
         type: "POST",
         url: "/flightpriceanalysis",
-        data: JSON.stringify(fligh_search_data),
+        data: JSON.stringify(object_to_send),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (result)=>{
@@ -1531,6 +1554,7 @@ if(localStorage.getItem("main_search_type") === "flight_search"){
         
         if(data.data){
             if(data.data.length > 0){
+
                 price_metrics_min = parseFloat((site_currency_coverter(data.data[0].currencyCode, current_currency.currency, parseFloat(data.data[0].priceMetrics[0].amount))).replaceAll(",", ""));
                 price_metrics_first = parseFloat((site_currency_coverter(data.data[0].currencyCode, current_currency.currency, parseFloat(data.data[0].priceMetrics[1].amount))).replaceAll(",", ""));
                 price_metrics_medium = parseFloat((site_currency_coverter(data.data[0].currencyCode, current_currency.currency, parseFloat(data.data[0].priceMetrics[2].amount))).replaceAll(",", ""));
@@ -1544,8 +1568,8 @@ if(localStorage.getItem("main_search_type") === "flight_search"){
                 console.log("median: " + price_metrics_medium);
                 console.log("third: " + price_metrics_third);
                 console.log("max: ", price_metrics_max);
-                console.log("metrics currency: ", price_metrices_currency);
-                console.log(data);*/
+                console.log("metrics currency: ", price_metrices_currency);*/
+                //console.log(data);
             }
         }
 

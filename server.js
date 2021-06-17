@@ -403,18 +403,32 @@ app.get('/flight_price_metric/origin/:o_code/destination/:d_code/date/:date', (r
 //Getting Flight Price Analysis
 app.post('/flightpriceanalysis/', (req, res, next)=>{
 
-  let origin = req.body.origin_iata;
-  let destination = req.body.destination_iata;
-  let depart_date = req.body.departure_date;
-  let num_of_adults = req.body.number_of_adults;
+  let origin = "";
+  let destination = "";
+  let depart_date = "";
+  let currency = "";
+  let is_one_way = "true";
+
+  if(req.body.trip_round === "one-way"){
+    origin = req.body.origin_iata;
+    destination = req.body.destination_iata;
+    depart_date = req.body.departure_date;
+    currency = req.body.currencyCode;
+  }else if(req.body.trip_round === "multi-city"){
+    is_one_way = "false";
+    origin = req.body.itinerary.originDestinations[0].originLocationCode;
+    destination = req.body.itinerary.originDestinations[0].destinationLocationCode;
+    depart_date = req.body.itinerary.originDestinations[0].departureDateTimeRange.date;
+    currency = req.body.itinerary.currencyCode;
+  }
 
   /*origin = "MAD";
   destination = "CDG";*/
 
-  //console.log(req.body);
+  //console.log(currency);
 
   axios.get(
-    "https://test.api.amadeus.com/v1/analytics/itinerary-price-metrics?originIataCode="+origin+"&destinationIataCode="+destination+"&departureDate="+depart_date+"&currencyCode=USD&oneWay=true",
+    "https://test.api.amadeus.com/v1/analytics/itinerary-price-metrics?originIataCode="+origin+"&destinationIataCode="+destination+"&departureDate="+depart_date+"&currencyCode="+currency+"&oneWay="+is_one_way,
     {
       headers: {
         "Authorization": ("Bearer "+ AmadeusAccessToken)
