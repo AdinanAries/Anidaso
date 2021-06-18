@@ -1519,7 +1519,7 @@ var get_flight_price_analysis = async ()=>{
 
     //no search price analysis for non Economy flights
     if(localStorage.getItem("is_round_trip") === "yes"){
-        if(flight_multi_city_search_data.itinerary.searchCriteria.cabinRestrictions[0].cabin !== "ECONOMY"){
+        if(flight_multi_city_search_data.itinerary.searchCriteria.flightFilters.cabinRestrictions[0].cabin !== "ECONOMY"){
             return [];
         }
     }
