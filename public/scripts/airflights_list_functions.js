@@ -633,6 +633,7 @@ function book_ticket(){
 
         amadues_create_flight_order_post_data.data.travelers = booking_travelers;
 
+        document.getElementById("book_flight_final_submit_button").style.display = "none";
         submit_flight_ticket_booking_loader.style.display = "flex";
 
         setTimeout(()=>{
@@ -641,9 +642,7 @@ function book_ticket(){
 
         submit_booking_travelers_info_status_containter.style.display = "none";
         submit_booking_travelers_info_status_containter.innerHTML = '';
-        console.log("booking your flight");
-        console.log(amadues_create_flight_order_post_data);
-
+        
         $.ajax({
             type: "POST",
             data: JSON.stringify(amadues_create_flight_order_post_data),
@@ -651,15 +650,29 @@ function book_ticket(){
             contentType: "application/json; charset=utf-8",
             url: "/amadues_flight_create_order/",
             success: res => {
-                console.log(res);
+                
+                if(res.data){
+                    console.log(res);
 
-                submit_flight_ticket_booking_loader.style.opacity = 1;
-                setTimeout(()=>{
+                    submit_flight_ticket_booking_loader.style.opacity = 1;
+                    setTimeout(()=>{
+                        submit_flight_ticket_booking_loader.style.display = "none";
+                        document.getElementById("book_flight_final_submit_button").style.display = "block";
+                    },100);
+
+                    toggle_show_finish_booking_form();
+                    show_flight_booking_success_review_page(res);
+                }else{
+                    document.getElementById("book_flight_final_submit_button").style.display = "block";
                     submit_flight_ticket_booking_loader.style.display = "none";
-                },100);
-
-                toggle_show_finish_booking_form();
-                show_flight_booking_success_review_page(res);
+                    console.log(res);
+                    show_prompt_to_user(
+                        `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        Order Could Not Be Placed`, 
+                        `This flight may no longer be available. Also,
+                        check traveler(s) information to make sure everything is ok and try again.`
+                    );
+                }
 
             },
             error: err => {
@@ -910,7 +923,7 @@ function render_booking_confirmation_review_markup(obj){
 
     let departure_arrival_airport_iata = obj.data.flightOffers[0].itineraries[0].segments[(obj.data.flightOffers[0].itineraries[0].segments.length - 1)].arrival.iataCode
     let departure_arrival_airport_info = AirportsData.filter(each => {
-        return (each.IATA === departure_take_off_airport_iata);
+        return (each.IATA === departure_arrival_airport_iata);
     });
     let departure_arrival_airport = `${departure_arrival_airport_info[0].name} (${departure_arrival_airport_iata})`;
 
@@ -985,20 +998,108 @@ function render_booking_confirmation_review_markup(obj){
             <span style="color:rgb(190, 223, 233); font-size: 13px;">Your departure flight makes ${(obj.data.flightOffers[0].itineraries[0].segments.length-1)} Stop(s) before its destination</span>
         </div>`;
     }
+
     //return airports and segments
     let return_itinery_info = ""
     if(obj.data.flightOffers[0].itineraries.lenght > 1){
+
+        //return airports and segments
+        let return_take_off_airport_iata = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[0].departure.iataCode;
+        let return_take_off_airport_info = AirportsData.filter(each => {
+            return (each.IATA === return_take_off_airport_iata);
+        });
+        let return_take_off_airport = `${return_take_off_airport_info[0].name} (${departure_take_off_airport_iata})`;
+
+        let return_arrival_airport_iata = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[(obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments.length - 1)].arrival.iataCode
+        let return_arrival_airport_info = AirportsData.filter(each => {
+            return (each.IATA === return_arrival_airport_iata);
+        });
+        let return_arrival_airport = `${return_arrival_airport_info[0].name} (${return_arrival_airport_iata})`;
+
+        //return segments
+        let return_segments_markup = ``;
+        for(let s=0; s<obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments.length; s++){
+            
+            let segment_take_off_airport_iata = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].departure.iataCode;
+            let segment_take_off_airport_info = AirportsData.filter(each => {
+                return (each.IATA === segment_take_off_airport_iata);
+            });
+            let segment_take_off_airport = `${segment_take_off_airport_info[0].name} (${segment_take_off_airport_iata})`;
+
+            let segment_arrival_airport_iata = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].arrival.iataCode
+            let segment_arrival_airport_info = AirportsData.filter(each => {
+                return (each.IATA === segment_arrival_airport_iata);
+            });
+            let segment_arrival_airport = `${segment_arrival_airport_info[0].name} (${segment_arrival_airport_iata})`;
+
+            let take_off_date = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].departure.at.split("T")[0];
+            let take_off_date_to_display = change_date_from_iso_to_long_date(take_off_date);
+            let take_off_time = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].departure.at.split("T")[1];
+            let take_off_time_to_display = covert_time_to_12_hour(take_off_time);
+
+            let arrival_date = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].arrival.at.split("T")[0];
+            let arrival_date_to_display = change_date_from_iso_to_long_date(arrival_date);
+            let arrival_time = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].arrival.at.split("T")[1];
+            let arrival_time_to_display = covert_time_to_12_hour(arrival_time);
+
+            let airlines = airline_codes.filter(each => {
+            return (each.code === obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].carrierCode);
+            });
+            let aircrafts = aircrats.filter(each => {
+                return (each.IATA === obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].aircraft.code);
+            });
+
+            let airline_to_display = "Airline Code:"+obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].carrierCode;
+            if(airlines.length > 0){
+                airline_to_display = airlines[0].name;
+            }
+            let aircraft_to_display = "Aircraft Code:"+obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[s].aircraft.code;
+            if(aircrafts.length > 0){
+                aircraft_to_display = `${aircrafts[0].Manufacturer} ${aircrafts[0].Type_Model} ${aircrafts[0].Wake}`;
+            }
+
+            return_segments_markup += `
+                <div style="margin-top: 10px;">
+                    <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                        ${segment_take_off_airport} - ${segment_arrival_airport}
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                        ${take_off_date_to_display} - ${take_off_time_to_display}
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                        ${arrival_date_to_display} - ${arrival_time_to_display}
+                    </p>
+                    <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                        <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                        ${airline_to_display} 
+                        <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                        ${aircraft_to_display}</p>
+                </div>
+            `;
+        }
+
+        let return_segments_stops_status = ""
+        if(obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments.length > 1){
+            departure_segments_stops_status = `<div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
+                <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes ${(obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments.length-1)} Stop(s) before its destination</span>
+            </div>`;
+        }
+
         return_itinery_info = `
             <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
                 <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
                 <span style="color:rgb(174, 255, 231); margin-right: 5px;">Return:</span>
-                    Paris(CDG) - Madrid(MAD) 
+                    ${return_take_off_airport} - ${return_arrival_airport} 
                 <span style="color:rgb(144, 255, 222); font-size: 13px;">(4h:20m)</span>
                 </p>
                 <p style="margin-left: 10px; color:rgb(255, 102, 0); font-size: 13px; margin-top: 20px;">
                 Segments/Stops
                 </p>
-                <div style="margin-top: 10px;">
+                ${return_segments_markup}
+                <!--div style="margin-top: 10px;">
                     <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
                         Madrid(MAD) - Accra(ACC)
                     </p>
@@ -1015,8 +1116,8 @@ function render_booking_confirmation_review_markup(obj){
                         American Airlines 
                         <span style="color: rgba(255, 255, 255,0.2);">|</span> 
                         Airbus 320H</p>
-                </div>
-                <div style="margin-top: 10px;">
+                </div-->
+                <!--div style="margin-top: 10px;">
                     <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
                         Accra(ACC) - Paris(CDG)
                     </p>
@@ -1033,7 +1134,8 @@ function render_booking_confirmation_review_markup(obj){
                         American Airlines 
                         <span style="color: rgba(255, 255, 255,0.2);">|</span> 
                         Airbus 320H</p>
-                </div>
+                </div-->
+                ${return_segments_stops_status}
                 <div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
                     <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
                     <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes 2 Stops (Accra, Abuja) before its destination</span>
@@ -1113,6 +1215,24 @@ function render_booking_confirmation_review_markup(obj){
     `;
 
     //Price Information
+
+    let grand_total = obj.data.flightOffers[0].price.grandTotal;
+    let total = obj.data.flightOffers[0].price.total;
+    let base = obj.data.flightOffers[0].price.base;
+
+    let cost_fees_markup = "";
+    if(obj.data.flightOffers[0].price.fees){
+        for(let f=0; f<obj.data.flightOffers[0].price.fees.length; f++){
+            cost_fees_markup += `
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                    <span style="color:rgb(174, 255, 231); margin-right: 5px;">
+                        ${obj.data.flightOffers[0].price.fees[f].type.replaceAll("_", " ").toLowerCase()} Fee:</span>
+                    ${current_currency.sign} ${obj.data.flightOffers[0].price.fees[f].amount}
+                </p>
+            `;
+        }
+    }
+
     document.getElementById("flight_booking_success_price_review").innerHTML = `
         <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; width: calc(100% - 20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3);">
             <div style="display: flex; flex-direction: row !important;">
@@ -1121,15 +1241,20 @@ function render_booking_confirmation_review_markup(obj){
             </div>
             <div>
                 <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Base:</span>$239.00</p>
-                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Base:</span>${current_currency.sign} ${base}</p>
+                <div style="padding: 10px">
+                    <p style="font-size: 13px; color: white; margin-bottom: 10px; font-weight: bolder;">
+                        Additional Fees</p>
+                    ${cost_fees_markup}
+                </div>
+                <!--p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
                 <span style="color:rgb(174, 255, 231); margin-right: 5px;">Checked Bags:</span>$100.00</p>
                 <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Seats:</span>$200.00</p>
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Seats:</span>$200.00</p-->
                 <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Total:</span>439.00</p>
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Total:</span>${current_currency.sign} ${total}</p>
                 <p style="font-weight: bolder; color:rgb(0, 195, 255); font-size: 14px; margin-bottom: 3px; margin-top: 10px;">
-                <span style="color:rgb(174, 212, 255); margin-right: 5px;">Grand Total:</span>$239.00</p>
+                <span style="color:rgb(174, 212, 255); margin-right: 5px;">Grand Total:</span>${current_currency.sign} ${grand_total}</p>
             </div>
             </div>
         </div>

@@ -52,7 +52,7 @@
                   &copy; all rights reserved
               </span>
           </p>
-        <div class="flex_row_default_flex_column_mobile" style="margin-top: 20px; margin-left: 5px; margin-right: 5px; background-color: rgba(0, 0, 0, 0.35); border-top: 1px solid rgb(255, 102, 0); padding-bottom: 20px; min-height: calc(100% - 120px);">
+        <div class="flex_row_default_flex_column_mobile" style="margin-top: 20px; background-color: rgba(0, 0, 0, 0.35); padding-bottom: 20px; min-height: calc(100% - 110px);">
           
           <div class="flex_child_of_two">
             <div style="padding: 20px 5px;">
@@ -70,14 +70,7 @@
 
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex_child_of_two">
-            <div style="padding: 20px 5px;">
-              <p style="color: rgb(243, 139, 79); font-size: 14px; font-weight: bolder; text-align: center;">
-              Other Information</p>
-              <div>
+
                 <div style="margin-top: 25px;">
                   <div style="margin-bottom: 10px;">
                     <p style="color: rgb(200, 247, 255); font-size: 14px; font-weight: bolder; letter-spacing: 1px;">
@@ -104,17 +97,25 @@
               </div>
             </div>
           </div>
+          <div class="flex_child_of_two">
+            <div style="padding: 20px 5px;">
+              <p style="color: rgb(243, 139, 79); font-size: 14px; font-weight: bolder; text-align: center;">
+              Other Information</p>
+              <div>
+                
+              </div>
+            </div>
+          </div>
           
         </div>
       </div>
     </div>
 
-    <div id="page_full_screen_prompt" class="page_cover_for_popups">
+    <div id="page_full_screen_prompt" style="z-index: 1001;" class="page_cover_for_popups">
 
       <div style="display: flex; height: 100%; flex-direction: column !important; justify-content: center; padding: 0 10px;">
         <div style="background: white; padding: 20px; max-width: 500px; margin: auto; border-radius: 4px;">
           <p id="page_full_screen_prompt_title" style="font-size: 14px; font-weight: bolder; letter-spacing: 1px;">
-            <i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             
           </p>
           <p id="page_full_screen_prompt_msg" style="margin: 20px; text-align: Justify; font-size: 14px; letter-spacing: 1px;">
@@ -548,7 +549,7 @@
             </div>
 
             <div style="padding: 10px;">
-              <input onclick="book_ticket();" style="padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
+              <input id="book_flight_final_submit_button" onclick="book_ticket();" style="padding: 10px; border-radius: 4px; color: white; border: none; background-color: rgb(245, 151, 37); width: 100%;" 
               type="submit" value="Submit" />
             </div>
 

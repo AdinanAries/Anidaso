@@ -338,14 +338,18 @@ app.post('/amadues_flight_create_order/', async (req, res, next)=>{
         travelers: req.body.data.travelers,
         remarks: req.body.data.remarks,
         contacts: req.body.data.contacts
-    }})).catch(err=>{
+    }})).catch((err) =>{
       console.log(err);
     });
 
   try{
-    await res.json(JSON.parse(responseOrder.body));
+    if(responseOrder){
+      await res.json(JSON.parse(responseOrder.body));
+    }else{
+      await res.json({failed: true, msg: "order not fullfilled!"});
+    }
   }catch(err){
-    await res.json(err)
+    await res.json(err);
   }
 
 });

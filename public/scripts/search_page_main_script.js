@@ -95,7 +95,7 @@ trip_type_param_number_of_people_option.addEventListener("click", (evnt) => {
   flight_class_round_trip_type_options_item.style.display = "none";
   oneway_or_round_trip_type_options_item.style.display = "none";
 
-})
+});
 
 trip_type_param_flight_class_option.addEventListener("click", (evnt) => {
   trip_type_param_flight_class_option.style.color = "#ffcb7d";
@@ -106,7 +106,7 @@ trip_type_param_flight_class_option.addEventListener("click", (evnt) => {
   flight_class_round_trip_type_options_item.style.display = "block";
   oneway_or_round_trip_type_options_item.style.display = "none";
 
-})
+});
 
 trip_type_param_round_trip_option.addEventListener("click", (evnt) => {
   trip_type_param_flight_class_option.style.color = "#a9ddff";
@@ -117,7 +117,7 @@ trip_type_param_round_trip_option.addEventListener("click", (evnt) => {
   flight_class_round_trip_type_options_item.style.display = "none";
   oneway_or_round_trip_type_options_item.style.display = "block";
 
-})
+});
 
 var city_search_fieldset = document.getElementById("city_search_fieldset");
 var date_search_fieldset = document.getElementById("date_search_fieldset");
