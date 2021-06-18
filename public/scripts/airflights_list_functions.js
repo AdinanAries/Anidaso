@@ -463,6 +463,7 @@ $(function() {
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].dateOfBirth = start.format('YYYY-MM-DD');
+        document.getElementById("login_fld_9").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
 
       /*var years = moment().diff(start, 'years');
       alert("You are " + years + " years old!");*/
@@ -477,6 +478,7 @@ $(function() {
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceDate = start.format('YYYY-MM-DD');
+        document.getElementById("login_fld_13").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
 
         //start.format('YYYY-MM-DD');
 
@@ -493,6 +495,7 @@ $(function() {
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].documents[0].expiryDate = start.format('YYYY-MM-DD');
+        document.getElementById("login_fld_14").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
 
         //start.format('YYYY-MM-DD');
 
@@ -549,11 +552,11 @@ document.getElementById("login_fld_17").addEventListener('change', (evnt) => {
 });
 
 document.getElementById("login_fld_18").addEventListener('input', (evnt) => {
-    booking_travelers[booking_forms_current_travelers_index].documents[0].birthPlace = evnt.target.value;
+    booking_travelers[booking_forms_current_travelers_index].documents[0].birthPlace = evnt.target.value.toUpperCase();
 });
 
 document.getElementById("login_fld_19").addEventListener('input', (evnt) => {
-    booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceLocation = evnt.target.value;
+    booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceLocation = evnt.target.value.toUpperCase();
 });
 
 document.getElementById("login_fld_111").addEventListener('change', (evnt) => {
@@ -896,59 +899,96 @@ function show_flight_booking_success_review_page(obj){
 
 function render_booking_confirmation_review_markup(obj){
 
-    //itenirery information
-    document.getElementById("flight_booking_success_itenirery_review").innerHTML = `
-        <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; width: calc(100% - 20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3);">
-            <div>
-                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Departure:</span>
-                Madrid(MAD) - Paris(CDG) 
-                <span style="color:rgb(144, 255, 222); font-size: 13px;">(4h:20m)</span>
-                </p>
-                <p style="margin-left: 10px; color:rgb(255, 102, 0); font-size: 13px; margin-top: 20px;">
-                Segments/Stops
-                </p>
-                <div style="margin-top: 10px;">
+    console.log("this thing", obj.data);
+
+    //departure airports and segments
+    let departure_take_off_airport_iata = obj.data.flightOffers[0].itineraries[0].segments[0].departure.iataCode;
+    let departure_take_off_airport_info = AirportsData.filter(each => {
+        return (each.IATA === departure_take_off_airport_iata);
+    });
+    let departure_take_off_airport = `${departure_take_off_airport_info[0].name} (${departure_take_off_airport_iata})`;
+
+    let departure_arrival_airport_iata = obj.data.flightOffers[0].itineraries[0].segments[(obj.data.flightOffers[0].itineraries[0].segments.length - 1)].arrival.iataCode
+    let departure_arrival_airport_info = AirportsData.filter(each => {
+        return (each.IATA === departure_take_off_airport_iata);
+    });
+    let departure_arrival_airport = `${departure_arrival_airport_info[0].name} (${departure_arrival_airport_iata})`;
+
+    //departure segments
+    let departure_segments_markup = ``;
+    for(let s=0; s<obj.data.flightOffers[0].itineraries[0].segments.length; s++){
+        
+        let segment_take_off_airport_iata = obj.data.flightOffers[0].itineraries[0].segments[s].departure.iataCode;
+        let segment_take_off_airport_info = AirportsData.filter(each => {
+            return (each.IATA === segment_take_off_airport_iata);
+        });
+        let segment_take_off_airport = `${segment_take_off_airport_info[0].name} (${segment_take_off_airport_iata})`;
+
+        let segment_arrival_airport_iata = obj.data.flightOffers[0].itineraries[0].segments[s].arrival.iataCode
+        let segment_arrival_airport_info = AirportsData.filter(each => {
+            return (each.IATA === segment_arrival_airport_iata);
+        });
+        let segment_arrival_airport = `${segment_arrival_airport_info[0].name} (${segment_arrival_airport_iata})`;
+
+        let take_off_date = obj.data.flightOffers[0].itineraries[0].segments[s].departure.at.split("T")[0];
+        let take_off_date_to_display = change_date_from_iso_to_long_date(take_off_date);
+        let take_off_time = obj.data.flightOffers[0].itineraries[0].segments[s].departure.at.split("T")[1];
+        let take_off_time_to_display = covert_time_to_12_hour(take_off_time);
+
+        let arrival_date = obj.data.flightOffers[0].itineraries[0].segments[s].arrival.at.split("T")[0];
+        let arrival_date_to_display = change_date_from_iso_to_long_date(arrival_date);
+        let arrival_time = obj.data.flightOffers[0].itineraries[0].segments[s].arrival.at.split("T")[1];
+        let arrival_time_to_display = covert_time_to_12_hour(arrival_time);
+
+        let airlines = airline_codes.filter(each => {
+           return (each.code === obj.data.flightOffers[0].itineraries[0].segments[s].carrierCode);
+        });
+        let aircrafts = aircrats.filter(each => {
+            return (each.IATA === obj.data.flightOffers[0].itineraries[0].segments[s].aircraft.code);
+        });
+
+        let airline_to_display = "Airline Code:"+obj.data.flightOffers[0].itineraries[0].segments[s].carrierCode;
+        if(airlines.length > 0){
+            airline_to_display = airlines[0].name;
+        }
+        let aircraft_to_display = "Aircraft Code:"+obj.data.flightOffers[0].itineraries[0].segments[s].aircraft.code;
+        if(aircrafts.length > 0){
+            aircraft_to_display = `${aircrafts[0].Manufacturer} ${aircrafts[0].Type_Model} ${aircrafts[0].Wake}`;
+        }
+
+        departure_segments_markup += `
+            <div style="margin-top: 10px;">
                 <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
-                    Madrid(MAD) - Accra(ACC)
+                    ${segment_take_off_airport} - ${segment_arrival_airport}
                 </p>
                 <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
                     <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
-                    March 23, 2021 - 10:15:00
+                    ${take_off_date_to_display} - ${take_off_time_to_display}
                 </p>
                 <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
                     <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
-                    March 24, 2021 - 10:15:00
+                    ${arrival_date_to_display} - ${arrival_time_to_display}
                 </p>
                 <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
                     <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
-                    American Airlines 
+                    ${airline_to_display} 
                     <span style="color: rgba(255, 255, 255,0.2);">|</span> 
-                    Airbus 320H</p>
-                </div>
-                <div style="margin-top: 10px;">
-                <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
-                    Accra(ACC) - Paris(CDG)
-                </p>
-                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
-                    March 25, 2021 - 11:53:00
-                </p>
-                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
-                    March 24, 2021 - 04:24:00
-                </p>
-                <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
-                    <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
-                    American Airlines 
-                    <span style="color: rgba(255, 255, 255,0.2);">|</span> 
-                    Airbus 320H</p>
-                </div>
-                <div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
-                <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-                <span style="color:rgb(190, 223, 233); font-size: 13px;">Your departure flight makes 2 Stops (Accra, Abuja) before its destination</span>
-                </div>
+                    ${aircraft_to_display}</p>
             </div>
+        `;
+    }
+
+    let departure_segments_stops_status = ""
+    if(obj.data.flightOffers[0].itineraries[0].segments.length > 1){
+        departure_segments_stops_status = `<div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
+            <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+            <span style="color:rgb(190, 223, 233); font-size: 13px;">Your departure flight makes ${(obj.data.flightOffers[0].itineraries[0].segments.length-1)} Stop(s) before its destination</span>
+        </div>`;
+    }
+    //return airports and segments
+    let return_itinery_info = ""
+    if(obj.data.flightOffers[0].itineraries.lenght > 1){
+        return_itinery_info = `
             <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
                 <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
                 <span style="color:rgb(174, 255, 231); margin-right: 5px;">Return:</span>
@@ -959,46 +999,83 @@ function render_booking_confirmation_review_markup(obj){
                 Segments/Stops
                 </p>
                 <div style="margin-top: 10px;">
-                <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
-                    Madrid(MAD) - Accra(ACC)
-                </p>
-                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
-                    March 23, 2021 - 10:15:00
-                </p>
-                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
-                    March 24, 2021 - 10:15:00
-                </p>
-                <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
-                    <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
-                    American Airlines 
-                    <span style="color: rgba(255, 255, 255,0.2);">|</span> 
-                    Airbus 320H</p>
+                    <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                        Madrid(MAD) - Accra(ACC)
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                        March 23, 2021 - 10:15:00
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                        March 24, 2021 - 10:15:00
+                    </p>
+                    <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                        <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                        American Airlines 
+                        <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                        Airbus 320H</p>
                 </div>
                 <div style="margin-top: 10px;">
-                <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
-                    Accra(ACC) - Paris(CDG)
-                </p>
-                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
-                    March 25, 2021 - 11:53:00
-                </p>
-                <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                    <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
-                    March 24, 2021 - 04:24:00
-                </p>
-                <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
-                    <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
-                    American Airlines 
-                    <span style="color: rgba(255, 255, 255,0.2);">|</span> 
-                    Airbus 320H</p>
+                    <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                        Accra(ACC) - Paris(CDG)
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                        March 25, 2021 - 11:53:00
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                        March 24, 2021 - 04:24:00
+                    </p>
+                    <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                        <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                        American Airlines 
+                        <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                        Airbus 320H</p>
                 </div>
                 <div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
-                <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-                <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes 2 Stops (Accra, Abuja) before its destination</span>
+                    <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                    <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes 2 Stops (Accra, Abuja) before its destination</span>
                 </div>
             </div>
+        `;
+    }
+
+    //itenirery information
+    document.getElementById("flight_booking_success_itenirery_review").innerHTML = `
+        <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; width: calc(100% - 20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3);">
+            <div>
+                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Departure:</span>
+                ${departure_take_off_airport} - ${departure_arrival_airport} 
+                <span style="color:rgb(144, 255, 222); font-size: 13px;">(4h:20m)</span>
+                </p>
+                <p style="margin-left: 10px; color:rgb(255, 102, 0); font-size: 13px; margin-top: 20px;">
+                Segments/Stops
+                </p>
+                ${departure_segments_markup}
+                <!--div style="margin-top: 10px;">
+                    <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
+                        Accra(ACC) - Paris(CDG)
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
+                        March 25, 2021 - 11:53:00
+                    </p>
+                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
+                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
+                        March 24, 2021 - 04:24:00
+                    </p>
+                    <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
+                        <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
+                        American Airlines 
+                        <span style="color: rgba(255, 255, 255,0.2);">|</span> 
+                        Airbus 320H</p>
+                </div-->
+                ${departure_segments_stops_status}
+            </div>
+            ${return_itinery_info}
         </div>
     `;
 

@@ -61,6 +61,19 @@ var number_of_people_round_trip_type_options_item = document.getElementById("num
 var flight_class_round_trip_type_options_item = document.getElementById("flight_class_round_trip_type_options_item");
 var oneway_or_round_trip_type_options_item = document.getElementById("oneway_or_round_trip_type_options_item");
 
+function change_date_from_iso_to_long_date(isoString){
+    
+  let the_year = isoString.split("-")[0];
+  let the_month = isoString.split("-")[1];
+  let the_day = isoString.split("-")[2];
+
+  let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+  let n = the_date.toString().split(" ");
+  let formatted_date = `${n[1]} ${n[2]}, ${n[3]}`;
+
+  return formatted_date;
+}
+
 var top_nav_var_main_menu_items = Array.from(
   document.getElementsByClassName("top_nav_var_main_menu_item")
 );
