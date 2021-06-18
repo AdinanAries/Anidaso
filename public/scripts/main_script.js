@@ -1357,7 +1357,7 @@ $(document).ready(()=>{
   setTimeout(()=>{
     $("#top_noti_fication_div").slideDown("fast");
     
-  }, 2000);
+  }, 5000);
 
   //$("#top_noti_fication_div").slideDown("fast");
 
@@ -1369,7 +1369,7 @@ $(document).ready(()=>{
     //alert(top)
     close_main_round_trip_type_options_btn.style.top = `${top}px`;
     
-  }, 2400)
+  }, 5400);
 });
 
 
