@@ -1354,10 +1354,12 @@ top_noti_fication_close_btn.addEventListener("click", ()=>{
 
 $(document).ready(()=>{
   
-  /*setTimeout(()=>{
-    $("#top_noti_fication_div").slideDown("fast");
+  setTimeout(()=>{
+    //$("#top_noti_fication_div").slideDown("fast");
     
-  }, 300);*/
+  }, 2000);
+
+  $("#top_noti_fication_div").slideDown("fast");
 
   setTimeout(()=>{
 
@@ -1367,7 +1369,7 @@ $(document).ready(()=>{
     //alert(top)
     close_main_round_trip_type_options_btn.style.top = `${top}px`;
     
-  },600)
+  }, 2200)
 });
 
 
