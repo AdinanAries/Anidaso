@@ -1355,11 +1355,11 @@ top_noti_fication_close_btn.addEventListener("click", ()=>{
 $(document).ready(()=>{
   
   setTimeout(()=>{
-    //$("#top_noti_fication_div").slideDown("fast");
+    $("#top_noti_fication_div").slideDown("fast");
     
   }, 2000);
 
-  $("#top_noti_fication_div").slideDown("fast");
+  //$("#top_noti_fication_div").slideDown("fast");
 
   setTimeout(()=>{
 
@@ -1369,7 +1369,7 @@ $(document).ready(()=>{
     //alert(top)
     close_main_round_trip_type_options_btn.style.top = `${top}px`;
     
-  }, 2200)
+  }, 2400)
 });
 
 
