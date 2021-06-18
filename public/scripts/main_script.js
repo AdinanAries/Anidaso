@@ -1354,10 +1354,10 @@ top_noti_fication_close_btn.addEventListener("click", ()=>{
 
 $(document).ready(()=>{
   
-  setTimeout(()=>{
+  /*setTimeout(()=>{
     $("#top_noti_fication_div").slideDown("fast");
     
-  }, 300)
+  }, 300);*/
 
   setTimeout(()=>{
 
