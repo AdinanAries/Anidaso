@@ -338,7 +338,7 @@ function show_flights_search_forms_from_main_menu(){
 
   jumbotron_background.style.opacity = 0;
   setTimeout(()=>{
-    jumbotron_background.style.background = "linear-gradient(rgba(204, 241, 255, 0), #210340), url('../images/flightsBg.jpg')";
+    jumbotron_background.style.background = "linear-gradient(rgba(204, 241, 255, 0), #001f33), url('../images/flightsBg.jpg')";
   }, 500);
   setTimeout(()=>{
     jumbotron_background.style.opacity = 1;
@@ -427,7 +427,7 @@ function show_hotels_search_forms_from_main_menu(){
 
   jumbotron_background.style.opacity = 0;
   setTimeout(()=>{
-    jumbotron_background.style.background = "linear-gradient(rgba(204, 241, 255, 0), #210340), url('../images/HotelPic2.jpg')";
+    jumbotron_background.style.background = "linear-gradient(rgba(204, 241, 255, 0), #001f33), url('../images/HotelPic2.jpg')";
     jumbotron_background.backgroundPosition = "bottom";
   }, 500);
   setTimeout(()=>{
@@ -512,7 +512,7 @@ main_menu_car_rentals_option.addEventListener("click", () => {
 
   jumbotron_background.style.opacity = 0;
   setTimeout(()=>{
-    jumbotron_background.style.background = "linear-gradient(rgba(204, 241, 255, 0), #210340), url('../images/carBackgroundPic3.jpg')";
+    jumbotron_background.style.background = "linear-gradient(rgba(204, 241, 255, 0), #001f33), url('../images/carBackgroundPic3.jpg')";
   }, 500);
   setTimeout(()=>{
     jumbotron_background.style.opacity = 1;
