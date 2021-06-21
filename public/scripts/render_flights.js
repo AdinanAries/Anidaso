@@ -24,6 +24,11 @@ var price_metrices_currency = 0;
 function render_flights(){
     
     if(localStorage.getItem("is_multi_city_search") === "yes" || localStorage.getItem("is_round_trip") === "yes"){
+        trip_type_param_number_of_people_option.innerHTML = flight_multi_city_search_data.itinerary.travelers.length > 1 ?
+            `${flight_multi_city_search_data.itinerary.travelers.length} travelers 
+                <i class="fa fa-caret-down" aria-hidden="true"></i>` :
+            `${flight_multi_city_search_data.itinerary.travelers.length} traveler 
+                <i class="fa fa-caret-down" aria-hidden="true"></i>`;
         object_to_send = flight_multi_city_search_data;
     }else{
         object_to_send = fligh_search_data;

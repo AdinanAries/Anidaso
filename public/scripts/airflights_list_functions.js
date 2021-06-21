@@ -9,6 +9,21 @@ function calculate_age(dob) {
     return Math.abs(age_dt.getUTCFullYear() - 1970);
 }
 
+function convert_date_object_to_db_string_format(dateObj){
+    
+    let the_month = dateObj.toLocaleString().split(",")[0].split("/")[0];
+    let the_day = dateObj.toLocaleString().split(",")[0].split("/")[1];
+    let the_year = dateObj.toLocaleString().split(",")[0].split("/")[2];
+    //console.log(`${the_year}/${the_month}/${the_day}`)
+
+    let a_date = new Date(`${the_year}/${the_month}/${the_day}`);
+    //a_date = new Date(a_date.setDate(a_date.getDate() - 1));
+
+    let date_string = a_date.toISOString(); //eg. 2021-05-02T09:13:26.243Z*/
+    return date_string.split("T")[0];
+
+}
+
 //this function show each flight ticket main details
 function show_flight_ticket_item_main_details_set(number){
 
@@ -290,7 +305,7 @@ function view_flight_deal(isAnidasoBookable, data_or_link){
 
         let eachTraveler = {
             "id": (q+1),
-            "dateOfBirth": document.getElementById("login_fld_9").value,
+            "dateOfBirth": convert_date_object_to_db_string_format(new Date()),
             "name": {
               "firstName": "Traveler",
               "lastName": (q+1)
@@ -311,9 +326,9 @@ function view_flight_deal(isAnidasoBookable, data_or_link){
                 "documentType": "PASSPORT",
                 "birthPlace": "N/A",
                 "issuanceLocation": "N/A",
-                "issuanceDate": document.getElementById("login_fld_13").value,
+                "issuanceDate": convert_date_object_to_db_string_format(new Date()),
                 "number": "N/A",
-                "expiryDate": document.getElementById("login_fld_14").value,
+                "expiryDate": convert_date_object_to_db_string_format(new Date()),
                 "issuanceCountry": "N/A",
                 "validityCountry": "N/A",
                 "nationality": "N/A",
@@ -380,6 +395,9 @@ function booking_forms_set_current_traveler(number){
             document.getElementById("login_fld_5").value = booking_travelers[number].name.firstName === "Traveler" ? "" : booking_travelers[number].name.firstName;
             document.getElementById("login_fld_8").value = booking_travelers[number].name.lastName;
             document.getElementById("login_fld_10").value = booking_travelers[number].gender === "N/A" ? "" : booking_travelers[number].gender;
+            document.getElementById("login_fld_9").focus();
+            document.getElementById("login_fld_13").focus();
+            document.getElementById("login_fld_14").focus();
             document.getElementById("login_fld_6").value = booking_travelers[number].contact.emailAddress === "N/A" ? "" : booking_travelers[number].contact.emailAddress;
             document.getElementById("login_fld_11").value = booking_travelers[number].contact.phones[0].countryCallingCode === "N/A" ? "" : `+${booking_travelers[number].contact.phones[0].countryCallingCode}`;
             document.getElementById("login_fld_7").value = booking_travelers[number].contact.phones[0].number === "N/A" ? "" : booking_travelers[number].contact.phones[0].number;
@@ -466,13 +484,15 @@ $(function() {
     $("#login_fld_9").daterangepicker({
       singleDatePicker: true,
       showDropdowns: true,
-      autoUpdateInput: false,
+      //autoUpdateInput: false,
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].dateOfBirth = start.format('YYYY-MM-DD');
-        document.getElementById("login_fld_9").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
+        setTimeout(()=>{
+            document.getElementById("login_fld_9").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
+        }, 100);
 
-        let DOB = start.format('YYYY-MM-DD');
+        /*let DOB = start.format('YYYY-MM-DD');
         let YYYY = DOB.split("-")[0];
         let MM = DOB.split("-")[1];
         let DD = DOB.split("-")[2]
@@ -491,22 +511,38 @@ $(function() {
                 number: "Document Not Required",
                 validityCountry: "Not Required",
             }
-        }
+        }*/
 
         /*var years = moment().diff(start, 'years');
         alert("You are " + years + " years old!");*/
     });
   });
 
+$('#login_fld_9').on('show.daterangepicker', function(ev, picker) {
+    //do something, like clearing an input
+    $('#login_fld_9').val(change_date_from_iso_to_long_date(booking_travelers[booking_forms_current_travelers_index].dateOfBirth)); 
+    
+});
+
+$('#login_fld_9').on('cancel.daterangepicker', function(ev, picker) {
+    //do something, like clearing an input
+    setTimeout(()=>{
+        $('#login_fld_9').val(change_date_from_iso_to_long_date(booking_travelers[booking_forms_current_travelers_index].dateOfBirth));
+    }, 50);
+    
+});
+
   $(function() {
     $("#login_fld_13").daterangepicker({
       singleDatePicker: true,
       showDropdowns: true,
-      autoUpdateInput: false,
+      //autoUpdateInput: false,
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceDate = start.format('YYYY-MM-DD');
-        document.getElementById("login_fld_13").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
+        setTimeout(()=> {
+            document.getElementById("login_fld_13").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
+        }, 100);
 
         //start.format('YYYY-MM-DD');
 
@@ -515,15 +551,31 @@ $(function() {
     });
   });
 
-  $(function() {
+$('#login_fld_13').on('show.daterangepicker', function(ev, picker) {
+    //do something, like clearing an input
+    $('#login_fld_13').val(change_date_from_iso_to_long_date(booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceDate)); 
+    
+});
+
+$('#login_fld_13').on('cancel.daterangepicker', function(ev, picker) {
+    //do something, like clearing an input
+    setTimeout(()=>{
+        $('#login_fld_13').val(change_date_from_iso_to_long_date(booking_travelers[booking_forms_current_travelers_index].documents[0].issuanceDate));
+    }, 50);
+    
+});
+
+$(function() {
     $("#login_fld_14").daterangepicker({
       singleDatePicker: true,
       showDropdowns: true,
-      autoUpdateInput: false,
+      //autoUpdateInput: false,
     }, function(start, end, label) {
         
         booking_travelers[booking_forms_current_travelers_index].documents[0].expiryDate = start.format('YYYY-MM-DD');
-        document.getElementById("login_fld_14").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
+        setTimeout(()=>{
+            document.getElementById("login_fld_14").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
+        }, 100);
 
         //start.format('YYYY-MM-DD');
 
@@ -532,8 +584,22 @@ $(function() {
     });
   });
 
-//booking forms inputs onchange events
+$('#login_fld_14').on('show.daterangepicker', function(ev, picker) {
+    //do something, like clearing an input
+    $('#login_fld_14').val(change_date_from_iso_to_long_date(booking_travelers[booking_forms_current_travelers_index].documents[0].expiryDate)); 
+    
+});
 
+$('#login_fld_14').on('cancel.daterangepicker', function(ev, picker) {
+    //do something, like clearing an input
+    setTimeout(()=>{
+        $('#login_fld_14').val(change_date_from_iso_to_long_date(booking_travelers[booking_forms_current_travelers_index].documents[0].expiryDate));
+    }, 50);
+    
+});
+
+
+//booking forms inputs onchange events
 document.getElementById("login_fld_5").addEventListener('input', (evnt) => {
     booking_travelers[booking_forms_current_travelers_index].name.firstName = evnt.target.value;
 });
@@ -1196,6 +1262,11 @@ function render_booking_confirmation_review_markup(obj){
             marginTop = "margin-top: 0;";
         }
 
+        let guest_passport_number = "Not Available";
+        if(guest_passport_number = obj.data.travelers[t].documents.length > 0){
+            guest_passport_number = obj.data.travelers[t].documents[0].number
+        }
+
         travelers_markup += `
             <div style="display: flex; flex-direction: row !important; ${marginTop}">
                 <div>
@@ -1208,7 +1279,7 @@ function render_booking_confirmation_review_markup(obj){
                         (DOB: ${change_date_from_iso_to_long_date(obj.data.travelers[t].dateOfBirth)})
                     </p>
                     <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                        <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>${obj.data.travelers[t].documents[0].number}</p>
+                        <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>${guest_passport_number}</p>
                     <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
                         <span style="color:rgb(174, 255, 231); margin-right: 5px;">Gender:</span>${obj.data.travelers[t].gender}</p>
                     <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
