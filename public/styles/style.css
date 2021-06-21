@@ -887,7 +887,7 @@ header {
   position: sticky;
   top: 0;
   background-color: #000d1a;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  /*border-bottom: 1px solid rgba(255, 255, 255, 0.2);*/
   z-index: 11;
 }
 .header_menu_dropdowns {
