@@ -189,3 +189,59 @@ var airline_codes = [
     {number: 30, code: "VY", name: "Vueling Airlines S.A."},
     {number: 0, code: "DY", name: "Norwegian Air Shuttle"}
 ];
+
+function set_airlines_filter_for_search(){
+
+    show_prompt_to_user(
+        `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Action Not Allowed`, 
+        `Due to maintenance and expansion of services, we are unable to filter flights by airlines at the moment.
+        We apologize for this inconvenience.`
+    );
+
+    document.getElementById("book_flights_filter_airlines_list").value = "all";
+
+    /*let airline_code = document.getElementById("book_flights_filter_airlines_list").value;
+
+    if(airline_code === "all"){
+        flight_multi_city_search_data.itinerary.searchCriteria.flightFilters.carrierRestrictions.excludedCarrierCodes = ["NON"];
+    }else{
+        let excluded = airline_codes.filter( each => {
+            return (each.code !== airline_code);
+        });
+
+        flight_multi_city_search_data.itinerary.searchCriteria.flightFilters.carrierRestrictions.excludedCarrierCodes = [];
+        excluded.forEach(each => {
+            flight_multi_city_search_data.itinerary.searchCriteria.flightFilters.carrierRestrictions.excludedCarrierCodes.push(each.code);
+        });
+    }
+
+    //fligh_search_data.currencyCode = currency;
+    window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+    window.localStorage.setItem("flight_multi_city_search_data", JSON.stringify(flight_multi_city_search_data));*/
+}
+//initial setting
+$(document).ready( ()=>{
+    //set_airlines_filter_for_search();
+});
+
+
+function add_hotel_to_flight_search_func(){
+    document.getElementById("add_a_hotel_to_flight_search").checked = false;
+    show_prompt_to_user(
+        `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Action Not Allowed`, 
+        `Due to maintenance and expansion of services, we are unable to add hotels to flight searches at the moment.
+        We apologize for this inconvenience.`
+    );
+}
+
+function add_car_to_flight_search_func(){
+    document.getElementById("add_a_car_to_flight_search").checked = false;
+    show_prompt_to_user(
+        `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Action Not Allowed`, 
+        `Due to maintenance and expansion of services, we are unable to add rental cars to flight searches at the moment.
+        We apologize for this inconvenience.`
+    );
+}

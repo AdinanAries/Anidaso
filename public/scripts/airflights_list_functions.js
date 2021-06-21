@@ -2,6 +2,13 @@ var show_fastest_travel_times_clicked = false;
 var done_skipping = false;
 var show_cheapest_travels_clicked = false;
 
+function calculate_age(dob) { 
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms); 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+
 //this function show each flight ticket main details
 function show_flight_ticket_item_main_details_set(number){
 
@@ -465,8 +472,29 @@ $(function() {
         booking_travelers[booking_forms_current_travelers_index].dateOfBirth = start.format('YYYY-MM-DD');
         document.getElementById("login_fld_9").value = change_date_from_iso_to_long_date(start.format('YYYY-MM-DD'));
 
-      /*var years = moment().diff(start, 'years');
-      alert("You are " + years + " years old!");*/
+        let DOB = start.format('YYYY-MM-DD');
+        let YYYY = DOB.split("-")[0];
+        let MM = DOB.split("-")[1];
+        let DD = DOB.split("-")[2]
+        let age = calculate_age(new Date(YYYY, MM, DD));
+
+        if(age < 18){
+            booking_travelers[booking_forms_current_travelers_index].documents[0] = {
+                birthPlace: "Not Required",
+                documentType: "PASSPORT",
+                expiryDate: "Not Required",
+                holder: true,
+                issuanceCountry: "Not Required",
+                issuanceDate: "Not Required",
+                issuanceLocation: "Not Required",
+                nationality: "Not Required",
+                number: "Document Not Required",
+                validityCountry: "Not Required",
+            }
+        }
+
+        /*var years = moment().diff(start, 'years');
+        alert("You are " + years + " years old!");*/
     });
   });
 
@@ -662,6 +690,7 @@ function book_ticket(){
 
                     toggle_show_finish_booking_form();
                     show_flight_booking_success_review_page(res);
+                    save_flight_booking_to_anidaso_db(res);
                 }else{
                     document.getElementById("book_flight_final_submit_button").style.display = "block";
                     submit_flight_ticket_booking_loader.style.display = "none";
@@ -696,6 +725,22 @@ function book_ticket(){
         submit_flight_ticket_booking_loader.style.opacity = 0;
         
     }
+}
+
+function save_flight_booking_to_anidaso_db(booking_data){
+    $.ajax({
+        type: "POST",
+        url: "/save_booked_flight",
+        data: JSON.stringify(booking_data),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: data => {
+            console.log(data);
+        },
+        error: err => {
+            console.log(err);
+        }
+    })
 }
 
 //this function helps calculate the height of flight historic prices insights chart bar
@@ -1001,7 +1046,7 @@ function render_booking_confirmation_review_markup(obj){
 
     //return airports and segments
     let return_itinery_info = ""
-    if(obj.data.flightOffers[0].itineraries.lenght > 1){
+    if(obj.data.flightOffers[0].itineraries.length > 1){
 
         //return airports and segments
         let return_take_off_airport_iata = obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments[0].departure.iataCode;
@@ -1082,9 +1127,9 @@ function render_booking_confirmation_review_markup(obj){
 
         let return_segments_stops_status = ""
         if(obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments.length > 1){
-            departure_segments_stops_status = `<div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
+            return_segments_stops_status = `<div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
                 <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-                <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes ${(obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments.length-1)} Stop(s) before its destination</span>
+                <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes ${(obj.data.flightOffers[0].itineraries[(obj.data.flightOffers[0].itineraries.length - 1)].segments.length - 1)} Stop(s) before its destination</span>
             </div>`;
         }
 
@@ -1099,47 +1144,7 @@ function render_booking_confirmation_review_markup(obj){
                 Segments/Stops
                 </p>
                 ${return_segments_markup}
-                <!--div style="margin-top: 10px;">
-                    <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
-                        Madrid(MAD) - Accra(ACC)
-                    </p>
-                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
-                        March 23, 2021 - 10:15:00
-                    </p>
-                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
-                        March 24, 2021 - 10:15:00
-                    </p>
-                    <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
-                        <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
-                        American Airlines 
-                        <span style="color: rgba(255, 255, 255,0.2);">|</span> 
-                        Airbus 320H</p>
-                </div-->
-                <!--div style="margin-top: 10px;">
-                    <p style="color:rgb(0, 204, 255); font-size: 13px; margin-bottom: 3px;">
-                        Accra(ACC) - Paris(CDG)
-                    </p>
-                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Take-off:</span>
-                        March 25, 2021 - 11:53:00
-                    </p>
-                    <p style="margin-left: 10px; color:rgb(233, 214, 190); font-size: 13px; margin-bottom: 3px;">
-                        <span style="color:rgb(197, 234, 255); margin-right: 5px; font-size: 13px;">Arrival:</span>
-                        March 24, 2021 - 04:24:00
-                    </p>
-                    <p style="color:rgb(0, 255, 200); font-size: 13px; margin-left: 10px;">
-                        <i style="color:rgb(253, 158, 158); margin-right: 3px;" class="fa fa-plane" aria-hidden="true"></i>
-                        American Airlines 
-                        <span style="color: rgba(255, 255, 255,0.2);">|</span> 
-                        Airbus 320H</p>
-                </div-->
                 ${return_segments_stops_status}
-                <div style="display: flex; flex-direction: row !important; overflow: visible; margin-top: 20px;">
-                    <span style="font-size: 13px;"><i style="color: orangered; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-                    <span style="color:rgb(190, 223, 233); font-size: 13px;">Your return flight makes 2 Stops (Accra, Abuja) before its destination</span>
-                </div>
             </div>
         `;
     }
@@ -1182,35 +1187,55 @@ function render_booking_confirmation_review_markup(obj){
     `;
 
     //travelers information
+
+    let travelers_markup = "";
+    for(let t=0; t<obj.data.travelers.length; t++){
+
+        let marginTop = "margin-top: 15px;";
+        if(t<1){
+            marginTop = "margin-top: 0;";
+        }
+
+        travelers_markup += `
+            <div style="display: flex; flex-direction: row !important; ${marginTop}">
+                <div>
+                    <i style="color:rgb(253, 158, 158); margin-right: 10px;" class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                        <span style="color:rgb(0, 204, 255); margin-right: 5px;">
+                            ${obj.data.travelers[t].name.firstName} ${obj.data.travelers[t].name.lastName}</span>
+                        (DOB: ${change_date_from_iso_to_long_date(obj.data.travelers[t].dateOfBirth)})
+                    </p>
+                    <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                        <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>${obj.data.travelers[t].documents[0].number}</p>
+                    <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                        <span style="color:rgb(174, 255, 231); margin-right: 5px;">Gender:</span>${obj.data.travelers[t].gender}</p>
+                    <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                        <span style="color:rgb(174, 255, 231); margin-right: 5px;">Phone:</span>+${obj.data.travelers[t].contact.phones[0].countryCallingCode} ${obj.data.travelers[t].contact.phones[0].number}</p>
+                    <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                        <span style="color:rgb(174, 255, 231); margin-right: 5px;">Email:</span>${obj.data.travelers[t].contact.emailAddress}</p>
+                </div>
+            </div>
+        `;
+    }
+
     document.getElementById("flight_booking_success_travelers_review").innerHTML = `
         <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; width: calc(100% - 20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3);">
-            <div style="display: flex; flex-direction: row !important;">
-            <div>
-                <i style="color:rgb(253, 158, 158); margin-right: 10px;" class="fa fa-user" aria-hidden="true"></i>
-            </div>
-            <div>
-                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                <span style="color:rgb(0, 204, 255); margin-right: 5px;">
-                    Mohammed Adinan</span>
-                (DOB: March 23, 1992)
-                </p>
-                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>2392839223</p>
-            </div>
-            </div>
-            <div style="display: flex; flex-direction: row !important; margin-top: 15px;">
-            <div>
-                <i style="color:rgb(253, 158, 158); margin-right: 10px;" class="fa fa-user" aria-hidden="true"></i>
-            </div>
-            <div>
-                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                <span style="color:rgb(0, 204, 255); margin-right: 5px;">
-                    Micheal Essien</span>
-                (DOB: April 12, 1892)</p>
-                <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
-                    <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>none</p>
-            </div>
-            </div>
+            ${travelers_markup}
+            <!--div style="display: flex; flex-direction: row !important; margin-top: 15px;">
+                <div>
+                    <i style="color:rgb(253, 158, 158); margin-right: 10px;" class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                    <span style="color:rgb(0, 204, 255); margin-right: 5px;">
+                        Micheal Essien</span>
+                    (DOB: April 12, 1892)</p>
+                    <p style="color:rgb(233, 214, 190); font-size: 14px; margin-bottom: 3px;">
+                        <span style="color:rgb(174, 255, 231); margin-right: 5px;">Passport:</span>none</p>
+                </div>
+            </div-->
         </div>
     `;
 
@@ -1256,6 +1281,175 @@ function render_booking_confirmation_review_markup(obj){
                 <p style="font-weight: bolder; color:rgb(0, 195, 255); font-size: 14px; margin-bottom: 3px; margin-top: 10px;">
                 <span style="color:rgb(174, 212, 255); margin-right: 5px;">Grand Total:</span>${current_currency.sign} ${grand_total}</p>
             </div>
+            </div>
+        </div>
+    `;
+
+    //travelers prices breakdown
+    let travelers_pricing_markup = '';
+    for(let p=0; p<obj.data.flightOffers[0].travelerPricings.length; p++){
+
+        let the_traveler = obj.data.travelers.filter( each => {
+            return (each.id === obj.data.flightOffers[0].travelerPricings[p].travelerId);
+        });
+
+        let travelers_first_name = "";
+        let travelers_last_name = "";
+        if(the_traveler.length > 0){
+            travelers_first_name = the_traveler[0].name.firstName;
+            travelers_last_name = the_traveler[0].name.lastName;
+        }
+
+        let base_price = obj.data.flightOffers[0].travelerPricings[p].price.base;
+        let refundable_taxes = obj.data.flightOffers[0].travelerPricings[p].price.refundableTaxes;
+        let total = obj.data.flightOffers[0].travelerPricings[p].price.total;
+        let total_taxes = 0;
+        obj.data.flightOffers[0].travelerPricings[p].price.taxes.forEach(each => {
+            total_taxes += parseFloat(each.amount);
+        });      
+
+        //segment details
+        let segment_fair_details_markup = "";
+        for(let s=0; s<obj.data.flightOffers[0].travelerPricings[p].fareDetailsBySegment.length; s++){
+
+            let segment_cabin = obj.data.flightOffers[0].travelerPricings[p].fareDetailsBySegment[s].cabin;
+            let segment_class = airfare_codes.filter( each => {
+                return (each.code === obj.data.flightOffers[0].travelerPricings[p].fareDetailsBySegment[s].class);
+            });
+
+            let segment_class_markup = segment_class[0].fare;
+
+            let segment_take_off_airport_iata = "";
+            let segment_arrival_airport_iata = "";
+            for(let it=0; it<obj.data.flightOffers[0].itineraries.length; it++){
+                for (is=0; is<obj.data.flightOffers[0].itineraries[it].segments.length; is++){
+                    if(obj.data.flightOffers[0].itineraries[it].segments[is].id === obj.data.flightOffers[0].travelerPricings[p].fareDetailsBySegment[s].segmentId){
+                        segment_take_off_airport_iata = obj.data.flightOffers[0].itineraries[it].segments[is].departure.iataCode;
+                        segment_arrival_airport_iata = obj.data.flightOffers[0].itineraries[it].segments[is].arrival.iataCode;
+                    }
+                }
+            }
+            let segment_take_off_airport_info = AirportsData.filter(each => {
+                return (each.IATA === segment_take_off_airport_iata);
+            });
+            let segment_take_off_airport = `${segment_take_off_airport_info[0].name} (${segment_take_off_airport_iata})`;
+
+            let segment_arrival_airport_info = AirportsData.filter(each => {
+                return (each.IATA === segment_arrival_airport_iata);
+            });
+            let segment_arrival_airport = `${segment_arrival_airport_info[0].name} (${segment_arrival_airport_iata})`;
+
+            let segment_checked_bags_markup = "";
+            if(obj.data.flightOffers[0].travelerPricings[p].fareDetailsBySegment[s].includedCheckedBags.quantity === 0){
+                segment_checked_bags_markup = `
+                <p style="color:rgb(222, 155, 216); font-size: 14px; margin-bottom: 5px; padding: 5px;">
+                    <i style="margin-right: 5px; color: rgb(60, 250, 209);" class="fa fa-info-circle" aria-hidden="true"></i>
+                    Checked Bags not included
+                </p>
+            `;
+            }else{
+                segment_checked_bags_markup = `
+                    <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                        <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                            Included Checked Bags:
+                        </span>
+                        1 bag(s), 
+                        <span style="color:rgb(0, 204, 255); font-size: 14px;">(width: 25kg)</span> 
+                    </p>
+                `;
+            }
+
+            segment_fair_details_markup += `
+                <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 1.2s; background-color: rgba(204, 77, 77, 0.253); padding: 10px; margin-bottom: 2px;">
+                    <p style="color: aqua; margin-bottom: 10px; font-weight: bolder; font-size: 14px;">
+                    ${segment_take_off_airport} - ${segment_arrival_airport}
+                    </p>
+                    <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                    <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                        Cabin:
+                    </span>
+                    ${segment_cabin}
+                    </p>
+                    <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                    <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                        Class:
+                    </span>
+                    ${segment_class[0].code} - ${segment_class_markup}
+                    </p>
+                    ${segment_checked_bags_markup}
+                </div>
+            `;
+        }
+
+        travelers_pricing_markup += `
+            <div style="padding: 10px 0; border-top:  1px solid rgba(255,255,255,0.3);">
+                <p style="font-weight: bolder; color:rgb(0, 189, 196); font-size: 14px; margin-bottom: 5px;">
+                <span style="font-size: 14px; margin-right: 10px; color:rgb(0, 241, 201);">
+                    ${travelers_first_name} ${travelers_last_name}
+                </span>
+                (ADULT)
+                </p>
+                <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                    Base Price:
+                </span>
+                ${current_currency.sign} ${base_price}
+                </p>
+                <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                    Refundable Taxes:
+                </span>
+                ${current_currency.sign} ${refundable_taxes}
+                </p>
+                <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                    Taxes Total:
+                </span>
+                ${current_currency.sign} ${total_taxes}
+                </p>
+                <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                    Total:
+                </span>
+                ${current_currency.sign} ${total}
+                </p>
+                <p style="color: white; font-size: 14px; font-weight: bolder; margin-bottom: 10px; margin-top: 20px;">
+                Fare Details Per Segment</p>
+                ${segment_fair_details_markup}
+                <!--div style="background-color: rgba(204, 77, 77, 0.253); padding: 10px; margin-bottom: 2px;">
+                    <p style="color: aqua; margin-bottom: 10px; font-weight: bolder; font-size: 14px;">
+                        MAD - CGG
+                    </p>
+                    <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                    <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                        Cabin:
+                    </span>
+                    ECONOMY
+                    </p>
+                    <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                    <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                        Class:
+                    </span>
+                    K
+                    </p>
+                    <p style="color:rgb(0, 155, 216); font-size: 14px; margin-bottom: 5px;">
+                    <span style="font-size: 14px; margin-right: 10px; color:rgb(233, 128, 0);">
+                        Included Checked Bags:
+                    </span>
+                    1 bag(s), 
+                    <span style="color:rgb(0, 204, 255); font-size: 14px;">(width: 25kg)</span> 
+                    </p>
+                </div-->
+            </div>
+        `;
+    }
+
+    document.getElementById("price_per_traveler_breakdown_display").innerHTML = `
+        <div style="animation: mounting_ani 0.5s ease-out; animation-delay: 0.5s; padding: 10px; border: 1px solid rgba(255,255,255,0.3); background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
+            <div>
+                <p style="font-size: 14px; color: rgb(175, 219, 255); font-weight: bolder; margin-bottom: 10px;">
+                    Price Per Traveler Breakdown</p>
+                ${travelers_pricing_markup}
             </div>
         </div>
     `;

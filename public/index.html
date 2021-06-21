@@ -1810,13 +1810,13 @@
               </div>
               <div style="display: flex; flex-direction: row !important;">
                 <div class="each_additional_search_inputs_and_Option">
-                  <input id="add_a_hotel_to_flight_search" type="checkbox" />
+                  <input onchange="add_hotel_to_flight_search_func();" id="add_a_hotel_to_flight_search" type="checkbox" />
                   <label for="add_a_hotel_to_flight_search">
                     <span>Add a Hotel</span>
                 </label>
                 </div>
                 <div class="each_additional_search_inputs_and_Option">
-                  <input id="add_a_car_to_flight_search" type="checkbox" />
+                  <input onchange="add_car_to_flight_search_func();" id="add_a_car_to_flight_search" type="checkbox" />
                   <label for="add_a_car_to_flight_search">
                     <span>Add a Car</span>
                 </label>
@@ -1825,8 +1825,8 @@
               <div style="display: flex; justify-content: space-between;">
                 <div style="padding: 0; display: flex;" class="each_additional_search_inputs_and_Option">
                   <p>Filter by Airline:</p>
-                  <select id="book_flights_filter_airlines_list" class="current_search_results_filter_options">
-                    <option>All</option>
+                  <select onchange="set_airlines_filter_for_search();" id="book_flights_filter_airlines_list" class="current_search_results_filter_options">
+                    <option value="all">All</option>
                   </select>
                 </div>
               </div>
@@ -2200,9 +2200,9 @@
               <p style="position: absolute; top: 0; left: 30px; background-color: #37a0f5; width: fit-content; padding: 5px 10px 2px 10px; border-radius: 4px 10px;">
                 <i class="fa fa-info" aria-hidden="true" style="margin: 0; color: rgb(8, 77, 122); font-size: 20px;"></i></p>
               <p style="border: #37a0f5 1px solid; padding: 20px;">
-                <span style="font-size: 13px;">
-                  At Anidaso, our main objective is to provide you with the best experience and prices while you're 
-                  shopping your travel and hospitality products/services. This page is currently unavailable
+                <span style="font-size: 14px !important; color:rgb(168, 195, 218);">
+                  At Anidaso, our main objective is to provide you the best experience and prices while 
+                  shopping travel and hospitality products. This page is currently unavailable
                   due to maintainance and expansion of services.
                 </span>
               </p>
@@ -2214,9 +2214,8 @@
             <h1 class="page_title">Travel easy and cheap</h1>
           </div>
           <p style="color: white; font-size: 14px; margin: 10px;">
-            Packages make your trip planning a lot easier. It also helps you save money.
-            Buying flight + hotel + other travel products/services combined into a single package
-            make your life easier. Also you get to save money, as a packages is cheaper than the sum of 
+            Buying flights, hotels, and rental cars as packages make trip planning alot easier.
+            It also saves you some cash, since a package is usually cheaper than the sum of 
             its parts.
           </p>
           <div class="page_not_available_card">
@@ -2232,9 +2231,9 @@
               <p style="position: absolute; top: 0; left: 30px; background-color: #37a0f5; width: fit-content; padding: 5px 10px 2px 10px; border-radius: 4px 10px;">
                 <i class="fa fa-info" aria-hidden="true" style="margin: 0; color: rgb(8, 77, 122); font-size: 20px;"></i></p>
               <p style="border: #37a0f5 1px solid; padding: 20px;">
-                <span style="font-size: 13px;">
-                  At Anidaso, our main objective is to provide you with the best experience and prices while you're 
-                  shopping your travel and hospitality products/services. This page is currently unavailable
+                <span style="font-size: 14px !important; color:rgb(168, 195, 218);">
+                  At Anidaso, our main objective is to provide you the best experience and prices while 
+                  shopping travel and hospitality products. This page is currently unavailable
                   due to maintainance and expansion of services.
                 </span>
               </p>
@@ -2258,9 +2257,9 @@
               <p style="position: absolute; top: 0; left: 30px; background-color: #37a0f5; width: fit-content; padding: 5px 10px 2px 10px; border-radius: 4px 10px;">
                 <i class="fa fa-info" aria-hidden="true" style="margin: 0; color: rgb(8, 77, 122); font-size: 20px;"></i></p>
               <p style="border: #37a0f5 1px solid; padding: 20px;">
-                <span style="font-size: 13px;">
-                  At Anidaso, our main objective is to provide you with the best experience and prices while you're 
-                  shopping your travel and hospitality products/services. This page is currently unavailable
+                <span style="font-size: 14px !important; color:rgb(168, 195, 218);">
+                  At Anidaso, our main objective is to provide you the best experience and prices while 
+                  shopping travel and hospitality products. This page is currently unavailable
                   due to maintainance and expansion of services.
                 </span>
               </p>

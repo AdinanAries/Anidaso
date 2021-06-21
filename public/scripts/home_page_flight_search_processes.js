@@ -188,7 +188,7 @@ if(window.localStorage.getItem("flights_post_data")){
           itinerary: {
             currencyCode: "USD",
               originDestinations: [ 
-                { 
+                /*{ 
                     id: 1, 
                     originLocationCode: "MAD", 
                     destinationLocationCode: "PAR", 
@@ -219,10 +219,10 @@ if(window.localStorage.getItem("flights_post_data")){
                     departureDateTimeRange: { 
                       date: "2021-04-11" 
                     } 
-                } 
+                }*/
               ], 
               travelers: [ 
-                { 
+                /*{ 
                     id: 1, 
                     travelerType: "ADULT", 
                     fareOptions: [ 
@@ -242,7 +242,7 @@ if(window.localStorage.getItem("flights_post_data")){
                     fareOptions: [ 
                         "STANDARD" 
                     ] 
-                } 
+                } */
               ], 
               sources: [ 
                 "GDS" 
@@ -251,13 +251,14 @@ if(window.localStorage.getItem("flights_post_data")){
                 maxFlightOffers: 100,
                 flightFilters: {
                     cabinRestrictions: [
-                    {
-                        cabin: "BUSINESS",
-                        coverage: "MOST_SEGMENTS",
-                        originDestinationIds: [1]
-                    }],
+                        {
+                            cabin: "BUSINESS",
+                            coverage: "MOST_SEGMENTS",
+                            originDestinationIds: [1]
+                        }
+                    ],
                     carrierRestrictions: {
-                        excludedCarrierCodes: ["AA", "TP", "AZ"]
+                        excludedCarrierCodes: ["NON"]
                     }
                 }
               } 

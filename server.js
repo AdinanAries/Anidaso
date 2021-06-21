@@ -60,6 +60,8 @@ var cheap_hotel_inventory_model = require("./models/cheap_hotel_inventory_model"
 var cheap_hotel_guest = require("./models/cheap_hotel_guests_Model");
 var hotel_deals = require("./models/hotel_deals_model");
 var cheap_hotel_invoice = require("./models/cheap_hotel_invoices_model");
+var booked_flight_data = require("./models/booked_flights_log_model");
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -352,6 +354,18 @@ app.post('/amadues_flight_create_order/', async (req, res, next)=>{
     await res.json(err);
   }
 
+});
+
+//Amadues - Saving booked Flight
+app.post("/save_booked_flight/", async(req, res, next) => {
+  
+  let flight = await new booked_flight_data({
+    booking_data: req.body
+  });
+
+  let saved_flight = await flight.save();
+
+  res.send(saved_flight);
 });
 
 //Amadues - Airline Code Lookup
