@@ -698,7 +698,15 @@ header {
   /*width: calc(100vw - 20px);*/
   width: 100vw;
   z-index: 2;
-  background-color: #000d1a;
+  /*background-color: #000d1a;*/
+  background: linear-gradient(
+    #000d1a,
+    #000d1a,
+    #000d1a,
+    #000d1a,
+    #000d1a,
+    rgba(0, 0, 0, 0)
+  );
   /*border-bottom: 1px solid rgba(255, 255, 255, 0.2);*/
 }
 #site_lower_section {
