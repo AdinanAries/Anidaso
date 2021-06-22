@@ -909,11 +909,14 @@ header {
   position: relative;
   width: 100px;
   height: 70px;
-  background-color: #140028;
+  background-color: #000d1a;
   left: 569px;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.5s linear;
+}
+#mobile_main_menu_items{
+  border-top: none;
 }
 #main_menu_more_submenu {
   position: absolute;
