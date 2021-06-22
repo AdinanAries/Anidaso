@@ -872,7 +872,7 @@ body {
   height: 100vh;
   z-index: -1;
   width: 100vw;
-  background: linear-gradient(#000d1a, rgba(204, 241, 255, 0), #000d1a),
+  background: linear-gradient(#000d1a, rgba(0, 0, 0, 0.479), #000d1a, #000d1a),
     url("../images/flightsBg.jpg");
   background-repeat: no-repeat !important;
   background-size: cover !important;
