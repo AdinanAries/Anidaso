@@ -29,8 +29,8 @@ function render_flights_load_more(){
     document.getElementById("render_flights_load_more_btn").style.display = "none";
     document.getElementById("render_flights_load_more_loader").style.display = "block";
 
-    render_flights_load_more_lower_bound += 21;
-    render_flights_load_more_upper_bound += 21;
+    render_flights_load_more_lower_bound = render_flights_load_more_upper_bound;
+    render_flights_load_more_upper_bound += 5;
 
     /*if(render_flights_returned_data.length < render_flights_load_more_lower_bound){
         return null
@@ -38,7 +38,7 @@ function render_flights_load_more(){
     
     let data = render_flights_returned_data;
 
-    let limit = 0;
+    let limit = render_flights_load_more_lower_bound;
     setTimeout(()=>{
         main_loop:
         for(var w = render_flights_load_more_lower_bound; w < data.length; w++){
@@ -1111,7 +1111,7 @@ function render_flights_load_more(){
             limit++;
             document.getElementById("render_flights_load_more_loader").style.display = "none";
         }
-    }, 100);
+    }, 50);
 }
 
 //One way trips
