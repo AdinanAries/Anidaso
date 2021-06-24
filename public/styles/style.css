@@ -1712,14 +1712,23 @@ header li a i,
 .favorite_bus_company_title_text {
   display: flex;
   justify-content: space-between;
+  font-weight: bolder;
   color: rgb(35, 167, 255);
   padding: 10px;
 }
+@keyframes border_colored_loader {
+  0% {
+  }
+  100% {
+  }
+}
 .favorite_bus_company_info {
+  /*animation: border_colored_loader 2s ease infinite;*/
   margin: 0 10px;
   border-top: 4px solid;
   border-image-source: linear-gradient(
     to right,
+    rgb(35, 167, 255),
     rgb(35, 167, 255),
     rgb(233, 128, 0)
   );
