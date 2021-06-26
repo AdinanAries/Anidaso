@@ -29,7 +29,7 @@ function render_flights_load_more(){
     document.getElementById("render_flights_load_more_btn").style.display = "none";
     document.getElementById("render_flights_load_more_loader").style.display = "block";
 
-    render_flights_load_more_lower_bound = render_flights_load_more_upper_bound;
+    render_flights_load_more_lower_bound = (render_flights_load_more_upper_bound+1);
     render_flights_load_more_upper_bound += 5;
 
     /*if(render_flights_returned_data.length < render_flights_load_more_lower_bound){

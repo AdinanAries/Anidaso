@@ -1718,21 +1718,152 @@ header li a i,
 }
 @keyframes border_colored_loader {
   0% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0)
+    );
+  }
+  10% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255)
+    );
+  }
+  20% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255)
+    );
+  }
+  30% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255)
+    );
+  }
+  40% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255)
+    );
+  }
+  50% {
+    background: linear-gradient(
+      to right,
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255)
+    );
+  }
+  60% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255)
+    );
+  }
+  70% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255)
+    );
+  }
+  80% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255)
+    );
+  }
+  90% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0),
+      rgb(35, 167, 255)
+    );
   }
   100% {
+    background: linear-gradient(
+      to right,
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(35, 167, 255),
+      rgb(233, 128, 0),
+      rgb(233, 128, 0)
+    );
   }
 }
-.favorite_bus_company_info {
-  /*animation: border_colored_loader 2s ease infinite;*/
+.favorite_bus_company_info_loader_by_color {
   margin: 0 10px;
-  border-top: 4px solid;
+  padding-top: 4px;
+  animation: border_colored_loader 0.5s ease infinite;
+}
+.favorite_bus_company_info {
+  /*border-top: 4px solid;
   border-image-source: linear-gradient(
     to right,
     rgb(35, 167, 255),
     rgb(35, 167, 255),
     rgb(233, 128, 0)
   );
-  border-image-slice: 1;
+  border-image-slice: 1;*/
   background-color: #ebf9ff;
   min-height: 100px;
 }
