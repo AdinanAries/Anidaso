@@ -804,7 +804,9 @@ header {
   font-size: 14px;
 }
 .trip_advisor_card {
-  background-color: #4b2e68;
+  /*background-color: #4b2e68;*/
+  background-color: #4b2e6859;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 5px;
   padding: 10px;
   animation: mounting_ani 300ms ease-out;
@@ -1264,7 +1266,9 @@ header {
   margin-top: 10px;
   margin-left: 20px;
   min-height: 600px;
-  background-image: url(../images/VerticalBannerAd.jpg);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 118, 148, 0.164);
+  /*background-image: url(../images/VerticalBannerAd.jpg);*/
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 4px;
