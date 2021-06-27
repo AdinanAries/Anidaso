@@ -729,6 +729,7 @@ app.get("/change_price_alert/:user_id", async (req, res, next)=> {
   let operation = req.query.action;
   let user_id = req.params.user_id;
 
+  //console.log("UserId: ", user_id, " - Opeartion: ", operation);
   let user = await signup_user.findById(user_id);
 
   if(operation === "activate"){

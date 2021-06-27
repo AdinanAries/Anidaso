@@ -1307,12 +1307,37 @@ function add_all_airlines(){
   
   document.getElementById("book_hotels_filter_hotel_by_stars").value = hotel_search_data.ratings;
 
-function change_user_price_alert(action){
+function change_user_price_alert(action, user_id){
     $.ajax({
         type: "GET",
-        url: 
+        url: "/change_price_alert/"+user_id+"?action="+action,
+        success: data => {
+            console.log(data);
+        },
+        error: err => {
+            console.log(err);
+        }
+
     });
 }
+
+document.getElementById("price_alert_toggle").addEventListener("change", e => {
+
+    let logged_in = true;
+    
+    if(logged_in){
+        let user_id = window.localStorage.getItem("ANDSUSR");
+        if(document.getElementById("price_alert_toggle").checked){
+            change_user_price_alert("activate", user_id);
+        }else{
+            change_user_price_alert("deactivate", user_id);
+        }
+    }else{
+        //User not recognized(signup or login needed);
+    }
+
+});
+
 /*from_where_search_input_fld.addEventListener('focus', ()=>{
 
     if($(window).width() < 700){
