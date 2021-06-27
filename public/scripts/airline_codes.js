@@ -245,3 +245,23 @@ function add_car_to_flight_search_func(){
         We apologize for this inconvenience.`
     );
 }
+
+function add_flight_to_hotel_search_func(){
+    document.getElementById("add_a_flight_to_hotel_search").checked = false;
+    show_prompt_to_user(
+        `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Action Not Allowed`, 
+        `Due to maintenance and expansion of services, we are unable to add flights to hotel searches at the moment.
+        We apologize for this inconvenience.`
+    );
+}
+
+function add_rental_car_to_hotel_search_func(){
+    document.getElementById("add_a_car_to_hotel_search").checked = false;
+    show_prompt_to_user(
+        `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Action Not Allowed`, 
+        `Due to maintenance and expansion of services, we are unable to add rental cars to hotel searches at the moment.
+        We apologize for this inconvenience.`
+    );
+}
