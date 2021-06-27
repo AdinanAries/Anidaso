@@ -1307,6 +1307,12 @@ function add_all_airlines(){
   
   document.getElementById("book_hotels_filter_hotel_by_stars").value = hotel_search_data.ratings;
 
+function change_user_price_alert(action){
+    $.ajax({
+        type: "GET",
+        url: 
+    });
+}
 /*from_where_search_input_fld.addEventListener('focus', ()=>{
 
     if($(window).width() < 700){
