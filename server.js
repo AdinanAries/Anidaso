@@ -662,7 +662,8 @@ app.post("/signup/", async (req, res, next)=> {
       first_name: req.body.firstname,
       last_name: req.body.lastname,
       email: req.body.email,
-      profile_picture: ""
+      profile_picture: "",
+      has_price_alert: false
     });
 
     let existing_user = await signup_user.findOne({
@@ -719,6 +720,28 @@ app.post("/signup/", async (req, res, next)=> {
     res.send({error: e})
   }
   //res.send(req.body);
+
+});
+
+//changing user price alert
+app.get("/change_price_alert/:user_id", async (req, res, next)=> {
+
+  let operation = req.query.action;
+  let user_id = req.params.user_id;
+
+  let user = await signup_user.findById(user_id);
+
+  if(operation === "activate"){
+    user.has_price_alert = true;
+  }else if(operation === "deactivate"){
+    user.has_price_alert = false;
+  }
+
+  let updated_user = await new signup_user(user);
+
+  let saved_user = await updated_user.save();
+
+  res.send(saved_user);
 
 });
 

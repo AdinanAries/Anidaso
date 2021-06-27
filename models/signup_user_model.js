@@ -21,6 +21,10 @@ let signup_user_schema = mongoose.Schema({
     profile_picture: {
         type: String,
         required: true
+    },
+    has_price_alert: {
+        type: Boolean,
+        required: true
     }
 });
 
