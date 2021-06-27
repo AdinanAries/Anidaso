@@ -172,28 +172,75 @@ function render_hotels(){
 
                         if(data.data[p].hotel.rating === "5"){
                             hotel_rating = `
-                            &#9733; &#9733; &#9733; &#9733; &#9733;
-                            <span style='margin-left: 10px; color: orange;font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
-                            - Excellent<span>`;
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                - Excellent</div>
+                            </div>`;
                         }else if(data.data[p].hotel.rating === "4"){
                             hotel_rating = `
-                            &#9733; &#9733; &#9733; &#9733; &#9734;
-                            <span style='margin-left: 10px; color: orange;font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
-                            - Very Good<span>`;
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                - Very Good</div>
+                            </div>`;
                         }else if(data.data[p].hotel.rating === "3"){
                             hotel_rating = `
-                            &#9733; &#9733; &#9733; &#9734; &#9734;
-                            <span style='margin-left: 10px; color: orange;font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
-                            - Average<span>`;
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                - Average</div>
+                            </div>`;
                         }else if(data.data[p].hotel.rating === "2"){
                             hotel_rating = `
-                            &#9733; &#9733; &#9734; &#9734; &#9734;
-                            <span style='margin-left: 10px; color: orange;font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
-                            - Not Good<span>`;
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                - Not Good</div>
+                            </div>`;
                         }else {
-                            hotel_rating = `&#9733; &#9734; &#9734; &#9734; &#9734;
-                            <span style='margin-left: 10px; color: orange;font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
-                            - Very Bad<span>`;
+                            hotel_rating = `
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                - Very Bad</div>
+                            </div>
+                            `;
                         }
                     }
 
@@ -281,10 +328,10 @@ function render_hotels(){
                                     <div id="hotels_card_pic${p}" class="hotels_card_pic" style="background-image: url(${hotel_display_pic}); background-size: cover; background-repeat: no-repeat; min-height: 150px;">
                                         <div id="hotels_card_pic_title${p}" style="opacity: 0; transition: 0.5s all; position: absolute; top: 0; left: 0; background-color:rgba(0, 0, 0, 0.6); padding: 10px; width: calc(100% - 20px);">
                                             <p style="color: white; font-weight: bolder; font-size: 13px; letter-spacing: 1px;">${hotel_name}</p>
-                                            <p style="color: white; font-size: 11px; font-size: 12px; letter-spacing: 1px; margin-top: 5px;">
+                                            <p style="margin-bottom: 5px; color: white; font-size: 11px; font-size: 12px; letter-spacing: 1px; margin-top: 5px;">
                                             ${hotel_location}
                                             </p>
-                                            <p style="color:rgb(0, 188, 235); font-size: 17px;">${hotel_rating}</p>
+                                            ${hotel_rating}
                                         </div>
                                         <div onclick="show_full_hotel_list_pic(${p});" class="hotels_card_pic_show_full_pic">
                                             <i id="hotels_card_pic_show_full_pic_icon${p}" class="fa fa-chevron-right" aria-hidden="true"></i>
@@ -303,12 +350,9 @@ function render_hotels(){
                                         <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
                                         font-weight: bolder; letter-spacing: 1px;">${hotel_location}</p>
                                         
-                                        <p style="margin-top: 0;">
-                                            <span style="font-size: 14px; padding: 5px 10px; color: white; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color:rgb(27, 18, 123); text-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3),
-                                            0px 0px 2.9px rgba(0, 0, 0, 0.23);">
+                                        <div style="padding: 5px 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color:rgb(27, 18, 123);">
                                             ${hotel_rating}
-                                            </span>
-                                        </p>
+                                        </div>
                                     </div>
                                     <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px; margin-right: 0 !important;">
                                         <div>
