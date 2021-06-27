@@ -120,6 +120,7 @@ if(window.localStorage.getItem("hotels_post_data")){
         checkout: formatted_future_date,
         roomQuantity: 1,
         adults: 1,
+        currency: "USD",
         ratings: "5,4,3,2"
     }
     window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));

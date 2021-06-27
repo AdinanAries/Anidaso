@@ -1525,3 +1525,10 @@ function render_booking_confirmation_review_markup(obj){
         </div>
     `;
 }
+
+function hotel_search_filter_by_rating(){
+    hotel_search_data.ratings = document.getElementById("book_hotels_filter_hotel_by_stars").value;
+    window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
+}
+
+document.getElementById("book_hotels_filter_hotel_by_stars").value = hotel_search_data.ratings;

@@ -492,17 +492,19 @@ app.get('/get_hotel_sentiments/:hotelId', (req, res, next)=>{
 //Hotel Search End Points
 app.post("/get_hotels/", (req, res, next)=>{
 
-  console.log(req.query);
+  //console.log(req.query);
+  console.log(req.body);
 
   let city = req.body.city;
   let checkinDate = req.body.checkin;
   let checkoutDate = req.body.checkout;
   let roomQuantity = req.body.roomQuantity;
   let adults = req.body.adults;
+  let currency = req.body.currency
   let ratings = req.body.ratings;
 
   axios.get(
-    "https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode="+city+"&checkInDate="+checkinDate+"&checkOutDate="+checkoutDate+"&roomQuantity="+roomQuantity+"&adults="+adults,//+"&radius=40&ratings="+ratings+"&view=FULL&sort=PRICE",
+    "https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode="+city+"&checkInDate="+checkinDate+"&checkOutDate="+checkoutDate+"&roomQuantity="+roomQuantity+"&adults="+adults+"&currency="+currency+"&ratings="+ratings,//+"&radius=40&ratings="+ratings+"&view=FULL&sort=PRICE",
     {
       headers: {
         "Authorization": ("Bearer "+ AmadeusAccessToken)
