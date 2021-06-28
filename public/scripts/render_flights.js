@@ -833,8 +833,8 @@ function render_flights_load_more(){
                     </div>
                     <div class="each_ticket_item_emogi_and_rating">
                     
-                    <div style="font-size: 14px; overflow: visible !important; padding: 5px; color: white; border-radius: 4px; background-color:rgb(80, 95, 105); text-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3),
-                        0px 0px 2.9px rgba(0, 0, 0, 0.23);">
+                    <div style="font-size: 14px; overflow: visible !important; padding: 5px; color: white; border-radius: 4px; background-color:rgb(80, 95, 105); box-shadow: 1px 1.6px 4px rgba(0, 0, 0, 0.6),
+                        1px 1px 4px rgba(0, 0, 0, 0.6);">
                         <p style="font-size: 11px; opacity: 0.8; font-weight: bolder; margin-bottom: 5px;">
                             Price Rating
                         </p>
@@ -2324,8 +2324,8 @@ function render_flights(){
                         </div>
                         <div class="each_ticket_item_emogi_and_rating">
                         
-                        <div style="font-size: 14px; overflow: visible !important; padding: 5px; color: white; border-radius: 4px; background-color:rgb(80, 95, 105); text-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3),
-                            0px 0px 2.9px rgba(0, 0, 0, 0.23);">
+                        <div style="font-size: 14px; overflow: visible !important; padding: 5px; color: white; border-radius: 4px; background-color:rgb(80, 95, 105); box-shadow: 1px 1.6px 4px rgba(0, 0, 0, 0.6),
+                            1px 1px 4px rgba(0, 0, 0, 0.6);">
                             <p style="font-size: 11px; opacity: 0.8; font-weight: bolder; margin-bottom: 5px;">
                                 Price Rating
                             </p>

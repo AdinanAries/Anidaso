@@ -1321,22 +1321,54 @@ function change_user_price_alert(action, user_id){
     });
 }
 
-document.getElementById("price_alert_toggle").addEventListener("change", e => {
+if(document.getElementById("price_alert_toggle")){
+    document.getElementById("price_alert_toggle").addEventListener("change", e => {
 
-    let logged_in = true;
-    
-    if(logged_in){
-        let user_id = window.localStorage.getItem("ANDSUSR");
-        if(document.getElementById("price_alert_toggle").checked){
-            change_user_price_alert("activate", user_id);
+        let logged_in = true;
+        
+        if(logged_in){
+            let user_id = window.localStorage.getItem("ANDSUSR");
+            if(document.getElementById("price_alert_toggle").checked){
+                change_user_price_alert("activate", user_id);
+            }else{
+                change_user_price_alert("deactivate", user_id);
+            }
         }else{
-            change_user_price_alert("deactivate", user_id);
+            //User not recognized(signup or login needed);
         }
-    }else{
-        //User not recognized(signup or login needed);
-    }
+    
+    });
+}
 
+function get_and_return_current_logged_in_user(){
+    return $.ajax({
+        type: "GET",
+        url: "/get_login_user/"+window.localStorage.getItem("ANDSUSR"),
+        success: data => {
+            return data;
+        },
+        error: err => {
+            return err;
+        }
+    });
+}
+
+$(document).ready(function() {
+    set_curret_price_alert_value();
 });
+
+async function set_curret_price_alert_value(){
+    if(window.localStorage.getItem("ANDSUSR")){
+        let user = await get_and_return_current_logged_in_user();
+        if(user){
+            if(user.has_price_alert === true){
+                if(document.getElementById("price_alert_toggle")){
+                    document.getElementById("price_alert_toggle").checked = true;
+                }
+            }
+        }
+    }
+}
 
 /*from_where_search_input_fld.addEventListener('focus', ()=>{
 

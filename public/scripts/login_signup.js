@@ -217,14 +217,19 @@ function get_user_info_by_id(id){
         success: data => {
             console.log(data);
 
-            change_page_url("");
+            if(page_url.pathname === "/search_results_page.html"){
+                //do nothing
+            }else{
+                change_page_url("");
+            }
+            
 
             if(document.getElementById("mobile_menu_logged_in_user_info")){
                 document.getElementById("mobile_menu_logged_in_user_info").innerHTML =
                 `
                     <div style="display: flex; flex-direction: row !important; padding: 10px; padding-top: 0;">
                         <div class="logged_in_user_nav_profile_picture">
-                        <div style="border:rgb(235, 86, 0) 2px solid" class="logged_in_user_nav_profile_picture_container">
+                        <div style="" class="logged_in_user_nav_profile_picture_container">
                             <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
                         </div>
                         </div>
@@ -245,7 +250,7 @@ function get_user_info_by_id(id){
                 `
                     <div class="logged_in_user_nav_profile_picture">
                         <div class="logged_in_user_nav_profile_picture_container">
-                        <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
+                            <img src="images/Anonymous_person3.jpg" alt="logged in user avatar"/>
                         </div>
                     </div>
                     <div class="logged_in_user_nav_profile_name">
