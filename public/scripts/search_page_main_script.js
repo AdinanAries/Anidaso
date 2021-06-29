@@ -113,7 +113,68 @@ function display_right_section_ads(){
   }, 6000);
 }
 
+document.getElementById("search_results_book_cheap_book_direct_promoter_card").innerHTML = `
+    <div style="position: relative; background-color: rgba(33, 106, 119, 0.253); border: 1px solid rgba(255,255,255,0.3); padding: 10px; border-radius: 4px;">
+      <p style="box-shadow: 1px 1px 4px rgba(0,0,0,0.4); position: absolute; top: -15px; left: -10px; width: 20px; height: 20px; text-align: center; padding: 5px; background-color: rgb(0, 124, 97); border-top-right-radius: 10px; border-bottom-left-radius: 10px;">
+        <i style="font-size: 20px;" class="fa fa-info" style="color:rgb(0, 83, 65);" aria-hidden="true"></i>
+      </p>
+      <div class="flex_row_default_flex_column_mobile" style="height: 100%;">
+        <div class="flex_child_of_two">
+          <p class="loading_card_data_element" style="margin-top: 10px; background-color: rgb(196, 86, 86); color: rgb(196, 86, 86); font-size: 15px; letter-spacing: 1px; font-weight: bolder;">
+            Find Cheapest Hotels</p>
+            <p class="loading_card_data_element" style="margin-top: 5px; background-color: rgb(255, 208, 208); color: rgb(255, 208, 208); font-size: 14px;">
+              Find very cheap yet very good rooms from unpopular brands.
+            </p>
+        </div>
+        <div class="flex_child_of_two flex_non_first_child">
+          <div>
+            <p class="loading_card_data_element" style="margin-bottom: 10px; background-color: rgb(255, 224, 183); color: rgb(255, 224, 183); font-size: 14px;">
+              Rooms in New York available at $23.00 per night.
+            </p>
+            <div class="loading_card_data_element" style="cursor: pointer; color:rgba(110, 201, 181,0); border: 1px solid rgba(25, 255, 205, 0.336); background-color:rgba(0, 177, 139, 0.199); padding: 10px; border-radius: 4px; font-size: 14px; text-align: center;">
+              Click Here To Find Rooms
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+`;
+
+function show_search_results_book_cheap_promoter(){
+  setTimeout(()=>{
+    document.getElementById("search_results_book_cheap_book_direct_promoter_card").innerHTML = `
+      <div style="position: relative; background-color: rgba(33, 106, 119, 0.253); border: 1px solid rgba(255,255,255,0.3); padding: 10px; border-radius: 4px;">
+        <p style="box-shadow:  1px 1px 4px rgba(0,0,0,0.4); position: absolute; top: -15px; left: -10px; width: 20px; height: 20px; text-align: center; padding: 5px; background-color: rgb(0, 124, 97); border-top-right-radius: 10px; border-bottom-left-radius: 10px;">
+          <i style="font-size: 20px;" class="fa fa-info" style="color:rgb(0, 83, 65);" aria-hidden="true"></i>
+        </p>
+        <div class="flex_row_default_flex_column_mobile" style="height: 100%;">
+          <div class="flex_child_of_two">
+            <p style="margin-top: 10px; color: rgb(253, 158, 158); font-size: 15px; letter-spacing: 1px; font-weight: bolder;">
+              Find Cheapest Hotels</p>
+              <p style="margin-top: 5px; color: rgb(255, 208, 208); font-size: 14px;">
+                Find very cheap yet very good rooms from unpopular brands.
+              </p>
+          </div>
+          <div class="flex_child_of_two flex_non_first_child">
+            <div>
+              <p style="margin-bottom: 10px; color: rgb(255, 224, 183); font-size: 14px;">
+                Rooms in 
+                <span style="color:rgb(0, 204, 255); font-size: 14px;">New York</span> available at
+                <span style="color:rgb(0, 204, 255); font-size: 14px;">$23.00</span> per night.
+              </p>
+              <div style="cursor: pointer; color:rgb(110, 201, 181); border: 1px solid rgba(25, 255, 205, 0.336); background-color:rgba(0, 177, 139, 0.199); padding: 10px; border-radius: 4px; font-size: 14px; text-align: center;">
+                Click here to find rooms
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }, 5000);
+}
+
 display_right_section_ads();
+show_search_results_book_cheap_promoter();
 
 var hide_trip_top_params = document.getElementById("hide_trip_top_params");
 

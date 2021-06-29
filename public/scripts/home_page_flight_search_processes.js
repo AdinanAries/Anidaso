@@ -1331,11 +1331,10 @@ function change_user_price_alert(action, user_id){
 }
 
 if(document.getElementById("price_alert_toggle")){
+
     document.getElementById("price_alert_toggle").addEventListener("change", e => {
 
-        let logged_in = true;
-        
-        if(logged_in){
+        if(window.localStorage.getItem("ANDSUSR")){
             let user_id = window.localStorage.getItem("ANDSUSR");
             if(document.getElementById("price_alert_toggle").checked){
                 document.getElementById("price_alert_toggle_status_text").innerText = "ON";
@@ -1346,6 +1345,14 @@ if(document.getElementById("price_alert_toggle")){
             }
         }else{
             //User not recognized(signup or login needed);
+            show_prompt_to_user(
+                `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                You Are Not Logged In`, 
+                `You must login first to enable price alert.`
+            );
+            document.getElementById("price_alert_toggle").checked = false;
+            document.getElementById("price_alert_toggle_status_text").innerText = "OFF";
+            toggle_show_login_div();
         }
     
     });
