@@ -1,6 +1,7 @@
 //dom elements
 var home_page_search_button = document.getElementById("home_page_search_button");
 var home_page_hotels_search_button = document.getElementById("home_page_hotels_search_button");
+var home_page_car_rentals_search_button = document.getElementById("home_page_car_rentals_search_button");
 
 //Global Utilities
 //today
@@ -1262,6 +1263,14 @@ home_page_hotels_search_button.addEventListener("click", () =>{
     
 });
 
+home_page_car_rentals_search_button.addEventListener("click", () =>{
+    show_prompt_to_user(
+        `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Action Not Allowed`, 
+        `Due to maintenance and expansion of services, we are unable to get you any rental car services at the moment.
+        We apologize for this inconvenience.`
+    );
+});
 
 //exchange flights inputs values
 let rotated = false;
@@ -1329,8 +1338,10 @@ if(document.getElementById("price_alert_toggle")){
         if(logged_in){
             let user_id = window.localStorage.getItem("ANDSUSR");
             if(document.getElementById("price_alert_toggle").checked){
+                document.getElementById("price_alert_toggle_status_text").innerText = "ON";
                 change_user_price_alert("activate", user_id);
             }else{
+                document.getElementById("price_alert_toggle_status_text").innerText = "OFF";
                 change_user_price_alert("deactivate", user_id);
             }
         }else{
@@ -1364,6 +1375,7 @@ async function set_curret_price_alert_value(){
             if(user.has_price_alert === true){
                 if(document.getElementById("price_alert_toggle")){
                     document.getElementById("price_alert_toggle").checked = true;
+                    document.getElementById("price_alert_toggle_status_text").innerText = "ON";
                 }
             }
         }

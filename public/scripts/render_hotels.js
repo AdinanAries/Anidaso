@@ -157,7 +157,7 @@ function render_hotels(){
                         }
                         if(data.data[p].hotel.contact.email){
                             hotel_email = `
-                            <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 12px;">
+                            <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 14px;">
                                 <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>${data.data[p].hotel.contact.email}
                             </p>
                             `;
@@ -257,7 +257,7 @@ function render_hotels(){
                             </span>`;
                         }
                         hotel_description = `
-                            <p style="color:rgb(0, 127, 177); margin-bottom: 20px; font-size: 13px;">
+                            <p style="color:rgb(0, 127, 177); margin-bottom: 20px; font-size: 15px;">
                                 ${the_desc}
                             </p>
                         `;
@@ -358,16 +358,16 @@ function render_hotels(){
                                         <div>
                                         <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">
                                             Quantity:</p>
-                                        <p style="font-size: 13px;">
+                                        <p style="font-size: 14px;">
                                             ${booking_number_of_rooms}</p>
                                         </div>
                                         <div style="margin-right: 0 !important;">
                                         <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">Checkin</p>
-                                        <p style="font-size: 13px;">${checkin_date}</p>
+                                        <p style="font-size: 14px;">${checkin_date}</p>
                                         </div>
                                         <div>
                                         <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">Checkout</p>
-                                        <p style="font-size: 13px;">
+                                        <p style="font-size: 14px;">
                                             ${checkout_date}</p>
                                         </div>
                                     </div>
@@ -390,10 +390,10 @@ function render_hotels(){
                                 </div>
                                 <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
                                 <p class="ticket_item_price_display">${current_currency.sign} ${hotel_deal_price}</p>
-                                <p style="font-size: 12px; margin-bottom: 5px; font-weight: bolder;">
+                                <p style="font-size: 15px; margin-bottom: 5px;">
                                     ${room_category}</p>
-                                <div class="ticket_item_entitlements_display">
-                                    ${first_hotel_amenities}
+                                <div class="ticket_item_entitlements_display" style="font-size: 14px; opacity: 0.9;">
+                                    ${first_hotel_amenities}, ...
                                     <div class="ticket_item_entitlements_content_display arrow_on_bottom">
                                         <p style="opacity: 0.8; font-weight: bolder; font-size: 12px; padding: 10px;">
                                             Hotels Amenities
@@ -542,15 +542,76 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                 if(data.data.hotel){
                     if(data.data.hotel.rating){
                         if(data.data.hotel.rating === "5"){
-                            RR_hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9733;";
+                            RR_hotel_rating = `
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                 - Excellent</div>
+                            </div>`;
                         }else if(data.data.hotel.rating === "4"){
-                            RR_hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9734;";
+                            RR_hotel_rating = `
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                 - Very Good</div>
+                            </div>`;
                         }else if(data.data.hotel.rating === "3"){
-                            RR_hotel_rating = "&#9733; &#9733; &#9733; &#9734; &#9734;";
+                            RR_hotel_rating = `
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                 - Average</div>
+                            </div>`;
                         }else if(data.data.hotel.rating === "2"){
-                            RR_hotel_rating = "&#9733; &#9733; &#9734; &#9734; &#9734;";
+                            RR_hotel_rating = `
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                 - Not Good</div>
+                            </div>`;
                         }else {
-                            RR_hotel_rating = "&#9733; &#9734; &#9734; &#9734; &#9734;";
+                            RR_hotel_rating = `
+                            <div style="display: flex; flex-direction: row !important; justify-content: flex-start;">
+                                <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                                    <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+                                </div>
+                                <div style='color: orange; font-size: 11px; letter-spacing: 1px; font-weight: bolder; text-shadow: none;'>
+                                 - Very Bad</div>
+                            </div>
+                            `;
                         }
                     }
                     if(data.data.hotel.name){
@@ -602,10 +663,10 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                                 <h1 style="font-weight: bolder; letter-spacing: 1px; color: white;">
                                 ${RR_hotel_name}
                                 </h1>
-                                <p style="color: white; font-size: 11px; letter-spacing: 0.7px;">
+                                <p style="color: white; font-size: 11px; letter-spacing: 0.7px; magin-top: 4px;">
                                     ${RR_hotel_address}
                                 </p>
-                                <p style="color:rgb(0, 188, 235);">${RR_hotel_rating}</p>
+                                <div style="margin-top: 5px;">${RR_hotel_rating}</div>
                             </div>
                             <div class="hotels_card_pic_items_points">
                                 <div class="hotels_card_pic_each_item_point selected"><p>1</p></div>
@@ -623,7 +684,7 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                             <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>
                             ${RR_hotel_fax}
                             </p>
-                            <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 12px;">
+                            <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 14px;">
                             <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>
                             ${RR_hotel_email}
                             </p>
@@ -715,19 +776,19 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                     <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Details</p>
                     <div style="display: flex; flex-direction: row !important;">
                         <div style="margin-right: 20px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Room Type:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Room Type:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">
                             ${RR_room_type}
                         </p>
                         </div>
                         <div>
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Bed Type:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_bed_type}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Bed Type:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">${RR_bed_type}</p>
                         </div>
                     </div>
                     <div style="margin-top: 10px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Description:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Description:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                         ${RR_room_desc}
                         </p>
                     </div>
@@ -736,20 +797,20 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                     <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Details</p>
                     <div style="display: flex; flex-direction: row !important;">
                         <div style="margin-right: 20px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checkin:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_checkin_date}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Checkin:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">${RR_checkin_date}</p>
                         </div>
                         <div style="margin-right: 20px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checout:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_checkout_date}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Checout:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_checkout_date}</p>
                         </div>
                         <div style="margin-right: 20px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Guests:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_guest_num}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Guests:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_guest_num}</p>
                         </div>
                         <div>
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Rooms:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_rooms_num}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Rooms:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_rooms_num}</p>
                         </div>
                     </div>
                     </div>
@@ -757,16 +818,16 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                     <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Hotel Policies</p>
                     <div style="display: flex; flex-direction: row !important;">
                         <div style="margin-right: 20px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_policy_type}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Type:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">${RR_policy_type}</p>
                         </div>
                         <div style="margin-right: 20px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Deadline:</p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancel_deadline}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Deadline:</p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_cancel_deadline}</p>
                         </div>
                         <div style="margin-right: 20px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount: </p>
-                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancl_amount}</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Amount: </p>
+                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_cancl_amount}</p>
                         </div>
                     </div>
                     </div>
@@ -774,13 +835,13 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                     <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Price</p>
                     <div style="display: flex; flex-direction: row !important;">
                         <div style="margin-right: 50px;">
-                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Total:</p>
+                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Total:</p>
                         <p style="color: rgb(17, 95, 126); font-size: 17px; font-weight: bolder; margin-top: 10px; margin-left: 10px;">
                             ${RR_booking_price}
                         </p>
                         </div>
                         <div onclick="get_final_price('${RR_booking_self}', '${url}');" style="cursor: pointer; background-color: rgb(0, 127, 177); padding: 20px;">
-                        <p style="font-size: 13px; font-weight: bolder; color: white;">Choose</p>
+                        <p style="font-size: 14px; font-weight: bolder; color: white;">Choose</p>
                         </div>
                     </div>
                     </div>
@@ -872,26 +933,26 @@ function get_final_price(url, first_url){
             let all_taxes = `
                     <div style="display: flex; flex-direction: row !important;">
                         <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type of tax:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                            <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Type of tax:</p>
+                            <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">
                                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable
                             </p>
                         </div>
                         <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Frequency:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                            <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Frequency:</p>
+                            <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable
                             </p>
                         </div>
                         <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Mode:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                            <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Mode:</p>
+                            <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable
                             </p>
                         </div>
                         <div>
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                            <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Amount:</p>
+                            <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable
                             </p>
                         </div>
@@ -900,20 +961,20 @@ function get_final_price(url, first_url){
             let all_changes = `
                     <div style="display: flex; flex-direction: row !important;">
                         <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Start Date:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                            <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Start Date:</p>
+                            <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">
                                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable
                             </p>
                         </div>
                         <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">End Date:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                            <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">End Date:</p>
+                            <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable
                             </p>
                         </div>
                         <div style="margin-right: 20px;">
-                            <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Base Price:</p>
-                            <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                            <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Base Price:</p>
+                            <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable
                             </p>
                         </div>
@@ -931,7 +992,7 @@ function get_final_price(url, first_url){
             }else{
                 RR_room_availability = 
                     `
-                        <span style="font-weight: initial; margin-left: 10px; font-size: 13px; color:rgb(148, 148, 148);">
+                        <span style="font-weight: initial; margin-left: 10px; font-size: 14px; color:rgb(148, 148, 148);">
                             <i style="color: crimson; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                             Unavailable (can't be booked)
                         </span>
@@ -1031,26 +1092,26 @@ function get_final_price(url, first_url){
                             all_taxes += `
                                 <div style="display: flex; flex-direction: row !important; margin-top: ${margin_top};">
                                     <div style="margin-right: 20px;">
-                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type of tax:</p>
-                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Type of tax:</p>
+                                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">
                                             ${taxCode}
                                         </p>
                                     </div>
                                     <div style="margin-right: 20px;">
-                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Frequency:</p>
-                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Frequency:</p>
+                                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                             ${pricingFrequency}
                                         </p>
                                     </div>
                                     <div style="margin-right: 20px;">
-                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Mode:</p>
-                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Mode:</p>
+                                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                             ${pricingMode}
                                         </p>
                                     </div>
                                     <div>
-                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount:</p>
-                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Amount:</p>
+                                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                             ${tax_price}
                                         </p>
                                     </div>
@@ -1077,20 +1138,20 @@ function get_final_price(url, first_url){
                             all_changes += `
                                 <div style="display: flex; flex-direction: row !important; margin-top: ${margin_top}">
                                     <div style="margin-right: 20px;">
-                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Start Date:</p>
-                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Start Date:</p>
+                                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">
                                             ${data.data.offers[rr].price.variations.changes[chnes].startDate}
                                         </p>
                                     </div>
                                     <div style="margin-right: 20px;">
-                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">End Date:</p>
-                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">End Date:</p>
+                                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                             ${data.data.offers[rr].price.variations.changes[chnes].endDate}
                                         </p>
                                     </div>
                                     <div style="margin-right: 20px;">
-                                        <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Base Price:</p>
-                                        <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                        <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Base Price:</p>
+                                        <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                             ${change_price}
                                         </p>
                                     </div>
@@ -1109,19 +1170,19 @@ function get_final_price(url, first_url){
                             <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Room Details</p>
                             <div style="display: flex; flex-direction: row !important;">
                                 <div style="margin-right: 20px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Room Type:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Room Type:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">
                                     ${RR_room_type}
                                 </p>
                                 </div>
                                 <div>
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Bed Type:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_bed_type}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Bed Type:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">${RR_bed_type}</p>
                                 </div>
                             </div>
                             <div style="margin-top: 10px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Description:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Description:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">
                                 ${RR_room_desc}
                                 </p>
                             </div>
@@ -1131,20 +1192,20 @@ function get_final_price(url, first_url){
                             <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Booking Details</p>
                             <div style="display: flex; flex-direction: row !important;">
                                 <div style="margin-right: 20px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checkin:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_checkin_date}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Checkin:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">${RR_checkin_date}</p>
                                 </div>
                                 <div style="margin-right: 20px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Checout:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_checkout_date}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Checout:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_checkout_date}</p>
                                 </div>
                                 <div style="margin-right: 20px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Guests:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_guest_num}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Guests:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_guest_num}</p>
                                 </div>
                                 <div>
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Rooms</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_rooms_num}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Rooms</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_rooms_num}</p>
                                 </div>
                             </div>
                             </div>
@@ -1153,16 +1214,16 @@ function get_final_price(url, first_url){
                             <p style="font-size: 14px; color:rgb(0, 127, 177); font-weight: bolder; margin-bottom: 10px;">Hotel Policies</p>
                             <div style="display: flex; flex-direction: row !important;">
                                 <div style="margin-right: 20px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Type:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px">${RR_policy_type}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Type:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px">${RR_policy_type}</p>
                                 </div>
                                 <div style="margin-right: 20px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Deadline:</p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancel_deadline}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Deadline:</p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_cancel_deadline}</p>
                                 </div>
                                 <div style="margin-right: 20px;">
-                                <p style="opacity: 0.8; font-size: 13px; font-weight: bolder;">Amount: </p>
-                                <p style="opacity: 0.8; font-size: 13px; margin-top: 5px;">${RR_cancl_amount}</p>
+                                <p style="opacity: 0.8; font-size: 14px; font-weight: bolder;">Amount: </p>
+                                <p style="opacity: 0.8; font-size: 14px; margin-top: 5px;">${RR_cancl_amount}</p>
                                 </div>
                             </div>
                             </div>

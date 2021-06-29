@@ -74,11 +74,10 @@
   display: flex;
   flex-direction: row !important;
   position: relative;
-  width: 200px;
 }
-.logged_in_user_nav_info:hover .logged_in_user_nav_profile_picture_container {
+/*.logged_in_user_nav_info:hover .logged_in_user_nav_profile_picture_container {
   border: #d85d38 2px solid;
-}
+}*/
 .logged_in_user_nav_info:hover .logged_in_user_nav_info_drop_down {
   display: block;
 }
@@ -117,11 +116,13 @@
   display: none;
   position: absolute;
   top: calc(100% - 5px);
-  left: 0;
-  border-bottom-left-radius: 4px;
-  width: 100%;
-  border-top: #d85d38 4px solid;
-  border-bottom-right-radius: 4px;
+  right: 0;
+  z-index: 100;
+  border-radius: 4px;
+  width: fit-content;
+  padding: 0 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.562);
+  padding-bottom: 10px;
   background-color: white;
 }
 

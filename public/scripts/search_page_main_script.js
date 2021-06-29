@@ -1,4 +1,119 @@
 //getting dom elements
+document.getElementById("site_lower_section_right_ads_list").innerHTML = `
+  <div class="site_lower_section_right_top_ad general_adds_card">
+    <div style="background-color: rgba(0, 64, 80, 0.541); padding-top: 5px;">
+      <div style="display: flex; flex-direction: row !important; justify-content: space-between; padding: 5px;">
+        <div style="display: flex; flex-direction: column !important; justify-content: center;">
+          <div class="loading_card_data_element" style="background-color: white; color: white; font-size: 11px; font-weight: bolder; text-align: center; letter-spacing: 1px; 
+            margin-left: 5px; padding: 5px; border-radius: 20px; width: 30px !important; cursor: pointer;">
+            AD</div>
+        </div>
+        <div class="loading_card_data_element" style="margin-right: 5px; background-color: white; padding: 5x; width: 30px !important; text-align: center; border-radius: 5px;">
+          <i style="color: white; font-size: 15px;" class="fa fa-times" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div style="padding: 10px;">
+        <p class="loading_card_data_element" style="background-color: rgba(0, 183, 255, 0.897); color: rgba(0, 183, 255, 0.897); font-size: 13px; font-weight: bolder;">
+          Hotel Brand Name
+        </p>
+        <div class="loading_card_data_element" style="margin-top: 5px; background-color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex; flex-direction: row !important;">
+          <div style="margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+          <div style="margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+          <div style="margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+          <div style="margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+          <div style="margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+          <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+        </div>
+        <div style="padding: 5px 0; margin-top: 5px;">
+          <p class="loading_card_data_element" style="background-color: rgb(152, 197, 214); color:rgb(152, 197, 214); font-size: 13px;">
+            NY, USA</p>
+          <p class="loading_card_data_element" style="background-color: rgb(152, 197, 214); color:rgb(152, 197, 214); font-size: 13px; margin-top: 2px;">
+            Deluxe, Queen-size</p>
+        </div>
+        <p class="loading_card_data_element" style="font-weight: bolder; letter-spacing: 1px; box-shadow: 2px 2px 4px rgba(0,0,0,0.8); border-top-right-radius: 15px; position: relative; overflow: hidden !important; margin-top: 5px; text-align: center; color:rgba(128, 194, 255, 0); font-size: 15px; background-color: rgba(128, 194, 255, 0.212); padding: 5px;">
+          <span style="box-shadow: 1px 3px 4px rgba(0,0,0,0.8); background-color: #098ac5cc; width: 11px; height: 10px; position: absolute; right: 0; top: -1px;"></span>
+          $99.99
+          <sup style="text-decoration: line-through; font-size: 13px; color: rgba(128, 194, 255, 0);">
+            $133.00</sup>
+        </p>
+        <a href="#" style="text-decoration: none;">
+          <div class="loading_card_data_element" style="cursor: pointer; font-weight: bolder; text-align: center; font-size: 13px; padding: 10px; border-radius: 4px; margin: 10px 0; color: rgba(0, 255, 213, 0); border: 1px solid rgba(0, 255, 213, 0.637); background-color:rgba(0, 85, 74, 0.603);">
+            Book Now
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="loading_card_data_element" style="background-color: rgba(255,255,255,0.6); background-size: cover; background-repeat: no-repeat; height: 130px;"></div>
+    <div style="padding: 10px;">
+      <p class="loading_card_data_element" style="font-size: 13px; background-color: rgb(200, 247, 255); color:rgb(200, 247, 255);">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit temporibus ducimus veniam esse deleniti
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit temporibus ducimus veniam esse deleniti
+        officia voluptatum asperiores, quo facere
+      </p>
+    </div>
+  </div>
+`;
+
+function display_right_section_ads(){
+  setTimeout(()=>{
+    document.getElementById("site_lower_section_right_ads_list").innerHTML = `
+      <div class="site_lower_section_right_top_ad general_adds_card">
+        <div style="background-color: rgba(0, 64, 80, 0.541); padding-top: 5px;">
+          <div style="display: flex; flex-direction: row !important; justify-content: space-between; padding: 5px;">
+            <div style="display: flex; flex-direction: column !important; justify-content: center;">
+              <div style="background-color: white; font-size: 11px; font-weight: bolder; text-align: center; letter-spacing: 1px; 
+                margin-left: 5px; padding: 5px; border-radius: 20px; width: 30px !important; cursor: pointer;">
+                AD</div>
+            </div>
+            <div style="padding: 5x; width: 30px !important; text-align: center; border-radius: 5px;">
+              <i style="color: white; font-size: 15px;" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div style="padding: 10px;">
+            <p style="color: rgba(0, 183, 255, 0.897); font-size: 13px; font-weight: bolder;">
+              Hotel Brand Name
+            </p>
+            <div style="margin-top: 5px; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex; flex-direction: row !important;">
+              <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+              <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+              <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+              <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+              <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+              <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
+            </div>
+            <div style="padding: 5px 0; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.3)">
+              <p style="color:rgb(152, 197, 214); font-size: 13px;">
+                NY, USA</p>
+              <p style="color:rgb(152, 197, 214); font-size: 13px; margin-top: 2px;">
+                Deluxe, Queen-size</p>
+            </div>
+            <p style="letter-spacing: 1px; box-shadow: 2px 2px 4px rgba(0,0,0,0.8); border-top-right-radius: 15px; position: relative; overflow: hidden !important; margin-top: 5px; text-align: center;color:rgb(255, 102, 0); font-size: 15px; background-color: rgba(128, 194, 255, 0.212); padding: 5px;">
+              <span style="box-shadow: 1px 3px 4px rgba(0,0,0,0.8); background-color: #098ac5cc; width: 11px; height: 10px; position: absolute; right: 0; top: -1px;"></span>
+              $99.99
+              <sup style="text-decoration: line-through; font-size: 13px; color: rgba(0, 195, 255, 0.884);">
+                $133.00</sup>
+            </p>
+            <a href="#" style="text-decoration: none;">
+              <div style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px; border-radius: 4px; margin: 10px 0; color: rgba(0, 255, 213, 0.637); border: 1px solid rgba(0, 255, 213, 0.637); background-color:rgba(0, 85, 74, 0.603);">
+                Book Now
+              </div>
+            </a>
+          </div>
+        </div>
+        <div style="background-image: url('./images/HotelPic.jpg'); background-size: cover; background-repeat: no-repeat; height: 130px;"></div>
+        <div style="padding: 10px;">
+          <p style="font-size: 13px; color:rgb(200, 247, 255);">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit temporibus ducimus veniam esse deleniti
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit temporibus ducimus veniam esse deleniti
+            officia voluptatum asperiores, quo facere
+          </p>
+        </div>
+      </div>
+    `;
+  }, 6000);
+}
+
+display_right_section_ads();
 
 var hide_trip_top_params = document.getElementById("hide_trip_top_params");
 

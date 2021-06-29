@@ -57,8 +57,8 @@ function getBestFlights(){
     site_lower_section_tabs_LeastC02_option.classList.remove("active");
     site_lower_section_tabs_best_option.classList.add("active");
 
-    site_lower_section_tabs_best_option_content.style.borderColor = "rgb(112, 2, 2)";
-    site_lower_section_tabs_cheapest_option_content.style.borderColor = "#ad310b";
+    site_lower_section_tabs_best_option_content.style.borderColor = "rgba(255, 255, 255, 0.2)";
+    site_lower_section_tabs_cheapest_option_content.style.borderColor = "rgba(255, 255, 255, 0.2)";
 
     show_only_fastest_travel_times();
 
@@ -70,8 +70,8 @@ function getCheapFlights(){
     site_lower_section_tabs_LeastC02_option.classList.remove("active");
     site_lower_section_tabs_best_option.classList.remove("active");
 
-    site_lower_section_tabs_cheapest_option_content.style.borderColor = "rgb(112, 2, 2)";
-    site_lower_section_tabs_best_option_content.style.borderColor = "#a32600";
+    site_lower_section_tabs_cheapest_option_content.style.borderColor = "rgba(255, 255, 255, 0.2)";
+    site_lower_section_tabs_best_option_content.style.borderColor = "rgba(255, 255, 255, 0.2)";
 
     show_only_custom_travel_times();
 
@@ -87,8 +87,8 @@ function getLeastC02Flights(){
     site_lower_section_tabs_LeastC02_option.classList.add("active");
     site_lower_section_tabs_best_option.classList.remove("active");
 
-    site_lower_section_tabs_cheapest_option_content.style.borderColor = "#a32600";
-    site_lower_section_tabs_best_option_content.style.borderColor = "#ad310b";
+    site_lower_section_tabs_cheapest_option_content.style.borderColor = "rgba(255, 255, 255, 0.2)";
+    site_lower_section_tabs_best_option_content.style.borderColor = "rgba(255, 255, 255, 0.2)";
 
     left_setting_no_stop_option.checked = true;
     left_setting_one_stop_option.checked = true;
