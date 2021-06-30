@@ -150,6 +150,31 @@ function show_search_results_book_cheap_promoter(){
         <div class="flex_row_default_flex_column_mobile" style="height: 100%;">
           <div class="flex_child_of_two">
             <p style="margin-top: 10px; color: rgb(253, 158, 158); font-size: 15px; letter-spacing: 1px; font-weight: bolder;">
+              Site Maintenance Notice</p>
+              <p style="margin-top: 5px; color: rgb(255, 208, 208); font-size: 14px;">
+                Some site features are disabled for maintenace purposes.
+              </p>
+          </div>
+          <div class="flex_child_of_two flex_non_first_child">
+            <div>
+              <p style="margin-bottom: 10px; color: rgb(255, 224, 183); font-size: 14px;">
+                We are incrementally integrating new features</p>
+              <div style="cursor: pointer; color:rgb(110, 201, 181); border: 1px solid rgba(25, 255, 205, 0.336); background-color:rgba(0, 177, 139, 0.199); padding: 10px; border-radius: 4px; font-size: 14px; text-align: center;">
+                Read more...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    /*document.getElementById("search_results_book_cheap_book_direct_promoter_card").innerHTML = `
+      <div style="position: relative; background-color: rgba(33, 106, 119, 0.253); border: 1px solid rgba(255,255,255,0.3); padding: 10px; border-radius: 4px;">
+        <p style="box-shadow:  1px 1px 4px rgba(0,0,0,0.4); position: absolute; top: -15px; left: -10px; width: 20px; height: 20px; text-align: center; padding: 5px; background-color: rgb(0, 124, 97); border-top-right-radius: 10px; border-bottom-left-radius: 10px;">
+          <i style="font-size: 20px;" class="fa fa-info" style="color:rgb(0, 83, 65);" aria-hidden="true"></i>
+        </p>
+        <div class="flex_row_default_flex_column_mobile" style="height: 100%;">
+          <div class="flex_child_of_two">
+            <p style="margin-top: 10px; color: rgb(253, 158, 158); font-size: 15px; letter-spacing: 1px; font-weight: bolder;">
               Find Cheapest Hotels</p>
               <p style="margin-top: 5px; color: rgb(255, 208, 208); font-size: 14px;">
                 Find very cheap yet very good rooms from unpopular brands.
@@ -169,7 +194,7 @@ function show_search_results_book_cheap_promoter(){
           </div>
         </div>
       </div>
-    `;
+    `;*/
   }, 5000);
 }
 
