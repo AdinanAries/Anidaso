@@ -1738,8 +1738,17 @@ function show_book_hotel_view_full_profile_sentiments_infor(sleep_qlt, service_q
 }
 function show_book_hotel_view_full_profile_contacts_infor(){
     document.getElementById("book_hotel_view_full_profile_contacts_infor").innerHTML = `
-        
-    `;
+        <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
+        Our Recommendations</p>
+        <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
+            <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <p style="color: white; font-size: 14px;">
+                    Nothing to show at this time</p>
+            </div>
+        </div>`;
 }
 function show_book_hotel_view_full_profile_photos(){
     document.getElementById("book_hotel_view_full_profile_photos").innerHTML = `
@@ -1773,6 +1782,18 @@ function show_book_hotel_view_full_profile_photos(){
 function show_book_hotel_view_full_profile_child_policies_infor(){
     document.getElementById("book_hotel_view_full_profile_child_policies_infor").innerHTML = `
         <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
+            Child policies</p>
+        <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
+            <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <p style="color: white; font-size: 14px;">
+                    Nothing to show at this time</p>
+            </div>
+        </div>`;
+    /*document.getElementById("book_hotel_view_full_profile_child_policies_infor").innerHTML = `
+        <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
         Child policies</p>
         <div style="display: flex; flex-direction: row !important;">
         <p style="color: rgb(155, 238, 220); font-size: 14px; margin-right: 10px;">
@@ -1794,10 +1815,23 @@ function show_book_hotel_view_full_profile_child_policies_infor(){
             <i style="color:rgb(86, 223, 193);" class="fa fa-check" aria-hidden="true"></i></p>
         <p style="color: rgb(250, 187, 187); font-size: 14px;">This property doesn't offer extra beds</p>
         </div>
-    `;
+    `;*/
 }
 function show_book_hotel_view_full_profile_whats_nearby_infor(){
     document.getElementById("book_hotel_view_full_profile_whats_nearby_infor").innerHTML = `
+        <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
+            What's nearby</p>
+        <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
+            <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <p style="color: white; font-size: 14px;">
+                    Nothing to show at this time</p>
+            </div>
+        </div>
+    `;
+    /*document.getElementById("book_hotel_view_full_profile_whats_nearby_infor").innerHTML = `
         <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
         What's nearby</p>
         <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
@@ -1820,7 +1854,7 @@ function show_book_hotel_view_full_profile_whats_nearby_infor(){
             <i style="color:rgb(86, 223, 193);" class="fa fa-check" aria-hidden="true"></i></p>
         <p style="color: rgb(250, 187, 187); font-size: 14px;">Minskoff Theatre</p>
         </div>
-    `;
+    `;*/
 }
 function show_book_hotel_view_full_profile_public_transit_infor(closest_airports){
     
@@ -1855,6 +1889,18 @@ function show_book_hotel_view_full_profile_public_transit_infor(closest_airports
 function show_book_hotel_view_full_profile_other_infor(){
     document.getElementById("book_hotel_view_full_profile_other_infor").innerHTML = `
         <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
+            Other</p>
+        <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
+            <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <p style="color: white; font-size: 14px;">
+                    Nothing to show at this time</p>
+            </div>
+        </div>`;
+    /*document.getElementById("book_hotel_view_full_profile_other_infor").innerHTML = `
+        <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
         Other</p>
         <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-bottom: 5px;">
         <p style="color: rgb(155, 238, 220); font-size: 14px; margin-right: 10px; min-width: fit-content;">
@@ -1871,10 +1917,20 @@ function show_book_hotel_view_full_profile_other_infor(){
             <i style="color:rgb(86, 223, 193); margin-right: 5px;" class="fa fa-users" aria-hidden="true"></i>Groups:</p>
         <p style="color: rgb(250, 187, 187); font-size: 14px; text-align: right;">When booking more than 10 rooms, different policies and additional supplements may apply.</p>
         </div>
-    `;
+    `;*/
 }
 function show_view_full_hotel_profile_reviews_list(){
     document.getElementById("view_full_hotel_profile_reviews_list").innerHTML = `
+        <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
+            <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <p style="color: white; font-size: 14px;">
+                    Nothing to show at this time</p>
+            </div>
+        </div>`;
+    /*document.getElementById("view_full_hotel_profile_reviews_list").innerHTML = `
         <div class="view_full_hotel_profile_reviews_list_item">
         <div style="border-radius: 100%; width: 75px; height: 75px; overflow: hidden !important; margin: auto; border: 2px solid white;">
         <img src="./images/Anonymous_person4.jpg" alt=""  style="width: 75px; min-height: 75px; height: aut;"/>
@@ -1897,7 +1953,7 @@ function show_view_full_hotel_profile_reviews_list(){
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure quos impedit debitis dolorum fuga fugiat est ipsum doloribus non rem repudiandae, vero fugit reiciendis facere. Possimus similique laudantium provident illum.
         </p>
     </div>
-    `;
+    `;*/
 }
 
 function show_loading_card_on_book_hotel_view_full_profile_infor_row_set_item(){
