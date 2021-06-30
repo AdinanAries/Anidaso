@@ -1739,7 +1739,7 @@ function show_book_hotel_view_full_profile_sentiments_infor(sleep_qlt, service_q
 function show_book_hotel_view_full_profile_contacts_infor(){
     document.getElementById("book_hotel_view_full_profile_contacts_infor").innerHTML = `
         <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
-        Our Recommendations</p>
+        Recommendations</p>
         <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
             <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
                 <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -1861,7 +1861,16 @@ function show_book_hotel_view_full_profile_public_transit_infor(closest_airports
     document.getElementById("book_hotel_view_full_profile_public_transit_infor").innerHTML = `
         <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px;;">
         Public transit</p>
-        <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
+        <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
+            <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div style="height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
+                <p style="color: white; font-size: 14px;">
+                    Nothing to show at this time</p>
+            </div>
+        </div>
+        <!--div style="display: flex; flex-direction: row !important; justify-content: space-between;">
         <p style="color: rgb(155, 238, 220); font-size: 14px; margin-right: 10px;">
             <i style="color:rgb(86, 223, 193);" class="fa fa-check" aria-hidden="true"></i></p>
         <p style="color: rgb(250, 187, 187); font-size: 14px;">Subway - 50th Street Station</p>
@@ -1880,7 +1889,7 @@ function show_book_hotel_view_full_profile_public_transit_infor(closest_airports
         <p style="color: rgb(155, 238, 220); font-size: 14px; margin-right: 10px;">
             <i style="color:rgb(86, 223, 193);" class="fa fa-check" aria-hidden="true"></i></p>
         <p style="color: rgb(250, 187, 187); font-size: 14px;">Subway - 49th Street Station</p>
-        </div>
+        </div-->
         <p style="color: white; font-size: 14px; text-align: center; margin-bottom: 20px; font-weight: bolder; letter-spacing: 1px; margin-top: 20px;">
         Airports in the city</p>
         ${closest_airports}
@@ -1921,7 +1930,7 @@ function show_book_hotel_view_full_profile_other_infor(){
 }
 function show_view_full_hotel_profile_reviews_list(){
     document.getElementById("view_full_hotel_profile_reviews_list").innerHTML = `
-        <div style="padding: 10px; background-color: rgba(0,0,0,0.5); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
+        <div style="padding: 10px; background-color: rgba(0,0,0,0.8); height: 80px; display: flex; flex-direction: row !important; justify-content: center;">
             <div style="margin-right: 10px;height: 100%; display: flex; flex-direction: column !important; justify-content: center;">
                 <i style="color: orangered; font-size: 20px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             </div>

@@ -663,7 +663,8 @@ app.post("/signup/", async (req, res, next)=> {
       last_name: req.body.lastname,
       email: req.body.email,
       profile_picture: "",
-      has_price_alert: false
+      has_price_alert: false,
+      search_history: []
     });
 
     let existing_user = await signup_user.findOne({
@@ -806,7 +807,8 @@ app.post("/cheap_hotels/", async (req, res, next) =>{
 
   let hotels = await cheap_hotel.find();
 
-  res.send(hotels);
+  res.send([]);
+  //res.send(hotels);
   /*/this code should be replaced with that to read data from DB
   fs.readFile('./book_cheap_hotels_data.json', 'utf8', function (err,data) {
     if (err) {

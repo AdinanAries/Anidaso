@@ -24,6 +24,9 @@ let signup_user_schema = mongoose.Schema({
     has_price_alert: {
         type: Boolean,
         required: true
+    },
+    search_history: {
+        type: Array,
     }
 });
 
