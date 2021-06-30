@@ -642,6 +642,17 @@ function toggle_show_hide_book_cheap_book_direct_reviews_div(){
 
 function toggle_show_hide_book_cheap_book_direct_register_hotel_div(){
     $("#book_cheap_book_direct_register_hotel_div").toggle("up");
+
+    setTimeout(()=>{
+        if(document.getElementById("book_cheap_book_direct_register_hotel_div").style.display === "block"){
+            show_prompt_to_user(
+                `<i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Site Maintenance Notice`, 
+                `Due to site maintenance and expansion of services, we are unable to accept hotel registrations through the platform at the moment.
+                We apologise for the inconvenience.`
+            );
+        }
+    }, 300);
 }
 
 $(document).ready(()=>{
