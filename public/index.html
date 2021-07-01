@@ -50,6 +50,34 @@
     <title>Anidaso | Home</title>
   </head>
   <body>
+    <div id="site_read_more_about_something_popup" class="page_cover_for_popups">
+      <div class="page_popup_main_container" style="background-color: rgba(0, 0, 0, 0.768);">
+        <div onclick="toggle_show_site_read_more_about_something_popup();" style="margin-right: 10px !important;" class="page_popup_close_button">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <p style="padding: 20px 0; font-size: 13px; color: white; text-align: center;">
+          All rights reserved &copy; 
+          <span style="font-size: 13px; color: rgb(253, 110, 14);">Anidaso.com</span>, 2021</p>
+        <div style="padding: 10px; background-color: rgba(0, 45, 63, 0.904); height: calc(100% - 60px);">
+          <p style="letter-spacing: 1px; margin-bottom: 20px; font-size: 15px; color:rgb(177, 230, 255); text-align: center;">
+            Maintenance & Services Expansions</p>
+          <p style="font-size: 14px; letter-spacing: 1px; color: white;">
+            We are sorry to announce a temporary stoppage of some site features due to ongoing site maintenance and expansion of services.
+            <br/><br/>
+            At Anidaso, our main goal is to ensure that travelers and hotel shoppers find the best deals on travel and hospitality products and services.
+            With that in mind, we've been constantly improving on site features and algorithms. The Platform in its current state only has partial functionality,
+            rest asured enough to find you the best prices on hotels and flights. 
+            <br/><br/>
+            <span style="font-weight: bolder; color:rgb(253, 158, 158); font-size: 15px; margin-bottom: 7px;">
+              Flights: </span>
+            Our flights search and booking engines allow for one way, round trip, and multi-city flight searches and bookings of all cabin and traveler types. 
+            One of the restrictions placed on the flights search and booking feature, however, is that of the prevention of inclusions of rental cars and hotel rooms during searches. 
+            Also, filtering search by airline has been disabled due to the ongoing maintenance work. Our developers and technical team are working on these 
+            features which should be soon rolled out to enhace the platform for better user experience and satisfaction.
+          </p>
+        </div>
+      </div>
+    </div>
 
     <div id="full_page_picture_viewer">
       <div onclick="close_full_Screen_photo_viewer();" class="page_popup_close_button" style="width: 30px; text-align: center; padding: 5px 0; margin: 10px; margin-right: 15px; background-color: rgba(0, 0, 0, 0.568); border-radius: 4px;">
@@ -2288,14 +2316,14 @@
               <p style="margin-top: 10px; color: rgb(253, 158, 158); font-size: 15px; letter-spacing: 1px; font-weight: bolder;">
                 Site Maintenance Notice</p>
                 <p style="margin-top: 5px; color: rgb(255, 208, 208); font-size: 14px;">
-                  Some site features are disabled for maintenace purposes.
+                  Some site features are disabled for maintenance purposes.
                 </p>
             </div>
             <div class="flex_child_of_two flex_non_first_child">
               <div>
                 <p style="margin-bottom: 10px; color: rgb(255, 224, 183); font-size: 14px;">
                   We are incrementally integrating new features</p>
-                <div style="cursor: pointer; color:rgb(110, 201, 181); border: 1px solid rgba(25, 255, 205, 0.336); background-color:rgba(0, 177, 139, 0.199); padding: 10px; border-radius: 4px; font-size: 14px; text-align: center;">
+                <div onclick="toggle_show_site_read_more_about_something_popup();" style="cursor: pointer; color:rgb(110, 201, 181); border: 1px solid rgba(25, 255, 205, 0.336); background-color:rgba(0, 177, 139, 0.199); padding: 10px; border-radius: 4px; font-size: 14px; text-align: center;">
                   Read more...
                 </div>
               </div>

@@ -152,7 +152,7 @@ function show_search_results_book_cheap_promoter(){
             <p style="margin-top: 10px; color: rgb(253, 158, 158); font-size: 15px; letter-spacing: 1px; font-weight: bolder;">
               Site Maintenance Notice</p>
               <p style="margin-top: 5px; color: rgb(255, 208, 208); font-size: 14px;">
-                Some site features are disabled for maintenace purposes.
+                Some site features are disabled for maintenance purposes.
               </p>
           </div>
           <div class="flex_child_of_two flex_non_first_child">

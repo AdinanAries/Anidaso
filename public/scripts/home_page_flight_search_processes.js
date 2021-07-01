@@ -1389,6 +1389,15 @@ async function set_curret_price_alert_value(){
     }
 }
 
+function toggle_show_site_read_more_about_something_popup(){
+    $("#site_read_more_about_something_popup").toggle("up");
+
+    if(document.getElementById("site_read_more_about_something_popup").style.display === "block")
+        document.getElementById("site_read_more_about_something_popup").style.display = "flex";
+    
+    
+}
+
 /*from_where_search_input_fld.addEventListener('focus', ()=>{
 
     if($(window).width() < 700){
