@@ -159,7 +159,7 @@ function show_search_results_book_cheap_promoter(){
             <div>
               <p style="margin-bottom: 10px; color: rgb(255, 224, 183); font-size: 14px;">
                 We are incrementally integrating new features</p>
-              <div style="cursor: pointer; color:rgb(110, 201, 181); border: 1px solid rgba(25, 255, 205, 0.336); background-color:rgba(0, 177, 139, 0.199); padding: 10px; border-radius: 4px; font-size: 14px; text-align: center;">
+              <div onclick="toggle_show_site_read_more_about_something_popup();" style="cursor: pointer; color:rgb(110, 201, 181); border: 1px solid rgba(25, 255, 205, 0.336); background-color:rgba(0, 177, 139, 0.199); padding: 10px; border-radius: 4px; font-size: 14px; text-align: center;">
                 Read more...
               </div>
             </div>

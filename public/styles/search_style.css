@@ -144,7 +144,15 @@
   margin-bottom: 1px;
   border-radius: 4px;
 }
-
+.page_popup_main_container {
+  height: 90%;
+  width: 95%;
+  margin: auto;
+  max-width: 900px;
+  border-radius: 4px;
+  background-color: white;
+  position: relative;
+}
 .page_popup_close_button {
   position: absolute;
   width: fit-content;
