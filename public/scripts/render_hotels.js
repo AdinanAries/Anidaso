@@ -83,8 +83,8 @@ function render_hotels_load_more(){
                 <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i> nothing found.
             `;
         let room_category = `
-        <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i> nothing found.
-    `;
+            <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i> nothing found.
+        `;
         let booking_number_of_rooms = "";
         let url_rates = "";
         let checkin_date = "June 25, 2021";
@@ -127,7 +127,7 @@ function render_hotels_load_more(){
                 if(p >= hotels_render_index_upperbound){
                     break;
                 }
-                if(p < data.data.length){
+                if(hotels_render_index_upperbound < data.data.length){
                     document.getElementById("render_hotels_load_more_btn").style.display = "block";
                 }
 
@@ -426,8 +426,9 @@ function render_hotels_load_more(){
         document.getElementById("render_hotels_load_more_loader").style.display = "none";
 
     }, 50);
-        //hotel_search_data.city = "";
-        //window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
+
+    //hotel_search_data.city = "";
+    //window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
     
 }
 
