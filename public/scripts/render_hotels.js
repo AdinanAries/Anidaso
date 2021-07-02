@@ -456,6 +456,21 @@ if(localStorage.getItem("main_search_type") === "hotel_search"){
     render_hotels();
 }
 
+var hotel_rates_div_pics = [];
+function change_hotel_pics_at_rates_div(index){
+    Array.from(document.getElementsByClassName("hotels_card_pic_each_item_point")).forEach(each => {
+        each.classList.remove("selected");
+    });
+    document.getElementById("hotels_card_pic_each_item_point_at_rates_div_"+index).classList.add("selected");
+    
+    let url = hotel_rates_div_pics[0].uri;
+    if(hotel_rates_div_pics[index]){
+        url = hotel_rates_div_pics[index].uri;
+    }
+
+    document.getElementById("hotel_rates_div_hotel_pic_display").style.backgroundImage = `url('${url}')`;
+}
+
 function get_hotel_rates(url, is_going_back_from_final_price){
 
     document.getElementById("view_rooms_and_rates_main_title").style.display = "block";
@@ -540,6 +555,11 @@ function get_hotel_rates(url, is_going_back_from_final_price){
 
             if(data.data){
                 if(data.data.hotel){
+
+                    if(data.data.hotel.media[0]){
+                        hotel_rates_div_pics = data.data.hotel.media;
+                    }
+
                     if(data.data.hotel.rating){
                         if(data.data.hotel.rating === "5"){
                             RR_hotel_rating = `
@@ -657,8 +677,8 @@ function get_hotel_rates(url, is_going_back_from_final_price){
             if(data.data){
                 if(data.data.hotel){
                     document.getElementById("order_room_form_hotel_infor_container").innerHTML = `
-                        <div style="height: 300px; width: 100%; margin: auto; position: relative;
-                        background-image: url('./images/HotelPic2.jpg'); background-size: cover; background-repeat: no-repeat; ">
+                        <div id="hotel_rates_div_hotel_pic_display" style="height: 300px; width: 100%; margin: auto; position: relative;
+                            background-image: url('./images/HotelPic2.jpg'); background-size: cover; background-repeat: no-repeat; ">
                             <div style="background-color: rgba(0, 0, 0, 0.575); padding: 20px;">
                                 <h1 style="font-weight: bolder; letter-spacing: 1px; color: white;">
                                 ${RR_hotel_name}
@@ -669,9 +689,9 @@ function get_hotel_rates(url, is_going_back_from_final_price){
                                 <div style="margin-top: 5px;">${RR_hotel_rating}</div>
                             </div>
                             <div class="hotels_card_pic_items_points">
-                                <div class="hotels_card_pic_each_item_point selected"><p>1</p></div>
-                                <div class="hotels_card_pic_each_item_point"><p>2</p></div>
-                                <div class="hotels_card_pic_each_item_point"><p>3</p></div>
+                                <div onclick="change_hotel_pics_at_rates_div(0);" id="hotels_card_pic_each_item_point_at_rates_div_0" class="hotels_card_pic_each_item_point selected"><p>1</p></div>
+                                <div onclick="change_hotel_pics_at_rates_div(1);" id="hotels_card_pic_each_item_point_at_rates_div_1" class="hotels_card_pic_each_item_point"><p>2</p></div>
+                                <div onclick="change_hotel_pics_at_rates_div(2);" id="hotels_card_pic_each_item_point_at_rates_div_2" class="hotels_card_pic_each_item_point"><p>3</p></div>
                             </div>
                         </div>
                         <div>
