@@ -6,7 +6,7 @@ if(localStorage.getItem("hotels_last_search_city")){
 
 var render_hotel_returned_hotels_list = [];
 var hotels_render_index_lowerbound = 0;
-var hotels_render_index_upperbound = 5;
+var hotels_render_index_upperbound = 20;
 
 var book_room_final_post_data = {
     data: {
@@ -64,7 +64,7 @@ function render_hotels_load_more(){
     document.getElementById("render_hotels_load_more_btn").style.display = "none";
     document.getElementById("render_hotels_load_more_loader").style.display = "block";
 
-    hotels_render_index_lowerbound = (hotels_render_index_upperbound + 1);
+    hotels_render_index_lowerbound = hotels_render_index_upperbound;
     hotels_render_index_upperbound += 5;
 
     setTimeout(()=> {
