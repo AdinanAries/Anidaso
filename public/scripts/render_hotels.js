@@ -923,6 +923,7 @@ function get_final_price(url, first_url){
             let RR_checkin_date = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_checkout_date = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_guest_num = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
+            let number_of_guests = 1;
             let RR_rooms_num = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_policy_type = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_cancel_deadline = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
@@ -1010,6 +1011,7 @@ function get_final_price(url, first_url){
                         if(data.data.offers[rr].guests.adults){
                             RR_guest_num = data.data.offers[rr].guests.adults > 1 ?
                                 `${data.data.offers[rr].guests.adults} adults` :`${data.data.offers[rr].guests.adults} adult`;
+                            number_of_guests = data.data.offers[rr].guests.adults;
                         }
                     }
 
@@ -1250,7 +1252,7 @@ function get_final_price(url, first_url){
                                         ${RR_booking_price}
                                     </p>
                                     </div>
-                                    <div onclick="room_booking_get_user_information('${url}', '${first_url}');" style="cursor: pointer; background-color: rgb(0, 127, 177); padding: 20px;">
+                                    <div onclick="room_booking_get_user_information('${url}', '${first_url}', ${number_of_guests});" style="cursor: pointer; background-color: rgb(0, 127, 177); padding: 20px;">
                                     <p style="font-size: 13px; font-weight: bolder; color: white;">Book Room</p>
                                     </div>
                                 </div>
@@ -1272,7 +1274,42 @@ function get_final_price(url, first_url){
     });
 }
 
-function room_booking_get_user_information(url, first_url){
+//functions to collect guest information
+function add_guests_first_name(input_id, index){
+    book_room_final_post_data.data.guests[index].name.firstName = document.getElementById(input_id).value;
+    console.log(book_room_final_post_data.data.guests);
+}
+function add_guests_last_name(input_id, index){
+    book_room_final_post_data.data.guests[index].name.lastName = document.getElementById(input_id).value;
+}
+function add_guest_title(input_id, index){
+    book_room_final_post_data.data.guests[index].name.title = document.getElementById(input_id).value;
+}
+function add_guest_email(input_id, index){
+    book_room_final_post_data.data.guests[index].contact.email = document.getElementById(input_id).value;
+}
+
+function add_phone_email(code_input_id, num_input_id, index){
+    book_room_final_post_data.data.guests[index].contact.phone = document.getElementById(code_input_id).value+document.getElementById(num_input_id).value;
+}
+
+function room_booking_get_user_information(url, first_url, number_of_guests){
+
+    //adding guests to final post object
+    book_room_final_post_data.data.guests = [];
+    for(let g=0; g<number_of_guests; g++){
+        book_room_final_post_data.data.guests.push({
+            name: {
+              title: "MR",
+              firstName: "",
+              lastName: ""
+            },
+            contact: {
+              phone: "",
+              email: ""
+            }
+        });
+    }
 
     document.getElementById("view_rooms_and_rates_main_title").style.display = "none";
 
@@ -1290,22 +1327,22 @@ function room_booking_get_user_information(url, first_url){
                 <div style="max-width: 100px !important; margin-bottom: 20px;" id="login_fld_container_${form_input_counter}" class="login_fld_container">
                     <p id="login_fld_title_${form_input_counter}" class="login_fld_title">
                     Title</p>
-                    <select id="login_fld_${form_input_counter}" class="login_fld">
-                    <option value="MALE">Mr</option>
-                    <option value="FEMALE">Mrs</option>
+                    <select onchange="add_guest_title('login_fld_${form_input_counter}', ${inputnum});" id="login_fld_${form_input_counter}" class="login_fld">
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
                     </select>
                 </div>
                 <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
                     <div id="login_fld_container_${(form_input_counter + 1)}" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
                     <p id="login_fld_title_${(form_input_counter + 1)}" class="login_fld_title">
                     First Name</p>
-                    <input onblur="de_activate_login_fld(${(form_input_counter + 1)});" onclick="activate_login_fld(${(form_input_counter + 1)});" id="login_fld_${(form_input_counter + 1)}" class="login_fld" type="text" />
+                    <input oninput="add_guests_first_name('login_fld_${(form_input_counter + 1)}', ${inputnum});" onblur="de_activate_login_fld(${(form_input_counter + 1)});" onclick="activate_login_fld(${(form_input_counter + 1)});" id="login_fld_${(form_input_counter + 1)}" class="login_fld" type="text" />
                     </div>
 
                     <div style="width: calc(100% - 10px);" id="login_fld_container_${(form_input_counter + 2)}" class="login_fld_container">
                     <p id="login_fld_title_${(form_input_counter + 2)}" class="login_fld_title">
                     Last Name</p>
-                    <input onblur="de_activate_login_fld(${(form_input_counter + 2)});" onclick="activate_login_fld(${(form_input_counter + 2)});" id="login_fld_${(form_input_counter + 2)}" class="login_fld" type="text" />
+                    <input oninput="add_guests_last_name('login_fld_${(form_input_counter + 2)}', ${inputnum});" onblur="de_activate_login_fld(${(form_input_counter + 2)});" onclick="activate_login_fld(${(form_input_counter + 2)});" id="login_fld_${(form_input_counter + 2)}" class="login_fld" type="text" />
                     </div>
                 </div>
                 
@@ -1313,7 +1350,7 @@ function room_booking_get_user_information(url, first_url){
                     <div id="login_fld_container_${(form_input_counter + 3)}" class="login_fld_container">
                     <p id="login_fld_title_${(form_input_counter + 3)}" class="login_fld_title">
                     Email</p>
-                    <input onblur="de_activate_login_fld(${(form_input_counter + 3)});" onclick="activate_login_fld(${(form_input_counter + 3)});" id="login_fld_${(form_input_counter + 3)}" class="login_fld" type="email" />
+                    <input oninput="add_guest_email('login_fld_${(form_input_counter + 3)}', ${inputnum});" onblur="de_activate_login_fld(${(form_input_counter + 3)});" onclick="activate_login_fld(${(form_input_counter + 3)});" id="login_fld_${(form_input_counter + 3)}" class="login_fld" type="email" />
                     </div>
                 </div>
 
@@ -1322,7 +1359,7 @@ function room_booking_get_user_information(url, first_url){
                     <div style="width: 170px !important;" id="login_fld_container_${(form_input_counter + 4)}" class="login_fld_container">
                     <p id="login_fld_title_${(form_input_counter + 4)}" class="login_fld_title">
                     Country Code</p>
-                    <select id="login_fld_${(form_input_counter + 4)}" class="login_fld">
+                    <select onchange="add_phone_email('login_fld_${(form_input_counter + 4)}', 'login_fld_${(form_input_counter + 5)}', ${inputnum})" id="login_fld_${(form_input_counter + 4)}" class="login_fld">
                         <option>+1</option>
                         <option>+233</option>
                     </select>
@@ -1330,7 +1367,7 @@ function room_booking_get_user_information(url, first_url){
                     <div id="login_fld_container_${(form_input_counter + 5)}" style="width: 100%;" class="login_fld_container">
                     <p id="login_fld_title_${(form_input_counter + 5)}" class="login_fld_title">
                         Mobile Number</p>
-                    <input onblur="de_activate_login_fld(${(form_input_counter + 5)});" onclick="activate_login_fld(${(form_input_counter + 5)});" id="login_fld_${(form_input_counter + 5)}" class="login_fld" type="text" />
+                    <input oninput="add_phone_email('login_fld_${(form_input_counter + 4)}', 'login_fld_${(form_input_counter + 5)}', ${inputnum})" onblur="de_activate_login_fld(${(form_input_counter + 5)});" onclick="activate_login_fld(${(form_input_counter + 5)});" id="login_fld_${(form_input_counter + 5)}" class="login_fld" type="text" />
                     </div>
                 </div>
 
@@ -1668,7 +1705,7 @@ function show_book_hotel_view_full_profile_ratings_infor(overall_rating, rating,
         <p style="color: rgb(250, 187, 187); font-size: 14px; text-align: right;">${email}</p>
         </div>
 
-        <div style="padding: 10px; border-radius: 4px; margin-top: 25px; border:rgb(250, 187, 187) 1px solid;">
+        <!--div style="padding: 10px; border-radius: 4px; margin-top: 25px; border:rgb(250, 187, 187) 1px solid;">
             <p style="font-size: 14px; margin-bottom: 10px; color:rgb(152, 197, 214); font-weight: bolder; letter-spacing: 1px;">
             ${rec_mn_dtion}</p>
             <div style="display: flex; flex-direction: row !important; margin-bottom: 5px;">
@@ -1681,7 +1718,7 @@ function show_book_hotel_view_full_profile_ratings_infor(overall_rating, rating,
                 <i style="color:rgb(86, 223, 193);" class="fa fa-bed" aria-hidden="true"></i></p>
             <p style="color: rgb(250, 187, 187); font-size: 14px;">${the_highest_rating_factor_msg}</p>
             </div>
-        </div>
+        </div-->
 
     `;
 }
