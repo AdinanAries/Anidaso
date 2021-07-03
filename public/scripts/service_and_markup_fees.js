@@ -1,32 +1,40 @@
 var all_fees_and_markups = [
     {
-        type: "Service",
+        type: "service",
         amount: 3.55,
         currency: "USD",
         Reason: "additional infor mation to be added here"
     },
     {
-        type: "Markup",
-        amount: 3.00,
+        type: "markup",
+        percentage: 5,
         currency: "USD",
-        Reason: "additional infor mation to be added here"
+        Reason: "additional information to be added here"
     }
 ]
 
-function include_service_fee(price){
+function include_service_fee(price, currency){
 
     let fee_obj = all_fees_and_markups.filter( each => {
         return each.type === "Service"
-    })[0];
+    });
 
     
-    let fee_price = site_currency_coverter(fee_obj.currency, current_currency.currency, fee_obj.amount);
+    let fee_price = site_currency_coverter(fee_obj[0].currency, currency, fee_obj[0].amount);
 
-    let new_price = price + parseFloat(fee_price);
+    let new_price = price + (parseFloat(fee_price).toFixed(2));
     
-    return new_price
+    return new_price;
 }
 
-function get_original_price_without_service_fee(){
+function return_service_fee(currency){
+
+    let fee_obj = all_fees_and_markups.filter( each => {
+        return each.type === "service"
+    });
+
     
+    let fee_price = site_currency_coverter(fee_obj[0].currency, currency, fee_obj[0].amount);
+
+    return parseFloat(fee_price).toFixed(2);
 }
