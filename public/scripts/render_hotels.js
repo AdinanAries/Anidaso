@@ -472,10 +472,10 @@ function render_hotels(){
             let room_category = `
             <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i> nothing found.
         `;
-            let booking_number_of_rooms = "";
+            let booking_number_of_rooms = "1 room";
             let url_rates = "";
-            let checkin_date = "June 25, 2021";
-            let checkout_date = "July 5, 2021";
+            let checkin_date = "";
+            let checkout_date = "";
             let hotel_tel = "";
             let hotel_fax = "";
             let hotel_email = "";
@@ -814,6 +814,8 @@ function render_hotels(){
             }
 
             hotel_search_data.city = "";
+            hotel_search_data.roomQuantity = 1,
+            hotel_search_data.adults = 1,
             window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
         },
         error: err =>{
@@ -821,18 +823,18 @@ function render_hotels(){
             hotel_search_data.city = "";
             window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
             document.getElementById("hotels_tickets_section_list_container").innerHTML =
-                    `
-                        <div style=" background-color: white; border-radius: 4px; margin: 15px 0;
-                            padding: 50px 0; animation: display_anim 1000ms ease-out;">
-                            <p style="text-align: center;">
-                                <img src="/images/search_not_found.png" style="width: 60px; height: 60px;" alt=""/>
-                            </p>
-                            <p style="color: #00284e; font-weight: bolder; font-size: 13px; text-align: center;">
-                                Oops! nothing found for this search.
-                            </p>
-                        </div>
+            `
+                <div style=" background-color: white; border-radius: 4px; margin: 15px 0;
+                    padding: 50px 0; animation: display_anim 1000ms ease-out;">
+                    <p style="text-align: center;">
+                        <img src="/images/search_not_found.png" style="width: 60px; height: 60px;" alt=""/>
+                    </p>
+                    <p style="color: #00284e; font-weight: bolder; font-size: 13px; text-align: center;">
+                        Oops! nothing found for this search.
+                    </p>
+                </div>
 
-                    `;
+            `;
         }
 
     });
@@ -1116,7 +1118,7 @@ function get_hotel_rates(url, is_going_back_from_final_price){
             let RR_checkin_date = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_checkout_date = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_guest_num = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
-            let RR_rooms_num = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unknown`;
+            let RR_rooms_num = `1 room`;
             let RR_policy_type = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_cancel_deadline = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
             let RR_cancl_amount = `<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i>unavailable`;
