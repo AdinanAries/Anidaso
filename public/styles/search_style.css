@@ -1786,7 +1786,7 @@ footer li {
 }
 .footer_fld_cntn {
   border: 1px solid rgba(255, 255, 255, 0.3);
-  background-color:rgba(0, 59, 87, 0.418);
+  background-color: rgba(0, 59, 87, 0.418);
   border-radius: 3px;
   padding: 5px;
   margin-bottom: 10px;
@@ -2235,6 +2235,13 @@ footer a {
     left: -227px !important;
     max-width: 260px !important;
     height: auto;
+  }
+  .page_popup_main_container {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    overflow: auto !important;
+    border-radius: 0;
   }
   #hero_section_flex_container {
     flex-direction: column !important;
