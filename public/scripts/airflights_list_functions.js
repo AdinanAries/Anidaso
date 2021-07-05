@@ -794,9 +794,15 @@ function book_ticket(){
 }
 
 function save_flight_booking_to_anidaso_db(booking_data){
+
+    let anidaso_user_id = "not_anidaso_user";
+    if(window.localStorage.getItem("ANDSUSR")){
+        anidaso_user_id = window.localStorage.getItem("ANDSUSR");
+    }
+
     $.ajax({
         type: "POST",
-        url: "/save_booked_flight",
+        url: "/save_booked_flight/"+anidaso_user_id,
         data: JSON.stringify(booking_data),
         dataType: "json",
         contentType: "application/json; charset=utf-8",

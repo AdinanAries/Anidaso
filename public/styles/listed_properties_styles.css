@@ -350,10 +350,10 @@ textarea:focus {
   border-radius: 4px;
 }
 body {
-  background-color: rgb(0, 16, 43);
+  background-color: #000d1a;
 }
 header {
-  background-color: rgb(0, 16, 43);
+  background-color: #000d1a;
   /*border-bottom: rgb(212, 113, 0) 4px solid;*/
   padding: 0 20px;
 }
@@ -374,8 +374,9 @@ header {
 }
 #top_nav_hotel_name_display_drop_down {
   background-color: rgb(3, 31, 53);
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-radius: 4px; 
+  min-width: 120px; 
+  border: 1px solid rgba(255,255,255,0.3);
   padding: 10px;
   position: absolute;
   top: calc(100% - 10px);
@@ -386,7 +387,7 @@ header {
   justify-content: center;
 }
 #main_top_nav_hotel_name_display:hover #top_nav_hotel_name_display_drop_down {
-  display: flex;
+  display: block;
 }
 .top_nav_hotel_name_display p,
 .top_nav_login_btn p {
@@ -424,9 +425,9 @@ header {
 }
 .hero_section {
   background-image: linear-gradient(
-      rgb(0, 16, 43),
+      #000d1a,
       rgba(3, 31, 53, 0.5),
-      rgb(0, 16, 43)
+      #000d1a
     ),
     url("../images/HotelPic.jpg");
   background-size: cover;
@@ -564,7 +565,8 @@ header {
 .all_rooms_list_table tr td {
   padding: 10px;
   color: white;
-  background-color: rgba(0, 0, 0, 0.23);
+  background-color: rgba(0, 82, 61, 0.23);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 4px;
   font-size: 13px;
   letter-spacing: 1px;
@@ -572,6 +574,7 @@ header {
 .all_rooms_list_table tr:nth-child(1) td {
   background: none;
   color: rgb(212, 113, 0);
+  border: none;
   font-weight: bolder;
 }
 .rooms_list_edit_room_icon {
@@ -579,7 +582,7 @@ header {
   color: rgb(114, 147, 197) !important;
 }
 footer {
-  background-color: #140028;
+  background-color: #000d1a;
   padding: 30px 0;
   font-size: 13px;
 }

@@ -4,6 +4,39 @@ if(localStorage.getItem("hotels_last_search_city")){
     localStorage.setItem("hotels_last_search_city", "");
 }
 
+var payment_card_vendors = [
+    {code: "CA", brand: "MasterCard"},
+    {code: "VI", brand: "Visa"},
+    {code: "AX", brand: "American Express"},
+    {code: "DC", brand: "Diners Club"},
+    {code: "AU", brand: "Carte Aurore"},
+    {code: "CG", brand: "Cofinoga"},
+    {code: "DS", brand: "Discover"},
+    {code: "GK", brand: "Lufthansa GK Card"},
+    {code: "JC", brand: "Japanese Credit Bureau"},
+    {code: "TC", brand: "Torch Club"},
+    {code: "TP", brand: "Universal Air Travel Card"},
+    {code: "BC", brand: "Bank Card"},
+    {code: "DL", brand: "Delta"},
+    {code: "MA", brand: "Maestro"},
+    {code: "UP", brand: "China UnionPay"},
+    {code: "VE", brand: "Visa Electron"}
+];
+
+function bind_card_venders_to_select(select_input_id){
+
+    document.getElementById(select_input_id).innerHTML = "";
+
+    for(let p=0; p<payment_card_vendors.length; p++){
+        document.getElementById(select_input_id).innerHTML += `
+            <option value="${payment_card_vendors[p].code}">
+                ${payment_card_vendors[p].brand}
+            </option>
+        `;
+    }
+
+}
+
 var render_hotel_returned_hotels_list = [];
 var hotels_render_index_lowerbound = 0;
 var hotels_render_index_upperbound = 20;
@@ -1805,25 +1838,25 @@ function room_booking_get_user_information(url, first_url, number_of_guests){
             <div style="margin-top: 30px;">
                 <p style="font-size: 12px; letter-spacing: 1px; font-weight: bolder; margin-bottom: 20px; color:rgb(112, 41, 0);">Payments</p>
                 <div style="background-color: rgb(220, 238, 245); padding: 20px; border-radius: 4px;">
-                <div style="max-width: 250px !important; margin-bottom: 20px;" id="login_fld_container_30" class="login_fld_container">
+                <div style="width: 100% !important; max-width: 395px !important; margin-bottom: 20px;" id="login_fld_container_30" class="login_fld_container">
                     <p id="login_fld_title_300" class="login_fld_title">
                     Method</p>
-                    <select id="login_fld_300" class="login_fld">
-                    <option value="MALE">Credit Card</option>
-                    <option value="FEMALE">Debit Card</option>
+                    <select id="login_fld_300" class="login_fld" style="width: 100% !important;">
+                        <option value="creditCard">Credit Card</option>
+                        <option value="debitCard">Debit Card</option>
                     </select>
                 </div>
                 <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
                     <div id="login_fld_container_301" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
                     <p id="login_fld_title_301" class="login_fld_title">
                     Vendor Code</p>
-                    <input onblur="de_activate_login_fld(301);" onclick="activate_login_fld(301);" id="login_fld_301" class="login_fld" type="text" />
+                    <select id="login_fld_301" class="login_fld" style="width: 100% !important;" type="text"></select>
                     </div>
 
                     <div style="width: calc(100% - 10px);" id="login_fld_container_302" class="login_fld_container">
-                    <p id="login_fld_title_302" class="login_fld_title">
-                    Expiration Date</p>
-                    <input onblur="de_activate_login_fld(302);" onclick="activate_login_fld(302);" id="login_fld_302" class="login_fld" type="text" />
+                        <p id="login_fld_title_302" class="login_fld_title">
+                            Expiration Date</p>
+                        <input onchange="check_credit_card_exp_input('login_fld_302')" onblur="de_activate_login_fld(302);" onclick="activate_login_fld(302);" id="login_fld_302" class="login_fld" type="text" placeholder="MM/YYYY eg.03/2025" />
                     </div>
                 </div>
                 <div style="margin-top: 20px; justify-content: space-between; max-width: 395px !important;">
@@ -1848,6 +1881,68 @@ function room_booking_get_user_information(url, first_url, number_of_guests){
     `;
 
     book_hotel_forms_scroll_helper();
+    bind_card_venders_to_select("login_fld_301");
+}
+
+function check_credit_card_exp_input(input_id){
+    
+    let passed_slash = false;
+    let exp_date = document.getElementById(input_id).value;
+
+    for(let e=0; e<exp_date.length; e++){
+        if(exp_date[e]==="/"){
+            passed_slash = true;
+        }
+    }
+
+    let month_part;
+    let year_part;
+    if(passed_slash){
+        month_part = exp_date.split("/")[0];
+        year_part = exp_date.split("/")[1];
+
+        if(month_part.length !== 2){
+            document.getElementById(input_id).value = "";
+            document.getElementById(input_id).placeholder = "invalid month";
+            return null;
+        }
+
+        if(parseInt(month_part) > 12 || parseInt(month_part) < 1){
+            document.getElementById(input_id).value = "";
+            document.getElementById(input_id).placeholder = "invalid month";
+            return null;
+        }
+
+        if(year_part.length !== 4){
+            document.getElementById(input_id).value = "";
+            document.getElementById(input_id).placeholder = "invalid year";
+            return null;
+        }
+
+        for(let m=0; m<month_part.length; m++){
+            if(isNaN(parseInt(month_part[m]))){
+                document.getElementById(input_id).value = "";
+                document.getElementById(input_id).placeholder = "invalid month";
+                return null;
+            }
+        }
+
+        for(let y=0; y<year_part.length; y++){
+            if(isNaN(parseInt(year_part[y]))){
+                document.getElementById(input_id).value = "";
+                document.getElementById(input_id).placeholder = "invalid year";
+                return null;
+            }
+        }
+    }
+
+    if(!passed_slash){
+        document.getElementById(input_id).value = "";
+        document.getElementById(input_id).placeholder = "must contain slash(/)";
+        return null;
+    }
+
+    book_room_final_post_data.data.payments[0].expiryDate = `${year_part}-${month_part}`;
 }
 
 function submit_hotel_room_booking(offer_id){

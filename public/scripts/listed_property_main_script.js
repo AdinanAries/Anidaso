@@ -2918,11 +2918,14 @@ function display_logged_in_hotel_name(name, subs_status, prof_status){
             not subscribed <i style="color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
     `;
 
+    let top_nav_subs_status = `<i style="color: orangered; font-size: 12px !important; margin-right: 0;" class="fa fa-exclamation-triangle" aria-hidden="true"></i> not subscribed `;
+
     if(subs_status){
         subscription_status = `
             <span style="color:aqua; font-size: 14px;">Status:</span>
                 subscribed <i style="color: rgb(137, 235, 174);" class="fa fa-check" aria-hidden="true"></i>
         `;
+        top_nav_subs_status = `<i style="color: rgb(137, 235, 174); font-size: 12px !important; margin-right: 0;" class="fa fa-check" aria-hidden="true"></i> subscribed`;
     }
 
     let profile_status = `
@@ -2942,7 +2945,9 @@ function display_logged_in_hotel_name(name, subs_status, prof_status){
         <i class="fa fa-building" aria-hidden="true"></i>${top_nav_disp_name}
         </p>
         <div id="top_nav_hotel_name_display_drop_down">
-            <p onclick="hotel_manager_logout()" style="cursor: pointer; font-weight: initial; padding: 10px 0; font-size: 13px !important; text-align: center; width: 100%; border-radius: 4px; color: white; background-color: rgb(128, 0, 0);">
+            <p style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 10px;">
+            ${top_nav_subs_status}</p>
+            <p onclick="hotel_manager_logout()" style="border-top: 1px solid rgba(255,255,255,0.2); font-weight: bolder; cursor: pointer; padding: 10px 0; font-size: 13px !important; text-align: center; width: 100%; color: white;">
                 <i style="margin-right: 5px; color:rgb(252, 26, 26);" class="fa fa-sign-in" aria-hidden="true"></i>
                 Logout</p>
         </div>
