@@ -463,7 +463,7 @@ function render_flights_load_more(){
 
                             change_flights_section = `
 
-                                        <div style="width: calc(100% - 45px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 20px; background-color: #0d3357;">
+                                        <div style="width: calc(100% - 25px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 10px; background-color: #0d3357;">
                                             <p style="font-size: 12px; font-weight: bolder; color: white; margin: 0 10px; margin-bottom: 10px;">
                                             <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>
                                             Flight Stop</p>
@@ -490,12 +490,12 @@ function render_flights_load_more(){
                             </div>
 
                             <div style="width: 100%; display: flex; flex-direction: row !important; justify-content: space-between; margin-bottom: 10px;">
-                                <div style="padding: 20px; padding-bottom: 0;">
+                                <div style="padding: 10px; padding-bottom: 0;">
                                     <p style="font-weight: bolder; text-align: right; font-size: 12px; letter-spacing: 0.5px; color: rgb(123,0,0);">
                                         <i class="fa fa-calendar-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                         ${departure_string_date.substring(0, 10)}</p>
                                 </div>
-                                <div style="padding: 20px; padding-bottom: 0;">
+                                <div style="padding: 10px; padding-bottom: 0;">
                                     <p style="font-size: 13px; font-weight: bolder; text-align: right; opacity: 0.9; letter-spacing: 0.5px;">
                                         <i class="fa fa-clock-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                         ${travel_duration}</p>
@@ -506,7 +506,7 @@ function render_flights_load_more(){
 
                                 <div style="width: 100%;">
 
-                                    <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 20px; margin-bottom: 20px;">
+                                    <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 10px; margin-bottom: 10px;">
                                         <div>
                                             <div>
                                                 <p>
@@ -688,7 +688,7 @@ function render_flights_load_more(){
 
                             return_flights_change_flights_section = `
 
-                                <div style="width: calc(100% - 45px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 20px; background-color: #0d3357;">
+                                <div style="width: calc(100% - 25px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 10px; background-color: #0d3357;">
                                     <p style="font-size: 12px; font-weight: bolder; color: white; margin: 0 10px; margin-bottom: 10px;">
                                     <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>
                                     Flight Stop</p>
@@ -715,12 +715,12 @@ function render_flights_load_more(){
                             </div>
 
                             <div style="width: 100%; display: flex; flex-direction: row !important; justify-content: space-between; margin-bottom: 10px;">
-                                <div style="padding: 20px; padding-bottom: 0;">
+                                <div style="padding: 10px; padding-bottom: 0;">
                                     <p style="font-weight: bolder; text-align: right; font-size: 12px; letter-spacing: 0.5px; color: rgb(123,0,0);">
                                         <i class="fa fa-calendar-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                         ${departure_string_date.substring(0, 10)}</p>
                                 </div>
-                                <div style="padding: 20px; padding-bottom: 0;">
+                                <div style="padding: 10px; padding-bottom: 0;">
                                     <p style="font-size: 13px; font-weight: bolder; text-align: right; opacity: 0.9; letter-spacing: 0.5px;">
                                         <i class="fa fa-clock-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                         ${travel_duration}</p>
@@ -731,7 +731,7 @@ function render_flights_load_more(){
 
                                 <div style="width: 100%;">
 
-                                    <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 20px; margin-bottom: 20px;">
+                                    <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 10px; margin-bottom: 10px;">
                                         <div>
                                             <div>
                                                 <p>
@@ -1962,7 +1962,7 @@ function render_flights(){
 
                                 change_flights_section = `
 
-                                            <div style="width: calc(100% - 45px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 20px; background-color: #0d3357;">
+                                            <div style="width: calc(100% - 25px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 10px; background-color: #0d3357;">
                                                 <p style="font-size: 12px; font-weight: bolder; color: white; margin: 0 10px; margin-bottom: 10px;">
                                                 <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>
                                                 Flight Stop</p>
@@ -1989,12 +1989,12 @@ function render_flights(){
                                 </div>
 
                                 <div style="width: 100%; display: flex; flex-direction: row !important; justify-content: space-between; margin-bottom: 10px;">
-                                    <div style="padding: 20px; padding-bottom: 0;">
+                                    <div style="padding: 10px; padding-bottom: 0;">
                                         <p style="font-weight: bolder; text-align: right; font-size: 12px; letter-spacing: 0.5px; color: rgb(123,0,0);">
                                         <i class="fa fa-calendar-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                         ${departure_string_date.substring(0, 10)}</p>
                                     </div>
-                                    <div style="padding: 20px; padding-bottom: 0;">
+                                    <div style="padding: 10px; padding-bottom: 0;">
                                         <p style="font-size: 12px; font-weight: bolder; text-align: right; opacity: 0.9; letter-spacing: 0.5px;">
                                         <i class="fa fa-clock-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                         ${travel_duration}</p>
@@ -2005,7 +2005,7 @@ function render_flights(){
 
                                     <div style="width: 100%;">
 
-                                        <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 20px; margin-bottom: 20px;">
+                                        <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 10px; margin-bottom: 10px;">
                                             <div>
                                                 <div>
                                                     <p>
@@ -2187,7 +2187,7 @@ function render_flights(){
 
                                 return_flights_change_flights_section = `
 
-                                    <div style="width: calc(100% - 45px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 20px; background-color: #0d3357;">
+                                    <div style="width: calc(100% - 25px); border-radius: 4px; border-left: 3px solid rgb(50,225,50); padding: 10px 0; margin: 0 10px; background-color: #0d3357;">
                                         <p style="font-size: 12px; font-weight: bolder; color: white; margin: 0 10px; margin-bottom: 10px;">
                                         <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>
                                         Flight Stop</p>
@@ -2214,12 +2214,12 @@ function render_flights(){
                                 </div>
 
                                 <div style="width: 100%; display: flex; flex-direction: row !important; justify-content: space-between; margin-bottom: 10px;">
-                                    <div style="padding: 20px; padding-bottom: 0;">
+                                    <div style="padding: 10px; padding-bottom: 0;">
                                     <p style="font-weight: bolder; text-align: right; font-size: 12px; letter-spacing: 0.5px; color: rgb(123,0,0);">
                                         <i class="fa fa-calendar-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                         ${departure_string_date.substring(0, 10)}</p>
                                     </div>
-                                    <div style="padding: 20px; padding-bottom: 0;">
+                                    <div style="padding: 10px; padding-bottom: 0;">
                                         <p style="font-size: 13px; font-weight: bolder; text-align: right; opacity: 0.9; letter-spacing: 0.5px;">
                                             <i class="fa fa-clock-o" style="color: rgb(25,183,25);" aria-hidden="true"></i>
                                             ${travel_duration}</p>
@@ -2230,7 +2230,7 @@ function render_flights(){
 
                                     <div style="width: 100%;">
 
-                                        <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 20px; margin-bottom: 20px;">
+                                        <div style="border-left: 3px dashed rgb(25,183,25); padding-left: 10px; display: flex; justify-content: space-between; margin: 0 10px; margin-bottom: 10px;">
                                             <div>
                                                 <div>
                                                     <p>
