@@ -827,29 +827,9 @@ function render_flights_load_more(){
                 </div>
                 <div class="each_ticket_item_main_extra_container">
                 <div class="each_ticket_item_main_extra">
-                    <div onclick="toggle_show_flight_ticket_item_details(${w})" style="background-color: rgba(23,121,22,0.2); border: 1px dashed rgb(85, 55, 55); padding: 10px; border-radius: 4px;">
-                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
-                            ${number_of_travelers}</span> 
-                            <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
-                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
-                            only flights</span><br/>
-                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                            <!--class="COVID_policy_desktop" -->
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
-                            round trip
-                        </span> 
-                        <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
-                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                            <!--class="COVID_policy_desktop" -->
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
-                            business
-                        </span> 
-                        <div style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65);">
-                            see itinerary details
-                            <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
-                        </div>
+                    <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65);">
+                        see itinerary details
+                        <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
                     </div>
                     <div class="each_ticket_item_emogi_and_rating">
                     
@@ -1153,6 +1133,26 @@ function render_flights_load_more(){
                     </p>
                 </div>
                 <div class="each_ticket_item_main_right">
+                    <div style="margin-bottom: 10px; background-color: rgba(23,121,22,0.2); border: 1px dashed rgb(85, 55, 55); padding: 10px; border-radius: 4px;">
+                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
+                            ${number_of_travelers}</span> 
+                            <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
+                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
+                            only flights</span><br/>
+                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                            <!--class="COVID_policy_desktop" -->
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
+                            round trip
+                        </span> 
+                        <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
+                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                            <!--class="COVID_policy_desktop" -->
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
+                            business
+                        </span>
+                    </div>
                     <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
                         ${current_currency.sign} ${flight_price}</p>
                     <p style="font-size: 13px; margin-bottom: 5px; border-left: 3px solid rgb(24,102,4); padding: 5px;">
@@ -2341,29 +2341,9 @@ function render_flights(){
                     </div>
                     <div class="each_ticket_item_main_extra_container">
                     <div class="each_ticket_item_main_extra">
-                        <div onclick="toggle_show_flight_ticket_item_details(${w})" style="background-color: rgba(23,121,22,0.2); border: 1px dashed rgb(85, 55, 55); padding: 10px; border-radius: 4px;">
-                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
-                                ${number_of_travelers}</span> 
-                                <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
-                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
-                                only flights</span><br/>
-                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                                <!--class="COVID_policy_desktop" -->
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
-                                round trip
-                            </span> 
-                            <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
-                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                                <!--class="COVID_policy_desktop" -->
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
-                                business
-                            </span> 
-                            <div style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65);">
-                                see itinerary details
-                                <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
-                            </div>
+                        <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65); cursor: pointer;">
+                            see itinerary details
+                            <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
                         </div>
                         <div class="each_ticket_item_emogi_and_rating">
                         
@@ -2667,6 +2647,26 @@ function render_flights(){
                         </p>
                     </div>
                     <div class="each_ticket_item_main_right">
+                        <div style="margin-bottom: 10px; background-color: rgba(23,121,22,0.2); border: 1px dashed rgb(85, 55, 55); padding: 10px; border-radius: 4px;">
+                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
+                                ${number_of_travelers}</span> 
+                                <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
+                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
+                                only flights</span><br/>
+                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                                <!--class="COVID_policy_desktop" -->
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
+                                round trip
+                            </span> 
+                            <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
+                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                                <!--class="COVID_policy_desktop" -->
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
+                                business
+                            </span>
+                        </div>
                         <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
                             ${current_currency.sign} ${flight_price}</p>
                         <p style="font-size: 13px; margin-bottom: 5px; border-left: 3px solid rgb(24,102,4); padding: 5px;">
