@@ -414,6 +414,29 @@ function render_hotels_load_more(){
                         <div style="padding: 0; width: calc(29% + 20px); background-color: white; border: none; justify-content: space-between;" class="each_ticket_item_main_right hotels_each_ticket_item_main_right">
                             <div style="padding: 10px;">
 
+                                <div style="cursor: pointer; border-top-left-radius: 20px; border-bottom-right-radius: 20px; border: 1px solid rgba(255,0,0,0.5); padding: 5px; background-color: rgba(255,0,0,0.1); margin-bottom: 10px;">
+                                    <p style="color: orangered; text-align: right; font-weight: bolder;">
+                                        <span style="color: rgb(53,94,52); font-weight: initial; font-size: 14px; margin-right: 3px;">
+                                            <i class="fa fa-thumbs-up" style=""></i></span>
+                                        <span style="font-size: 25px;">
+                                            9.3</span>
+                                        <span style="color: rgb(53,94,52); font-size: 14px;">
+                                            - Awsome</span>
+                                    </p>
+                                    <p style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
+                                        Score from 2332 reviews
+                                    </p>
+
+                                    <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
+                                        <p style="font-size: 12px; color: white; text-align: center;">
+                                            ONLY 6 LEFT
+                                        <p>
+                                        <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
+                                            90% room comfort
+                                        <p>
+                                    </div>
+                                </div>
+
                                 <p style="opacity: 0.7; font-size: 14px; font-weight: bolder;">Contact:</p>
                                 ${hotel_tel}
                                 
@@ -811,6 +834,29 @@ function render_hotels(){
                             </div>
                             <div style="padding: 0; width: calc(29% + 20px); background-color: white; border: none; justify-content: space-between;" class="each_ticket_item_main_right hotels_each_ticket_item_main_right">
                                 <div style="padding: 10px;">
+
+                                    <div style="cursor: pointer; border-top-left-radius: 20px; border-bottom-right-radius: 20px; border: 1px solid rgba(255,0,0,0.5); padding: 5px; background-color: rgba(255,0,0,0.1); margin-bottom: 10px;">
+                                        <p style="color: orangered; text-align: right; font-weight: bolder;">
+                                            <span style="color: rgb(53,94,52); font-weight: initial; font-size: 14px; margin-right: 3px;">
+                                                <i class="fa fa-thumbs-up" style=""></i></span>
+                                            <span style="font-size: 25px;">
+                                                9.3</span>
+                                            <span style="color: rgb(53,94,52); font-size: 14px;">
+                                                - Awsome</span>
+                                        </p>
+                                        <p style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
+                                            Score from 2332 reviews
+                                        </p>
+
+                                        <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
+                                            <p style="font-size: 12px; color: white; text-align: center;">
+                                                ONLY 6 LEFT
+                                            <p>
+                                            <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
+                                                90% room comfort
+                                            <p>
+                                        </div>
+                                    </div>
 
                                     <p style="opacity: 0.7; font-size: 14px; font-weight: bolder;">Contact:</p>
                                     ${hotel_tel}
