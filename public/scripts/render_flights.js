@@ -924,7 +924,7 @@ function render_flights_load_more(){
 
                             <div onclick="show_flight_ticket_added_policies_content(${w});" style="display: flex; cursor: pointer; flex-direction: row !important; justify-content: space-between; padding: 20px;">
                                 <div>
-                                    <p id="each_flight_ticket_added_policies_content_title${w}" style="display: none; font-size: 14px; opacity: 0.9; font-weight: bolder; margin: 10px 0;">American Airlines policies</p>
+                                    <p id="each_flight_ticket_added_policies_content_title${w}" style="display: none; font-size: 14px; opacity: 0.9; font-weight: bolder; margin: 10px 0;">Airlines policies</p>
                                     <p id="each_flight_ticket_added_policies_content_summary${w}" style="font-size: 13px; opacity: 0.6; letter-spacing: 0.5px;">View cancellation options & additional safety measures</p>
                                     <p id="each_flight_ticket_added_policies_content_read_more_txt${w}" style="margin-top: 7px; color: #00284e; font-size: 13px; opacity: 0.9; letter-spacing: 0.5px; font-weight: bolder;">Read More</p>
                                 </div>
@@ -938,11 +938,11 @@ function render_flights_load_more(){
 
                             <div style="display: flex; flex-direction: row !important; margin-bottom: 20px;">
                                 <div style="margin-right: 10px;">
-                                    <i style="font-size: 22px; opacity: 0.7; color: orangered;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
+                                    <i style="color: orangered;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
                                 </div>
                                 <div>
-                                    <p style="font-size: 13px; opacity: 0.7;">
-                                        nothing found for this flight...
+                                    <p style="font-size: 13px; opacity: 0.9;">
+                                        nothing found at this moment...
                                     </p>
                                 </div>
                             </div>
@@ -2423,7 +2423,7 @@ function render_flights(){
 
                                 <div onclick="show_flight_ticket_added_policies_content(${w});" style="display: flex; cursor: pointer; flex-direction: row !important; justify-content: space-between; padding: 20px;">
                                     <div>
-                                        <p id="each_flight_ticket_added_policies_content_title${w}" style="display: none; font-size: 14px; opacity: 0.9; font-weight: bolder; margin: 10px 0;">American Airlines policies</p>
+                                        <p id="each_flight_ticket_added_policies_content_title${w}" style="display: none; font-size: 14px; opacity: 0.9; font-weight: bolder; margin: 10px 0;">Airlines policies</p>
                                         <p id="each_flight_ticket_added_policies_content_summary${w}" style="font-size: 13px; opacity: 0.6; letter-spacing: 0.5px;">View cancellation options & additional safety measures</p>
                                         <p id="each_flight_ticket_added_policies_content_read_more_txt${w}" style="margin-top: 7px; color: #00284e; font-size: 13px; opacity: 0.9; letter-spacing: 0.5px; font-weight: bolder;">Read More</p>
                                     </div>
@@ -2437,11 +2437,11 @@ function render_flights(){
 
                                 <div style="display: flex; flex-direction: row !important; margin-bottom: 20px;">
                                     <div style="margin-right: 10px;">
-                                        <i style="font-size: 22px; opacity: 0.7; color: orangered;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
+                                        <i style="color: orangered;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
                                     </div>
                                     <div>
-                                        <p style="font-size: 13px; opacity: 0.7;">
-                                            nothing found for this flight...
+                                        <p style="font-size: 13px; opacity: 0.9;">
+                                            nothing found at this moment...
                                         </p>
                                     </div>
                                 </div>
