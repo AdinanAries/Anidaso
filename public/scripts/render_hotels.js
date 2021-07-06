@@ -39,7 +39,7 @@ function bind_card_venders_to_select(select_input_id){
 
 var render_hotel_returned_hotels_list = [];
 var hotels_render_index_lowerbound = 0;
-var hotels_render_index_upperbound = 20;
+var hotels_render_index_upperbound = 2;
 
 var book_room_final_post_data = {
     data: {
@@ -172,22 +172,22 @@ function render_hotels_load_more(){
 
                     if(data.data[p].hotel.contact.phone){
                         hotel_tel = `
-                        <p style="margin-top: 10px; color:rgb(117, 117, 117); font-size: 14px;">
-                            <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>${data.data[p].hotel.contact.phone}
+                        <p style="margin-top: 10px; color:rgb(27, 17, 17); font-size: 12px;">
+                            <i style="color:rgb(22, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>${data.data[p].hotel.contact.phone}
                         </p>
                         `;
                     }
                     if(data.data[p].hotel.contact.fax){
                         hotel_fax = `
-                        <p style="margin-bottom: 10px; margin-top: 5px; color:rgb(117, 117, 117); font-size: 14px;">
-                            <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>${data.data[p].hotel.contact.fax}
+                        <p style="margin-bottom: 10px; margin-top: 5px; color:rgb(27, 17, 17); font-size: 12px;">
+                            <i style="color:rgb(22, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>${data.data[p].hotel.contact.fax}
                         </p>
                         `;
                     }
                     if(data.data[p].hotel.contact.email){
                         hotel_email = `
-                        <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 14px;">
-                            <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>${data.data[p].hotel.contact.email}
+                        <p style="margin-bottom: 10px; color:rgb(27, 17, 17); font-size: 12px;">
+                            <i style="color:rgb(22, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>${data.data[p].hotel.contact.email}
                         </p>
                         `;
                     }
@@ -280,13 +280,16 @@ function render_hotels_load_more(){
                         the_desc += `<br/><br/>
                         <span class="hotel_description_show_all_btn">
                             <span class="hotel_description_show_all_txt">
+                                <span style="font-size: 13px; font-weight: bolder; color: rgba(255,22,233);">
+                                    Description</span>
+                                <br/><br/>
                                 ${data.data[p].hotel.description.text}
                             </span>
-                            Read more...
+                            read all...
                         </span>`;
                     }
                     hotel_description = `
-                        <p style="color:rgb(0, 127, 177); margin-bottom: 20px; font-size: 15px;">
+                        <p style="color:rgb(23, 107, 107); margin-bottom: 20px; font-size: 13px;">
                             ${the_desc}
                         </p>
                     `;
@@ -401,7 +404,9 @@ function render_hotels_load_more(){
                                     </div>
                                 </div>
                                 <p style="margin-top: 20px; margin-bottom: 5px; font-weight: bolder; font-size: 14px;">Description: </p>
-                                ${hotel_description}
+                                    <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107);">    
+                                        ${hotel_description}
+                                    </div>
                                 </div>
                             </div>
                             </div>
@@ -418,11 +423,14 @@ function render_hotels_load_more(){
                                 
                             </div>
                             <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
-                            <p class="ticket_item_price_display">${current_currency.sign} ${hotel_deal_price}</p>
-                            <p style="font-size: 15px; margin-bottom: 5px;">
-                                ${room_category}</p>
-                            <div class="ticket_item_entitlements_display" style="font-size: 14px; opacity: 0.9;">
-                                ${first_hotel_amenities}, ...
+                                <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
+                                    ${current_currency.sign}${hotel_deal_price}</p>
+                                <p style="font-size: 13px; margin-bottom: 5px; border-left: 3px solid rgb(24,102,4); padding: 5px;">
+                                    ${room_category.toUpperCase()}</p>
+                                <div class="ticket_item_entitlements_display" style="font-size: 12px; color: rgb(21,32,22); margin-top: 3px;">
+                                    <!--${first_hotel_amenities}, ...-->
+                                    <i style="color: rgba(23,2,22); margin-right: 5px; font-size: 13px;" class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                    see amenities
                                 <div class="ticket_item_entitlements_content_display arrow_on_bottom">
                                     <p style="opacity: 0.8; font-weight: bolder; font-size: 12px; padding: 10px;">
                                         Hotels Amenities
@@ -562,22 +570,22 @@ function render_hotels(){
 
                         if(data.data[p].hotel.contact.phone){
                             hotel_tel = `
-                            <p style="margin-top: 10px; color:rgb(117, 117, 117); font-size: 14px;">
-                                <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>${data.data[p].hotel.contact.phone}
+                            <p style="margin-top: 10px; color:rgb(27, 17, 17); font-size: 12px;">
+                                <i style="color:rgb(22, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-phone"></i>${data.data[p].hotel.contact.phone}
                             </p>
                             `;
                         }
                         if(data.data[p].hotel.contact.fax){
                             hotel_fax = `
-                            <p style="margin-bottom: 10px; margin-top: 5px; color:rgb(117, 117, 117); font-size: 14px;">
-                                <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>${data.data[p].hotel.contact.fax}
+                            <p style="margin-bottom: 10px; margin-top: 5px; color:rgb(27, 17, 17); font-size: 12px;">
+                                <i style="color:rgb(22, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-fax"></i>${data.data[p].hotel.contact.fax}
                             </p>
                             `;
                         }
                         if(data.data[p].hotel.contact.email){
                             hotel_email = `
-                            <p style="margin-bottom: 10px; color:rgb(117, 117, 117); font-size: 14px;">
-                                <i style="color:rgb(212, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>${data.data[p].hotel.contact.email}
+                            <p style="margin-bottom: 10px; color:rgb(27, 17, 17); font-size: 12px;">
+                                <i style="color:rgb(22, 78, 0); margin-right: 5px;" aria-hidden="true" class="fa fa-envelope"></i>${data.data[p].hotel.contact.email}
                             </p>
                             `;
                         }
@@ -670,13 +678,16 @@ function render_hotels(){
                             the_desc += `<br/><br/>
                             <span class="hotel_description_show_all_btn">
                                 <span class="hotel_description_show_all_txt">
+                                    <span style="font-size: 13px; font-weight: bolder; color: rgba(255,22,233);">
+                                        Description</span>
+                                    <br/><br/>
                                     ${data.data[p].hotel.description.text}
                                 </span>
-                                Read more...
+                                read all...
                             </span>`;
                         }
                         hotel_description = `
-                            <p style="color:rgb(0, 127, 177); margin-bottom: 20px; font-size: 15px;">
+                            <p style="color:rgb(23, 107, 107); margin-bottom: 20px; font-size: 13px;">
                                 ${the_desc}
                             </p>
                         `;
@@ -791,7 +802,9 @@ function render_hotels(){
                                         </div>
                                     </div>
                                     <p style="margin-top: 20px; margin-bottom: 5px; font-weight: bolder; font-size: 14px;">Description: </p>
-                                    ${hotel_description}
+                                        <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107);">    
+                                            ${hotel_description}
+                                        </div>
                                     </div>
                                 </div>
                                 </div>
@@ -808,11 +821,14 @@ function render_hotels(){
                                     
                                 </div>
                                 <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
-                                <p class="ticket_item_price_display">${current_currency.sign} ${hotel_deal_price}</p>
-                                <p style="font-size: 15px; margin-bottom: 5px;">
-                                    ${room_category}</p>
-                                <div class="ticket_item_entitlements_display" style="font-size: 14px; opacity: 0.9;">
-                                    ${first_hotel_amenities}, ...
+                                <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
+                                    ${current_currency.sign}${hotel_deal_price}</p>
+                                <p style="font-size: 13px; margin-bottom: 5px; border-left: 3px solid rgb(24,102,4); padding: 5px;">
+                                    ${room_category.toUpperCase()}</p>
+                                <div class="ticket_item_entitlements_display" style="font-size: 12px; color: rgb(21,32,22); margin-top: 3px;">
+                                    <!--${first_hotel_amenities}, ...-->
+                                    <i style="color: rgba(23,2,22); margin-right: 5px; font-size: 13px;" class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                    see amenities
                                     <div class="ticket_item_entitlements_content_display arrow_on_bottom">
                                         <p style="opacity: 0.8; font-weight: bolder; font-size: 12px; padding: 10px;">
                                             Hotels Amenities
@@ -1311,24 +1327,24 @@ function get_final_price(url, first_url){
 
     document.getElementById("order_room_form_final_price_container").innerHTML = 
     `
-            <div style="padding: 40px;">
+        <div style="padding: 40px;">
             <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
-            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-            <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                <animateTransform attributeType="xml"
-                attributeName="transform"
-                type="rotate"
-                from="0 25 25"
-                to="360 25 25"
-                dur="0.6s"
-                repeatCount="indefinite"/>
-                </path>
-            </svg>
-            <p style="text-align: center; font-size: 14px; color:rgb(0, 60, 83);">
-                <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                getting room and price information
-            </p>
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                    <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                    </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:rgb(0, 60, 83);">
+                    <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    getting room and price information
+                </p>
             </div>
         </div>
     `;
@@ -1838,35 +1854,35 @@ function room_booking_get_user_information(url, first_url, number_of_guests){
             <div style="margin-top: 30px;">
                 <p style="font-size: 12px; letter-spacing: 1px; font-weight: bolder; margin-bottom: 20px; color:rgb(112, 41, 0);">Payments</p>
                 <div style="background-color: rgb(220, 238, 245); padding: 20px; border-radius: 4px;">
-                <div style="width: 100% !important; max-width: 395px !important; margin-bottom: 20px;" id="login_fld_container_30" class="login_fld_container">
-                    <p id="login_fld_title_300" class="login_fld_title">
-                    Method</p>
-                    <select id="login_fld_300" class="login_fld" style="width: 100% !important;">
-                        <option value="creditCard">Credit Card</option>
-                        <option value="debitCard">Debit Card</option>
-                    </select>
-                </div>
-                <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
-                    <div id="login_fld_container_301" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
-                    <p id="login_fld_title_301" class="login_fld_title">
-                    Vendor Code</p>
-                    <select id="login_fld_301" class="login_fld" style="width: 100% !important;" type="text"></select>
+                    <div style="width: 100% !important; max-width: 395px !important; margin-bottom: 20px;" id="login_fld_container_30" class="login_fld_container">
+                        <p id="login_fld_title_300" class="login_fld_title">
+                        Method</p>
+                        <select id="login_fld_300" class="login_fld" style="width: 100% !important;">
+                            <option value="creditCard">Credit Card</option>
+                            <option value="debitCard">Debit Card</option>
+                        </select>
                     </div>
+                    <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
+                        <div id="login_fld_container_301" style="width: calc(100% - 10px); margin-right: 10px;" class="login_fld_container">
+                            <p id="login_fld_title_301" class="login_fld_title">
+                                Vendor Code</p>
+                            <select id="login_fld_301" class="login_fld" style="width: 100% !important;" type="text"></select>
+                        </div>
 
-                    <div style="width: calc(100% - 10px);" id="login_fld_container_302" class="login_fld_container">
-                        <p id="login_fld_title_302" class="login_fld_title">
-                            Expiration Date</p>
-                        <input onchange="check_credit_card_exp_input('login_fld_302')" onblur="de_activate_login_fld(302);" onclick="activate_login_fld(302);" id="login_fld_302" class="login_fld" type="text" placeholder="MM/YYYY eg.03/2025" />
+                        <div style="width: calc(100% - 10px);" id="login_fld_container_302" class="login_fld_container">
+                            <p id="login_fld_title_302" class="login_fld_title">
+                                Expiration Date</p>
+                            <input onchange="check_credit_card_exp_input('login_fld_302', 'hotel_guest_payments_status_txt','white')" onblur="de_activate_login_fld(302);" onclick="activate_login_fld(302);" id="login_fld_302" class="login_fld" type="text" placeholder="MM/YYYY eg.03/2025" />
+                        </div>
                     </div>
-                </div>
-                <div style="margin-top: 20px; justify-content: space-between; max-width: 395px !important;">
-                    <div id="login_fld_container_303" class="login_fld_container">
-                    <p id="login_fld_title_303" class="login_fld_title">
-                    Card Number</p>
-                    <input onblur="de_activate_login_fld(303);" onclick="activate_login_fld(303);" id="login_fld_303" class="login_fld" type="number" />
+                    <div style="margin-top: 20px; justify-content: space-between; max-width: 395px !important;">
+                        <div id="login_fld_container_303" class="login_fld_container">
+                            <p id="login_fld_title_303" class="login_fld_title">
+                                Card Number</p>
+                            <input onblur="de_activate_login_fld(303);" onclick="activate_login_fld(303);" id="login_fld_303" class="login_fld" type="number" />
+                        </div>
                     </div>
-                </div>
-
+                    <p id="hotel_guest_payments_status_txt" style="display: none; max-width: 395px !important; font-size: 14px; color: rgba(0,0,0,0.8); padding: 20px 0; text-align: center;"></p>
                 </div>
             </div>
 
@@ -1874,8 +1890,27 @@ function room_booking_get_user_information(url, first_url, number_of_guests){
                 <div onclick="get_final_price('${url}', '${first_url}');" style="cursor: pointer; padding: 20px; background-color: #571a02; color: white; font-size: 14px;">
                     <i style="margin-right: 10px" class="fa fa-chevron-left" aria-hidden="true"></i>Back
                 </div>
-                <div onclick="submit_hotel_room_booking('offer_id');" style="cursor: pointer; padding: 20px; background-color: #023057; color: white; font-size: 14px;">
+                <div id="submit_gds_hotel_booking_button" onclick="submit_hotel_room_booking('offer_id');" style="cursor: pointer; padding: 20px; background-color: #023057; color: white; font-size: 14px;">
                     Submit Booking<i style="margin-left: 10px" class="fa fa-ticket" aria-hidden="true"></i>
+                </div>
+                <div id="submit_gds_hotel_booking_loader" style="display: none; margin-right: 20px;">
+                    <div style="width: 100%; text-align: center;" class="loader2 loader--style2" title="1">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                            <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 25 25"
+                            to="360 25 25"
+                            dur="0.6s"
+                            repeatCount="indefinite"/>
+                            </path>
+                        </svg>
+                        <p style="text-align: center; font-size: 12px; color:rgb(0, 60, 83); font-weight: bolder;">
+                            please wait...
+                        </p>
+                    </div>
                 </div>
             </div>
     `;
@@ -1884,8 +1919,12 @@ function room_booking_get_user_information(url, first_url, number_of_guests){
     bind_card_venders_to_select("login_fld_301");
 }
 
-function check_credit_card_exp_input(input_id){
+function check_credit_card_exp_input(input_id, status_elem_id, initial_bg_color){
     
+    document.getElementById(input_id).style.backgroundColor = initial_bg_color;
+    document.getElementById(status_elem_id).style.display = "none";
+    document.getElementById(status_elem_id).innerHTML = "";
+
     let passed_slash = false;
     let exp_date = document.getElementById(input_id).value;
 
@@ -1902,43 +1941,55 @@ function check_credit_card_exp_input(input_id){
         year_part = exp_date.split("/")[1];
 
         if(month_part.length !== 2){
-            document.getElementById(input_id).value = "";
-            document.getElementById(input_id).placeholder = "invalid month";
+            document.getElementById(input_id).style.backgroundColor = "rgba(255,25,25, 0.2)";
+            document.getElementById(status_elem_id).style.display = "block";
+            document.getElementById(status_elem_id).innerHTML = `<i class='fa fa-exclamation-triangle' aria-hidden='true' style='color: orangered; margin-right: 5px;'></i>
+                                                                Month must be two digits (eg. 02)`;
             return null;
         }
 
         if(parseInt(month_part) > 12 || parseInt(month_part) < 1){
-            document.getElementById(input_id).value = "";
-            document.getElementById(input_id).placeholder = "invalid month";
+            document.getElementById(input_id).style.backgroundColor = "rgba(255,25,25, 0.2)";
+            document.getElementById(status_elem_id).style.display = "block";
+            document.getElementById(status_elem_id).innerHTML = `<i class='fa fa-exclamation-triangle' aria-hidden='true' style='color: orangered; margin-right: 5px;'></i>
+                                                                Month must be from 01 to 12`;
             return null;
         }
 
         if(year_part.length !== 4){
-            document.getElementById(input_id).value = "";
-            document.getElementById(input_id).placeholder = "invalid year";
+            document.getElementById(input_id).style.backgroundColor = "rgba(255,25,25, 0.2)";
+            document.getElementById(status_elem_id).style.display = "block";
+            document.getElementById(status_elem_id).innerHTML = `<i class='fa fa-exclamation-triangle' aria-hidden='true' style='color: orangered; margin-right: 5px;'></i>
+                                                                Year must be four digits (eg. 2025)`;
             return null;
         }
 
         for(let m=0; m<month_part.length; m++){
             if(isNaN(parseInt(month_part[m]))){
-                document.getElementById(input_id).value = "";
-                document.getElementById(input_id).placeholder = "invalid month";
+                document.getElementById(input_id).style.backgroundColor = "rgba(255,25,25, 0.2)";
+                document.getElementById(status_elem_id).style.display = "block";
+                document.getElementById(status_elem_id).innerHTML = `<i class='fa fa-exclamation-triangle' aria-hidden='true' style='color: orangered; margin-right: 5px;'></i>
+                                                                    Month must be a number`;
                 return null;
             }
         }
 
         for(let y=0; y<year_part.length; y++){
             if(isNaN(parseInt(year_part[y]))){
-                document.getElementById(input_id).value = "";
-                document.getElementById(input_id).placeholder = "invalid year";
+                document.getElementById(input_id).style.backgroundColor = "rgba(255,25,25, 0.2)";
+                document.getElementById(status_elem_id).style.display = "block";
+                document.getElementById(status_elem_id).innerHTML = `<i class='fa fa-exclamation-triangle' aria-hidden='true' style='color: orangered; margin-right: 5px;'></i>
+                                                                    Year must be a number`;
                 return null;
             }
         }
     }
 
     if(!passed_slash){
-        document.getElementById(input_id).value = "";
-        document.getElementById(input_id).placeholder = "must contain slash(/)";
+        document.getElementById(input_id).style.backgroundColor = "rgba(255,25,25, 0.2)";
+        document.getElementById(status_elem_id).style.display = "block";
+        document.getElementById(status_elem_id).innerHTML = `<i class='fa fa-exclamation-triangle' aria-hidden='true' style='color: orangered; margin-right: 5px;'></i>
+                                                            Exp Date must contain a slash(/)`;
         return null;
     }
 
@@ -1947,6 +1998,8 @@ function check_credit_card_exp_input(input_id){
 
 function submit_hotel_room_booking(offer_id){
     //show_hotels_review_booking_detials();
+    document.getElementById("submit_gds_hotel_booking_loader").style.display = "block";
+    document.getElementById("submit_gds_hotel_booking_button").style.display = "none";
     book_room_final_post_data.data.offerId = offer_id;
 
     $.ajax({
@@ -1959,10 +2012,14 @@ function submit_hotel_room_booking(offer_id){
         data: JSON.stringify(book_room_final_post_data),
         success: data => {
             console.log(data);
+            document.getElementById("submit_gds_hotel_booking_loader").style.display = "none";
+    document.getElementById("submit_gds_hotel_booking_button").style.display = "block";
             show_hotels_review_booking_detials();
             book_hotel_forms_scroll_helper();
         },
         error: err => {
+            document.getElementById("submit_gds_hotel_booking_loader").style.display = "none";
+            document.getElementById("submit_gds_hotel_booking_button").style.display = "block";
             console.log(err)
         }
     });

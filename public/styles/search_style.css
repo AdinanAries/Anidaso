@@ -164,8 +164,9 @@
   color: orangered;
 }
 .hotel_description_show_all_btn {
-  color: orangered;
-  font-size: 14px;
+  font-weight: bolder;
+  color: rgb(0, 60, 75);
+  font-size: 13px;
   margin-left: 10px;
   position: relative;
   z-index: 1;
@@ -179,13 +180,14 @@
   position: absolute;
   bottom: 20px;
   left: -100px;
-  background-color: white;
+  color: white;
+  background-color: rgb(0, 23, 49);
   box-shadow: 0px 1.6px 3.6px rgba(0, 0, 0, 0.3),
     0px 0px 2.9px rgba(0, 0, 0, 0.23);
   min-width: 500px;
   padding: 10px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 0.5px;
 }
 
