@@ -831,7 +831,7 @@ function render_flights_load_more(){
                         <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                             <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
                             ${number_of_travelers}</span> 
-                            <span style="color: rgba(0,0,0,0.3); margin: 0 !important; padding: 0 !important;">|</span>
+                            <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
                         <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                             <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
                             only flights</span><br/>
@@ -839,6 +839,12 @@ function render_flights_load_more(){
                             <!--class="COVID_policy_desktop" -->
                             <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
                             round trip
+                        </span> 
+                        <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
+                        <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                            <!--class="COVID_policy_desktop" -->
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
+                            business
                         </span> 
                         <div style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65);">
                             see itinerary details
@@ -2336,7 +2342,7 @@ function render_flights(){
                             <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                                 <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
                                 ${number_of_travelers}</span> 
-                                <span style="color: rgba(0,0,0,0.3); margin: 0 !important; padding: 0 !important;">|</span>
+                                <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
                             <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                                 <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
                                 only flights</span><br/>
@@ -2344,6 +2350,12 @@ function render_flights(){
                                 <!--class="COVID_policy_desktop" -->
                                 <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
                                 round trip
+                            </span> 
+                            <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
+                            <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
+                                <!--class="COVID_policy_desktop" -->
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
+                                business
                             </span> 
                             <div style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65);">
                                 see itinerary details
