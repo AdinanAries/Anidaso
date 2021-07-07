@@ -211,55 +211,55 @@ function render_flights_load_more(){
             if(each_traveler_price <= price_metrics_min){
                 ticket_rating_starts = `
                     <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                         <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                     </div>
                 `;
             }else if(each_traveler_price <= price_metrics_first && each_traveler_price > price_metrics_min){
                 ticket_rating_starts = `
                     <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                         <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                     </div>
                 `;
             }else if(each_traveler_price <= price_metrics_third && each_traveler_price > price_metrics_first){
                 ticket_rating_starts = `
                     <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                         <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                     </div>
                 `;
             }else if(each_traveler_price <= price_metrics_max && each_traveler_price > price_metrics_third){
                 ticket_rating_starts = `
                     <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                         <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                     </div>
                 `;
             }else if(each_traveler_price > price_metrics_max && price_metrics_max !== 0){
                 ticket_rating_starts = `
                     <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                         <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                     </div>
                 `;
@@ -1133,28 +1133,28 @@ function render_flights_load_more(){
                     </p>
                 </div>
                 <div class="each_ticket_item_main_right">
-                    <div style="margin-bottom: 10px; background-color: rgba(23,121,22,0.2); border: 1px dashed rgb(85, 55, 55); padding: 10px; border-radius: 4px;">
+                    <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
+                        ${current_currency.sign} ${flight_price}</p>
+                    <div style="margin-bottom: 10px;  border-left: 3px solid rgb(24,102,4); padding: 5px; margin-top: 5px;">
                         <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-users" aria-hidden="true"></i>
                             ${number_of_travelers}</span> 
                             <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
                         <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
                             only flights</span><br/>
                         <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                             <!--class="COVID_policy_desktop" -->
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-exchange" aria-hidden="true"></i>
                             round trip
                         </span> 
                         <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
                         <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                             <!--class="COVID_policy_desktop" -->
-                            <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
+                            <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-level-up" aria-hidden="true"></i>
                             business
                         </span>
                     </div>
-                    <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
-                        ${current_currency.sign} ${flight_price}</p>
                     <p style="font-size: 13px; margin-bottom: 5px; border-left: 3px solid rgb(24,102,4); padding: 5px;">
                         ${validating_airline}</p>
                     <div class="ticket_item_entitlements_display" style="font-size: 12px; color: rgb(21,32,22);">
@@ -1725,55 +1725,55 @@ function render_flights(){
                 if(each_traveler_price <= price_metrics_min){
                     ticket_rating_starts = `
                         <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                             <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                         </div>
                     `;
                 }else if(each_traveler_price <= price_metrics_first && each_traveler_price > price_metrics_min){
                     ticket_rating_starts = `
                         <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                             <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                         </div>
                     `;
                 }else if(each_traveler_price <= price_metrics_third && each_traveler_price > price_metrics_first){
                     ticket_rating_starts = `
                         <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                            <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                             <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                         </div>
                     `;
                 }else if(each_traveler_price <= price_metrics_max && each_traveler_price > price_metrics_third){
                     ticket_rating_starts = `
                     <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                         <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                     </div>
                 `;
                 }else if(each_traveler_price > price_metrics_max && price_metrics_max !== 0){
                     ticket_rating_starts = `
                     <div style="overflow: visible !important; color: rgba(0, 217, 255, 0.856); font-size: 16px; display: flex !important; flex-direction: row !important;">
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
-                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 12px !important; height: 12px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.897); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
+                        <div style="box-shadow: 2px 2px 4px rgba(0,0,0,0.5); background-color: rgba(0, 217, 255, 0.253); margin-right: 3px; width: 10px !important; height: 10px !important; border-radius: 100%; display: flex; flex-direction: column !important; justify-content: center; text-align: center;"></div>
                         <!--span>&#9733; &#9733; &#9733; &#9734;</span-->
                     </div>
                 `;
@@ -2647,28 +2647,28 @@ function render_flights(){
                         </p>
                     </div>
                     <div class="each_ticket_item_main_right">
-                        <div style="margin-bottom: 10px; background-color: rgba(23,121,22,0.2); border: 1px dashed rgb(85, 55, 55); padding: 10px; border-radius: 4px;">
+                        <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
+                            ${current_currency.sign} ${flight_price}</p>
+                        <div style="margin-bottom: 10px;  border-left: 3px solid rgb(24,102,4); padding: 5px; margin-top: 5px;">
                             <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-users" aria-hidden="true"></i>
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-users" aria-hidden="true"></i>
                                 ${number_of_travelers}</span> 
                                 <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span>
                             <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-suitcase" aria-hidden="true"></i>
                                 only flights</span><br/>
                             <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                                 <!--class="COVID_policy_desktop" -->
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-exchange" aria-hidden="true"></i>
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-exchange" aria-hidden="true"></i>
                                 round trip
                             </span> 
                             <span style="color: rgba(0,0,0,0.4); margin: 0 !important; padding: 0 !important;">|</span> 
                             <span style="color: rgba(52,43,23); font-weight: bolder; margin: 0 !important; padding: 0 !important; font-size: 12px;">
                                 <!--class="COVID_policy_desktop" -->
-                                <i style="margin-right: 3px; font-size: 12px; color: rgb(85, 55, 55);" class="fa fa-level-up" aria-hidden="true"></i>
+                                <i style="margin-right: 3px; font-size: 12px; color: rgb(15, 155, 55);" class="fa fa-level-up" aria-hidden="true"></i>
                                 business
                             </span>
                         </div>
-                        <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
-                            ${current_currency.sign} ${flight_price}</p>
                         <p style="font-size: 13px; margin-bottom: 5px; border-left: 3px solid rgb(24,102,4); padding: 5px;">
                             ${validating_airline}</p>
                         <div class="ticket_item_entitlements_display" style="font-size: 12px; color: rgb(21,32,22);">
