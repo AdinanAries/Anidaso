@@ -118,7 +118,7 @@ function render_hotels_load_more(){
         let room_category = `
             <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i> nothing found.
         `;
-        let booking_number_of_rooms = "";
+        let booking_number_of_rooms = "1 room";
         let url_rates = "";
         let checkin_date = "June 25, 2021";
         let checkout_date = "July 5, 2021";
@@ -166,7 +166,8 @@ function render_hotels_load_more(){
 
                 hotel_name = data.data[p].hotel.name;
                 let country = return_country_from_code(data.data[p].hotel.address.countryCode)[0].country;
-                hotel_location = data.data[p].hotel.address.cityName + ", " + country.toUpperCase();
+                //hotel_location = data.data[p].hotel.address.cityName + ", " + country.toUpperCase();
+                hotel_location = `${data.data[p].hotel.address.lines[0].toLowerCase()}, ${data.data[p].hotel.address.cityName.toLowerCase()}`;
 
                 if(data.data[p].hotel.contact){
 
@@ -380,31 +381,25 @@ function render_hotels_load_more(){
                                         margin-bottom: 0; border-top-left-radius: 10px; border-top-right-radius: 10px;">
                                         ${hotel_name}</h1>
                                     <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
-                                    font-weight: bolder; letter-spacing: 1px;">${hotel_location}</p>
+                                    font-weight: bolder; letter-spacing: 1px;">
+                                    <i style="color: rgba(212,200,0); margin-right: 2px; font-size: 14px;" class="fa fa-map-marker"></i>
+                                    ${hotel_location}</p>
                                     
                                     <div style="padding: 5px 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color:rgb(27, 18, 123);">
                                         ${hotel_rating}
                                     </div>
                                 </div>
-                                <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px; margin-right: 0 !important;">
-                                    <div>
-                                    <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">
-                                        Quantity:</p>
-                                    <p style="font-size: 14px;">
-                                        ${booking_number_of_rooms}</p>
-                                    </div>
-                                    <div style="margin-right: 0 !important;">
-                                    <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">Checkin</p>
-                                    <p style="font-size: 14px;">${checkin_date}</p>
+                                <div style="flex-direction: row !important; background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin: 10px 0;">
+                                    <i style="font-size: 13px; color: rgb(222,31,22); margin-right: 5px;" class="fa fa-calendar" aria-hidden="true"></i>
+                                    <div style="margin-right: 5px;">
+                                        <p style="font-size: 13px; color: rgb(23, 107, 107); font-weight: bolder;">${change_date_from_iso_to_long_date(checkin_date)} - </p>
                                     </div>
                                     <div>
-                                    <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">Checkout</p>
-                                    <p style="font-size: 14px;">
-                                        ${checkout_date}</p>
+                                        <p style="font-size: 13px; color: rgb(23, 107, 107); font-weight: bolder;">
+                                            ${change_date_from_iso_to_long_date(checkout_date)}</p>
                                     </div>
                                 </div>
-                                <p style="margin-top: 20px; margin-bottom: 5px; font-weight: bolder; font-size: 14px;">Description: </p>
-                                    <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107);">    
+                                    <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin-right: 0;">    
                                         ${hotel_description}
                                     </div>
                                 </div>
@@ -434,6 +429,9 @@ function render_hotels_load_more(){
                                         <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
                                             90% room comfort
                                         <p>
+                                        <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
+                                            ${booking_number_of_rooms} offer(s)
+                                        <p>
                                     </div>
                                 </div>
 
@@ -443,7 +441,7 @@ function render_hotels_load_more(){
                                 ${hotel_fax}
                                 
                                 ${hotel_email}
-                                
+
                             </div>
                             <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
                                 <p class="ticket_item_price_display" style="color: rgba(23,92,12); padding-bottom: 5px; border-bottom: 1px dashed rgba(12,0,0,0.3);">
@@ -587,7 +585,8 @@ function render_hotels(){
 
                     hotel_name = data.data[p].hotel.name;
                     let country = return_country_from_code(data.data[p].hotel.address.countryCode)[0].country;
-                    hotel_location = data.data[p].hotel.address.cityName + ", " + country.toUpperCase();
+                    //hotel_location = data.data[p].hotel.address.cityName + ", " + country.toUpperCase();
+                    hotel_location = `${data.data[p].hotel.address.lines[0].toLowerCase()}, ${data.data[p].hotel.address.cityName.toLowerCase()}`;
 
                     if(data.data[p].hotel.contact){
 
@@ -801,31 +800,25 @@ function render_hotels(){
                                             margin-bottom: 0; border-top-left-radius: 10px; border-top-right-radius: 10px;">
                                             ${hotel_name}</h1>
                                         <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
-                                        font-weight: bolder; letter-spacing: 1px;">${hotel_location}</p>
+                                        font-weight: bolder; letter-spacing: 1px;">
+                                        <i style="color: rgba(212,200,0); margin-right: 2px; font-size: 14px;" class="fa fa-map-marker"></i>
+                                        ${hotel_location}</p>
                                         
                                         <div style="padding: 5px 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color:rgb(27, 18, 123);">
                                             ${hotel_rating}
                                         </div>
                                     </div>
-                                    <div style="flex-direction: row !important; width: 100%; justify-content: space-between; padding-top: 20px; margin-right: 0 !important;">
-                                        <div>
-                                        <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">
-                                            Quantity:</p>
-                                        <p style="font-size: 14px;">
-                                            ${booking_number_of_rooms}</p>
-                                        </div>
+                                    <div style="flex-direction: row !important; background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin: 10px 0;">
+                                        <i style="font-size: 13px; color: rgb(222,31,22); margin-right: 5px;" class="fa fa-calendar" aria-hidden="true"></i>
                                         <div style="margin-right: 0 !important;">
-                                        <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">Checkin</p>
-                                        <p style="font-size: 14px;">${checkin_date}</p>
+                                            <p style="font-size: 13px; color: rgb(23, 107, 107); margin-right: 5px; font-weight: bolder;">${change_date_from_iso_to_long_date(checkin_date)} - </p>
                                         </div>
                                         <div>
-                                        <p style="font-weight: bolder; font-size: 14px; margin-bottom: 5px;">Checkout</p>
-                                        <p style="font-size: 14px;">
-                                            ${checkout_date}</p>
+                                            <p style="font-size: 13px; color: rgb(23, 107, 107); font-weight: bolder;">
+                                            ${change_date_from_iso_to_long_date(checkout_date)}</p>
                                         </div>
                                     </div>
-                                    <p style="margin-top: 20px; margin-bottom: 5px; font-weight: bolder; font-size: 14px;">Description: </p>
-                                        <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107);">    
+                                        <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin-right: 0;">    
                                             ${hotel_description}
                                         </div>
                                     </div>
@@ -847,13 +840,15 @@ function render_hotels(){
                                         <p style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
                                             Score from 2332 reviews
                                         </p>
-
                                         <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
                                             <p style="font-size: 12px; color: white; text-align: center;">
                                                 ONLY 6 LEFT
                                             <p>
                                             <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
                                                 90% room comfort
+                                            <p>
+                                            <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
+                                                ${booking_number_of_rooms} offer(s)
                                             <p>
                                         </div>
                                     </div>
