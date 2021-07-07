@@ -435,12 +435,11 @@ function render_hotels_load_more(){
                                     </div>
                                 </div>
 
-                                <p style="opacity: 0.7; font-size: 14px; font-weight: bolder;">Contact:</p>
-                                ${hotel_tel}
+                                <!--${hotel_tel}
                                 
                                 ${hotel_fax}
                                 
-                                ${hotel_email}
+                                ${hotel_email}-->
 
                             </div>
                             <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
@@ -853,12 +852,11 @@ function render_hotels(){
                                         </div>
                                     </div>
 
-                                    <p style="opacity: 0.7; font-size: 14px; font-weight: bolder;">Contact:</p>
-                                    ${hotel_tel}
+                                    <!--${hotel_tel}
                                     
                                     ${hotel_fax}
                                     
-                                    ${hotel_email}
+                                    ${hotel_email}-->
                                     
                                 </div>
                                 <div style="background-color: #e2e2e2; border: 1px solid #d1d1d1; padding: 10px; border-bottom-right-radius: 5px;">
