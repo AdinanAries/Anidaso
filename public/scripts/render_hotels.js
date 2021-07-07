@@ -375,6 +375,10 @@ function render_hotels_load_more(){
                                         <div class="hotels_card_pic_each_item_point"><p>3</p></div>
                                     </div-->
                                 </div>
+                                <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; ">
+                                    <p style="color: white; font-size: 12px;">Free Cancellation</p>
+                                    <p style="color: white; font-size: 12px; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.2);">5% off</p>
+                                </div>
                                 <div id="hotels_card_booking_desc${p}" style="margin-right: 0 !important; justify-content: flex-start; transition: all 0.5s ease-out;">
                                 <div style="margin-right: 0 !important;">
                                     <h1 style="font-size: 13px; color:rgba(30, 63, 65, 0.9); letter-spacing: 1px; margin-bottom: 5px; padding: 10px; background-color:rgb(27, 18, 123); color: white; 
@@ -776,6 +780,7 @@ function render_hotels(){
                             <div style="min-height: 100%;" class="each_ticket_item_main_left">
                                 <div  style="min-height: 100%;" class="main_ticket_info_area">
                                 <div style="justify-content: flex-start !important;" class="main_ticket_info_area_top">
+                                    
                                     <div id="hotels_card_pic${p}" class="hotels_card_pic" style="background-image: url(${hotel_display_pic}); background-size: cover; background-repeat: no-repeat; min-height: 150px;">
                                         <div id="hotels_card_pic_title${p}" style="opacity: 0; transition: 0.5s all; position: absolute; top: 0; left: 0; background-color:rgba(0, 0, 0, 0.6); padding: 10px; width: calc(100% - 20px);">
                                             <p style="color: white; font-weight: bolder; font-size: 13px; letter-spacing: 1px;">${hotel_name}</p>
@@ -792,6 +797,11 @@ function render_hotels(){
                                             <div class="hotels_card_pic_each_item_point"><p>2</p></div>
                                             <div class="hotels_card_pic_each_item_point"><p>3</p></div>
                                         </div-->
+                                    </div>
+                                    <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; ">
+                                        <p style="color: white; font-size: 12px;">Free Cancellation</p>
+                                        <p style="color: rgb(200,255,200); font-size: 14px; text-align: center; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; font-weight: bolder;">
+                                            5% off</p>
                                     </div>
                                     <div id="hotels_card_booking_desc${p}" style="margin-right: 0 !important; justify-content: flex-start; transition: all 0.5s ease-out;">
                                     <div style="margin-right: 0 !important;">
