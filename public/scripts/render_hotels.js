@@ -375,9 +375,10 @@ function render_hotels_load_more(){
                                         <div class="hotels_card_pic_each_item_point"><p>3</p></div>
                                     </div-->
                                 </div>
-                                <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; ">
+                                <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 3px rgba(0,0,0,0.4);">
                                     <p style="color: white; font-size: 12px;">Free Cancellation</p>
-                                    <p style="color: white; font-size: 12px; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.2);">5% off</p>
+                                    <p style="color: rgb(200,255,200); font-size: 14px; text-align: center; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; font-weight: bolder;">
+                                            5% off</p>
                                 </div>
                                 <div id="hotels_card_booking_desc${p}" style="margin-right: 0 !important; justify-content: flex-start; transition: all 0.5s ease-out;">
                                 <div style="margin-right: 0 !important;">
@@ -798,7 +799,7 @@ function render_hotels(){
                                             <div class="hotels_card_pic_each_item_point"><p>3</p></div>
                                         </div-->
                                     </div>
-                                    <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; ">
+                                    <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 3px rgba(0,0,0,0.4);">
                                         <p style="color: white; font-size: 12px;">Free Cancellation</p>
                                         <p style="color: rgb(200,255,200); font-size: 14px; text-align: center; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; font-weight: bolder;">
                                             5% off</p>
