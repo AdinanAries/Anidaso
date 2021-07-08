@@ -1991,6 +1991,7 @@ function show_full_hotel_list_pic(number){
       document.getElementById("hotels_card_booking_desc"+number).style.maxHeight = elem_height+"px";
       document.getElementById("hotels_card_booking_desc"+number).style.opacity = 0;
       document.getElementById("hotels_card_booking_desc"+number).style.overflow = "hidden";
+      document.getElementById("each_hotel_search_result_surprise_txt"+number).style.display = "none";
       setTimeout(()=>{
         document.getElementById("hotels_card_booking_desc"+number).style.minWidth = "1px";
         document.getElementById("hotels_card_pic"+number).style.minWidth = "100%";
@@ -2014,6 +2015,8 @@ function show_full_hotel_list_pic(number){
         document.getElementById("hotels_card_booking_desc"+number).style.overflow = "initial";
         document.getElementById("hotels_card_booking_desc"+number).style.opacity = 1;
       }, 300);
+
+      document.getElementById("each_hotel_search_result_surprise_txt"+number).style.display = "block";
 
   }
 

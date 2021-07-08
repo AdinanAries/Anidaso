@@ -375,7 +375,7 @@ function render_hotels_load_more(){
                                         <div class="hotels_card_pic_each_item_point"><p>3</p></div>
                                     </div-->
                                 </div>
-                                <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 3px rgba(0,0,0,0.4);">
+                                <div id="each_hotel_search_result_surprise_txt${p}" style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 3px rgba(0,0,0,0.4);">
                                     <p style="color: white; font-size: 12px;">Free Cancellation</p>
                                     <p style="color: rgb(200,255,200); font-size: 14px; text-align: center; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; font-weight: bolder;">
                                             5% off</p>
@@ -388,8 +388,8 @@ function render_hotels_load_more(){
                                     <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
                                         font-weight: bolder; letter-spacing: 1px;">
                                         <i style="color: rgba(212,200,0); margin-right: 2px; font-size: 14px;" class="fa fa-map-marker"></i>
-                                        ${hotel_location}
-                                        <span style="font-size: 12px; margin-left: 5px; padding: 3px; border-radius: 4px; background-color: crimson; color: white;">
+                                        ${hotel_location}<br/>
+                                        <span style="font-size: 11px; margin-left: 15px; font-weight: initial; margin-top: 3px; padding: 3px; border-radius: 4px; color: rgba(212,160,0); background-color: rgba(212,160,0,0.15); box-shadow: 1px 2px 3px rgba(0,0,0,0.3);1">
                                             0.6km from center</span>
                                     </p>
                                     <div style="padding: 5px 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color:rgb(27, 18, 123);">
@@ -801,7 +801,7 @@ function render_hotels(){
                                             <div class="hotels_card_pic_each_item_point"><p>3</p></div>
                                         </div-->
                                     </div>
-                                    <div style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 3px rgba(0,0,0,0.4);">
+                                    <div id="each_hotel_search_result_surprise_txt${p}" style="position: absolute; left: -5px; top: 20px; padding: 5px; background-color: crimson; z-index; 10; border-top-left-radius: 10px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 3px rgba(0,0,0,0.4);">
                                         <p style="color: white; font-size: 12px;">Free Cancellation</p>
                                         <p style="color: rgb(200,255,200); font-size: 14px; text-align: center; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; font-weight: bolder;">
                                             5% off</p>
