@@ -386,10 +386,12 @@ function render_hotels_load_more(){
                                         margin-bottom: 0; border-top-left-radius: 10px; border-top-right-radius: 10px;">
                                         ${hotel_name}</h1>
                                     <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
-                                    font-weight: bolder; letter-spacing: 1px;">
-                                    <i style="color: rgba(212,200,0); margin-right: 2px; font-size: 14px;" class="fa fa-map-marker"></i>
-                                    ${hotel_location}</p>
-                                    
+                                        font-weight: bolder; letter-spacing: 1px;">
+                                        <i style="color: rgba(212,200,0); margin-right: 2px; font-size: 14px;" class="fa fa-map-marker"></i>
+                                        ${hotel_location}
+                                        <span style="font-size: 12px; margin-left: 5px; padding: 3px; border-radius: 4px; background-color: crimson; color: white;">
+                                            0.6km from center</span>
+                                    </p>
                                     <div style="padding: 5px 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color:rgb(27, 18, 123);">
                                         ${hotel_rating}
                                     </div>
@@ -810,10 +812,12 @@ function render_hotels(){
                                             margin-bottom: 0; border-top-left-radius: 10px; border-top-right-radius: 10px;">
                                             ${hotel_name}</h1>
                                         <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
-                                        font-weight: bolder; letter-spacing: 1px;">
-                                        <i style="color: rgba(212,200,0); margin-right: 2px; font-size: 14px;" class="fa fa-map-marker"></i>
-                                        ${hotel_location}</p>
-                                        
+                                            font-weight: bolder; letter-spacing: 1px;">
+                                            <i style="color: rgba(212,200,0); margin-right: 2px; font-size: 14px;" class="fa fa-map-marker"></i>
+                                            ${hotel_location}<br/>
+                                            <span style="font-size: 11px; margin-left: 15px; font-weight: initial; margin-top: 3px; padding: 3px; border-radius: 4px; color: rgba(212,160,0); background-color: rgba(212,160,0,0.15); box-shadow: 1px 2px 3px rgba(0,0,0,0.3);1">
+                                                0.6km from center</span>
+                                        </p>
                                         <div style="padding: 5px 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color:rgb(27, 18, 123);">
                                             ${hotel_rating}
                                         </div>

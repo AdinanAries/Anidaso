@@ -1209,7 +1209,11 @@ header {
   object-fit: cover;
 }
 .tickets_main_additional_text {
-  color: #636363;
+  color: #d30000;
+  background-color: rgba(255, 0, 0, 0.185);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 0, 0, 0.274);
+  padding: 5px;
   font-size: 13px;
   margin: 10px;
 }

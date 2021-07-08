@@ -827,10 +827,29 @@ function render_flights_load_more(){
                 </div>
                 <div class="each_ticket_item_main_extra_container">
                 <div class="each_ticket_item_main_extra">
-                    <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65);">
-                        see itinerary details
-                        <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
-                    </div>
+                    <div>
+                            <div style="border-radius: 4px; display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgba(55,255,55,0.2); border: 1px solid rgba(23, 107, 107,0.5);">
+                                <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
+                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                                    some info here</p>
+                                </div>
+                                <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
+                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                                    some info here</p>
+                                </div>
+                                <div class="COVID_policy_desktop" style="padding: 5px; border-radius: 4px;">
+                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                                    some info here</p>
+                                </div>
+                            </div>
+                            <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65); cursor: pointer;">
+                                see itinerary details
+                                <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                        </div>
                     <div class="each_ticket_item_emogi_and_rating">
                     
                     <div style="font-size: 14px; overflow: visible !important; padding: 5px; color: white; border-radius: 4px; background-color:rgb(80, 95, 105); box-shadow: 1px 1.6px 4px rgba(0, 0, 0, 0.6),
@@ -1129,7 +1148,8 @@ function render_flights_load_more(){
                     </div>
                     </div>
                     <p class="tickets_main_additional_text">
-                        <i class="fa fa-exclamation" style="margin-right: 5px; color: green;" aria-hidden="true"></i> this ticket is sold by ${validating_airline}
+                    <i class="fa fa-info-circle" style="margin-right: 5px; color: rgb(155, 13, 166); font-size: 15px;" aria-hidden="true"></i>
+                        this ticket is sold by ${validating_airline}
                     </p>
                 </div>
                 <div class="each_ticket_item_main_right">
@@ -2341,9 +2361,28 @@ function render_flights(){
                     </div>
                     <div class="each_ticket_item_main_extra_container">
                     <div class="each_ticket_item_main_extra">
-                        <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65); cursor: pointer;">
-                            see itinerary details
-                            <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
+                        <div>
+                            <div style="border-radius: 4px; display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgba(55,255,55,0.2); border: 1px solid rgba(23, 107, 107,0.5);">
+                                <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
+                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                                    some info here</p>
+                                </div>
+                                <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
+                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                                    some info here</p>
+                                </div>
+                                <div class="COVID_policy_desktop" style="padding: 5px; border-radius: 4px;">
+                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                                    some info here</p>
+                                </div>
+                            </div>
+                            <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65); cursor: pointer;">
+                                see itinerary details
+                                <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
                         </div>
                         <div class="each_ticket_item_emogi_and_rating">
                         
@@ -2643,7 +2682,8 @@ function render_flights(){
                         </div>
                         </div>
                         <p class="tickets_main_additional_text">
-                            <i class="fa fa-exclamation" style="margin-right: 5px; color: green;" aria-hidden="true"></i> this ticket is sold by ${validating_airline}
+                            <i class="fa fa-info-circle" style="margin-right: 5px; color: rgb(155, 13, 166); font-size: 15px;" aria-hidden="true"></i>
+                            this ticket is sold by ${validating_airline}
                         </p>
                     </div>
                     <div class="each_ticket_item_main_right">
