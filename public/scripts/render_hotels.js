@@ -37,6 +37,31 @@ function bind_card_venders_to_select(select_input_id){
 
 }
 
+function get_and_return_hotel_sentiments(hotel_id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_hotel_sentiments/SJNYCAJA",//+hotel_id
+        success: data => {
+            console.log(data);
+            if(data.data){
+                if(data.data.length > 0){
+                    return data.data;
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+
+        },
+        error: err => {
+            console.log(err);
+            return null;
+        }
+
+    });
+}
+
 var render_hotel_returned_hotels_list = [];
 var hotels_render_index_lowerbound = 0;
 var hotels_render_index_upperbound = 2;
@@ -100,10 +125,11 @@ function render_hotels_load_more(){
     hotels_render_index_lowerbound = hotels_render_index_upperbound;
     hotels_render_index_upperbound += 5;
 
-    setTimeout(()=> {
+    setTimeout(async()=> {
 
         let data = render_hotel_returned_hotels_list;
 
+        let hotel_sentiments_obj;
         let hotel_name = "Hotel Name Here";
         let hotel_location = "bronx New York, USA";
         let hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9733;";
@@ -165,6 +191,32 @@ function render_hotels_load_more(){
                 }
 
                 hotel_name = data.data[p].hotel.name;
+                hotel_sentiments_obj = await get_and_return_hotel_sentiments(data.data[p].hotel.hotelId);
+                let remark = "";
+                let icon_class = "";
+                if(hotel_sentiments_obj){
+                    
+                    if((parseFloat(hotel_sentiments_obj.data.overallRating)/10) >= 9){
+                        remark = "Awsome";
+                        icon_class = "thumbs-up";
+                    }else if((parseFloat(hotel_sentiments_obj.data[0].overallRating)/10) >= 8){
+                        remark = "Excellent";
+                        icon_class = "thumbs-up";
+                    }else if((parseFloat(hotel_sentiments_obj.data[0].overallRating)/10) >= 7){
+                        remark = "Great";
+                        icon_class = "thumbs-up";
+                    }else if((parseFloat(hotel_sentiments_obj.data[0].overallRating)/10) >= 5){
+                        remark = "Good";
+                        icon_class = "thumbs-up";
+                    }else if((parseFloat(hotel_sentiments_obj.data[0].overallRating)/10) >= 4){
+                        remark = "Average";
+                        icon_class = "exclamation-triangle";
+                    }else if((parseFloat(hotel_sentiments_obj.data[0].overallRating)/10) < 4){
+                        remark = "Not Good";
+                        icon_class = "thumbs-down";
+                    }
+
+                }
                 let country = return_country_from_code(data.data[p].hotel.address.countryCode)[0].country;
                 //hotel_location = data.data[p].hotel.address.cityName + ", " + country.toUpperCase();
                 hotel_location = `${data.data[p].hotel.address.lines[0].toLowerCase()}, ${data.data[p].hotel.address.cityName.toLowerCase()}`;
@@ -419,14 +471,14 @@ function render_hotels_load_more(){
                                 <div style="cursor: pointer; border-top-left-radius: 20px; border-bottom-right-radius: 20px; border: 1px solid rgba(255,0,0,0.5); padding: 5px; background-color: rgba(255,0,0,0.1); margin-bottom: 10px;">
                                     <p style="color: orangered; text-align: right; font-weight: bolder;">
                                         <span style="color: rgb(53,94,52); font-weight: initial; font-size: 14px; margin-right: 3px;">
-                                            <i class="fa fa-thumbs-up" style=""></i></span>
+                                            <i class="fa fa-${icon_class}" style=""></i></span>
                                         <span style="font-size: 25px;">
-                                            9.3</span>
+                                        ${(parseFloat(hotel_sentiments_obj.data[0].overallRating)/10)}</span>
                                         <span style="color: rgb(53,94,52); font-size: 14px;">
-                                            - Awsome</span>
+                                            - ${remark}</span>
                                     </p>
                                     <p style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
-                                        Score from 2332 reviews
+                                        Score from ${hotel_sentiments_obj.data[0].numberOfRatings} ratings
                                     </p>
 
                                     <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
@@ -526,6 +578,7 @@ function render_hotels(){
             console.log(data);
             render_hotel_returned_hotels_list = data;
 
+            let hotel_sentiments_obj;
             let hotel_name = "Hotel Name Here";
             let hotel_location = "bronx New York, USA";
             let hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9733;";
@@ -590,6 +643,55 @@ function render_hotels(){
                     }
 
                     hotel_name = data.data[p].hotel.name;
+                    let hotel_sentiments = async function(){
+                        return await get_and_return_hotel_sentiments(data.data[p].hotel.hotelId);
+                    }
+                    hotel_sentiments().then(data=>{
+                        hotel_sentiments_obj = data;
+                        console.log(hotel_sentiments_obj);
+                        if(data){
+                            let remark = "";
+                            let icon_class = "";
+
+                            if((parseFloat(data.data[0].overallRating)/10) >= 9){
+                                remark = "Awsome";
+                                icon_class = "thumbs-up";
+                            }else if((parseFloat(data.data[0].overallRating)/10) >= 8){
+                                remark = "Excellent";
+                                icon_class = "thumbs-up";
+                            }else if((parseFloat(data.data[0].overallRating)/10) >= 7){
+                                remark = "Great";
+                                icon_class = "thumbs-up";
+                            }else if((parseFloat(data.data[0].overallRating)/10) >= 5){
+                                remark = "Good";
+                                icon_class = "thumbs-up";
+                            }else if((parseFloat(data.data[0].overallRating)/10) >= 4){
+                                remark = "Average";
+                                icon_class = "exclamation-triangle";
+                            }else if((parseFloat(data.data[0].overallRating)/10) < 4){
+                                remark = "Not Good";
+                                icon_class = "thumbs-down";
+                            }
+
+                            if(document.getElementById("each_hotel_result_main_10_rating_"+p)){
+                                document.getElementById("each_hotel_result_main_10_rating_"+p).innerHTML = `
+                                    <span style="color: rgb(53,94,52); font-weight: initial; font-size: 14px; margin-right: 3px;">
+                                        <i class="fa fa-${icon_class}" style=""></i></span>
+                                    <span style="font-size: 25px;">
+                                        ${(parseFloat(data.data[0].overallRating)/10)}</span>
+                                    <span style="color: rgb(53,94,52); font-size: 14px;">
+                                        - ${remark}</span>
+                                `;
+                            }
+
+                            if(document.getElementById("each_hotel_result_main_number_of_ratings_"+p)){
+                                document.getElementById("each_hotel_result_main_number_of_ratings_"+p).innerText = `Score from ${data.data[0].numberOfRatings} ratings`;
+                            }
+                        }
+                    }).catch(err=>{
+                        console.log(err);
+                    });
+                    
                     let country = return_country_from_code(data.data[p].hotel.address.countryCode)[0].country;
                     //hotel_location = data.data[p].hotel.address.cityName + ", " + country.toUpperCase();
                     hotel_location = `${data.data[p].hotel.address.lines[0].toLowerCase()}, ${data.data[p].hotel.address.cityName.toLowerCase()}`;
@@ -843,16 +945,9 @@ function render_hotels(){
                                 <div style="padding: 10px;">
 
                                     <div style="cursor: pointer; border-top-left-radius: 20px; border-bottom-right-radius: 20px; border: 1px solid rgba(255,0,0,0.5); padding: 5px; background-color: rgba(255,0,0,0.1); margin-bottom: 10px;">
-                                        <p style="color: orangered; text-align: right; font-weight: bolder;">
-                                            <span style="color: rgb(53,94,52); font-weight: initial; font-size: 14px; margin-right: 3px;">
-                                                <i class="fa fa-thumbs-up" style=""></i></span>
-                                            <span style="font-size: 25px;">
-                                                9.3</span>
-                                            <span style="color: rgb(53,94,52); font-size: 14px;">
-                                                - Awsome</span>
+                                        <p id="each_hotel_result_main_10_rating_${p}" style="color: orangered; text-align: right; font-weight: bolder;">
                                         </p>
-                                        <p style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
-                                            Score from 2332 reviews
+                                        <p id="each_hotel_result_main_number_of_ratings_${p}" style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
                                         </p>
                                         <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
                                             <p style="font-size: 12px; color: white; text-align: center;">
@@ -2227,7 +2322,7 @@ function view_hotels_full_profile_info(hotel_info){
             let highest_rating_factor_msg = "Want a great night's sleep? This hotel was highly-rated for its very comfy beds.";
             highest_rating_factor_msg = highest_rating_factor_msg.replaceAll( "'", "#$#$#").replaceAll(",", "&*&*&*");
             
-            console.log(data);
+            console.log("sentiments", data);
             if(data.data){
                 if(data.data.length > 0){
                     show_book_hotel_view_full_profile_ratings_infor(data.data[0].overallRating, RR_hotel_rating, `${data.data[0].numberOfRatings} Ratings`, `${data.data[0].numberOfReviews} Reviews`, ratings_reccomendation, location_msg, highest_rating_factor_msg, RR_hotel_phone, RR_hotel_fax, RR_hotel_email);
