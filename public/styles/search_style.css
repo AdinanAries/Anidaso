@@ -5,6 +5,14 @@
   font-size: 16px;
 }
 /*-------------------------------*/
+@keyframes come_in_from_left_anim{
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 .flex_row_default_flex_column_mobile {
   display: flex !important;
   flex-direction: row !important;

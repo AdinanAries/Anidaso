@@ -482,7 +482,39 @@ function render_hotels_load_more(){
                                     </p>
 
                                     <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
-                                        <p style="font-size: 12px; color: white; text-align: center;">
+                                        <div style="margin-bottom: 5px;">
+                                            <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                Room Comfort (70%)</p>
+                                            <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.5s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 70% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 5px;">
+                                            <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                Sleep Quality (56%)</p>
+                                            <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 56% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 5px;">
+                                            <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                Facilities (80%)</p>
+                                            <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.8s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 80% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 5px;">
+                                            <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                Value for Money (90%)</p>
+                                            <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 90% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--p style="font-size: 12px; color: white; text-align: center;">
                                             ONLY 6 LEFT
                                         <p>
                                         <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
@@ -490,7 +522,7 @@ function render_hotels_load_more(){
                                         <p>
                                         <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
                                             ${booking_number_of_rooms} offer(s)
-                                        <p>
+                                        <p-->
                                     </div>
                                 </div>
 
@@ -950,7 +982,39 @@ function render_hotels(){
                                         <p id="each_hotel_result_main_number_of_ratings_${p}" style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
                                         </p>
                                         <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
-                                            <p style="font-size: 12px; color: white; text-align: center;">
+                                            <div style="margin-bottom: 5px;">
+                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                    Room Comfort (70%)</p>
+                                                <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.5s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 70% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="margin-bottom: 5px;">
+                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                    Sleep Quality (56%)</p>
+                                                <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 56% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="margin-bottom: 5px;">
+                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                    Facilities (80%)</p>
+                                                <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.8s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 80% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="margin-bottom: 5px;">
+                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                    Value for Money (90%)</p>
+                                                <div style="height: 7px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 90% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--p style="font-size: 12px; color: white; text-align: center;">
                                                 ONLY 6 LEFT
                                             <p>
                                             <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
@@ -958,7 +1022,7 @@ function render_hotels(){
                                             <p>
                                             <p style="font-size: 12px; margin-top: 5px; color: rgba(255,200,200,0.9); text-align: center;">
                                                 ${booking_number_of_rooms} offer(s)
-                                            <p>
+                                            <p-->
                                         </div>
                                     </div>
 
