@@ -484,33 +484,33 @@ function render_hotels_load_more(){
                                     <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
                                         <div style="margin-bottom: 5px;">
                                             <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                Room Comfort (70%)</p>
+                                                Room Comforts (${hotel_sentiments_obj.data[0].sentiments.roomComforts}%)</p>
                                             <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.5s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 70% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.5s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${hotel_sentiments_obj.data[0].sentiments.roomComforts}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
                                                 </div>
                                             </div>
                                         </div>
                                         <div style="margin-bottom: 5px;">
                                             <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                Sleep Quality (56%)</p>
+                                                Sleep Quality (${hotel_sentiments_obj.data[0].sentiments.sleepQuality}%)</p>
                                             <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 56% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${hotel_sentiments_obj.data[0].sentiments.sleepQuality}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
                                                 </div>
                                             </div>
                                         </div>
                                         <div style="margin-bottom: 5px;">
                                             <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                Facilities (80%)</p>
+                                                Facilities (${hotel_sentiments_obj.data[0].sentiments.facilities}%)</p>
                                             <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.8s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 80% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.8s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${hotel_sentiments_obj.data[0].sentiments.facilities}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
                                                 </div>
                                             </div>
                                         </div>
                                         <div style="margin-bottom: 5px;">
                                             <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                Value for Money (90%)</p>
+                                                Value for Money (${hotel_sentiments_obj.data[0].sentiments.valueForMoney}%)</p>
                                             <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 90% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${hotel_sentiments_obj.data[0].sentiments.valueForMoney}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
                                                 </div>
                                             </div>
                                         </div>
@@ -718,6 +718,43 @@ function render_hotels(){
 
                             if(document.getElementById("each_hotel_result_main_number_of_ratings_"+p)){
                                 document.getElementById("each_hotel_result_main_number_of_ratings_"+p).innerText = `Score from ${data.data[0].numberOfRatings} ratings`;
+                            }
+
+                            if(document.getElementById("each_hotel_result_main_sentiments_chart_"+p)){
+                                document.getElementById("each_hotel_result_main_sentiments_chart_"+p).innerHTML = `
+                                    <div style="margin-bottom: 5px;">
+                                        <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                            Room Comforts (${data.data[0].sentiments.roomComforts}%)</p>
+                                        <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                            <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.5s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${data.data[0].sentiments.roomComforts}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 5px;">
+                                        <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                            Sleep Quality (${data.data[0].sentiments.sleepQuality}%)</p>
+                                        <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                            <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${data.data[0].sentiments.sleepQuality}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 5px;">
+                                        <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                            Facilities (${data.data[0].sentiments.facilities}%)</p>
+                                        <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                            <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.8s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${data.data[0].sentiments.facilities}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 5px;">
+                                        <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                            Value for Money (${data.data[0].sentiments.valueForMoney}%)</p>
+                                        <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                            <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${data.data[0].sentiments.valueForMoney}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
                             }
                         }
                     }).catch(err=>{
@@ -981,39 +1018,8 @@ function render_hotels(){
                                         </p>
                                         <p id="each_hotel_result_main_number_of_ratings_${p}" style="color: rgba(155, 23,0,0.8); margin-top: 5px; font-size: 12px; font-weight: bolder; text-align: right;">
                                         </p>
-                                        <div style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
-                                            <div style="margin-bottom: 5px;">
-                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                    Room Comfort (70%)</p>
-                                                <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.5s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 70% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="margin-bottom: 5px;">
-                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                    Sleep Quality (56%)</p>
-                                                <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 56% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="margin-bottom: 5px;">
-                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                    Facilities (80%)</p>
-                                                <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 0.8s;font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 80% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="margin-bottom: 5px;">
-                                                <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
-                                                    Value for Money (90%)</p>
-                                                <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
-                                                    <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: 90% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div id="each_hotel_result_main_sentiments_chart_${p}" style="background-color: #900d1a; padding: 10px; margin-top: 5px; border-bottom-right-radius: 20px;">
+                                            
                                             <!--p style="font-size: 12px; color: white; text-align: center;">
                                                 ONLY 6 LEFT
                                             <p>
