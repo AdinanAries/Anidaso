@@ -131,6 +131,7 @@ function render_hotels_load_more(){
 
         let hotel_sentiments_obj;
         let hotel_name = "Hotel Name Here";
+        let hotel_location_distance = "";
         let hotel_location = "bronx New York, USA";
         let hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9733;";
         let hotel_amenities = `
@@ -191,6 +192,7 @@ function render_hotels_load_more(){
                 }
 
                 hotel_name = data.data[p].hotel.name;
+                hotel_location_distance = `${data.data[p].hotel.hotelDistance.distance}${data.data[p].hotel.hotelDistance.distanceUnit}`;
                 hotel_sentiments_obj = await get_and_return_hotel_sentiments(data.data[p].hotel.hotelId);
                 let remark = "";
                 let icon_class = "";
@@ -440,9 +442,9 @@ function render_hotels_load_more(){
                                         <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
                                             font-weight: bolder; letter-spacing: 1px;">
                                             <span style="font-size: 11px; margin-left: -15px; font-weight: initial; padding: 3px; border-radius: 4px; color: white; background-color: crimson; box-shadow: 1px 2px 3px rgba(0,0,0,0.3);">
-                                                Location: 50%</span>
+                                                Location: ${hotel_sentiments_obj.data[0].sentiments.location}%</span>
                                             <span style="font-size: 11px; font-weight: initial; padding: 3px; border-radius: 4px; color: rgba(112,60,0); background-color: rgba(212,160,0,0.15); box-shadow: 1px 2px 3px rgba(0,0,0,0.3);">
-                                                0.6km from center</span><br/>
+                                                ${hotel_location_distance} from center</span><br/>
                                             <i style="color: rgba(212,200,0); margin-right: 5px; font-size: 22px;" class="fa fa-map-marker"></i>
                                             ${hotel_location}
                                         </p>
@@ -614,6 +616,7 @@ function render_hotels(){
 
             let hotel_sentiments_obj;
             let hotel_name = "Hotel Name Here";
+            let hotel_location_distance = "";
             let hotel_location = "bronx New York, USA";
             let hotel_rating = "&#9733; &#9733; &#9733; &#9733; &#9733;";
             let hotel_amenities = `
@@ -677,6 +680,7 @@ function render_hotels(){
                     }
 
                     hotel_name = data.data[p].hotel.name;
+                    hotel_location_distance = `${data.data[p].hotel.hotelDistance.distance}${data.data[p].hotel.hotelDistance.distanceUnit}`;
                     let hotel_sentiments = async function(){
                         return await get_and_return_hotel_sentiments(data.data[p].hotel.hotelId);
                     }
@@ -757,6 +761,10 @@ function render_hotels(){
                                         </div>
                                     </div>
                                 `;
+                            }
+
+                            if(document.getElementById("hotel_search_result_location_rating_display"+p)){
+                                document.getElementById("hotel_search_result_location_rating_display"+p).innerText = `Location: ${data.data[0].sentiments.location}%`;
                             }
                         }
                     }).catch(err=>{
@@ -986,10 +994,10 @@ function render_hotels(){
                                             ${hotel_name}</h1>
                                         <p style="font-size: 11px; color: rgb(196, 95, 0); font weight: bolder; padding: 10px; padding-left: 5px; border-left: 5px solid rgb(27, 18, 123);
                                             font-weight: bolder; letter-spacing: 1px;">
-                                            <span style="font-size: 11px; margin-left: -15px; font-weight: initial; padding: 3px; border-radius: 4px; color: white; background-color: crimson; box-shadow: 1px 2px 3px rgba(0,0,0,0.3);">
-                                                Location: 50%</span>
+                                            <span id="hotel_search_result_location_rating_display${p}" style="font-size: 11px; margin-left: -15px; font-weight: initial; padding: 3px; border-radius: 4px; color: white; background-color: crimson; box-shadow: 1px 2px 3px rgba(0,0,0,0.3);">
+                                            </span>
                                             <span style="font-size: 11px; font-weight: initial; padding: 3px; border-radius: 4px; color: rgba(112,60,0); background-color: rgba(212,160,0,0.15); box-shadow: 1px 2px 3px rgba(0,0,0,0.3);">
-                                                0.6km from center</span><br/>
+                                                ${hotel_location_distance} from center</span><br/>
                                             <i style="color: rgba(212,200,0); margin-right: 5px; font-size: 22px;" class="fa fa-map-marker"></i>
                                             ${hotel_location}
                                         </p>
