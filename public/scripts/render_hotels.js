@@ -462,16 +462,16 @@ function render_hotels_load_more(){
                                                 ${change_date_from_iso_to_long_date(checkout_date)}</p>
                                         </div>
                                     </div>
-                                    <div style="flex-direction: row !important; background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin: 10px 0;">
-                                            <i style="font-size: 13px; color: rgb(222,31,22); margin-right: 5px;" class="fa fa-calendar" aria-hidden="true"></i>
-                                            <div style="margin-right: 0 !important;">
-                                                <p style="font-size: 13px; color: rgb(23, 107, 107); margin-right: 5px; font-weight: bolder;">1 Adult, ${booking_number_of_rooms} </p>
-                                            </div>
-                                            <div>
-                                                <p style="font-size: 13px; color: rgb(23, 107, 107); font-weight: bolder;">
-                                                (Bed-Type: Double)</p>
-                                            </div>
+                                    <div style="flex-direction: row !important; background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin: 10px 0; margin-top: 0;">
+                                        <i style="font-size: 13px; color: rgb(222,31,22); margin-right: 5px;" class="fa fa-users" aria-hidden="true"></i>
+                                        <div style="margin-right: 0 !important;">
+                                            <p style="font-size: 13px; color: rgb(23, 107, 107); margin-right: 5px; font-weight: bolder;">1 Adult, ${booking_number_of_rooms}, </p>
                                         </div>
+                                        <div>
+                                            <p style="font-size: 13px; color: rgb(23, 107, 107); font-weight: bolder;">
+                                            <span style="font-size: 13px; color: rgb(222,31,22);">Bed</span>: Double</p>
+                                        </div>
+                                    </div>
                                     <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin-right: 0;">    
                                         ${hotel_description}
                                     </div>
@@ -525,6 +525,14 @@ function render_hotels_load_more(){
                                                 Value for Money (${hotel_sentiments_obj.data[0].sentiments.valueForMoney}%)</p>
                                             <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
                                                 <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${hotel_sentiments_obj.data[0].sentiments.valueForMoney}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 5px;">
+                                            <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                                Catering (${hotel_sentiments_obj.data[0].sentiments.catering}%)</p>
+                                            <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                                <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${hotel_sentiments_obj.data[0].sentiments.catering}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
                                                 </div>
                                             </div>
                                         </div>
@@ -767,6 +775,14 @@ function render_hotels(){
                                             Value for Money (${data.data[0].sentiments.valueForMoney}%)</p>
                                         <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
                                             <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${data.data[0].sentiments.valueForMoney}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 5px;">
+                                        <p style="font-size: 10px; font-weight: bolder; margin-bottom: 2px; color: white;">
+                                            Catering (${data.data[0].sentiments.catering}%)</p>
+                                        <div style="height: 5px; background-color: rgba(222,223,22,0.4); overflow: hidden !important;">
+                                            <div style="animation: come_in_from_left_anim; animation-duration: 0.5s; animation-delay: 1.2s; font-size: 10px; color: white; font-weight: bolder; height: 100%; width: ${data.data[0].sentiments.catering}% !important; padding; background-color: rgba(255,255,255,0.4); border-right: 4px solid rgb(255,233,122); text-align: right;">
                                             </div>
                                         </div>
                                     </div>
@@ -1025,14 +1041,14 @@ function render_hotels(){
                                                 ${change_date_from_iso_to_long_date(checkout_date)}</p>
                                             </div>
                                         </div>
-                                        <div style="flex-direction: row !important; background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin: 10px 0;">
-                                            <i style="font-size: 13px; color: rgb(222,31,22); margin-right: 5px;" class="fa fa-calendar" aria-hidden="true"></i>
+                                        <div style="flex-direction: row !important; background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin: 10px 0; margin-top: 0;">
+                                            <i style="font-size: 13px; color: rgb(222,31,22); margin-right: 5px;" class="fa fa-users" aria-hidden="true"></i>
                                             <div style="margin-right: 0 !important;">
-                                                <p style="font-size: 13px; color: rgb(23, 107, 107); margin-right: 5px; font-weight: bolder;">1 Adult, ${booking_number_of_rooms} </p>
+                                                <p style="font-size: 13px; color: rgb(23, 107, 107); margin-right: 5px; font-weight: bolder;">1 Adult, ${booking_number_of_rooms}, </p>
                                             </div>
                                             <div>
                                                 <p style="font-size: 13px; color: rgb(23, 107, 107); font-weight: bolder;">
-                                                (Bed-Type: Double)</p>
+                                                <span style="font-size: 13px; color: rgb(222,31,22);">Bed</span>: Double</p>
                                             </div>
                                         </div>
                                         <div style="background-color: rgba(55,255,55,0.2); padding: 10px; border-radius: 4px; border: 1px dashed rgb(23, 107, 107); margin-right: 0;">    
