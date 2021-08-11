@@ -48,6 +48,19 @@ function render_flights_load_more(){
                 return null;
             }
 
+            let number_of_bookable_seats = data[w].numberOfBookableSeats;
+                let checked_bags_status = "";
+                if(data[w].pricingOptions.includedCheckedBagsOnly){
+                    checked_bags_status = `
+                        <i class="fa fa-check" style="color: green; margin-right: 5px;" aria-hidden="true"></i>
+                        checked bags included in price
+                    `;
+                }else{
+                    checked_bags_status = `
+                        <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                        checked bags not included in price
+                    `;
+                }
             let itinery_segments = 0;
             for(let stlp = 0; stlp < data[w].itineraries.length; stlp++){
 
@@ -828,28 +841,27 @@ function render_flights_load_more(){
                 <div class="each_ticket_item_main_extra_container">
                 <div class="each_ticket_item_main_extra">
                     <div>
-                            <div style="border-radius: 4px; display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgba(55,255,55,0.2); border: 1px solid rgba(23, 107, 107,0.5);">
-                                <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
-                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
-                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
-                                    some info here</p>
-                                </div>
-                                <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
-                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
-                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
-                                    some info here</p>
-                                </div>
-                                <div class="COVID_policy_desktop" style="padding: 5px; border-radius: 4px;">
-                                    <p style="font-size: 13px; color: rgb(23, 107, 107);">
-                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
-                                    some info here</p>
-                                </div>
+                        <div style="border-radius: 4px; display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgba(55,255,55,0.2); border: 1px solid rgba(23, 107, 107,0.5);">
+                            <div class="COVID_policy_desktop" style="padding: 5px; border-radius: 4px; margin-right: 5px;">
+                                <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    <i class="fa fa-info-circle" style="color: green; margin-right: 5px;" aria-hidden="true"></i>
+                                    ${number_of_bookable_seats} bookable seat(s)</p>
                             </div>
-                            <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65); cursor: pointer;">
-                                see itinerary details
-                                <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
+                            <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
+                                <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                    ${checked_bags_status}</p>
+                            </div>
+                            <div class="COVID_policy_desktop" style="display: none; padding: 5px; border-radius: 4px;">
+                                <p style="font-size: 13px; color: rgb(23, 107, 107);">
+                                <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                                some info here</p>
                             </div>
                         </div>
+                        <div onclick="toggle_show_flight_ticket_item_details(${w})" style="padding-top: 15px; font-size: 13px; font-weight: bolder; color:rgb(65, 65, 65); cursor: pointer;">
+                            see itinerary details
+                            <i id="see_flight_details_angle_down${w}" style="margin-left: 5px;" class="fa fa-angle-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
                     <div class="each_ticket_item_emogi_and_rating">
                     
                     <div style="font-size: 14px; overflow: visible !important; padding: 5px; color: white; border-radius: 4px; background-color:rgb(80, 95, 105); box-shadow: 1px 1.6px 4px rgba(0, 0, 0, 0.6),
@@ -1584,6 +1596,19 @@ function render_flights(){
             main_loop:
             for(var w = 0; w < data.length; w++){
                 
+                let number_of_bookable_seats = data[w].numberOfBookableSeats;
+                let checked_bags_status = "";
+                if(data[w].pricingOptions.includedCheckedBagsOnly){
+                    checked_bags_status = `
+                        <i class="fa fa-check" style="color: green; margin-right: 5px;" aria-hidden="true"></i>
+                        checked bags included in price
+                    `;
+                }else{
+                    checked_bags_status = `
+                        <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
+                        checked bags not included in price
+                    `;
+                }
                 let itinery_segments = 0;
                 for(let stlp = 0; stlp < data[w].itineraries.length; stlp++){
 
@@ -2363,17 +2388,16 @@ function render_flights(){
                     <div class="each_ticket_item_main_extra">
                         <div>
                             <div style="border-radius: 4px; display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgba(55,255,55,0.2); border: 1px solid rgba(23, 107, 107,0.5);">
-                                <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
+                                <div class="COVID_policy_desktop" style="padding: 5px; border-radius: 4px; margin-right: 5px;">
                                     <p style="font-size: 13px; color: rgb(23, 107, 107);">
-                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
-                                    some info here</p>
+                                        <i class="fa fa-info-circle" style="color: green; margin-right: 5px;" aria-hidden="true"></i>
+                                        ${number_of_bookable_seats} bookable seat(s)</p>
                                 </div>
                                 <div style="padding: 5px; border-radius: 4px; margin-right: 5px;">
                                     <p style="font-size: 13px; color: rgb(23, 107, 107);">
-                                    <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
-                                    some info here</p>
+                                        ${checked_bags_status}</p>
                                 </div>
-                                <div class="COVID_policy_desktop" style="padding: 5px; border-radius: 4px;">
+                                <div class="COVID_policy_desktop" style="display: none; padding: 5px; border-radius: 4px;">
                                     <p style="font-size: 13px; color: rgb(23, 107, 107);">
                                     <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;" aria-hidden="true"></i>
                                     some info here</p>

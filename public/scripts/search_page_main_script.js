@@ -829,142 +829,148 @@ var hero_section_container = document.querySelector(".hero_section_container");
         var currStickyPos =  
         hero_section_container.getBoundingClientRect().top + window.pageYOffset;
 
-        window.onscroll = function() {
+window.onscroll = function() {
+  
+    /*if($(window).width() < 700 && window.pageYOffset > (currStickyPos - 100)){
+      city_search_fieldset.style.display = "flex";
+      car_rentals_city_search_fieldset.style.display = "flex";
+      hotels_city_search_fieldset.style.display = "flex";
+      date_search_fieldset.style.display = "flex";
+      car_rentals_date_search_fieldset.style.display = "flex";
+      hotels_date_search_fieldset.style.display = "flex";
+      home_page_search_button.style.display = "flex";
+      home_page_car_rentals_search_button.style.display = "flex";
+      home_page_hotels_search_button.style.display = "flex";
+      MobilehowSearchFormInputsBtn.style.display = "none";
+
+      if(document.activeElement !== city_search_fieldset 
+        || document.activeElement !== date_search_fieldset){
+
+          //$("#additional_search_inputs_and_Options").slideDown("fast");
+          document.getElementById("additional_search_inputs_and_Options").style.display = "block";
           
-            /*if($(window).width() < 700 && window.pageYOffset > (currStickyPos - 100)){
-              city_search_fieldset.style.display = "flex";
-              car_rentals_city_search_fieldset.style.display = "flex";
-              hotels_city_search_fieldset.style.display = "flex";
-              date_search_fieldset.style.display = "flex";
-              car_rentals_date_search_fieldset.style.display = "flex";
-              hotels_date_search_fieldset.style.display = "flex";
-              home_page_search_button.style.display = "flex";
-              home_page_car_rentals_search_button.style.display = "flex";
-              home_page_hotels_search_button.style.display = "flex";
-              MobilehowSearchFormInputsBtn.style.display = "none";
+        }
+      //$("#multi_city_search_inputs_display").slideDown("fast");
+    }*/
 
-              if(document.activeElement !== city_search_fieldset 
-                || document.activeElement !== date_search_fieldset){
+    /* Check if the current Y offset 
+    is greater than the position of 
+    the element */ 
+    if (window.pageYOffset > currStickyPos) { 
 
-                  //$("#additional_search_inputs_and_Options").slideDown("fast");
-                  document.getElementById("additional_search_inputs_and_Options").style.display = "block";
-                  
-                }
-              //$("#multi_city_search_inputs_display").slideDown("fast");
-            }*/
+      hero_section_container.style.position = "fixed"; 
+      hero_section_container.style.top = "0px";
+      mobile_search_change_type_of_service.style.paddingTop = "15px";
 
-            /* Check if the current Y offset 
-            is greater than the position of 
-            the element */ 
-            if (window.pageYOffset > currStickyPos) { 
+      if((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 25 )){
+        document.body.style.marginTop = 0;
+      }else{
+        document.body.style.marginTop = "20px";
+      }
+      
 
-              hero_section_container.style.position = "fixed"; 
-              hero_section_container.style.top = "0px";
-              mobile_search_change_type_of_service.style.paddingTop = "15px";
+      if(
+          city_search_fieldset.style.display === "flex" ||
+          car_rentals_city_search_fieldset.style.display === "flex" ||
+          hotels_city_search_fieldset.style.display === "flex"
+          ){
+            document.getElementById("mobile_search_change_type_of_service").style.paddingBottom = 0;
+          }else{
+            document.getElementById("mobile_search_change_type_of_service").style.paddingBottom = "10px";
+          }
+      
+          
+      if($(window).width() > 1025){
+        if((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 120 )){
+          document.body.style.marginTop = 0;
+        }else{
+          document.body.style.marginTop = "115px";
+        }
+        $("#multi_city_search_inputs_display").slideUp("fast");
+        document.getElementById("additional_search_inputs_and_Options").style.display = "none";
+        document.getElementById("wide_screen_scroll_to_top_button").style.display = "block";
+      }
+      //$("#multi_city_search_inputs_display").slideUp("fast");
 
-              if((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 25 )){
-                document.body.style.marginTop = 0;
-              }else{
-                document.body.style.marginTop = "20px";
-              }
-              
+      //$("#additional_search_inputs_and_Options").slideUp("fast");
+      //document.getElementById("additional_search_inputs_and_Options").style.display = "none";
+      
+      /*if($(window).width() < 700){
+        document.body.style.paddingTop = "265px";
+      }*/
 
-              if(
-                  city_search_fieldset.style.display === "flex" ||
-                  car_rentals_city_search_fieldset.style.display === "flex" ||
-                  hotels_city_search_fieldset.style.display === "flex"
-                  ){
-                    document.getElementById("mobile_search_change_type_of_service").style.paddingBottom = 0;
-                  }else{
-                    document.getElementById("mobile_search_change_type_of_service").style.paddingBottom = "10px";
-                  }
-              
-                  
-              if($(window).width() > 1025){
-                if((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 120 )){
-                  document.body.style.marginTop = 0;
-                }else{
-                  document.body.style.marginTop = "115px";
-                }
-                $("#multi_city_search_inputs_display").slideUp("fast");
-                document.getElementById("additional_search_inputs_and_Options").style.display = "none";
-              }
-              //$("#multi_city_search_inputs_display").slideUp("fast");
-
-              //$("#additional_search_inputs_and_Options").slideUp("fast");
-              //document.getElementById("additional_search_inputs_and_Options").style.display = "none";
-              
-              /*if($(window).width() < 700){
-                document.body.style.paddingTop = "265px";
-              }*/
-
-              /*if($(window).width() < 700 && window.pageYOffset > (currStickyPos + 210)){
-                
-                if(document.activeElement !== city_search_fieldset 
-                    || document.activeElement !== date_search_fieldset){
-                  city_search_fieldset.style.display = "none";
-                  car_rentals_city_search_fieldset.style.display = "none";
-                  hotels_city_search_fieldset.style.display = "none";
-                  date_search_fieldset.style.display = "none";
-                  car_rentals_date_search_fieldset.style.display = "none";
-                  hotels_date_search_fieldset.style.display = "none";
-                  home_page_search_button.style.display = "none";
-                  home_page_car_rentals_search_button.style.display = "none";
-                  home_page_hotels_search_button.style.display = "none";
-                  MobilehowSearchFormInputsBtn.style.display = "none";
-                  MobilehowSearchFormInputsBtn.style.display = "block";
-                }
-
-              }*/
-
-              if($(window).width() < 450){
-                hero_section_container.style.minWidth = "100vw";
-              }
-
-            } else { 
-              
-              /*if(document.activeElement !== city_search_fieldset 
-                || document.activeElement !== date_search_fieldset){
-                  
-                  //$("#additional_search_inputs_and_Options").slideDown("fast");
-                  document.getElementById("additional_search_inputs_and_Options").style.display = "block";
-                  
-                }*/
-              //document.getElementById("additional_search_inputs_and_Options").style.display = "flex";
-
-              /*$("#multi_city_search_inputs_display").slideDown("fast");
-
-              city_search_fieldset.style.display = "flex";
-              car_rentals_city_search_fieldset.style.display = "flex";
-              hotels_city_search_fieldset.style.display = "flex";
-              date_search_fieldset.style.display = "flex";
-              car_rentals_date_search_fieldset.style.display = "flex";
-              hotels_date_search_fieldset.style.display = "flex";
-              home_page_search_button.style.display = "flex";
-              home_page_car_rentals_search_button.style.display = "flex";
-              home_page_hotels_search_button.style.display = "flex";
-              MobilehowSearchFormInputsBtn.style.display = "none";*/
-
-
-              if($(window).width() < 450)
-                hero_section_container.style.minWidth = "100vw";
-
-              mobile_search_change_type_of_service.style.paddingTop = 0;
-              document.getElementById("mobile_search_change_type_of_service").style.paddingBottom = 0;
-              document.body.style.marginTop = "0";
-              hero_section_container.style.position = "initial"; 
-              hero_section_container.style.top = "initial"; 
-
-              if($(window).width() > 1025){
-                $("#multi_city_search_inputs_display").slideDown("fast");
-                document.getElementById("additional_search_inputs_and_Options").style.display = "block";
-              }
-
-            } 
+      /*if($(window).width() < 700 && window.pageYOffset > (currStickyPos + 210)){
+        
+        if(document.activeElement !== city_search_fieldset 
+            || document.activeElement !== date_search_fieldset){
+          city_search_fieldset.style.display = "none";
+          car_rentals_city_search_fieldset.style.display = "none";
+          hotels_city_search_fieldset.style.display = "none";
+          date_search_fieldset.style.display = "none";
+          car_rentals_date_search_fieldset.style.display = "none";
+          hotels_date_search_fieldset.style.display = "none";
+          home_page_search_button.style.display = "none";
+          home_page_car_rentals_search_button.style.display = "none";
+          home_page_hotels_search_button.style.display = "none";
+          MobilehowSearchFormInputsBtn.style.display = "none";
+          MobilehowSearchFormInputsBtn.style.display = "block";
         }
 
+      }*/
 
-        //hiding top nav forms for mobile views
+      if($(window).width() < 450){
+        hero_section_container.style.minWidth = "100vw";
+      }
+
+    } else { 
+      
+      /*if(document.activeElement !== city_search_fieldset 
+        || document.activeElement !== date_search_fieldset){
+          
+          //$("#additional_search_inputs_and_Options").slideDown("fast");
+          document.getElementById("additional_search_inputs_and_Options").style.display = "block";
+          
+        }*/
+      //document.getElementById("additional_search_inputs_and_Options").style.display = "flex";
+
+      /*$("#multi_city_search_inputs_display").slideDown("fast");
+
+      city_search_fieldset.style.display = "flex";
+      car_rentals_city_search_fieldset.style.display = "flex";
+      hotels_city_search_fieldset.style.display = "flex";
+      date_search_fieldset.style.display = "flex";
+      car_rentals_date_search_fieldset.style.display = "flex";
+      hotels_date_search_fieldset.style.display = "flex";
+      home_page_search_button.style.display = "flex";
+      home_page_car_rentals_search_button.style.display = "flex";
+      home_page_hotels_search_button.style.display = "flex";
+      MobilehowSearchFormInputsBtn.style.display = "none";*/
+
+
+      if($(window).width() < 450)
+        hero_section_container.style.minWidth = "100vw";
+
+      mobile_search_change_type_of_service.style.paddingTop = 0;
+      document.getElementById("mobile_search_change_type_of_service").style.paddingBottom = 0;
+      document.body.style.marginTop = "0";
+      hero_section_container.style.position = "initial"; 
+      hero_section_container.style.top = "initial"; 
+
+      if($(window).width() > 1025){
+        $("#multi_city_search_inputs_display").slideDown("fast");
+        document.getElementById("additional_search_inputs_and_Options").style.display = "block";
+        document.getElementById("wide_screen_scroll_to_top_button").style.display = "none";
+      }
+
+    } 
+}
+
+document.getElementById("wide_screen_scroll_to_top_button").addEventListener("click", evnt => {
+  $("html, body").animate({ scrollTop: 0 }, "fast");
+  //$(window).scrollTop(0);
+});
+
+//hiding top nav forms for mobile views
 function hide_search_page_top_nav_form(){
 
   if($(window).width() < 700){
