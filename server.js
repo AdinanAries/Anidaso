@@ -61,6 +61,7 @@ var cheap_hotel_guest = require("./models/cheap_hotel_guests_Model");
 var hotel_deals = require("./models/hotel_deals_model");
 var cheap_hotel_invoice = require("./models/cheap_hotel_invoices_model");
 var booked_flight_data = require("./models/booked_flights_log_model");
+var booked_hotel_data = require("./models/booked_hotels_log");
 
 
 app.use(passport.initialize());
@@ -570,9 +571,9 @@ app.post("/get_room_final_price/", (req, res, next)=>{
 
 app.post('/finish_room_booking/', (req, res, next)=> {
 
-  res.send(req.body);
+  //res.send(req.body);
 
-  /*axios.post("test.api.amadeus.com/v1/booking/hotel-bookings",
+  axios.post("test.api.amadeus.com/v1/booking/hotel-bookings",
   {
     data: req.body
   },{
@@ -581,11 +582,26 @@ app.post('/finish_room_booking/', (req, res, next)=> {
     }
 }).then(data=>{
     console.log(data);
+    res.send(data);
   }).catch(err=>{
     console.log(err);
+    res.send({error: true});
   }).then(()=>{
     //defaults
-  });*/
+  });
+
+});
+
+app.post("/save_booked_hotel/:anidaso_user_id", async(req, res, next) => {
+  
+  let hotel = await new booked_hotel_data({
+    is_anidaso_client_user_id: req.params.anidaso_user_id,
+    booking_data: req.body
+  });
+
+  let saved_hotel = await hotel.save();
+
+  res.send(saved_hotel);
 
 });
 

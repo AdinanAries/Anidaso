@@ -1632,7 +1632,8 @@ function get_final_price(url, first_url){
         data: JSON.stringify({url: url}),
         success: data => {
 
-            console.log(data);
+            console.log(data.data.offers[0].id);
+            book_room_final_post_data.data.offerId = data.data.offers[0].id;
 
             document.getElementById("order_room_form_final_price_container").innerHTML = `
                 <div onclick="get_hotel_rates('${first_url}', true);" style="cursor: pointer; background-color: darkslateblue; padding: 20px; margin-bottom: 20px; margin-top: 30px; font-size: 14px; color: white; font-weight: bolder;">
@@ -2126,7 +2127,7 @@ function room_booking_get_user_information(url, first_url, number_of_guests){
                         Method</p>
                         <select id="login_fld_300" class="login_fld" style="width: 100% !important;">
                             <option value="creditCard">Credit Card</option>
-                            <option value="debitCard">Debit Card</option>
+                            <!--option value="debitCard">Debit Card</option-->
                         </select>
                     </div>
                     <div style="display: flex; flex-direction: row !important; justify-content: space-between; max-width: 395px !important;">
@@ -2185,6 +2186,21 @@ function room_booking_get_user_information(url, first_url, number_of_guests){
     book_hotel_forms_scroll_helper();
     bind_card_venders_to_select("login_fld_301");
 }
+
+//adding selected payment method
+document.getElementById("login_fld_300").addEventListener("change", e => {
+    book_room_final_post_data.data.payments[0].method = document.getElementById("login_fld_300").value;
+});
+
+//adding selected credit card type
+document.getElementById("login_fld_301").addEventListener("change", e => {
+    book_room_final_post_data.data.payments[0].card.vendorCode = document.getElementById("login_fld_301").value;
+});
+
+//adding selected payment card number
+document.getElementById("login_fld_303").addEventListener("change", e => {
+    book_room_final_post_data.data.payments[0].card.cardNumber = document.getElementById("login_fld_303").value;
+});
 
 function check_credit_card_exp_input(input_id, status_elem_id, initial_bg_color){
     
@@ -2260,14 +2276,15 @@ function check_credit_card_exp_input(input_id, status_elem_id, initial_bg_color)
         return null;
     }
 
-    book_room_final_post_data.data.payments[0].expiryDate = `${year_part}-${month_part}`;
+    book_room_final_post_data.data.payments[0].card.expiryDate = `${year_part}-${month_part}`;
 }
 
 function submit_hotel_room_booking(offer_id){
     //show_hotels_review_booking_detials();
     document.getElementById("submit_gds_hotel_booking_loader").style.display = "block";
     document.getElementById("submit_gds_hotel_booking_button").style.display = "none";
-    book_room_final_post_data.data.offerId = offer_id;
+    //book_room_final_post_data.data.offerId = offer_id;
+    console.log(book_room_final_post_data);
 
     $.ajax({
         beforeSend: xhrObj =>{
@@ -2278,11 +2295,21 @@ function submit_hotel_room_booking(offer_id){
         url: "./finish_room_booking",
         data: JSON.stringify(book_room_final_post_data),
         success: data => {
+            if(data.error){
+                show_prompt_to_user(`
+                    <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        Unsuccessful`, 
+                    "An error occured on the server");
+                document.getElementById("submit_gds_hotel_booking_loader").style.display = "none";
+                document.getElementById("submit_gds_hotel_booking_button").style.display = "block";
+                return null;
+            }
             console.log(data);
             document.getElementById("submit_gds_hotel_booking_loader").style.display = "none";
-    document.getElementById("submit_gds_hotel_booking_button").style.display = "block";
+            document.getElementById("submit_gds_hotel_booking_button").style.display = "block";
             show_hotels_review_booking_detials();
             book_hotel_forms_scroll_helper();
+            save_booked_hotel_data(data);
         },
         error: err => {
             document.getElementById("submit_gds_hotel_booking_loader").style.display = "none";
@@ -2291,6 +2318,28 @@ function submit_hotel_room_booking(offer_id){
         }
     });
 
+}
+
+function save_booked_hotel_data(booking_data){
+    
+    let anidaso_user_id = "not_anidaso_user";
+    if(window.localStorage.getItem("ANDSUSR")){
+        anidaso_user_id = window.localStorage.getItem("ANDSUSR");
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/save_booked_hotel/"+anidaso_user_id,
+        data: JSON.stringify(booking_data),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: data => {
+            console.log(data);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
 }
 
 function book_hotel_forms_scroll_helper(){

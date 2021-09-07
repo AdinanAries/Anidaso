@@ -812,7 +812,7 @@ function save_flight_booking_to_anidaso_db(booking_data){
         error: err => {
             console.log(err);
         }
-    })
+    });
 }
 
 //this function helps calculate the height of flight historic prices insights chart bar
