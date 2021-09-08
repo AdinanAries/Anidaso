@@ -361,6 +361,7 @@ app.post('/amadues_flight_create_order/', async (req, res, next)=>{
 app.post("/save_booked_flight/:anidaso_user_id", async(req, res, next) => {
   
   let flight = await new booked_flight_data({
+    booking_date: new Date().toString(),
     is_anidaso_client_user_id: req.params.anidaso_user_id,
     booking_data: req.body
   });
@@ -595,6 +596,7 @@ app.post('/finish_room_booking/', (req, res, next)=> {
 app.post("/save_booked_hotel/:anidaso_user_id", async(req, res, next) => {
   
   let hotel = await new booked_hotel_data({
+    booking_date: new Date().toString(),
     is_anidaso_client_user_id: req.params.anidaso_user_id,
     booking_data: req.body
   });
