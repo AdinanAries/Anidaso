@@ -60,8 +60,8 @@ var cheap_hotel_inventory_model = require("./models/cheap_hotel_inventory_model"
 var cheap_hotel_guest = require("./models/cheap_hotel_guests_Model");
 var hotel_deals = require("./models/hotel_deals_model");
 var cheap_hotel_invoice = require("./models/cheap_hotel_invoices_model");
-var booked_flight_data = require("./models/booked_flights_log_model");
-var booked_hotel_data = require("./models/booked_hotels_log");
+var bookings_data = require("./models/bookings_log_model");
+//var booked_hotel_data = require("./models/booked_hotels_log");
 
 
 app.use(passport.initialize());
@@ -360,8 +360,9 @@ app.post('/amadues_flight_create_order/', async (req, res, next)=>{
 //Amadues - Saving booked Flight
 app.post("/save_booked_flight/:anidaso_user_id", async(req, res, next) => {
   
-  let flight = await new booked_flight_data({
+  let flight = await new bookings_data({
     booking_date: new Date().toString(),
+    booking_type: "flight",
     is_anidaso_client_user_id: req.params.anidaso_user_id,
     booking_data: req.body
   });
@@ -595,8 +596,9 @@ app.post('/finish_room_booking/', (req, res, next)=> {
 
 app.post("/save_booked_hotel/:anidaso_user_id", async(req, res, next) => {
   
-  let hotel = await new booked_hotel_data({
+  let hotel = await new bookings_data({
     booking_date: new Date().toString(),
+    booking_type: "hotel",
     is_anidaso_client_user_id: req.params.anidaso_user_id,
     booking_data: req.body
   });
