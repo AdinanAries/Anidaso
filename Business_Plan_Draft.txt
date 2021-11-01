@@ -1,0 +1,121 @@
+<----current plans--->
+- Anidaso is a travel and hospitatility retail platform. 
+- Its current state comprises commision-based flights, hotels, and car rentals sales (also events may be sold to make commisions)
+- It also has feature for helping new and unpopular hospitality brands compete in the global market (This feature is going to be strongly based on
+  SEO and SEM capabilities).
+- Another feature is that of hotel deal sales where Anidaso prepurchases future rooms at lower prices than their actual prices and sells 
+  them in future at relatively lower prices than the current market price.
+
+<----future plans---->
+- Anidaso has "Explore feature" that helps people discover places and travel inspirations.
+- It wil in the future create its own travel packages that comprise combinations of 
+  different travel products into single purchasable packages.
+
+<----Cheap Hotel Data Elements---->
+-Account Type: [Subscribed, Commission Account, and Expired Account]
+-Payments{
+  Status,
+  Card:
+}
+-Invoices [invoice_id],
+-Payouts{
+  Account,
+  sold,
+  next date,
+  history: [{
+    date,
+    sold
+  }]
+}
+-Bookings [
+  {
+    _id,
+    hotel_brand_id,
+    property_id,
+    room_id,
+    checkin_date,
+    checkout_date,
+    checkin_time,
+    checkout_time,
+    guest {
+      first_name,
+      last_name,
+      age,
+      gender,
+      price_paid,
+    }
+  }
+]
+-Cancellation_History: [
+  {
+    booking_id,
+    date_requested
+  }
+],
+-Property{
+  _id,
+  hotel_brand_id,
+  full_location_address,
+  city,
+  country,
+  zipcode,
+  street_address,
+  town,
+  description,
+  amenities []
+},
+-Room{
+  property_id
+  room_number,
+  closed,
+  booked,
+  room_type: [Delux],
+  room_link,
+  guest_capacitance {
+    adult,
+    children
+  },
+  price,
+  description,
+  amenities [amenity],
+  next_available_date,
+  cancellation_policy {
+    time_period,
+    percentage
+  },
+  thumbnail_url,
+  cancellation_request {
+    request_status,
+    booking_id,
+    date_requested,
+  }
+}
+-
+
+-Hotel Board Types
+  ROOM_ONLY = RO / Room Only
+  BREAKFAST = BB / Bed & Breakfast
+  HALF_BOARD = DBB / Diner & Bed & Breakfast (only for Aggregators)
+  FULL_BOARD = FB / Full Board (only for Aggregators)
+  ALL_INCLUSIVE = AI / All Inclusive (only for Aggregators)
+
+Useful Amadeus Api Doc
+https://developers.amadeus.com/self-service/category/air/api-doc/flight-create-orders
+https://developers.amadeus.com/self-service/category/air/api-doc/flight-order-management
+https://www.npmjs.com/package/amadeus
+https://developers.amadeus.com/blog/add-baggage-amadeus-flight-booking-api
+https://developers.amadeus.com/blog/what-is-air-ticketing
+
+https://www.iban.com/country-codes
+https://www.toptal.com/designers/htmlarrows/currency/
+http://symbologic.info/currency.htm
+https://en.wikipedia.org/wiki/ISO_4217
+
+https://daterangepicker.com/
+
+The hotel is located 547 yards (500 m) from the Plaza de España. Its 97 rooms offer comfortable beds, minibar, 
+LCD TV, WIFI and free coffee. Why not book a Privilege Room with a large terrace, 
+Nespresso machine and complimentary minibar? Near to the hotel, you will find Plaza de 
+Los Cubos with its plethora of restaurants, cinemas and a fitness center (free for hotel guests). 
+The Gran Vía with its musicals is just five minutes away on foot. 
+The zoo and theme park are ten minutes away by car
