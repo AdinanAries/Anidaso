@@ -1024,7 +1024,15 @@ function toggle_hide_show_flight_booking_success_confirmation_pane(){
 
 function show_flight_booking_success_review_page(obj){
     toggle_hide_show_flight_booking_success_confirmation_pane();
-    render_booking_confirmation_review_markup(obj)
+    render_booking_confirmation_review_markup(obj);
+    document.getElementById("booking_confirmation_send_btn").addEventListener("click", e => {
+        if(document.getElementById("booking_confirmation_email_input").value === ""){
+            alert("please add your email");
+        }else{
+            send_confimation_email_ajax(obj);
+        }
+        
+    });
 }
 
 function render_booking_confirmation_review_markup(obj){
@@ -1269,8 +1277,10 @@ function render_booking_confirmation_review_markup(obj){
         }
 
         let guest_passport_number = "Not Available";
-        if(guest_passport_number = obj.data.travelers[t].documents.length > 0){
-            guest_passport_number = obj.data.travelers[t].documents[0].number
+        if(obj.data.travelers[t].documents){
+            if(guest_passport_number = obj.data.travelers[t].documents.length > 0){
+                guest_passport_number = obj.data.travelers[t].documents[0].number
+            }
         }
 
         travelers_markup += `
@@ -1530,6 +1540,25 @@ function render_booking_confirmation_review_markup(obj){
             </div>
         </div>
     `;
+}
+
+function send_confimation_email_ajax(data){
+    //console.log(data);
+    let client_email =  document.getElementById("booking_confirmation_email_input").value;
+    $.ajax({
+        type: "POST",
+        url: `/send_booking_confirmation_email/${client_email}/`,
+        data: JSON.stringify({booking: data}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: res => {
+            console.log(res);
+        },
+        error: err => {
+            console.log(err);
+        }
+
+    });
 }
 
 function hotel_search_filter_by_rating(){

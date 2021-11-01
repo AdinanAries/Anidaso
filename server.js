@@ -35,8 +35,8 @@ const expressSession = require('express-session')({
 
 //instantiating Amandues
 var amadeus = new Amadeus({
-  clientId: 'tMUIuRrYAgk0zLfDy1PCC4GXegGg0rYc',
-  clientSecret: 'PAtVLCWxpRGsYPdU'
+  clientId: process.env.AMADEUS_CLIENT_ID,
+  clientSecret: process.env.AMADEUS_API_SECRETE
 });
 
 //stripe connection
@@ -114,8 +114,8 @@ function Amadues_OAuth(){
   //form data
   let req_data = querystring.stringify({
     grant_type: "client_credentials",
-    client_id: "tMUIuRrYAgk0zLfDy1PCC4GXegGg0rYc",
-    client_secret: "PAtVLCWxpRGsYPdU"
+    client_id: process.env.AMADEUS_CLIENT_ID,
+    client_secret: process.env.AMADEUS_API_SECRETE
   });
 
   // request option
@@ -609,6 +609,14 @@ app.post("/save_booked_hotel/:anidaso_user_id", async(req, res, next) => {
 
 });
 
+app.post("/send_booking_confirmation_email/:email/", (req,res, next)=>{
+  let client_email = req.params.email;
+  let req_body = req.body;
+  res.send({
+    email: client_email,
+    data: req_body
+  });
+});
 
 //login and signup routes
 app.get('/ensureLoggedIn/',
