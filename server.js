@@ -33,7 +33,7 @@ const expressSession = require('express-session')({
   saveUninitialized: false
 });
 
-//instantiating Amandues
+//instantiating Amandues...
 var amadeus = new Amadeus({
   clientId: process.env.AMADEUS_CLIENT_ID,
   clientSecret: process.env.AMADEUS_API_SECRETE
