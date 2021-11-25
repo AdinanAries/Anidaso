@@ -26,7 +26,7 @@ const s3 = new aws.S3({
   signatureVersion: 'v4'
 });
 
-
+//express session
 const expressSession = require('express-session')({
   secret: 'secret',
   resave: false,
