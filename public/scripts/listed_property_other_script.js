@@ -9,6 +9,73 @@ var guest_search_post_data = {
     date: "",
 }
 
+async function go_to_checkout_from_inhouse_guests(guest_id, booking_id){ //remove these parameters if not needed
+
+    toggle_show_in_house_guests_div();
+    toggle_show_guests_checkout_div();
+
+    setTimeout(async ()=>{
+        await load_country_calling_codes_on_select_input("checkout_guests_search_country_calling_code_select");
+        document.getElementById("checkout_guests_search_country_calling_code_select").value = guest_search_post_data.mobile.split(" ")[0];
+    },510);
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("checkout_guests_search_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("checkout_guests_search_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+    document.getElementById("checkout_guests_search_property_select").value = guest_search_post_data.property_id;
+
+    guest_search_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+    document.getElementById("checkout_guests_search_first_name_input").value = guest_search_post_data.first_name;
+    document.getElementById("checkout_guests_search_last_name_input").value = guest_search_post_data.last_name;
+    document.getElementById("checkout_guests_search_mobile_input").value = guest_search_post_data.mobile.split(" ")[1];
+    document.getElementById("checkout_guests_search_email_input").value = guest_search_post_data.email;
+
+    document.getElementById("checkout_guests_list").innerHTML = `
+            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:white;">
+                loading...
+                </p>
+            </div>
+        `;
+
+        let search_results = await search_and_return_cheap_hotel_guest("checkout");
+
+        if(search_results.length === 0){
+            document.getElementById("checkout_guests_list").innerHTML =  `
+                <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white;">
+                    <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i>
+                    guest not found
+                </div>
+            `;
+            return null;
+        }
+
+        document.getElementById("checkout_guests_list").innerHTML = "";
+        for(let i=0; i<search_results.length; i++){
+            let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
+            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
+        }
+
+
+}
+
 async function hotel_guests_search_function(type){
 
     if(type === "inhouse"){
@@ -35,7 +102,7 @@ async function hotel_guests_search_function(type){
 
         await collect_inhouse_guests_search_post_data();
         let search_results = await search_and_return_cheap_hotel_guest(type);
-        
+        //console.log(guest_search_post_data);
         if(search_results.length === 0){
             document.getElementById("inhouse_guests_list").innerHTML =  `
                 <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white;">
@@ -90,7 +157,7 @@ async function hotel_guests_search_function(type){
         document.getElementById("arrival_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
             let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
-            document.getElementById("arrival_guests_list").innerHTML += return_arrival_guests_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
+            document.getElementById("arrival_guests_list").innerHTML += return_arrival_guests_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property, i);
         }
 
     }else if(type === "checkout"){
@@ -213,7 +280,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
                     ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
                     ${property.city} - ${property.street_address} (${property.country})</P>  
-                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
@@ -261,7 +328,7 @@ function return_guest_checkout_markup(guest, booking, invoice, property){
                     ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
                     ${property.city} - ${property.street_address} (${property.country})</P>  
-                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
@@ -291,7 +358,31 @@ function return_guest_checkout_markup(guest, booking, invoice, property){
     `;
 }
 
-function return_arrival_guests_markup(guest, booking, invoice, property){
+function return_arrival_guests_markup(guest, booking, invoice, property, index){
+
+    let checkin_status_dspl = `
+        <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid lightgreen;">
+            <i class="fa fa-check" style="margin-right: 5px; color: lightgreen;"></i>
+            Checkin is available<br/><br/>
+            <span style="font-size: 14px; color:rgba(255, 208, 187, 0.815);">Stay Period: ${change_date_from_iso_to_long_date(booking.checkin_date)} - ${change_date_from_iso_to_long_date(booking.checkout_date)}
+            </span>
+        </p>
+    `;
+    let chk_in_btn_status_style = `style="color: rgb(255, 179, 136); margin-right: 5px;" class="fa fa-check"`;
+    if(!is_today_covered_in_date_range(booking.checkin_date, booking.checkout_date)){
+        checkin_status_dspl = `
+        <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid red;">
+            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;"></i>
+            <span style="color: red; font-size: 13px;">Checkin Warning:</span><br/><br/>
+            Today is not in the stay period of this guest based on checkin and checkout dates.
+            <br/><br/>
+            <span style="font-size: 14px; color:rgba(255, 208, 187, 0.815);">Stay Period: ${change_date_from_iso_to_long_date(booking.checkin_date)} - ${change_date_from_iso_to_long_date(booking.checkout_date)}
+            </span>
+        </p>
+    `;
+    chk_in_btn_status_style = `style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle"`;
+    }
+
     return `
         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
@@ -308,14 +399,46 @@ function return_arrival_guests_markup(guest, booking, invoice, property){
                         leaves on ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
                     ${property.city} - ${property.street_address} (${property.country})</P>
-                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
+                ${checkin_status_dspl}
             </div>
             <div class="flex_child_of_two flex_non_first_child">
-                <div style="display: flex; flex-direction: row !important;">
-                    <div style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                <div id="arrival_guest_checkin_loader${index}" style="display: none; flex-direction: row !important;">
+                    <div id="arrival_guest_checkin_loader_spinner${index}">
+                        <div style="width: 100%; text-align: center; padding: 10px 0; background-color: rgba(0,0,0,0.5);" class="loader loader--style2" title="1">
+                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            width="30px" height="30px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                            <animateTransform attributeType="xml"
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 25 25"
+                                to="360 25 25"
+                                dur="0.6s"
+                                repeatCount="indefinite"/>
+                            </path>
+                            </svg>
+                            <p style="text-align: center; font-size: 14px; color:white;">
+                            pleas wait...
+                            </p>
+                        </div>
+                    </div>
+                    <div id="arrival_guest_checkin_confirm_msg${index}" style="display: none; background-color: rgba(0,0,0,0.5); padding: 10px;">
+                        <p id="arrival_guest_checkin_confirm_msg_p${index}" style="color: white; margin-bottom: 10px; font-size: 14px;">
+                            
+                        </p>
+                        <div onclick="document.getElementById('arrival_guest_checkin_loader${index}').style.display='none';document.getElementById('arrival_guest_checkin_btn_set${index}').style.display='flex';" 
+                            style="background-color:rgb(55, 97, 107); text-align: center; color: white; cursor: pointer; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                            OK
+                        </div>
+                    </div>
+                </div>
+                <div id="arrival_guest_checkin_btn_set${index}" style="display: flex; flex-direction: row !important;">
+                    <div id="arrival_guest_checkin_btn_main${index}" onclick="start_guest_checkin('${guest._id}','${booking._id}', '${index}');" style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        <i ${chk_in_btn_status_style} aria-hidden="true"></i>
                         Check Guest In
                     </div>
                     <div onclick="show_include_services_in_booking_div();" style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
@@ -323,7 +446,7 @@ function return_arrival_guests_markup(guest, booking, invoice, property){
                         Include Service
                     </div>
                 </div>
-                <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                <div onclick="show_view_booking_div('${booking._id}');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                     view booking
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </div>
@@ -333,7 +456,7 @@ function return_arrival_guests_markup(guest, booking, invoice, property){
 }
 
 function search_and_return_cheap_hotel_guest(type){
-
+    
     guest_search_post_data.hotel_brand_id = window.localStorage.getItem("ANDSBZID");
     guest_search_post_data.date = convert_date_object_to_db_string_format(new Date());
 
@@ -345,7 +468,7 @@ function search_and_return_cheap_hotel_guest(type){
     }else if(type === "checkout"){
         post_url = "/search_cheap_hotel_inhouse_guests/";
     }
-
+    console.log(guest_search_post_data);
     return $.ajax({
         type: "POST",
         url: post_url,
@@ -844,7 +967,7 @@ function clean_up_after_saving_new_guest(){
     document.getElementById("guest_manager_new_or_existing_guest_zipcode_input").value = "";
 }
 
-function search_and_return_cheap_hotel_guest(post_data){
+function search_and_return_cheap_hotel_guest_main(post_data){
     return $.ajax({
         type: "POST",
         url: "/search_cheap_hotel_guest/",
@@ -888,12 +1011,34 @@ $(function() {
 });
 async function search_guest_on_submit_function(){
 
+    document.getElementById("guest_mamager_search_guests_list").innerHTML = `
+            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:white;">
+                loading...
+                </p>
+            </div>
+        `;
+
     let f_name = document.getElementById("guests_manager_search_guest_first_name_input").value;
     let l_name = document.getElementById("guests_manager_search_guest_last_name_input").value;
     let country_calling_code = document.getElementById("guests_manager_search_guest_calling_code_select").value;
     let mobile_last_nums = document.getElementById("guests_manager_search_mobile_input").value;
     let mobile_p = `${country_calling_code} ${mobile_last_nums}`;
     let property_id_p = document.getElementById("guests_manager_search_property_select").value;
+
+    guest_manager_search_guest_DOB = guest_manager_search_guest_DOB || document.getElementById("guests_manager_search_guest_DOB_input").value; 
 
     let post_obj = {
         first_name: f_name,
@@ -903,17 +1048,63 @@ async function search_guest_on_submit_function(){
         property_id: property_id_p,
         hotel_id: window.localStorage.getItem("ANDSBZID")
     }
+    console.log(post_obj);
+    let guests = await search_and_return_cheap_hotel_guest_main(post_obj);
 
-    let guests = await search_and_return_cheap_hotel_guest(post_obj);
+    if(guests.length === 0){
+        document.getElementById("guest_mamager_search_guests_list").innerHTML = `
+            <div style="margin: 40px 0;">
+                <p style="font-size: 14px; color: white; text-align: center; font-weight: bolder;margin-bottom: 8px;">
+                    <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle"></i>
+                    Oops! nothing was found</p>
+                <p style="color: #eee; font-size: 13px; text-align: center;">
+                    please enter correct guest information</p>
+            <div>
+        `;
+    }else{
 
-    document.getElementById("guest_mamager_search_guests_list").innerHTML = ``;
-    for(let i=0; i<guests.length; i++){
-        document.getElementById("guest_mamager_search_guests_list").innerHTML += return_each_guest_manager_guest_markup(guests[i]);
+        document.getElementById("guest_mamager_search_guests_list").innerHTML = ``;
+        for(let i=0; i<guests.length; i++){
+            
+            let property = await get_and_return_hotel_property_by_id(guests[i].property_id);
+
+            //fixing guest booking status
+            let bookings = await get_bookings_using_guest_id(guests[i]._id, guests[i].property_id, guests[i].hotel_brand_id);
+            console.log(bookings);
+            let guest_stay_obj = {
+                room: "",
+                checkin: "",
+                checkout: "",
+            }
+            if(bookings.length > 0){
+                for(let booking of bookings){
+                    if(is_today_covered_in_date_range(booking.checkin_date, booking.checkout_date)){//"2022-09-26"
+                        alert("guest is staying");
+                        guests[i].status = "staying";
+                        guest_stay_obj.room = booking.rooms[0].number;
+                        guest_stay_obj.checkin = booking.checkin_date;
+                        guest_stay_obj.checkout = booking.checkout_date;
+                        //update guest information here
+                        break;
+                    }
+                }
+            }
+            
+            document.getElementById("guest_mamager_search_guests_list").innerHTML += return_each_guest_manager_guest_markup(guests[i], property, guest_stay_obj);
+            //reset guest dob
+            guest_manager_search_guest_DOB = "";
+        }
     }
 
 }
 
-function return_each_guest_manager_guest_markup(guest){
+function return_each_guest_manager_guest_markup(guest, property, stay){
+
+    let stay_info = stay.room ? `
+        <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+            Room ${stay.room}, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
+                ${change_iso_date_to_readable_format(stay.checkin)} - ${change_iso_date_to_readable_format(stay.checkout)}</span></p>` : "";
+
     return `
         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
@@ -926,22 +1117,20 @@ function return_each_guest_manager_guest_markup(guest){
                 <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
                     <span style="color: rgb(215,255,255); font-size: 12px;">Gender:</span> ${guest.gender}
                     <span style="margin-left: 10px; color:rgb(235, 137, 137); font-size: 14px;">
-                        (Unbooked)
+                        (${guest.status})
                     </span>
                 </p>
-                <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
-                    Room 5D, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
-                        March 09 - March 12</span></p>
+                ${stay_info}
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
-                    Kumasi - 2122 Estate Junc (Ghana)</P>  
-                <p style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                    ${property.city} - ${property.street_address} (${property.country})</P>  
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
             </div>
             <div class="flex_child_of_two flex_non_first_child">
                 <div style="display: flex; flex-direction: row !important;">
-                    <div onclick="" style="border: 1px solid rgb(55, 107, 75); background-color: rgba(0, 0, 0, 0.4); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                    <div onclick="show_guest_manager_edit_guest_div();" style="border: 1px solid rgb(55, 107, 75); background-color: rgba(0, 0, 0, 0.4); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         <i style="color:rgb(136, 191, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
                         Edit Guests
                     </div>
@@ -963,4 +1152,38 @@ function return_each_guest_manager_guest_markup(guest){
             </div>
         </div>
     `;
+}
+
+function start_guest_checkin(guest_id, booking_id, index){
+
+    $("#arrival_guest_checkin_btn_set"+index).toggle('up');
+    $("#arrival_guest_checkin_loader"+index).toggle('up');
+
+    $.ajax({
+        type: "GET",
+        url: `/cheap_hotel_checkin_guest/${guest_id}/${booking_id}`,
+        success: res =>{
+
+            document.getElementById("arrival_guest_checkin_loader_spinner"+index).style.display = "none";
+            document.getElementById("arrival_guest_checkin_confirm_msg"+index).style.display = "block";
+
+            console.log(res);
+            if(res.checkedIn){
+                document.getElementById("arrival_guest_checkin_confirm_msg_p"+index).innerHTML = `
+                    <i style="color: lightgreen; margin-right: 5px;" class="fa fa-check"></i>
+                    Guest Checkin Successfull!
+                `;
+                document.getElementById("arrival_guest_checkin_btn_main"+index).style.display="none";
+            }else{
+                document.getElementById("arrival_guest_checkin_confirm_msg_p"+index).innerHTML = `
+                    <span style="color: red; font-size: 14px;"><i style="color: red; margin-right: 5px;" class="fa fa-exclamation-triangle"></i>
+                    Oops! Guest Checkin Failed.</span>
+                `;
+            }
+            //return res;
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
 }

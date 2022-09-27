@@ -198,6 +198,20 @@ function show_search_results_book_cheap_promoter(){
   }, 5000);
 }
 
+//Getting all localstorage posted data
+/*const _hotels_post_data = localStorage.getItem("hotels_post_data") || "";
+const _main_search_type = localStorage.getItem("main_search_type") || "";
+const _is_multi_city_search = localStorage.getItem("is_multi_city_search") || "not set";
+const _flight_multi_city_search_data = localStorage.getItem("flight_multi_city_search_data") || "";
+const _hotels_trivials = localStorage.getItem("hotels_trivials") || "";
+const _flights_trivials = localStorage.getItem("flights_trivials") || "";
+const _hotels_last_search_city = localStorage.getItem("hotels_last_search_city") || "";
+const _flights_post_data = localStorage.getItem("flights_post_data") || "";
+const _is_round_trip = localStorage.getItem("is_round_trip") || "";
+const _site_current_currecy = localStorage.getItem("site_current_currecy") || "";*/
+
+//alert();
+
 display_right_section_ads();
 show_search_results_book_cheap_promoter();
 
@@ -760,10 +774,26 @@ $("#hotels_to_when_search_input").datepicker({minDate: 0});
 $("#car_rentals_from_when_search_input").datepicker({minDate: 0});
 $("#car_rentals_to_when_search_input").datepicker({minDate: 0});*/
 
-$(function() {
+/*let _date = new Date().toISOString().split("T")[0].split("-");
+_date = `${_date[1]}/${_date[2]}/${_date[0]}`;
+
+let _Ddate = JSON.parse(_flights_post_data).departure_date.split("-");
+_Ddate = `${_Ddate[1]}/${_Ddate[2]}/${_Ddate[0]}`;
+
+let _Rdate = JSON.parse(_flights_post_data).return_date.split("-");
+_Rdate = `${_Rdate[1]}/${_Rdate[2]}/${_Rdate[0]}`; */
+
+/*const start = (_main_search_type === "flight_search") ? (_is_multi_city_search === "no") ? _Ddate : _Ddate : _date;
+const end = (_main_search_type === "flight_search") ? (_is_multi_city_search === "no") ? _Rdate : _Rdate : _date;*/
+//alert(_Ddate)
+//2022-09-24T23:04:15.646Z
+
+/*$(function() {
   $('#from_when_search_input').daterangepicker({
     opens: 'left',
-    autoUpdateInput: false,
+    //autoUpdateInput: false,
+    startDate: start,
+    endDate: end,
     locale: {
       cancelLabel: 'Clear'
     }
@@ -780,12 +810,26 @@ $(function() {
 
     //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
   });
-});
+
+  setTimeout(()=>{
+    if(_is_multi_city_search === "no"){
+      if(_is_round_trip === "no"){
+        document.getElementById("from_when_search_input").value = change_date_from_utc_to_actual_format(start);
+      }else{
+        document.getElementById("from_when_search_input").value = change_date_from_utc_to_actual_format(start) +" - "+ change_date_from_utc_to_actual_format(end);
+      }
+    }
+    
+  }, 10);
+
+});*/
 
 $(function() {
   $('#hotels_from_when_search_input').daterangepicker({
     opens: 'left',
-    autoUpdateInput: false,
+    startDate: _HSstart,
+    endDate: _HSend,
+    //autoUpdateInput: false,
     locale: {
       cancelLabel: 'Clear'
     }
@@ -801,6 +845,11 @@ $(function() {
     window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
     //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
   });
+
+  setTimeout(()=>{
+    document.getElementById("hotels_from_when_search_input").value = change_date_from_utc_to_actual_format(_HSstart) +" - "+ change_date_from_utc_to_actual_format(_HSend);
+  }, 10);
+  
 });
 
 $(function() {

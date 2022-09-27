@@ -1674,6 +1674,18 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
 
 });
 
+app.get("/get_cheap_hotel_bookings_by_guest/:guest_id/:property_id/:brand_id/", async(req, res, next)=>{
+
+  bookings = await cheap_hotel_booking.find({
+    hotel_brand_id: req.params.brand_id,
+    property_id: req.params.property_id,
+    "guests.id": req.params.guest_id
+  }).exec();
+
+  res.send(bookings);
+
+});
+
 app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
   
   let res_objects = [];
@@ -1728,9 +1740,12 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
           }*/
         }).exec();
         
+        //the for loop below enforces checkin date being the same as today.
+        
         for(let b=0; b < bookings.length; b++){
-          
-          if(bookings[b].checkin_date === req.body.date){
+
+          res_objects[i].booking = bookings[b];
+          /*if(bookings[b].checkin_date === req.body.date){
             res_objects[i].booking = bookings[b];
           }else{
             let this_guest = await cheap_hotel_guest.findById(res_objects[i].guest._id);
@@ -1738,7 +1753,7 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
             let updt_guest = await new cheap_hotel_guest(this_guest);
             let saved_updt_guest = await updt_guest.save();
             //res_objects.splice(i,i);
-          }
+          }*/
 
         }
 
@@ -1792,6 +1807,18 @@ app.post("/search_booking_by_booking_info/", async(req, res, next)=>{
     res.send({empty: true})
   }
 
+});
+
+app.get("/get_booking_by_id/:id/", async(req, res, next)=>{
+  let booking = await cheap_hotel_booking.findById(req.params.id).exec();
+  res.send(booking);
+});
+
+app.get("/cheap_hotel_checkin_guest/:guest_id/:booking_id", async(req, res, next)=>{
+    console.log(req.params.booking_id);
+    console.log(req.params.guest_id);
+    setTimeout(()=>{res.send({checkedIn: true})},2000);
+    ;
 });
 
 app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {

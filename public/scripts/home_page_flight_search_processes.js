@@ -3,6 +3,19 @@ var home_page_search_button = document.getElementById("home_page_search_button")
 var home_page_hotels_search_button = document.getElementById("home_page_hotels_search_button");
 var home_page_car_rentals_search_button = document.getElementById("home_page_car_rentals_search_button");
 
+function change_date_from_utc_to_actual_format(isoString){
+    
+    let the_year = isoString.split("/")[2];
+    let the_month = isoString.split("/")[0];
+    let the_day = isoString.split("/")[1];
+  
+    let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+    let n = the_date.toString().split(" ");
+    let formatted_date = `${n[0]} ${n[1]} ${n[2]}`;
+  
+    return formatted_date;
+}
+
 //Global Utilities
 //today
 var todays_date = new Date();
@@ -19,7 +32,7 @@ if(this_month < 10){
 }
 var formatted_date = todays_date.getFullYear() + "-" + this_month + "-" + this_month_day;
 
-var future_date = new Date(todays_date.setDate(todays_date.getDate() + 5));
+var future_date = new Date(todays_date.setDate(todays_date.getDate() + 1)); //it wasn't + 1 here it was + 5. Incase code breaks
 var future_date_day = future_date.getDate();
 var future_date_month = (future_date.getMonth() + 1);
 
@@ -310,6 +323,39 @@ var flight_search_number_of_people = {
     }
 }
 
+//Getting all localstorage posted data
+let _hotels_post_data = localStorage.getItem("hotels_post_data") || "";
+let _main_search_type = localStorage.getItem("main_search_type") || "";
+let _is_multi_city_search = localStorage.getItem("is_multi_city_search") || "not set";
+let _flight_multi_city_search_data = localStorage.getItem("flight_multi_city_search_data") || "";
+let _hotels_trivials = localStorage.getItem("hotels_trivials") || "";
+let _flights_trivials = localStorage.getItem("flights_trivials") || "";
+let _hotels_last_search_city = localStorage.getItem("hotels_last_search_city") || "";
+let _flights_post_data = localStorage.getItem("flights_post_data") || "";
+let _is_round_trip = localStorage.getItem("is_round_trip") || "";
+let _site_current_currecy = localStorage.getItem("site_current_currecy") || "";
+
+let _date = new Date().toISOString().split("T")[0].split("-");
+_date = `${_date[1]}/${_date[2]}/${_date[0]}`;
+
+let _Ddate = _flights_post_data && JSON.parse(_flights_post_data).departure_date.split("-");
+_Ddate = `${_Ddate[1]}/${_Ddate[2]}/${_Ddate[0]}`;
+
+let _Rdate = _flights_post_data && JSON.parse(_flights_post_data).return_date.split("-");
+_Rdate = `${_Rdate[1]}/${_Rdate[2]}/${_Rdate[0]}`; 
+
+let _FSstart = _Ddate || _date; //(_main_search_type === "flight_search") ? (_is_multi_city_search === "no") ? _Ddate : _Ddate : _date;
+let _FSend = _Rdate || _date; //(_main_search_type === "flight_search") ? (_is_multi_city_search === "no") ? _Rdate : _Rdate : _date;
+
+//hotel search dates presets
+let _CHkInDate = _hotels_post_data && JSON.parse(_hotels_post_data).checkin.split("-");
+_CHkInDate = `${_CHkInDate[1]}/${_CHkInDate[2]}/${_CHkInDate[0]}`;
+
+let _CHKOutDate = _hotels_post_data && JSON.parse(_hotels_post_data).checkout.split("-");
+_CHKOutDate = `${_CHKOutDate[1]}/${_CHKOutDate[2]}/${_CHKOutDate[0]}`; 
+
+let _HSstart = _CHkInDate || _date; //(_main_search_type === "hotel_search") ? _CHkInDate : _date;
+let _HSend = _CHKOutDate || _date; //(_main_search_type === "hotel_search") ? _CHKOutDate : _date;
 
 //prevents it from being automatically when search page loads. That way it maintains last set value until search results have been rendered
 if(localStorage.getItem("is_round_trip")){
@@ -317,12 +363,41 @@ if(localStorage.getItem("is_round_trip")){
         set_flight_trip_round_for_search('One-way');
         document.getElementById("roundtrip_radio_option").checked = false;
         document.getElementById("oneway_radio_option").checked = true;
+    }else{
+        set_flight_trip_round_for_search("Round-trip");
+        localStorage.setItem("is_round_trip", "yes");
     }
 }else{
+    set_flight_trip_round_for_search("Round-trip");
     localStorage.setItem("is_round_trip", "yes");
 }
 
 function set_flight_trip_round_for_search(f_trip_round){
+
+    //Getting all localstorage posted data
+    _hotels_post_data = localStorage.getItem("hotels_post_data") || "";
+    _main_search_type = localStorage.getItem("main_search_type") || "";
+    _is_multi_city_search = localStorage.getItem("is_multi_city_search") || "not set";
+    _flight_multi_city_search_data = localStorage.getItem("flight_multi_city_search_data") || "";
+    _hotels_trivials = localStorage.getItem("hotels_trivials") || "";
+    _flights_trivials = localStorage.getItem("flights_trivials") || "";
+    _hotels_last_search_city = localStorage.getItem("hotels_last_search_city") || "";
+    _flights_post_data = localStorage.getItem("flights_post_data") || "";
+    _is_round_trip = localStorage.getItem("is_round_trip") || "";
+    _site_current_currecy = localStorage.getItem("site_current_currecy") || "";
+
+    _date = new Date().toISOString().split("T")[0].split("-");
+    _date = `${_date[1]}/${_date[2]}/${_date[0]}`;
+
+    _Ddate = JSON.parse(_flights_post_data).departure_date.split("-");
+    _Ddate = `${_Ddate[1]}/${_Ddate[2]}/${_Ddate[0]}`;
+
+    _Rdate = JSON.parse(_flights_post_data).return_date.split("-");
+    _Rdate = `${_Rdate[1]}/${_Rdate[2]}/${_Rdate[0]}`; 
+
+    _FSstart = _Ddate || _date; //(_main_search_type === "flight_search") ? (_is_multi_city_search === "no") ? _Ddate : _Ddate : _date;
+    _FSend = _Rdate || _date; //(_main_search_type === "flight_search") ? (_is_multi_city_search === "no") ? _Rdate : _Rdate : _date;
+
 
     flight_search_trip_round.t_round = f_trip_round;
     document.getElementById("trip_type_param_round_trip_option").innerHTML = `${f_trip_round} 
@@ -334,18 +409,36 @@ function set_flight_trip_round_for_search(f_trip_round){
 
         $(function() {
             $('#from_when_search_input').daterangepicker({
-              opens: 'left'
+              opens: 'left',
+              singleDatePicker: true,
+              showDropdowns: true,
+              startDate: _FSstart,
             }, function(start, end, label) {
                 
+                setTimeout(()=>{
+                    document.getElementById("from_when_search_input").value = start.toString().substring(0,11);
+                }, 100);
+
                 fligh_search_data.departure_date = start.format('YYYY-MM-DD');
-                fligh_search_data.return_date = end.format('YYYY-MM-DD');
+                //fligh_search_data.return_date = end.format('YYYY-MM-DD');
 
                 window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
                 //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             });
+
+            setTimeout(()=>{
+                if(_is_multi_city_search === "no"){
+                  if(_is_round_trip === "no"){
+                    document.getElementById("from_when_search_input").value = change_date_from_utc_to_actual_format(_FSstart);
+                  }else{
+                    document.getElementById("from_when_search_input").value = change_date_from_utc_to_actual_format(start) +" - "+ change_date_from_utc_to_actual_format(end);
+                  }
+                }
+                
+              }, 10);
           });
 
-        $(function() {
+        /*$(function() {
             $("#from_when_search_input").daterangepicker({
               singleDatePicker: true,
               showDropdowns: true
@@ -358,11 +451,8 @@ function set_flight_trip_round_for_search(f_trip_round){
                 fligh_search_data.departure_date = start.format('YYYY-MM-DD');
 
                 window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
-
-              /*var years = moment().diff(start, 'years');
-              alert("You are " + years + " years old!");*/
             });
-          });
+          });*/
 
         /*document.getElementById("to_where_input_fld_tile").style.display = "none";
         document.getElementById("airports_exchange_search_fields_values_icon_container").style.display = "none";
@@ -380,7 +470,9 @@ function set_flight_trip_round_for_search(f_trip_round){
         document.getElementById("airportSearch_date_title_span").innerHTML = "Depature - Return Dates";
         $(function() {
             $('#from_when_search_input').daterangepicker({
-              opens: 'left'
+              opens: 'left',
+              startDate: _FSstart,
+              endDate: _FSend,
             }, function(start, end, label) {
                 
                 setTimeout(()=>{
@@ -388,12 +480,23 @@ function set_flight_trip_round_for_search(f_trip_round){
                 }, 100);
 
                 fligh_search_data.departure_date = start.format('YYYY-MM-DD');
-                fligh_search_data.arrival_date = end.format('YYYY-MM-DD');
+                fligh_search_data.return_date = end.format('YYYY-MM-DD');
 
                 window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
 
                 //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             });
+
+            setTimeout(()=>{
+                if(_is_multi_city_search === "no"){
+                  if(_is_round_trip === "no"){
+                    document.getElementById("from_when_search_input").value = change_date_from_utc_to_actual_format(_FSstart);
+                  }else{
+                    document.getElementById("from_when_search_input").value = change_date_from_utc_to_actual_format(_FSstart) +" - "+ change_date_from_utc_to_actual_format(_FSend);
+                  }
+                }
+                
+              }, 10);
           });
 
         /*setTimeout(()=>{

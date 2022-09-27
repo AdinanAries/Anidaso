@@ -215,7 +215,7 @@ var aita_city_codes = [
     {city: "Charleston-Yeager", code: "CRW"},
     {city: "Charlotte/Douglas Int´l", code: "CLT"},
     {city: "Chattanooga Metropolitan", code: "CHA"},
-    {city: "Chavenay", code: "PAR"},
+    {city: "Chavenay", code: "LFPX"},
     {city: "Cheju – Jeju", code: "CJU"},
     {city: "Chelyabinsk – Balandino", code: "CEK"},
     {city: "Chengdu/Shuangliu", code: "CTU"},

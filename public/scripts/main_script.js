@@ -987,7 +987,9 @@ $(function() {
 $(function() {
   $('#hotels_from_when_search_input').daterangepicker({
     opens: 'left',
-    autoUpdateInput: false,
+    startDate: _HSstart,
+    endDate: _HSend,
+    //autoUpdateInput: false,
     locale: {
         cancelLabel: 'Clear'
     }
@@ -998,8 +1000,17 @@ $(function() {
       document.getElementById("hotels_from_when_search_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
     }, 100);
 
+    hotel_search_data.checkin = start.format('YYYY-MM-DD');
+    hotel_search_data.checkout = end.format('YYYY-MM-DD');
+
+    window.localStorage.setItem("hotels_post_data", JSON.stringify(hotel_search_data));
     //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
   });
+
+  setTimeout(()=>{
+    document.getElementById("hotels_from_when_search_input").value = change_date_from_utc_to_actual_format(_HSstart) +" - "+ change_date_from_utc_to_actual_format(_HSend);
+  }, 10);
+
 });
 
 $(function() {

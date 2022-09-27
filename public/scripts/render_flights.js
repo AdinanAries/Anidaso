@@ -1365,6 +1365,7 @@ function render_flights(){
             let fastest_minutes_h_number = 0;
             let fastest_minutes_m_number = 0;
 
+            //Adding Itinerary for first flight as default
             for(let itn = 0; itn < data[0].itineraries.length; itn++){
                 fastest_minutes_h_number += parseInt(data[0].itineraries[itn].duration.substring(2, data[0].itineraries[itn].duration.length).split("H")[0]);
                 let tempMin = data[0].itineraries[itn].duration.substring(2, data[0].itineraries[itn].duration.length).split("H")[1];
@@ -1405,7 +1406,7 @@ function render_flights(){
                 if((parseInt(ahour) * 60) + parseInt(aminute) <= fastest_minutes_number){
                     
                     fastest_minutes_number = (parseInt(ahour) * 60) + parseInt(aminute);
-                    console.log(tp);
+                    //console.log(tp);
                     fastest_price = site_currency_coverter(data[tp].price.currency, current_currency.currency, data[tp].price.total);
                     
                     if(parseFloat(fastest_price.replaceAll(",","")) >= 100000 && (parseFloat(fastest_price.replaceAll(",","")) % 10) === 0){
@@ -1585,13 +1586,13 @@ function render_flights(){
                
             }
 
-            document.getElementById("ticks_top_fastest_categories_price").innerHTML = current_currency.sign + " " + (fastest_price.includes("k") ? 
-            fastest_price : parseFloat(fastest_price.replaceAll(",","")).toFixed(0));
-            document.getElementById("ticks_top_fastest_categories_time").innerHTML = fastest_tickets_departure_duration;
+            document.getElementById("ticks_top_fastest_categories_price").innerHTML = (fastest_price ? current_currency.sign : "") + " " + (fastest_price ? fastest_price.includes("k") ? 
+            fastest_price : parseFloat(fastest_price.replaceAll(",","")).toFixed(0) : "no data");
+            document.getElementById("ticks_top_fastest_categories_time").innerHTML = fastest_tickets_departure_duration || "here";
 
-            document.getElementById("ticks_top_cheapest_categories_price").innerHTML = current_currency.sign + " " + (cheapest_price.includes("k") ? 
-            cheapest_price : parseFloat(cheapest_price.replaceAll(",","")).toFixed(0));
-            document.getElementById("ticks_top_cheapest_categories_time").innerHTML = cheapest_tickets_departure_duration;
+            document.getElementById("ticks_top_cheapest_categories_price").innerHTML = (cheapest_price ? current_currency.sign : "") + " " + (cheapest_price ? cheapest_price.includes("k") ? 
+            cheapest_price : parseFloat(cheapest_price.replaceAll(",","")).toFixed(0) : "no data");
+            document.getElementById("ticks_top_cheapest_categories_time").innerHTML = cheapest_tickets_departure_duration || "here";
 
             main_loop:
             for(var w = 0; w < data.length; w++){
@@ -1877,6 +1878,7 @@ function render_flights(){
                         
                         bhour += parseInt(data[w].itineraries[k].duration.substring(2, data[w].itineraries[k].duration.length).split("H")[0]);
                         let tempMin = data[w].itineraries[k].duration.substring(2, data[w].itineraries[k].duration.length).split("H")[1];
+                        tempMin = tempMin || "00";
                         bminute += parseInt(tempMin.substring(0, (tempMin.length - 1)));
                     
                         trip_departure_total_stops = data[w].itineraries[k].segments.length - 1;
@@ -2073,8 +2075,8 @@ function render_flights(){
                                                     </p>
                                                     <div style="margin-bottom: 10px; display: flex;  flex-direction: row !important; justify-content: space-between;">
                                                         <p style="font-size: 14px;  letter-spacing: 0.5px; font-weight: bolder; opacity: 0.8;">${departure_time} — ${arrival_time}</p>
-                                                        <p style="font-size: 12px;  letter-spacing: 0.8px; font-weight: bolder; opacity: 0.5;">
-                                                            ${segment_cabin}
+                                                        <p style="font-size: 12px;  letter-spacing: 0.8px; font-weight: bolder; opacity: 0.5; padding-left: 5px;">
+                                                            | ${segment_cabin}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -2298,8 +2300,8 @@ function render_flights(){
                                                     </p>
                                                     <div style="margin-bottom: 10px; display: flex;  flex-direction: row !important; justify-content: space-between;">
                                                         <p style="font-size: 14px;  letter-spacing: 0.5px; font-weight: bolder; opacity: 0.8;">${departure_time} — ${arrival_time}</p>
-                                                        <p style="font-size: 12px;  letter-spacing: 0.8px; font-weight: bolder; opacity: 0.5;">
-                                                            ${segment_cabin}
+                                                        <p style="font-size: 12px;  letter-spacing: 0.8px; font-weight: bolder; opacity: 0.5; padding-left: 10px;">
+                                                            | ${segment_cabin}
                                                         </p>
                                                     </div>
                                                 </div>

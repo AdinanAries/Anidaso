@@ -237,6 +237,60 @@ var current_op_cities_edit_elem_id;
 var global_is_room_closed = false;
 var search_result_current_room_id;
 
+function is_today_covered_in_date_range(first_date, last_date){
+
+    const today = new Date();
+    const firstDate = new Date(first_date);
+    const lastDate = new Date(last_date);
+    lastDate.setDate(lastDate.getDate() + 1)
+    
+    let isCovered = false;
+
+    if(today >= firstDate && today <= lastDate)
+        isCovered = true;
+    
+    return isCovered;
+}
+function change_date_from_iso_to_long_date(isoString){
+    
+    let the_year = isoString.split("-")[0];
+    let the_month = isoString.split("-")[1];
+    let the_day = isoString.split("-")[2];
+
+    let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+    let n = the_date.toString().split(" ");
+    let formatted_date = `${n[1]} ${n[2]}, ${n[3]}`;
+
+    return formatted_date;
+}
+function calculate_age(dob) { 
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms); 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+function calculateAge(birthday){
+    const ageDifMs = Date.now() - new Date(birthday).getTime();
+    const ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+function change_iso_date_to_readable_format(isoString){
+    
+    let the_year = isoString.split("-")[0];
+    let the_month = isoString.split("-")[1];
+    let the_day = isoString.split("-")[2];
+  
+    let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
+    let n = the_date.toString().split(" ");
+    let formatted_date = `${n[0]} ${n[1]} ${n[2]}`;
+  
+    return formatted_date;
+}
+//alert(calculateAge("1995-03-23"));
+//console.log(calculate_age(new Date(1992, 03, 23)));
+//alert(is_today_covered_in_date_range("2022-09-23", "2022-09-27"));
+//console.log(change_date_from_iso_to_long_date("2021-12-15"));
+
 function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
     guest_type_param, DOB_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
     room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param){
@@ -449,11 +503,6 @@ function show_add_facilities(){
 
 }
 
-function go_to_checkout_from_inhouse_guests(guest_id, booking_id){
-    toggle_show_in_house_guests_div();
-    toggle_show_guests_checkout_div();
-}
-
 function toggle_show_view_booking_div(){
     $("#view_booking_div").toggle("up");
 }
@@ -627,6 +676,20 @@ function search_booking_post_function(post_obj){
     });
 }
 
+function get_and_return_booking_by_id(id){
+    return $.ajax({
+        type: "GET",
+        url: "/get_booking_by_id/"+id,
+        success: res =>{
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
+
 async function render_search_booking_results_markup(booking){
 
     let property = await get_and_return_hotel_property_by_id(booking.property_id);
@@ -740,11 +803,51 @@ function start_edit_booking(){
     toggle_show_edit_booking_edit_page()
 }
 
-function show_view_booking_div(booking_id){
+async function show_view_booking_div(booking_id){
     if(document.getElementById("view_booking_div").style.display === "none"){
         toggle_show_view_booking_div();
     }
     toggle_show_edit_booking_results_page();
+
+    if(booking_id){
+
+        document.getElementById("view_booking_result_details").innerHTML = `
+            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                </path>
+                </svg>
+                <p style="text-align: center; font-size: 14px; color:white;">
+                loading...
+                </p>
+            </div>
+        `;
+
+        toggle_show_edit_booking_results_page();
+
+        let booking = await get_and_return_booking_by_id(booking_id);
+        console.log(booking);
+        if(booking.empty){
+            document.getElementById("view_booking_result_details").innerHTML = `
+            <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.2);">
+                <i aria-hidden="true" class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;"></i>
+                booking not found
+            </div>
+            `;
+        }else{
+            render_search_booking_results_markup(booking);
+            current_edit_booking_object.booking = booking;
+        }
+
+    }
 }
 
 function toggle_show_guests_invoice_div(){
@@ -910,7 +1013,7 @@ function show_inventory_div(){
 }
 
 async function show_guests_checkout(){
-
+    document.getElementById("guests_manager_div").style.display = "none";
     toggle_show_guests_checkout_div();
     setTimeout(()=>{
         load_country_calling_codes_on_select_input("checkout_guests_search_country_calling_code_select");
@@ -931,7 +1034,7 @@ function toggle_show_in_house_guests_div(){
 }
 
 async function show_in_house_guests(){
-
+    document.getElementById("guests_manager_div").style.display = "none";
     toggle_show_in_house_guests_div();
     setTimeout(()=>{
         load_country_calling_codes_on_select_input("inhouse_guests_search_country_calling_code_select");
@@ -979,6 +1082,50 @@ async function show_guest_manager_find_guest(){
         `; 
     }
 }
+function toggle_show_guest_manager_edit_guest(){
+    $("#guest_manager_edit_guest_div").toggle("up");
+}
+async function show_guest_manager_edit_guest_div(){
+
+    if(document.getElementById("guests_manager_div").style.display==="none"){
+        toggle_show_guests_manager_div();
+    }
+    document.getElementById("guest_manager_search_guest_div").style.display = "none";
+    document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
+    document.getElementById("guest_manager_view_guest_profile_div").style.display = "none";
+    document.getElementById("guest_manager_menu_div").style.display = "none";
+
+    setTimeout(()=>{
+        load_country_calling_codes_on_select_input("guest_manager_edit_guest_country_calling_code_input");
+    },510);
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("guest_manager_edit_guest_property_select").innerHTML = '';
+    for(let i=0; i < properties.length; i++){
+        document.getElementById("guest_manager_edit_guest_property_select").innerHTML += `
+            <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
+        `; 
+    }
+
+    toggle_show_guest_manager_edit_guest();
+}
+
+function show_all_invoices(){
+    $("#all_invioces_pane").toggle("up");
+}
+
+function hide_all_invoices(){
+    $("#all_invioces_pane").toggle("up");
+}
+
+function show_all_payouts(){
+    $("#all_payouts_pane").toggle("up");
+}
+
+function hide_all_payouts(){
+    $("#all_payouts_pane").toggle("up");
+}
 
 function toggle_show_guest_manager_menu(){
     $("#guest_manager_menu_div").toggle("up");
@@ -987,6 +1134,8 @@ function toggle_show_guest_manager_menu(){
 function show_guest_manager_menu(){
     document.getElementById("guest_manager_search_guest_div").style.display = "none";
     document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
+    document.getElementById("guest_manager_edit_guest_div").style.display = "none";
+    document.getElementById("guest_manager_view_guest_profile_div").style.display = "none";
     if(document.getElementById("guest_manager_menu_div").style.display = "none"){
         toggle_show_guest_manager_menu();
     }
@@ -999,6 +1148,8 @@ function toggle_show_guest_manager_add_new_guest(){
 async function show_guest_manager_add_new_guest(){
     document.getElementById("guest_manager_search_guest_div").style.display = "none";
     document.getElementById("guest_manager_menu_div").style.display = "none";
+    document.getElementById("guest_manager_edit_guest_div").style.display = "none";
+    document.getElementById("guest_manager_view_guest_profile_div").style.display = "none";
     toggle_show_guest_manager_add_new_guest();
 
     setTimeout(()=>{
@@ -1023,6 +1174,14 @@ function show_guest_manager_add_new_guest_address(){
     toggle_show_guest_manager_add_new_guest_address();
 }
 
+function toggle_show_guest_manager_edit_guest_address(){
+    $("#guest_manager_edit_guest_address").toggle("up");
+}
+
+function show_guest_manager_edit_guest_address(){
+    toggle_show_guest_manager_edit_guest_address();
+}
+
 function guest_manager_save_new_guest_address(){
     toggle_show_guest_manager_add_new_guest_address();
 }
@@ -1035,6 +1194,32 @@ function show_guest_manager_add_new_guest_photo(){
     toggle_show_guest_manager_add_new_guest_photo();
 }
 
+function toggle_show_guest_manager_edit_guest_photo(){
+    $("#guest_manager_edit_guest_profile_photo").toggle("up");
+}
+
+function show_guest_manager_edit_guest_photo(){
+    toggle_show_guest_manager_edit_guest_photo();
+}
+
+function toggle_show_guest_manager_view_guest_profile_div(){
+    $("#guest_manager_view_guest_profile_div").toggle("up");
+}
+
+function show_guest_manager_view_guest_profile_div(){
+    
+    if(document.getElementById("guests_manager_div").style.display==="none"){
+        toggle_show_guests_manager_div();
+    }
+    document.getElementById("guest_manager_search_guest_div").style.display = "none";
+    document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
+    document.getElementById("guest_manager_edit_guest_div").style.display = "none";
+    document.getElementById("guest_manager_menu_div").style.display = "none";
+    document.getElementById("guest_manager_view_guest_profile_div").style.display = "none";
+
+    toggle_show_guest_manager_view_guest_profile_div();
+}
+
 function guest_manager_save_new_guest_photo(){
     toggle_show_guest_manager_add_new_guest_photo();
 }
@@ -1044,7 +1229,7 @@ function toggle_show_hide_arrival_guests_div(){
 }
 
 async function show_arrival_guests(){
-
+    document.getElementById("guests_manager_div").style.display = "none";
     toggle_show_hide_arrival_guests_div();
     setTimeout(()=>{
         load_country_calling_codes_on_select_input("arrival_guests_search_country_calling_code_select");
@@ -1084,29 +1269,6 @@ function show_notifications(){
     toggle_show_notifications_div();
 }
 
-function change_date_from_iso_to_long_date(isoString){
-    
-    let the_year = isoString.split("-")[0];
-    let the_month = isoString.split("-")[1];
-    let the_day = isoString.split("-")[2];
-
-    let the_date = new Date(`${the_year}/${the_month}/${the_day}`);
-    let n = the_date.toString().split(" ");
-    let formatted_date = `${n[1]} ${n[2]}, ${n[3]}`;
-
-    return formatted_date;
-}
-
-//console.log(change_date_from_iso_to_long_date("2021-12-15"));
-
-function calculate_age(dob) { 
-    var diff_ms = Date.now() - dob.getTime();
-    var age_dt = new Date(diff_ms); 
-  
-    return Math.abs(age_dt.getUTCFullYear() - 1970);
-}
-
-//console.log(calculate_age(new Date(1992, 03, 23)));
 function reservation_bind_guest_dob_chooser(type, input, index){
     $(function() {
         $('#'+input).daterangepicker({
@@ -3634,6 +3796,7 @@ function get_and_return_hotel_property_by_id(property_id){
         type: "GET",
         url: "/get_property_by_id/"+property_id,
         success: res => {
+            //console.log(res);
             return res;
         },
         error: err => {
@@ -4468,6 +4631,22 @@ async function save_new_property(){
         reset_add_new_building_inputs();
     }
 }
+
+function get_bookings_using_guest_id(guest_id, property_id, brand_id){
+    return $.ajax({
+        type: "GET",
+        url: `/get_cheap_hotel_bookings_by_guest/${guest_id}/${property_id}/${brand_id}`,
+        success: res => {
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+//console.log(get_bookings_using_guest_id("6329e2f4deec1e00043fa501", "607304a562a84645bccdf40b", "6063dd3fb6dfe50bc800dd5f"));
 
 document.getElementById("add_hotel_property_form_save_btn").addEventListener("click", e => {
     save_new_property();
