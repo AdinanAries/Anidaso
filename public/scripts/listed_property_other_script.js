@@ -437,6 +437,10 @@ function return_arrival_guests_markup(guest, booking, invoice, property, index){
                     </div>
                 </div>
                 <div id="arrival_guest_checkin_btn_set${index}" style="display: flex; flex-direction: row !important;">
+                    <div id="arrival_guest_already_checked_in_msg${index}" style="display: none; background-color:rgba(0,0,0,0.5); border: 1px solid lightgreen; color: white; width: fit-content; padding: 10px; margin-right: 10px; font-size: 13px;">
+                        <i class="fa fa-check" style="margin-right: 10px; color: lightgreen;" aria-hidden="true"></i>
+                        Guest Staying!
+                    </div>
                     <div id="arrival_guest_checkin_btn_main${index}" onclick="start_guest_checkin('${guest._id}','${booking._id}', '${index}');" style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         <i ${chk_in_btn_status_style} aria-hidden="true"></i>
                         Check Guest In
@@ -1174,6 +1178,7 @@ function start_guest_checkin(guest_id, booking_id, index){
                     Guest Checkin Successfull!
                 `;
                 document.getElementById("arrival_guest_checkin_btn_main"+index).style.display="none";
+                document.getElementById("arrival_guest_already_checked_in_msg"+index).style.display="block";
             }else{
                 document.getElementById("arrival_guest_checkin_confirm_msg_p"+index).innerHTML = `
                     <span style="color: red; font-size: 14px;"><i style="color: red; margin-right: 5px;" class="fa fa-exclamation-triangle"></i>
