@@ -4,6 +4,9 @@
   font-family: Roboto;
   font-size: 16px;
 }
+select {
+  -webkit-appearance: none;
+}
 /*-------------------------------*/
 @keyframes come_in_from_left_anim{
   0% {

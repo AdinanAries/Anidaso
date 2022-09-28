@@ -2223,19 +2223,21 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
 
     let room_booked_status = `
         <i aria-hidden="true" class="fa fa-circle" style="color:rgb(88, 236, 51); margin-right: 2px;"></i> 
-        (vacant)
+        (<i aria-hidden="true" class="fa fa-check" style="color: lightgreen; margin-right: 2px;"></i>
+        vacant)
     `;
     if(is_booked){
         room_booked_status = `
             <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-            (occupied)
+            (<i aria-hidden="true" class="fa fa-bed" style="color: lightgreen; margin-right: 2px;"></i>
+            occupied)
         `;
     }
 
     if(is_closed){
         room_booked_status = `
             <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-            (<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 2px;"></i> 
+            (<i aria-hidden="true" class="fa fa-lock" style="color: orangered; margin-right: 2px;"></i> 
             closed)
         `;
     }
@@ -2380,7 +2382,7 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
 
         room_booked_status = `
             <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 2px;"></i> 
-            (<i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 2px;"></i> 
+            (<i aria-hidden="true" class="fa fa-lock" style="color: orangered; margin-right: 2px;"></i> 
             closed)
         `;
 
@@ -3577,7 +3579,7 @@ async function render_hotel_rooms(rooms_list){
 
         if(rooms_sublist[r].closed){
             room_booked = `
-                <i aria-hidden="true" class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 5px;"></i> 
+                <i aria-hidden="true" class="fa fa-lock" style="color: orangered; margin-right: 5px;"></i> 
                 closed
             `;
             /*if(booking[0]){
