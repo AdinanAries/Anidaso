@@ -198,7 +198,7 @@ async function hotel_guests_search_function(type){
         document.getElementById("checkout_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
             let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
-            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
+            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property, i);
         }
 
     }
@@ -310,7 +310,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
     `;
 }
 
-function return_guest_checkout_markup(guest, booking, invoice, property){
+function return_guest_checkout_markup(guest, booking, invoice, property, index){
     return `
         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
@@ -333,25 +333,47 @@ function return_guest_checkout_markup(guest, booking, invoice, property){
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
             </div>
-            <div class="flex_child_of_two flex_non_first_child">
+            <div id="checkout_guest_btn_set${index}" class="flex_child_of_two flex_non_first_child">
                 <div style="display: flex; flex-direction: row !important;">
-                    <div style="background-color: crimson; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
-                        Checkout Guest
+                    <div style="background-color: rgba(0,0,0,0.5); color: white; width: fit-content; padding: 10px; margin-right: 10px; border: 1px solid lightgreen; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
+                        Total: $244.00
                     </div>
-                    <div style="background-color: cornflowerblue; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
-                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                        Add to Running Invoice
+                    <div onclick="start_guest_checkout('${index}');" style="background-color: crimson; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        Checkout Guest
                     </div>
                 </div>
                 <div style="display: flex; flex-direction: row !important;">
                     <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
-                        view running invoice
+                        view invoice
                         <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
-                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                    <div onclick="show_view_booking_div('${booking._id}');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                         view booking
                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
+                </div>
+            </div>
+            <div id="checkout_add_payment_div${index}" style="display: none; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; padding: 10px;">
+                <p style="color: white; font-size: 14px; margin-bottom: 10px; margin-top: 5px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                    Payment (<span style="color: lightgreen; font-size: 14px;">
+                        $244.00</span>)<p>
+                <div style="display: flex; flex-direction: row !important;">
+                    <div onclick="guest_checkout_cancel_checkout('${index}');" style="font-size: 14px; color: red; padding: 5px; padding-left: 0; cursor: pointer;">
+                        <i style="color: red; margin-right: 5px;" class="fa fa-times" aria-hidden="true"></i>
+                        cancel
+                    </div>
+                    <div onclick="view_many_guests_running_invoice();" style="font-size: 14px; color: rgb(252, 255, 211); margin-left: 10px; padding: 5px; padding-left: 10px; cursor: pointer; border-left: 1px solid rgba(255,255,255,0.2);">
+                        view details
+                    </div>
+                </div>
+                <div style="margin: 10px 0;">
+                    <input style="padding: 10px; border: none; width: calc(100% - 20px); font-size: 14px; margin-bottom: 3px; border-radius: 4px" type="text" placeholder="card holder full name"/>
+                    <input style="padding: 10px; border: none; width: calc(100% - 20px); font-size: 14px; border-radius: 4px" type="text" placeholder="card number"/>
+                </div>
+                <div onclick="" style="background-color: darkslateblue; text-align: center; color: white; cursor: pointer; padding: 10px; border-radius: 4px; font-size: 13px;">
+                    <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>    
+                    Submit
                 </div>
             </div>
         </div>
@@ -1191,4 +1213,74 @@ function start_guest_checkin(guest_id, booking_id, index){
             console.log(err);
         }
     });
+}
+
+let initial_total = 400.00;
+let current_invoice_total = 0;
+function include_service_into_running_invoice(service_id, index, event_from_check_box=false){
+
+    if(!event_from_check_box) {
+        document.getElementById("include_services_item_checkbox"+index).checked = true;
+    }else if(event_from_check_box){
+        if(current_invoice_total != 0){
+            remove_service_from_running_invoice(service_id, index, event_from_check_box);
+            return;
+        }
+
+    }
+
+    $("#include_services_include_item_btn"+index).toggle("up");
+    $("#include_services_remove_item_btn"+index).toggle("up");
+    $("#include_services_quantity_params"+index).toggle("up");
+    setTimeout(()=>document.getElementById("include_services_quantity_params"+index).style.display="flex",300);
+
+    let unit_price = 19.99;
+    let quantity = document.getElementById("include_services_quantity_input"+index).value;
+    let item_total = unit_price * parseInt(quantity);
+    current_invoice_total = initial_total + item_total;
+    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(unit_price).toFixed(2)}`;
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
+}
+
+function remove_service_from_running_invoice(service_id, index){
+
+    document.getElementById("include_services_item_checkbox"+index).checked = false;
+
+    $("#include_services_include_item_btn"+index).toggle("up");
+    $("#include_services_remove_item_btn"+index).toggle("up");
+    $("#include_services_quantity_params"+index).toggle("up");
+
+    let unit_price = 19.99;
+    let quantity = document.getElementById("include_services_quantity_input"+index).value;
+    let item_total = unit_price * parseInt(quantity);
+    current_invoice_total = current_invoice_total - item_total;
+    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(unit_price).toFixed(2)}`;
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
+    document.getElementById("include_services_quantity_input"+index).value = 1;
+    current_invoice_total = 0;
+
+}
+
+function include_service_change_quantity(service_id, index){
+    let unit_price = 19.99;
+    let quantity = document.getElementById("include_services_quantity_input"+index).value;
+    let item_total = unit_price * parseInt(quantity);
+    current_invoice_total = initial_total + item_total;
+    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(item_total).toFixed(2)}`;
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
+}
+
+function start_guest_checkout(index){
+    $("#checkout_guest_btn_set"+index).toggle("up");
+    $("#checkout_add_payment_div"+index).toggle("up");
+}
+
+function guest_checkout_cancel_checkout(index){
+    $("#checkout_guest_btn_set"+index).toggle("up");
+    $("#checkout_add_payment_div"+index).toggle("up");
+}
+
+function go_to_checkout_from_invoice(){
+    document.getElementById("in_guests_checkout_div").style.display="block";
+    $("#guests_invoice_div").toggle("up");
 }
