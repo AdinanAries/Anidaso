@@ -632,12 +632,37 @@ footer a {
   color: white;
   font-size: 13px;
 }
+.recently_booked_and_rooms_div{
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+#logged_in_hotel_recently_booked_rooms_list{
+  min-width: 450px;
+}
+.logged_in_hotel_gallery{
+  border: 1px solid rgba(255,255,255,0.2);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 @media only screen and (max-width: 1300px) {
   .wrapper {
     margin: 0 10px;
   }
 }
 @media only screen and (max-width: 1000px) {
+  .recently_booked_and_rooms_div{
+    border: none;
+    display: block;
+  }
+  #logged_in_hotel_recently_booked_rooms_list{
+    min-width: auto;
+  }
+.logged_in_hotel_recent_rooms_list{
+  margin-top: 20px;
+}
   .wrapper {
     margin: 0;
   }
