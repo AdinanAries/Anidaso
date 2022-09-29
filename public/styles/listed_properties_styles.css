@@ -7,6 +7,12 @@
 select {
   -webkit-appearance: none;
 }
+select:focus {
+  outline: none;
+}
+select.payouts_cycle_select_input option {
+  background-color:rgb(3, 31, 53);
+}
 li{
   list-style-type: none !important;
 }

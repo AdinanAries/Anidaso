@@ -2198,7 +2198,9 @@
                             <p style="margin-left: 10px; color: white;">
                                 <span style="margin-left: 5px; font-size: 13px;">$500.00</span>
                                 <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
-                                <span style="font-size: 13px; color: rgb(255, 132, 132);">March 23 2022</span>
+                                <span style="margin-left: 5px; font-size: 13px; color: rgb(255, 132, 132);">March 23 2022</span>
+                                <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                                <span style="margin-left: 5px; font-size: 13px; color: rgb(255, 132, 132);">Monthly</span>
                             </p>
                         </div>
                     </div>
@@ -2213,6 +2215,8 @@
                                     <span style="margin-left: 5px; font-size: 13px;">$500.00</span>
                                     <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
                                     <span style="font-size: 13px;">March 23 2022</span>
+                                    <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                                    <span style="margin-left: 5px; font-size: 13px;">Monthly</span>
                                 </p>
                             </div>
                         </div>
@@ -2226,6 +2230,8 @@
                                     <span style="margin-left: 5px; font-size: 13px;">$500.00</span>
                                     <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
                                     <span style="font-size: 13px;">March 23 2022</span>
+                                    <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                                    <span style="margin-left: 5px; font-size: 13px;">Monthly</span>
                                 </p>
                             </div>
                         </div>
@@ -2239,6 +2245,8 @@
                                     <span style="margin-left: 5px; font-size: 13px;">$500.00</span>
                                     <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
                                     <span style="font-size: 13px;">March 23 2022</span>
+                                    <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                                    <span style="margin-left: 5px; font-size: 13px;">Monthly</span>
                                 </p>
                             </div>
                         </div>
@@ -2252,6 +2260,8 @@
                                     <span style="margin-left: 5px; font-size: 13px;">$500.00</span>
                                     <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
                                     <span style="font-size: 13px;">March 23 2022</span>
+                                    <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                                    <span style="margin-left: 5px; font-size: 13px;">Monthly</span>
                                 </p>
                             </div>
                         </div>
@@ -3657,7 +3667,7 @@
                         </div>
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
-                                Invoices</p>
+                                Subscriptions</p>
                             <div id="logged_in_hotel_invoices_list">
                                 <div class="logged_in_hotel_invoice">
                                     <p>
@@ -3681,7 +3691,7 @@
                                         </span>
                                     </p>
                                 </div>
-                                <p onclick="show_all_invoices();" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
+                                <p onclick="show_all_invoices();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 13px; padding: 10px;">
                                     see all invoices</p>
                             </div>
                         </div>
@@ -3701,8 +3711,21 @@
                                 <span style="color:aqua; font-size: 14px;">Next Date:</span>
                                 Feb 4, 2022
                             </p>
-                            <p onclick="show_all_payouts();" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
+                            <p onclick="show_all_payouts();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 13px; padding: 10px;">
                                 see all payouts</p>
+                            <div style="background-color: rgba(0, 0, 0, 0.5); margin-top: 10px; border: 1px solid aqua; padding: 0 10px; overflow: hidden;">
+                                <span style="color:aqua; font-size: 14px;">Payment Cycle:</span>
+                                <select class="payouts_cycle_select_input" style="border: none; background: none; padding: 10px; color: white; font-size: 14px;">
+                                    <option value="1">Weekly</option>
+                                    <option value="1">Bi-Weekly</option>
+                                    <option value="1">Monthly</option>
+                                    <option value="1">Quaterly</option>
+                                    <option value="1">6-Monthly</option>
+                                    <option value="1">Yearly</option>
+                                </select>
+                                <span>
+                                    <i style="color: aqua; font-size: 14px;" class="fa fa-caret-down" aria-hidden="true"></i></span>
+                            </div>
                         </div>
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
@@ -3742,7 +3765,7 @@
                                         
                                         </ul>
                                         <p style="text-align: right; margin: 10px; color: rgb(5, 57, 99); font-size: 12px; margin-bottom: 0;">
-                                        powered by <span style="font-size: 12px; color: rgb(209, 84, 0); font-weight: bolder; letter-spacing: 1px;">Anidaso</span>
+                                        powered by <span style="font-size: 12px; color: rgb(209, 84, 0); font-weight: bolder; letter-spacing: 1px;">Wellgo</span>
                                         </p>
                                     </div>
                                 </div>
@@ -4110,15 +4133,15 @@
                   <li><a href="#">Mobile</a></li>
                   <li><a href="#">Discover</a></li>
                   <li><a href="#">How we work</a></li>
-                  <li><a href="#">Why travelers choose Anidaso</a></li>
+                  <li><a href="#">Why travelers choose Wellgo</a></li>
                 </ul>
                 <div class="site_logo_container" style="margin-top: 40px">
                     <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                      <p><span>An</span>i<span>d</span>a<span>s</span>o<sup style="font-size: 12px;">&reg;</sup></p>
+                      <p><span>We</span>l<span>l</span>g<span>o</span><sup style="font-size: 12px;">&reg;</sup></p>
                     </div>
                   <p
                     style="color: darkgrey; font-weight: initial; font-family: 'Roboto' !important; font-size: 13px;"
-                  >Anidaso &copy; 2020
+                  >Wellgo &copy; 2020
                   </p>
                   <p>
                     <a href="" target="_blank" rel="noopener noreferrer">
@@ -4182,7 +4205,7 @@
                     margin-bottom: 15px;
                   "
                 >
-                  About Anidaso
+                  About Wellgo
                 </p>
                 <p
                   style="
@@ -4192,7 +4215,7 @@
                     text-align: justify;
                   "
                 >
-                  Anidaso is a travel and hospitality retail provider based in the United States of America whose 
+                  Wellgo is a travel and hospitality retail provider based in the United States of America whose 
                   business operations span multiple countries. In partnership with major providers and players in the 
                   travel industry, our main services focus on helping travelers shop flights, 
                   hotels, and rental cars, at affordable prices.
@@ -4237,6 +4260,10 @@
                 <p class="footer_section_header">Site/Currency</p>
                 <div class="footer_fld_cntn">
                   <div class="site_language_select">
+                    <div style="color: white; padding: 5px; font-size: 13px;">
+                        <i class="fa fa-exclamation-triangle" style="color: orangered; margin-right: 10px" aria-hidden="true"></i>
+                        Not Available
+                    </div>
                     <!--div id="site_language_select_options_as_id" class="site_language_select_options">
                       <p style="color:rgb(0, 127, 177); text-align: center; font-weight: bolder;">Site/Currency</p>
                       <div class="site_language_select_options_list">
