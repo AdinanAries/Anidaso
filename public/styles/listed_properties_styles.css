@@ -660,6 +660,10 @@ footer a {
   #logged_in_hotel_recently_booked_rooms_list{
     min-width: auto;
   }
+  .logged_in_hotel_gallery{
+    border: none;
+    padding: 0;
+  }
 .logged_in_hotel_recent_rooms_list{
   margin-top: 20px;
 }
