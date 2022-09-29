@@ -315,7 +315,7 @@
                             <input id="add_new_inventory_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter item name here" value="" />
                         </div>
                         <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Quantity</p>
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Stock Quantity</p>
                             <input id="add_new_inventory_quantity_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="enter quantity here" value="" />
                         </div>
                     </div>
@@ -335,12 +335,12 @@
                         </div>
                     </div>
                     <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
+                        <div style="display: none; width: calc(50% - 5px);">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Unit Price
                                 <span style="font-size: 12px; color:rgba(255, 208, 187, 0.815);"> in USD($)</span></p>
                             <input id="add_new_inventory_other_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="enter a unit price here" value="" />
                         </div>
-                        <div style="width: calc(50% - 5px);">
+                        <div style="width: 100%;">
                             <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
                             <select id="add_new_inventory_property_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
                                 
@@ -368,7 +368,7 @@
                 <div style="padding: 10px;">
                     <p style="text-align: center; font-size: 14px; color:rgb(216, 74, 74); font-weight: bolder; margin-top: 10px; margin-bottom: 5px;">
                         Inventory Manager</p>
-                    <p style="font-size: 15px; color: white; text-align: center; font-weight: bolder; margin-bottom: 20px;">
+                    <p style="font-size: 14px; color: white; text-align: center; margin-bottom: 20px;">
                         Select property to view inventory</p>
                     <div id="inventory_manager_select_property">
                         
@@ -382,7 +382,7 @@
                 </p>
                 <p style="text-align: center; margin: 10px; margin-top: 3px; color:rgb(255, 200, 200); font-size: 11px;">
                     <span style="font-size: 12px; color:rgb(255, 94, 0); font-weight: bolder;">
-                    Anidaso<span style="color: white; font-size: 12px; font-weight: initial;">.com</span></span> 
+                    Wellgo<span style="color: white; font-size: 12px; font-weight: initial;">.com</span></span> 
                     &copy; all rights reserved
                 </p>
             </div>
@@ -415,6 +415,7 @@
                     </div>
                 </div>
                 <div style="margin-top: 10px; padding: 10px; overflow: auto;">
+                    <div id="cheap_hotel_inventory_list_select_property"></div>
                     <table id="cheap_hotel_inventory_list_table" style="width: 100%; border-spacing: 5px;">
                         <tbody id="cheap_hotel_inventory_list_table_body">
                             <div id="property_not_selected_status" style="padding: 30px 10px;">

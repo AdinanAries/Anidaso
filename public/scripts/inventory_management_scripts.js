@@ -6,6 +6,7 @@ var add_new_inventory_property_input = document.getElementById("add_new_inventor
 var add_new_inventory_description_input = document.getElementById("add_new_inventory_description_input");
 
 var cheap_hotel_inventory_list_table_body = document.getElementById("cheap_hotel_inventory_list_table_body");
+var cheap_hotel_inventory_list_select_property_display = document.getElementById("cheap_hotel_inventory_list_select_property");
 
 var new_inventory_item_post_data = {
     hotel_brand_id: "",
@@ -18,12 +19,6 @@ var new_inventory_item_post_data = {
         stock_quantity: 0,
         description: "",
     }
-}
-
-var search_inventory_item_post_data = {
-    hotel_brand_id: "",
-    property_id: "",
-    search_param: "",
 }
 
 function get_and_return_all_inventory(hotel_id, property_id){   
@@ -61,6 +56,26 @@ async function get_and_show_all_inventory(property_id){
         `
         return null;
     }
+
+    if(property_id !== "all"){
+        let property = await get_and_return_hotel_property_by_id(property_id);
+        cheap_hotel_inventory_list_select_property_display.innerHTML = `
+            <p style="margin-bottom: 10px; font-size: 13px; color: rgba(255,255,255,0.6);">
+                <i class="fa fa-building" style="margin-right: 5px;" aria-hidden="true"></i>
+                <span>${property.city}</span> - ${property.street_address}, ${property.country}
+                <i onclick="show_inventory_select_property();" class="fa fa-refresh" style="margin-left: 10px; font-size: 15px; cursor: pointer;" aria-hidden="true"></i>
+            </p>
+        `; 
+    }else {
+        cheap_hotel_inventory_list_select_property_display.innerHTML = `
+            <p style="margin-bottom: 10px; font-size: 13px; color: rgba(255,255,255,0.6);">
+                <i class="fa fa-building" style="margin-right: 5px;" aria-hidden="true"></i>
+                all properties
+                <i onclick="show_inventory_select_property();" class="fa fa-refresh" style="margin-left: 10px; font-size: 15px; cursor: pointer;" aria-hidden="true"></i>
+            </p>
+        `; 
+    }
+    
 
     cheap_hotel_inventory_list_table_body.innerHTML = `
         <tr>
@@ -127,7 +142,7 @@ function collect_new_inventory_item_info_from_inputs(){
     let item_name = add_new_inventory_name_input.value;
 
     new_inventory_item_post_data.item.code = generate_item_code(4, item_name.split(" ")[0]);
-    new_inventory_item_post_data.item.name = item_name;
+    new_inventory_item_post_data.item.name = item_name.trim();
     new_inventory_item_post_data.item.unit_price = add_new_inventory_unit_price_input.value;
     new_inventory_item_post_data.item.stock_quantity = add_new_inventory_quantity_input.value;
     new_inventory_item_post_data.item.service_department = add_new_inventory_service_department_input.value;

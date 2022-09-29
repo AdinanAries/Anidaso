@@ -216,6 +216,11 @@ var make_reservations_post_data = {
         }
     }
 }
+var search_inventory_item_post_data = {
+    hotel_brand_id: "",
+    property_id: "all",
+    search_param: "",
+}
 
 let todays_date = new Date();
 let todays_date2 = new Date();
@@ -393,13 +398,16 @@ async function show_add_inventory_item_form(){
     toggle_show_add_inventory_form_div();
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
-    document.getElementById("add_new_inventory_property_input").innerHTML = "";
+    document.getElementById("add_new_inventory_property_input").innerHTML = `
+    <option value="all">All</option>
+    `;
 
     for(let i = 0; i < properties.length; i++){
         document.getElementById("add_new_inventory_property_input").innerHTML += `
         <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
         `;
     }
+    document.getElementById("add_new_inventory_property_input").value = search_inventory_item_post_data.property_id;
 }
 
 function toggle_show_add_services_from_list_div(){
@@ -983,7 +991,7 @@ async function show_inventory_select_property(){
     document.getElementById("inventory_manager_select_property").innerHTML = `
         <div style="padding: 10px; background-color: white; border-radius: 4px; margin-bottom: 5px;">
             <p style="color: rgb(0, 82, 121); font-weight: bolder; font-size: 14px;">
-                <i style="margin-right: 5px; color:rgb(235, 86, 0); font-size: 22px;" class="fa fa-building" aria-hidden="true"></i>
+                <i style="margin-right: 5px; color:rgb(235, 86, 0);" class="fa fa-building" aria-hidden="true"></i>
                 All Properties</p>
             <div onclick="get_and_show_all_inventory('all');" style="cursor: pointer; font-size: 14px; color: white; margin-top: 10px; width: fit-content; background-color:rgb(0, 28, 54); border-radius: 4px; padding: 10px;">
                 manage inventory
@@ -994,7 +1002,7 @@ async function show_inventory_select_property(){
         document.getElementById("inventory_manager_select_property").innerHTML += `
             <div style="padding: 10px; background-color: white; border-radius: 4px; margin-bottom: 5px;">
                 <p style="color: rgb(0, 82, 121); font-weight: bolder; font-size: 14px;">
-                    <i style="margin-right: 5px; color:rgb(235, 86, 0); font-size: 22px;" class="fa fa-building" aria-hidden="true"></i>
+                    <i style="margin-right: 5px; color:rgb(235, 86, 0);" class="fa fa-building" aria-hidden="true"></i>
                     ${properties[i].city}</p>
                 <p style="margin-top: 5px; font-size: 13px; color:rgb(25, 90, 90);">
                     ${properties[i].street_address}, ${properties[i].country}

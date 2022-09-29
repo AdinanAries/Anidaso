@@ -1547,30 +1547,29 @@ app.post("/add_new_inventory_item/", async (req, res, next) => {
 });
 
 app.get("/get_all_hotel_inventory/:hotel_brand_id/:property_id", async (req, res, next) => {
-
   let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.params.hotel_brand_id});
-
   if(inventory){
-
-    inventory.items = inventory.items.filter( each => {
-      return (each.property_id === req.params.property_id);
-    });
-
+    if(req.params.property_id !== "all"){
+      inventory.items = inventory.items.filter( each => {
+        return (each.property_id === req.params.property_id || each.property_id === "all");
+      });
+    }
     res.send(inventory);
-
   }else{
     res.send({nonAdded: true});
   }
-
 });
 
 app.post("/search_inventory_item/", async (req, res, next) => {
 
   let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.body.hotel_brand_id});
 
-  let property_inventory = inventory.items.filter( each => {
-     return (each.property_id === req.body.property_id)
-  });
+  let property_inventory = inventory.items;
+  if(req.body.property_id !== "all"){
+    property_inventory = inventory.items.filter( each => {
+      return (each.property_id === req.body.property_id)
+    });
+  }
 
   let items = property_inventory.filter( each => {
       return ((each.name.toLowerCase() === req.body.search_param.toLowerCase()) || (each.code.toLowerCase() === req.body.search_param.toLowerCase()))
