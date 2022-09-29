@@ -298,14 +298,14 @@ li{
   border-radius: 3px;
 }
 .page_popup_content_header {
-  padding: 10px;
-  height: 70px;
+  padding: 5px;
+  height: 60px;
 }
 .page_popup_content_body {
   overscroll-behavior: contain;
   padding: 10px 5px;
   background-color: rgb(14, 31, 61);
-  height: calc(100% - 165px);
+  height: calc(100% - 132px);
   overflow: auto;
 }
 .flex_row_default_flex_column_mobile {
@@ -649,10 +649,10 @@ footer a {
     display: flex !important;
   }
   .page_popup_content_header {
-    height: 150px;
+    height: 140px;
   }
   .page_popup_content_body {
-    height: calc(100% - 240px);
+    height: calc(100% - 218px);
   }
   .flex_row_default_flex_column_mobile {
     display: block !important;
