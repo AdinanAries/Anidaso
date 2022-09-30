@@ -1413,66 +1413,39 @@
                 </div>
                 
                 <div class="page_popup_content_body" style="height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
-                    <div>
-                        <p style="font-size: 13px; color: white; margin-bottom: 5px; margin-top: 10px;">
-                            Type of Service</p>
-                        <select style="padding: 10px; border-radius: 4px; background-color: floralwhite; width: 100%;">
-                            <option>Inventory</option>
-                            <option>Services</option>
-                            <option>Facilities</option>
-                        </select>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 50%;">
+                            <p style="font-size: 13px; color: white; margin-bottom: 5px; margin-top: 10px;">
+                                Property</p>
+                            <select id="include_services_in_booking_property_select" style="padding: 10px; border-radius: 4px; background-color: floralwhite; width: 100%;">
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                        <div style="width: 50%;">
+                            <p style="font-size: 13px; color: white; margin-bottom: 5px; margin-top: 10px;">
+                                Type of Service</p>
+                            <select id="include_services_in_booking_service_type_select_input" style="padding: 10px; border-radius: 4px; background-color: floralwhite; width: 100%;">
+                                <option value="inventory">Inventory</option>
+                                <option value="services">Services</option>
+                                <option value="facilities">Facilities</option>
+                            </select>
+                        </div>
                     </div>
                     <div>
                         <p style="font-size: 13px; color: white; margin-bottom: 5px; margin-top: 10px;">
                             Search Service Item</p>
                         <div style="display: flex; flex-direction: row !important;">
-                            <input id="search_inventory_item_input_fld" type="text" style="padding: 10px; border: none; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 110px); font-size: 14px;" placeholder="enter product name/code"/>
-                            <div id="search_inventory_item_search_btn" style="cursor: pointer; width: 90px; font-size: 14px; color: white; background-color: rgb(136, 17, 17); text-align: center; padding: 10px; border-top-right-radius: 4px; border-bottom-right-radius: 4px;">
+                            <input id="include_services_in_booking_search_input_fld" type="text" style="padding: 10px; border: none; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 110px); font-size: 14px;" placeholder="enter product name/code"/>
+                            <div id="include_services_in_booking_search_btn" style="cursor: pointer; width: 90px; font-size: 14px; color: white; background-color: rgb(136, 17, 17); text-align: center; padding: 10px; border-top-right-radius: 4px; border-bottom-right-radius: 4px;">
                                 Search
                             </div>
                         </div>
                     </div>
                     <p style="font-size: 13px; color: rgb(255, 147, 147); margin-top: 15px; margin-bottom: 10px;  margin-left: 10px;">
                         See Items Below</p>
-                    <div id="arrival_guest_add_services_list">
-                        <div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
-                            <div style="margin-right: 5px; display: flex; flex-direction: row !important;">
-                                <div style="margin-right: 10px;">
-                                    <input onclick="include_service_into_running_invoice('service_id', 0, true);" id="include_services_item_checkbox0" type="checkbox"/>
-                                </div>
-                                <div>
-                                    <p style="color: rgb(255, 94, 0); font-size: 14px; margin-bottom: 5px;">
-                                        Neat Fufu</p>
-                                    <p style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
-                                        $19.99</p>
-                                        <div id="include_services_quantity_params0" style="margin-top: 10px; display: none; flex-direction: row !important; justify-content: space-between; border-top: rgba(255, 208, 187, 0.815) 1px solid; padding-top: 10px;">
-                                            <div style="margin-right: 20px;">
-                                                <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
-                                                    How many?</p>
-                                                <input id="include_services_quantity_input0" oninput="include_service_change_quantity('service_id', 0)" style="border: none; padding: 10px; max-width: 100px;" type="number" value="1" />
-                                            </div>
-                                            <div>
-                                                <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
-                                                    Total:</p>
-                                                <p id="include_services_item_total0" style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
-                                                    $19.99</p>
-                                            </div>
-                                        </div>
-                                </div>
-                                
-                            </div>
-                            <div>
-                                <div onclick="include_service_into_running_invoice('service_id',0)" id="include_services_include_item_btn0" style="cursor: pointer; font-size: 14px; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
-                                    <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
-                                    Include
-                                </div>
-                                <div onclick="remove_service_from_running_invoice('service_id', 0)" id="include_services_remove_item_btn0" style="display: none; cursor: pointer; font-size: 14px; color: rgb(248, 16, 16); padding: 10px; border-radius: 4px;">
-                                    <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-minus" aria-hidden="true"></i>
-                                    Remove
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
+                    <div id="include_services_in_booking_items_list">
+                        
+                        <!--div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
                             <div style="margin-right: 5px; display: flex; flex-direction: row !important;">
                                 <div style="margin-right: 10px;">
                                     <input type="checkbox"/>
@@ -1490,7 +1463,7 @@
                                     Include
                                 </div>
                             </div>
-                        </div>
+                        </div-->
                     </div>
                 </div>
             </div>
@@ -4563,6 +4536,7 @@
     <script src="scripts/rooms_availability_grid_view_script.js" type="text/javascript"></script>
     <script src="scripts/property_managers_all_bookings_scripts.js" type="text/javascript"></script>
     <script src="scripts/inventory_management_scripts.js" type="text/javascript"></script>
+    <script src="scripts/include_service_to_booking_scripts.js" type="text/javascript"></script>
     <script src="scripts/guests_and_rooms_tracker.js" type="text/javascript"></script>
 </body>
 </html>

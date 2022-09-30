@@ -302,6 +302,24 @@ function search_inventory_post(){
     });
 }
 
+function default_search_inventory_post(){
+    return $.ajax({
+        type: "POST",
+        url: "/search_inventory_item_default/",
+        data: JSON.stringify(search_inventory_item_post_data),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
 document.getElementById("search_inventory_item_search_btn").addEventListener("click", async e => {
     search_inventory_item_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
     if(document.getElementById("search_inventory_item_input_fld").value === ""){

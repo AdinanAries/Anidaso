@@ -1629,6 +1629,28 @@ app.post("/search_inventory_item/", async (req, res, next) => {
 
 });
 
+app.post("/search_inventory_item_default/", async (req, res, next) => {
+  console.log(req.body.property_id)
+  let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.body.hotel_brand_id});
+
+  let property_inventory = inventory.items;
+  if(req.body.property_id !== "all" && req.body.property_id){
+    property_inventory = inventory.items.filter( each => {
+      return (each.property_id === req.body.property_id || each.property_id === "all")
+    });
+  }
+
+  let items = property_inventory;
+  if(req.body.search_param){
+    items = property_inventory.filter( each => {
+        return ((each.name.toLowerCase() === req.body.search_param.toLowerCase()) || (each.code.toLowerCase() === req.body.search_param.toLowerCase()))
+    });
+  }
+
+  res.send(items);
+
+});
+
 app.get("/delete_inventory_item/:code/:name/:property_id/:brand_id", async(req, res, next)=>{
   /*console.log('brand_id',req.params.brand_id);
   console.log('code',req.params.code);
