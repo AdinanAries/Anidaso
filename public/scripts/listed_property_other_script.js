@@ -1229,8 +1229,8 @@ function include_service_into_running_invoice(service_id, index, event_from_chec
 
     }
 
-    $("#include_services_include_item_btn"+index).toggle("up");
-    $("#include_services_remove_item_btn"+index).toggle("up");
+    document.getElementById("include_services_include_item_btn"+index).style.display="none";
+    document.getElementById("include_services_remove_item_btn"+index).style.display="block";
     $("#include_services_quantity_params"+index).toggle("up");
     setTimeout(()=>document.getElementById("include_services_quantity_params"+index).style.display="flex",300);
 
@@ -1246,8 +1246,8 @@ function remove_service_from_running_invoice(service_id, index){
 
     document.getElementById("include_services_item_checkbox"+index).checked = false;
 
-    $("#include_services_include_item_btn"+index).toggle("up");
-    $("#include_services_remove_item_btn"+index).toggle("up");
+    document.getElementById("include_services_include_item_btn"+index).style.display="block";
+    document.getElementById("include_services_remove_item_btn"+index).style.display="none";
     $("#include_services_quantity_params"+index).toggle("up");
 
     let unit_price = 19.99;
@@ -1262,6 +1262,15 @@ function remove_service_from_running_invoice(service_id, index){
 }
 
 function include_service_change_quantity(service_id, index){
+    if(document.getElementById("include_services_quantity_input"+index).value===""){
+        //document.getElementById("include_services_quantity_input"+index).value = 1;
+        document.getElementById("include_services_quantity_input"+index).style.border='1px solid red';
+        document.getElementById("include_services_quantity_input"+index).style.backgroundColor='rgba(255,55,55,0.5)';
+        return;
+    }else{
+        document.getElementById("include_services_quantity_input"+index).style.border='none';
+        document.getElementById("include_services_quantity_input"+index).style.backgroundColor='white';
+    }
     let unit_price = 19.99;
     let quantity = document.getElementById("include_services_quantity_input"+index).value;
     let item_total = unit_price * parseInt(quantity);

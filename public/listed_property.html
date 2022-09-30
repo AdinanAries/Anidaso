@@ -355,9 +355,86 @@
                             </textarea>
                         </div>
                     </div>
-                    <div id="add_new_inventory_save_btn" style="cursor: pointer; margin-top: 20px; border-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
-                        Save
+                    <div style="display: flex; overflow: hidden; border-radius: 4px; margin-top: 10px;">
+                        <div id="add_new_inventory_save_btn" style="width: 50%; cursor: pointer; background-color:rgb(0, 124, 83); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            Save
+                        </div>
+                        <div onclick="toggle_show_add_inventory_form_div();" style="width: 50%; cursor: pointer; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            cancel
+                        </div>
                     </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="edit_inventory_form_div" style="display: none; z-index: 112;" class="page_pop_up_cover">
+        <div class="page_popup_content_container" style="overflow: hidden;">
+            <div style="padding: 10px; height: 40px;">
+                <p onclick="toggle_show_edit_inventory_form_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
+                    Edit Inventory Item
+                </p>
+            </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 80px);">
+                <p style="color: white; text-align: center; font-size: 14px; margin: 10px 0;">
+                    Edit item information below</p>
+                <div>
+                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Name</p>
+                            <input id="edit_inventory_name_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter item name here" value="" />
+                        </div>
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Stock Quantity</p>
+                            <input id="edit_inventory_quantity_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="enter quantity here" value="" />
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Unit Price
+                                <span style="font-size: 12px; color:rgba(255, 208, 187, 0.815);"> in USD($)</span></p>
+                            <input id="edit_inventory_unit_price_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="enter a unit price here" value="" />
+                        </div>
+                        <div style="width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Service Department</p>
+                            <select id="edit_inventory_service_department_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                <option>None</option>
+                                <option>Dry Cleaning</option>
+                                <option>Room Service</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div style="display: none; width: calc(50% - 5px);">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Unit Price
+                                <span style="font-size: 12px; color:rgba(255, 208, 187, 0.815);"> in USD($)</span></p>
+                            <input id="edit_inventory_other_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="number" placeholder="enter a unit price here" value="" />
+                        </div>
+                        <div style="width: 100%;">
+                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Building</p>
+                            <select id="edit_inventory_property_input" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;">
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">
+                            Description</p>
+                        <div style="display: flex; flex-direction: row !important;">
+                            <textarea id="edit_inventory_description_input" style="border: none; padding: 10px; border-radius: 4px; width: calc(100% - 20px); min-height: 50px;">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex; border-radius: 4px; overflow: hidden; margin-top: 10px;">
+                        <div id="edit_inventory_save_btn" style="cursor: pointer; width: 50%; background-color:rgb(0, 124, 83); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            Save
+                        </div>
+                        <div onclick="toggle_show_edit_inventory_form_div();" style="cursor: pointer; width: 50%; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            cancel
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -1337,7 +1414,7 @@
                 
                 <div class="page_popup_content_body" style="height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
                     <div>
-                        <p style="font-size: 13px; font-weight: bolder; color: white; margin-bottom: 5px; margin-top: 10px;">
+                        <p style="font-size: 13px; color: white; margin-bottom: 5px; margin-top: 10px;">
                             Type of Service</p>
                         <select style="padding: 10px; border-radius: 4px; background-color: floralwhite; width: 100%;">
                             <option>Inventory</option>
@@ -1346,7 +1423,7 @@
                         </select>
                     </div>
                     <div>
-                        <p style="font-size: 13px; font-weight: bolder; color: white; margin-bottom: 5px; margin-top: 10px;">
+                        <p style="font-size: 13px; color: white; margin-bottom: 5px; margin-top: 10px;">
                             Search Service Item</p>
                         <div style="display: flex; flex-direction: row !important;">
                             <input id="search_inventory_item_input_fld" type="text" style="padding: 10px; border: none; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 110px); font-size: 14px;" placeholder="enter product name/code"/>
@@ -1355,7 +1432,7 @@
                             </div>
                         </div>
                     </div>
-                    <p style="font-size: 13px; color: rgb(255, 147, 147); margin-top: 15px; margin-bottom: 10px; font-weight: bolder; margin-left: 10px;">
+                    <p style="font-size: 13px; color: rgb(255, 147, 147); margin-top: 15px; margin-bottom: 10px;  margin-left: 10px;">
                         See Items Below</p>
                     <div id="arrival_guest_add_services_list">
                         <div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
@@ -1364,7 +1441,7 @@
                                     <input onclick="include_service_into_running_invoice('service_id', 0, true);" id="include_services_item_checkbox0" type="checkbox"/>
                                 </div>
                                 <div>
-                                    <p style="color: rgb(255, 94, 0); font-size: 14px; font-weight: bolder; margin-bottom: 5px;">
+                                    <p style="color: rgb(255, 94, 0); font-size: 14px; margin-bottom: 5px;">
                                         Neat Fufu</p>
                                     <p style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
                                         $19.99</p>
@@ -1372,7 +1449,7 @@
                                             <div style="margin-right: 20px;">
                                                 <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
                                                     How many?</p>
-                                                <input id="include_services_quantity_input0" onchange="include_service_change_quantity('service_id', 0)" style="border: none; padding: 10px; max-width: 100px;" type="number" value="1" />
+                                                <input id="include_services_quantity_input0" oninput="include_service_change_quantity('service_id', 0)" style="border: none; padding: 10px; max-width: 100px;" type="number" value="1" />
                                             </div>
                                             <div>
                                                 <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
@@ -1385,11 +1462,11 @@
                                 
                             </div>
                             <div>
-                                <div onclick="include_service_into_running_invoice('service_id',0)" id="include_services_include_item_btn0" style="cursor: pointer; font-size: 14px; border:rgb(137, 235, 174) 1px solid; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
+                                <div onclick="include_service_into_running_invoice('service_id',0)" id="include_services_include_item_btn0" style="cursor: pointer; font-size: 14px; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
                                     <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
                                     Include
                                 </div>
-                                <div onclick="remove_service_from_running_invoice('service_id', 0)" id="include_services_remove_item_btn0" style="display: none; cursor: pointer; font-size: 14px; border: rgb(248, 16, 16) 1px solid; color: rgb(248, 16, 16); padding: 10px; border-radius: 4px;">
+                                <div onclick="remove_service_from_running_invoice('service_id', 0)" id="include_services_remove_item_btn0" style="display: none; cursor: pointer; font-size: 14px; color: rgb(248, 16, 16); padding: 10px; border-radius: 4px;">
                                     <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-minus" aria-hidden="true"></i>
                                     Remove
                                 </div>
@@ -1401,14 +1478,14 @@
                                     <input type="checkbox"/>
                                 </div>
                                 <div>
-                                    <p style="color: rgb(255, 94, 0); font-size: 14px; font-weight: bolder; margin-bottom: 5px;">
+                                    <p style="color: rgb(255, 94, 0); font-size: 14px; margin-bottom: 5px;">
                                         Neat Fufu</p>
                                     <p style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
                                         $19.99</p>
                                 </div>
                             </div>
                             <div>
-                                <div style="cursor: pointer; font-size: 14px; border:rgb(137, 235, 174) 1px solid; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
+                                <div style="cursor: pointer; font-size: 14px; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
                                     <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
                                     Include
                                 </div>
@@ -3249,7 +3326,7 @@
             <p style="text-align: right; font-size: 10px; font-weight: bolder; letter-spacing: 1px; margin-top: 20px;">
                all rights reserved &copy; 
               <span style="color:rgb(228, 83, 0); font-size: 10px; font-weight: bolder; letter-spacing: 1px;">
-                Anidaso
+                Wellgo
               </span>
             </p>
           </div>

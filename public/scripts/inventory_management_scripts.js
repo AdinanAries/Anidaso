@@ -5,21 +5,15 @@ var add_new_inventory_service_department_input = document.getElementById("add_ne
 var add_new_inventory_property_input = document.getElementById("add_new_inventory_property_input");
 var add_new_inventory_description_input = document.getElementById("add_new_inventory_description_input");
 
+var edit_inventory_name_input = document.getElementById("edit_inventory_name_input");
+var edit_inventory_unit_price_input = document.getElementById("edit_inventory_unit_price_input");
+var edit_inventory_quantity_input = document.getElementById("edit_inventory_quantity_input");
+var edit_inventory_service_department_input = document.getElementById("edit_inventory_service_department_input");
+var edit_inventory_property_input = document.getElementById("edit_inventory_property_input");
+var edit_inventory_description_input = document.getElementById("edit_inventory_description_input");
+
 var cheap_hotel_inventory_list_table_body = document.getElementById("cheap_hotel_inventory_list_table_body");
 var cheap_hotel_inventory_list_select_property_display = document.getElementById("cheap_hotel_inventory_list_select_property");
-
-var new_inventory_item_post_data = {
-    hotel_brand_id: "",
-    item: {
-        code: "",
-        name: "",
-        unit_price: 0,
-        service_department: "",
-        property_id: "",
-        stock_quantity: 0,
-        description: "",
-    }
-}
 
 function get_and_return_all_inventory(hotel_id, property_id){   
     return $.ajax({
@@ -121,7 +115,10 @@ function return_each_inventory_markup(inventory){
             <td>${inventory.code}</td>
             <td>${inventory.stock_quantity}</td>
             <td>$${inventory.unit_price}</td>
-            <td style="text-align: center; cursor: pointer; background: none;"><i aria-hidden="true" style="color:rgb(6, 205, 255);" class="fa fa-pencil"></i></td>
+            <td onclick="start_edit_inventory_item('${inventory.code}', '${inventory.name}', '${inventory.property_id}')" style="text-align: center; cursor: pointer; background: none;">
+                <i aria-hidden="true" style="color:rgb(6, 205, 255);" class="fa fa-pencil"></i></td>
+            <td style="text-align: center; cursor: pointer; background: none;">
+                <i aria-hidden="true" style="color:red;" class="fa fa-trash"></i></td>
         </tr>
     `;
 }
@@ -198,12 +195,91 @@ function add_and_return_new_inventory_item(){
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: data => {
-            console.log(data);
+            //console.log(data);
             return data
         },
         error: err => {
             console.log(err);
             return err;
+        }
+    });
+}
+
+function collect_edit_inventory_item_info_from_inputs(){
+
+    let item_name = edit_inventory_name_input.value;
+
+    //new_inventory_item_post_data.item.code = generate_item_code(4, item_name.split(" ")[0]);
+    new_inventory_item_post_data.item.name = item_name.trim();
+    new_inventory_item_post_data.item.unit_price = edit_inventory_unit_price_input.value;
+    new_inventory_item_post_data.item.stock_quantity = edit_inventory_quantity_input.value;
+    new_inventory_item_post_data.item.service_department = edit_inventory_service_department_input.value;
+    new_inventory_item_post_data.item.property_id = edit_inventory_property_input.value;
+    new_inventory_item_post_data.item.description = edit_inventory_description_input.value;
+
+    return null;
+}
+
+document.getElementById("edit_inventory_save_btn").addEventListener("click", async e => {
+    if(edit_inventory_name_input.value === ""){
+        edit_inventory_name_input.placeholder = "please enter item name";
+        edit_inventory_name_input.focus();
+    }else if(edit_inventory_quantity_input.value === ""){
+        edit_inventory_quantity_input.placeholder = "please enter item quantity";
+        edit_inventory_quantity_input.focus();
+    }else if(edit_inventory_unit_price_input.value === ""){
+        edit_inventory_unit_price_input.placeholder = "please enter unit price";
+        edit_inventory_unit_price_input.focus();
+    }else{
+        await collect_edit_inventory_item_info_from_inputs();
+        new_inventory_item_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+        let res = await update_and_return_inventory_item();
+
+        $("#edit_inventory_form_div").toggle("up");
+
+        /*if(cheap_hotel_inventory_list_table_body.innerHTML.includes( `
+            <div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                    <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Nothing was found!
+                </p>
+            </div>`)){
+                cheap_hotel_inventory_list_table_body.innerHTML = `
+                    <tr>
+                        <td class="its_inventory_header">Item</td>
+                        <td class="its_inventory_header">Code</td>
+                        <td class="its_inventory_header">Quantity</td>
+                        <td class="its_inventory_header">Price</td>
+                    </tr>`;
+            }*/
+    
+            cheap_hotel_inventory_list_table_body.innerHTML = `
+                <tr>
+                    <td class="its_inventory_header">Item</td>
+                    <td class="its_inventory_header">Code</td>
+                    <td class="its_inventory_header">Quantity</td>
+                    <td class="its_inventory_header">Price</td>
+                </tr>`;
+
+        cheap_hotel_inventory_list_table_body.innerHTML += return_each_inventory_markup(res.items[res.items.length - 1]);
+
+    }
+});
+
+function update_and_return_inventory_item(){
+    return $.ajax({
+        type: "POST",
+        url: `/edit_inventory_item_by_name_and_code/${update_inventory_old_obj.code}/${update_inventory_old_obj.name}/`,
+        data: JSON.stringify(new_inventory_item_post_data),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: res => {
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
         }
     });
 }

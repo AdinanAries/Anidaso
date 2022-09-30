@@ -221,6 +221,22 @@ var search_inventory_item_post_data = {
     property_id: "all",
     search_param: "",
 }
+var new_inventory_item_post_data = {
+    hotel_brand_id: "",
+    item: {
+        code: "",
+        name: "",
+        unit_price: 0,
+        service_department: "",
+        property_id: "",
+        stock_quantity: 0,
+        description: "",
+    }
+}
+var update_inventory_old_obj = {
+    code: "",
+    name: ""
+}
 
 let todays_date = new Date();
 let todays_date2 = new Date();
@@ -391,6 +407,53 @@ function show_include_services_in_booking_div(){
 
 function toggle_show_add_inventory_form_div(){
     $("#add_inventory_form_div").toggle("up");
+}
+
+function toggle_show_edit_inventory_form_div(){
+    $("#edit_inventory_form_div").toggle("up");
+}
+
+function get_and_return_iventory_item(code, name, property_id){
+    return $.ajax({
+        type: "GET",
+        url: `/get_inventory_item_by_name_and_code/${code}/${name}/${property_id}/${localStorage.getItem("ANDSBZID")}`,
+        success: res => {
+            update_inventory_old_obj.code = res.code;
+            new_inventory_item_post_data.item.code = res.code;
+            update_inventory_old_obj.name = res.name;
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+}
+async function start_edit_inventory_item(code, name, property_id){
+    toggle_show_edit_inventory_form_div();
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("edit_inventory_property_input").innerHTML = `
+    <option value="all">All</option>
+    `;
+
+    for(let i = 0; i < properties.length; i++){
+        document.getElementById("edit_inventory_property_input").innerHTML += `
+        <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+        `;
+    }
+
+    let item = await get_and_return_iventory_item(code, name, property_id);
+    console.log(item);
+    if(item){
+        document.getElementById("edit_inventory_name_input").value = item.name;
+        document.getElementById("edit_inventory_quantity_input").value = item.stock_quantity;
+        document.getElementById("edit_inventory_unit_price_input").value = item.unit_price;
+        document.getElementById("edit_inventory_service_department_input").value = item.service_department;
+        document.getElementById("edit_inventory_description_input").value = item.description.trim();
+        document.getElementById("edit_inventory_property_input").value = item.property_id;
+    }
 }
 
 async function show_add_inventory_item_form(){
