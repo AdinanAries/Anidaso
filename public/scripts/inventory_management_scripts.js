@@ -115,9 +115,9 @@ function return_each_inventory_markup(inventory){
             <td>${inventory.code}</td>
             <td>${inventory.stock_quantity}</td>
             <td>$${inventory.unit_price}</td>
-            <td onclick="start_edit_inventory_item('${inventory.code}', '${inventory.name}', '${inventory.property_id}')" style="text-align: center; cursor: pointer; background: none;">
+            <td onclick="start_edit_inventory_item('${inventory.code}', '${inventory.name}', '${inventory.property_id}');" style="text-align: center; cursor: pointer; background: none; min-width: 16px;">
                 <i aria-hidden="true" style="color:rgb(6, 205, 255);" class="fa fa-pencil"></i></td>
-            <td style="text-align: center; cursor: pointer; background: none;">
+            <td onclick="start_delete_inventory_item('${inventory.code}', '${inventory.name}', '${inventory.property_id}');" style="text-align: center; cursor: pointer; background: none; min-width: 16px;">
                 <i aria-hidden="true" style="color:red;" class="fa fa-trash"></i></td>
         </tr>
     `;

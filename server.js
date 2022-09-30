@@ -1548,6 +1548,12 @@ app.post("/add_new_inventory_item/", async (req, res, next) => {
 
 app.get("/get_all_hotel_inventory/:hotel_brand_id/:property_id", async (req, res, next) => {
   let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.params.hotel_brand_id});
+  //if there's null values in iventory items fix it here
+  if(inventory){
+    inventory.items = inventory.items.filter(each=>each);
+    let updated_inventory = await new cheap_hotel_inventory_model(inventory);
+    await updated_inventory.save();
+  }
   if(inventory){
     if(req.params.property_id !== "all"){
       inventory.items = inventory.items.filter( each => {
@@ -1621,6 +1627,34 @@ app.post("/search_inventory_item/", async (req, res, next) => {
 
   res.send(items);
 
+});
+
+app.get("/delete_inventory_item/:code/:name/:property_id/:brand_id", async(req, res, next)=>{
+  /*console.log('brand_id',req.params.brand_id);
+  console.log('code',req.params.code);
+  console.log('name',req.params.name);
+  console.log('property_id',req.params.property_id);*/
+  try{
+    let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.params.brand_id});
+    /*inventory.items.forEach(each=>{
+      console.log('i code',each.code);
+      console.log('i name',each.name);
+      console.log('i property_id',each.property_id);
+    });*/
+    inventory.items = inventory.items.filter(each=>{
+      return (each.code === req.params.code && each.name === req.params.name && each.property_id === req.params.property_id) ? false : true;
+    });
+    //cleaning up
+    inventory.items = inventory.items.filter(each=>each);
+    let updated_inventory = await new cheap_hotel_inventory_model(inventory);
+    updated_inventory = await updated_inventory.save();
+    res.send(updated_inventory);
+  }catch(e){
+    console.log(e.message);
+    res.send({items:[]});
+  }
+ 
+  
 });
 
 app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{

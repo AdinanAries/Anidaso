@@ -312,6 +312,27 @@ function change_iso_date_to_readable_format(isoString){
 //alert(is_today_covered_in_date_range("2022-09-23", "2022-09-27"));
 //console.log(change_date_from_iso_to_long_date("2021-12-15"));
 
+function show_confirmation_dialog_to_confirm_user_action(title, msg, yes_action, no_action=()=>{}){
+    $("#confirmation_dialog_to_confirm_user_action").toggle("up");
+    document.getElementById("confirmation_dialog_to_confirm_user_action_title").innerHTML=`
+        <i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        ${title}
+    `;
+    document.getElementById("confirmation_dialog_to_confirm_user_action_msg").innerHTML=`
+        <span >
+            ${msg}
+        </span>
+    `;
+     document.getElementById("confirmation_dialog_to_confirm_user_action_yes_btn").onclick = yes_action;
+     document.getElementById("confirmation_dialog_to_confirm_user_action_no_btn").onclick = ()=>{
+        $('#confirmation_dialog_to_confirm_user_action').toggle('up');
+        no_action();
+    }
+}
+function confirmation_required_action_finished_call_back(){
+    $("#confirmation_dialog_to_confirm_user_action").toggle("up");
+}
+
 function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, profile_pic_param, first_name_param, last_name_param,
     guest_type_param, DOB_param, gender_param, email_param, mobile_param, price_paid_param, status_param, booking_id_param, 
     room_id_param, room_number_param, street_address_param, city_param, town_param, country_param, zipcode_param){
@@ -472,6 +493,67 @@ async function show_add_inventory_item_form(){
     }
     document.getElementById("add_new_inventory_property_input").value = search_inventory_item_post_data.property_id;
 }
+
+async function start_delete_inventory_item(code, name, property_id){
+    show_confirmation_dialog_to_confirm_user_action(
+        "Confirm Delete", 
+        `Are you sure you want to delete ${name} from inventory?`, 
+        ()=>delete_one_inventory_item_and_return_all_other_iventory_items(code, name, property_id)
+    );
+}
+
+
+function delete_one_inventory_item_and_return_all_other_iventory_items(code, name, property_id){
+    return $.ajax({
+        type: "GET",
+        url: `/delete_inventory_item/${code}/${name}/${property_id}/${localStorage.getItem("ANDSBZID")}`,
+        success: res => {
+            //console.log(res);
+            if(res.items.length > 0){
+                cheap_hotel_inventory_list_table_body.innerHTML = `
+                <tr>
+                    <td class="its_inventory_header">Item</td>
+                    <td class="its_inventory_header">Code</td>
+                    <td class="its_inventory_header">Quantity</td>
+                    <td class="its_inventory_header">Price</td>
+                </tr>`;
+                for(let i=0; i<res.items.length;i++){
+                    cheap_hotel_inventory_list_table_body.innerHTML += return_each_inventory_markup(res.items[i]);
+                }
+            
+            }else{
+                cheap_hotel_inventory_list_table_body.innerHTML=`<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                    <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                        <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        Nothing was found!
+                    </p>
+                </div>`;
+            }
+            confirmation_required_action_finished_call_back();
+            /*if(cheap_hotel_inventory_list_table_body.innerHTML.includes( `
+            <div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                    <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Nothing was found!
+                </p>
+            </div>`)){
+                cheap_hotel_inventory_list_table_body.innerHTML = `
+                    <tr>
+                        <td class="its_inventory_header">Item</td>
+                        <td class="its_inventory_header">Code</td>
+                        <td class="its_inventory_header">Quantity</td>
+                        <td class="its_inventory_header">Price</td>
+                    </tr>`;
+            }*/
+    
+        },
+        error: err => {
+            confirmation_required_action_finished_call_back();
+            console.log(err);
+        }
+    });
+}
+
 
 function toggle_show_add_services_from_list_div(){
     $("#add_services_from_list_div").toggle("up");
