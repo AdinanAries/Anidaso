@@ -1630,7 +1630,7 @@ app.post("/search_inventory_item/", async (req, res, next) => {
 });
 
 app.post("/search_inventory_item_default/", async (req, res, next) => {
-  console.log(req.body.property_id)
+  
   let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.body.hotel_brand_id});
 
   let property_inventory = inventory.items;
@@ -1734,8 +1734,8 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
         }).exec();
         
         for(let b=0; b < bookings.length; b++){
-          
-          if(bookings[b].all_dates_of_occupancy.includes(req.body.date)){
+          res_objects[i].booking = bookings[b];
+          /*if(bookings[b].all_dates_of_occupancy.includes(req.body.date)){
             res_objects[i].booking = bookings[b];
           }else{
             let this_guest = await cheap_hotel_guest.findById(res_objects[i].guest._id);
@@ -1743,7 +1743,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
             let updt_guest = await new cheap_hotel_guest(this_guest);
             let saved_updt_guest = await updt_guest.save();
             //res_objects.splice(i,i);
-          }
+          }*/
         }
 
       }

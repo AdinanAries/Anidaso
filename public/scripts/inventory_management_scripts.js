@@ -74,7 +74,7 @@ async function get_and_show_all_inventory(property_id){
     cheap_hotel_inventory_list_table_body.innerHTML = `
         <tr>
             <td class="its_inventory_header">Item</td>
-            <td class="its_inventory_header">Code</td>
+            <td class="its_inventory_header hide_for_smaller_screens">Code</td>
             <td class="its_inventory_header">Quantity</td>
             <td class="its_inventory_header">Price</td>
         </tr>`;
@@ -112,7 +112,7 @@ function return_each_inventory_markup(inventory){
     return `
         <tr>
             <td class="its_inventory_item_name">${inventory.name}</td>
-            <td>${inventory.code}</td>
+            <td class="hide_for_smaller_screens">${inventory.code}</td>
             <td>${inventory.stock_quantity}</td>
             <td>$${inventory.unit_price}</td>
             <td onclick="start_edit_inventory_item('${inventory.code}', '${inventory.name}', '${inventory.property_id}');" style="text-align: center; cursor: pointer; background: none; min-width: 16px;">
@@ -176,7 +176,7 @@ document.getElementById("add_new_inventory_save_btn").addEventListener("click", 
                 cheap_hotel_inventory_list_table_body.innerHTML = `
                     <tr>
                         <td class="its_inventory_header">Item</td>
-                        <td class="its_inventory_header">Code</td>
+                        <td class="its_inventory_header hide_for_smaller_screens">Code</td>
                         <td class="its_inventory_header">Quantity</td>
                         <td class="its_inventory_header">Price</td>
                     </tr>`;

@@ -695,6 +695,15 @@ footer a {
   .page_popup_content_body {
     height: calc(100% - 218px);
   }
+  .page_popup_content_body.rooms{
+    height: calc(100% - 190px) !important;
+  }
+  .page_popup_content_body.inventory_manager{
+    height: calc(100% - 150px) !important;
+  }
+  .page_popup_content_body.search_room{
+    height: calc(100% - 130px) !important;
+  }
   .flex_row_default_flex_column_mobile {
     display: block !important;
   }
@@ -702,7 +711,10 @@ footer a {
     width: 100% !important;
   }
   .flex_non_first_child {
-    margin-top: 20px;
+    margin-top: 5px;
+  }
+  .flex_non_first_child.make_reservation{
+    margin-top: 15px;
   }
   .page_popup_content_container {
     height: 100%;
@@ -816,5 +828,10 @@ footer a {
     padding: 10px !important;
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 4px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .hide_for_smaller_screens {
+    display: none !important;
   }
 }

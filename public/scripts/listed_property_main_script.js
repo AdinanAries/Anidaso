@@ -237,6 +237,17 @@ var update_inventory_old_obj = {
     name: ""
 }
 
+let add_invoice_item_post_obj = {
+    bookings: [],
+    invoice_items: {
+        guest_id: "",
+        booking_id: "",
+        guest_items: []
+    },
+    hotel_brand_id: localStorage.getItem("ANDSBZID"),
+    property_id: "",
+};
+
 let todays_date = new Date();
 let todays_date2 = new Date();
 
@@ -270,6 +281,19 @@ function is_today_covered_in_date_range(first_date, last_date){
         isCovered = true;
     
     return isCovered;
+}
+function is_today_before_date(the_date_p){
+
+    const today = new Date();
+    const theDate = new Date(the_date_p);
+    theDate.setDate(theDate.getDate() + 1)
+    
+    let isBefore = false;
+
+    if(today < theDate)
+        isBefore = true;
+    
+    return isBefore;
 }
 function change_date_from_iso_to_long_date(isoString){
     
@@ -307,6 +331,7 @@ function change_iso_date_to_readable_format(isoString){
     return formatted_date;
 }
 //alert(calculateAge("1995-03-23"));
+//alert(is_today_before_date("2022-10-01"));
 //console.log(calculate_age(new Date(1992, 03, 23)));
 //alert(is_today_covered_in_date_range("2022-09-23", "2022-09-27"));
 //console.log(change_date_from_iso_to_long_date("2021-12-15"));
@@ -2387,7 +2412,7 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
     }
 
     return `
-        <div class="each_property_info" style="background-color: rgba(0, 0, 0, 0.4); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
+        <div class="each_property_info" style="background-color: rgba(0, 0, 0, 0.4); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px;">
             <div class="flex_row_default_flex_column_mobile">
                 <div class="flex_child_of_two">
                     <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
@@ -2432,9 +2457,9 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
                         Checkout: 
                         <span style="font-size: 13px; color: white;">
                             ${checkout}</span></p>
-                    <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 20px;">
-                        <div onclick="view_selected_room_full_details('${room_id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                            <i class="fa fa-eye" aria-hidden="true"></i> view this room
+                    <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 10px;">
+                        <div onclick="view_selected_room_full_details('${room_id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgba(41, 66, 88, 0.555); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                            view this room
                         </div>
                         <div onclick="edit_hotel_room_func('${room._id}');" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                             <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
@@ -2936,7 +2961,7 @@ async function toggle_show_all_hotel_properties(){
 
 function all_properties_return_each_property_markup(property){
     return `
-        <div class="each_property_info" style="background-color:rgba(0, 0, 0, 0.7); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
+        <div class="each_property_info" style="background-color:rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px;">
             <p style="font-weight: bolder; margin-bottom: 10px; letter-spacing: 1px; color: white; font-size: 13px;">
                 <i style="color:rgb(211, 87, 5); margin-right: 5px; font-size: 20px;" class="fa fa-building" aria-hidden="true"></i>
                 ${property.city},
@@ -2944,9 +2969,9 @@ function all_properties_return_each_property_markup(property){
                     ${property.street_address}, ${property.country}
                 </span>
             </p>
-            <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 20px;">
-                <div onclick="show_all_hotel_property_rooms('${property._id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                    <i class="fa fa-eye" aria-hidden="true"></i> view rooms
+            <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 10px;">
+                <div onclick="show_all_hotel_property_rooms('${property._id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgba(41, 66, 88, 0.555); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                <i class="fa fa-list" aria-hidden="true"></i> view rooms
                 </div>
                 <div onclick="" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                     <i class="fa fa-pencil" aria-hidden="true"></i> edit property

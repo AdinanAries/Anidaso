@@ -116,7 +116,26 @@ async function hotel_guests_search_function(type){
         document.getElementById("inhouse_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
             let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
-            document.getElementById("inhouse_guests_list").innerHTML += return_inhouse_guest_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
+            let bookings = await get_bookings_using_guest_id(search_results[i].guest._id, search_results[i].booking.property_id, search_results[i].guest.hotel_brand_id);
+            //fixing guest status
+            if(bookings.length > 0){
+                for(let booking of bookings){
+                    if(is_today_covered_in_date_range(booking.checkin_date, booking.checkout_date)){
+                        if(search_results[i].guest.status!=="staying"){
+                            search_results[i].guest.status = `${search_results[i].guest.status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkin past due</span>`;
+                        }
+                        break;
+                    }else if(!is_today_before_date(booking.checkout_date)){
+                        if(search_results[i].guest.status==="staying"){
+                            search_results[i].guest.status = `${search_results[i].guest.status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkout past due</span>`;
+                        }
+                        break;
+                    }else{
+                        search_results[i].guest.status = `${search_results[i].guest.status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-check" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>good</span>`;
+                    }
+                }
+            }
+            document.getElementById("inhouse_guests_list").innerHTML += return_inhouse_guest_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property, i);
         }
 
     }else if(type === "arrival"){
@@ -198,6 +217,25 @@ async function hotel_guests_search_function(type){
         document.getElementById("checkout_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
             let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
+            let bookings = await get_bookings_using_guest_id(search_results[i].guest._id, search_results[i].booking.property_id, search_results[i].guest.hotel_brand_id);
+            //fixing guest status
+            if(bookings.length > 0){
+                for(let booking of bookings){
+                    if(is_today_covered_in_date_range(booking.checkin_date, booking.checkout_date)){
+                        if(search_results[i].guest.status!=="staying"){
+                            search_results[i].guest.status = `${search_results[i].guest.status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkin past due</span>`;
+                        }
+                        break;
+                    }else if(!is_today_before_date(booking.checkout_date)){
+                        if(search_results[i].guest.status==="staying"){
+                            search_results[i].guest.status = `${search_results[i].guest.status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkout past due</span>`;
+                        }
+                        break;
+                    }else{
+                        search_results[i].guest.status = `${search_results[i].guest.status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-check" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>good</span>`;
+                    }
+                }
+            }
             document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property, i);
         }
 
@@ -261,7 +299,7 @@ function collect_checkout_guests_search_post_data(){
     return null;
 }
 
-function return_inhouse_guest_markup(guest, booking, invoice, property){
+function return_inhouse_guest_markup(guest, booking, invoice, property, index){
     running_invoice = invoice;
     return `
         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
@@ -279,7 +317,11 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
                     ${change_date_from_iso_to_long_date(booking.checkin_date)} - 
                     ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
-                    ${property.city} - ${property.street_address} (${property.country})</P>  
+                    ${property.city} - ${property.street_address} (${property.country})</P> 
+                <div style="background-color: rgba(0,0,0,0.5); padding: 10px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2);">
+                    <p style="color: white; font-size: 13px;">Guest Status: 
+                    <span style="font-size: 13px; color: rgb(255, 132, 132);"> ${guest.status}</span></p>
+                </div> 
                 <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
@@ -290,7 +332,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
                     <div onclick="view_each_guest_running_bill();" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         View Running Bill
                     </div>
-                    <div onclick="show_include_services_in_booking_div();" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                    <div onclick="show_include_services_in_booking_div('${guest._id}');" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
                         Include Service
                     </div>
@@ -300,7 +342,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
                         go to checkout
                         <i style="color:rgb(255, 46, 46); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
-                    <div onclick="show_view_booking_div('booking_id');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                    <div onclick="show_view_booking_div('${booking._id}');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                         view booking
                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
@@ -311,6 +353,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property){
 }
 
 function return_guest_checkout_markup(guest, booking, invoice, property, index){
+    running_invoice = invoice;
     return `
         <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
@@ -327,7 +370,11 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
                     ${change_date_from_iso_to_long_date(booking.checkin_date)} - 
                     ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
-                    ${property.city} - ${property.street_address} (${property.country})</P>  
+                    ${property.city} - ${property.street_address} (${property.country})</P>
+                <div style="background-color: rgba(0,0,0,0.5); padding: 10px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2);">
+                    <p style="color: white; font-size: 13px;">Guest Status: 
+                    <span style="font-size: 13px; color: rgb(255, 132, 132);"> ${guest.status}</span></p>
+                </div> 
                 <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
@@ -381,7 +428,7 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
 }
 
 function return_arrival_guests_markup(guest, booking, invoice, property, index){
-
+    running_invoice = invoice;
     let checkin_status_dspl = `
         <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid lightgreen;">
             <i class="fa fa-check" style="margin-right: 5px; color: lightgreen;"></i>
@@ -393,16 +440,28 @@ function return_arrival_guests_markup(guest, booking, invoice, property, index){
     let chk_in_btn_status_style = `style="color: rgb(255, 179, 136); margin-right: 5px;" class="fa fa-check"`;
     if(!is_today_covered_in_date_range(booking.checkin_date, booking.checkout_date)){
         checkin_status_dspl = `
-        <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid red;">
-            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;"></i>
-            <span style="color: red; font-size: 13px;">Checkin Warning:</span><br/><br/>
-            Today is not in the stay period of this guest based on checkin and checkout dates.
-            <br/><br/>
-            <span style="font-size: 14px; color:rgba(255, 208, 187, 0.815);">Stay Period: ${change_date_from_iso_to_long_date(booking.checkin_date)} - ${change_date_from_iso_to_long_date(booking.checkout_date)}
-            </span>
-        </p>
-    `;
-    chk_in_btn_status_style = `style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle"`;
+            <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid red;">
+                <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;"></i>
+                <span style="color: red; font-size: 13px;">Checkin Warning:</span><br/><br/>
+                Today is not in the stay period of this guest based on checkin and checkout dates.
+                <br/><br/>
+                <span style="font-size: 14px; color:rgba(255, 208, 187, 0.815);">Stay Period: ${change_date_from_iso_to_long_date(booking.checkin_date)} - ${change_date_from_iso_to_long_date(booking.checkout_date)}
+                </span>
+            </p>
+        `;
+        chk_in_btn_status_style = `style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle"`;
+    }else if(!is_today_before_date(booking.checkout_date)){
+        checkin_status_dspl = `
+            <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid red;">
+                <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;"></i>
+                <span style="color: red; font-size: 13px;">Checkin Warning:</span><br/><br/>
+                    This booking has expired.
+                <br/><br/>
+                <span style="font-size: 14px; color:rgba(255, 208, 187, 0.815);">Stay Period: ${change_date_from_iso_to_long_date(booking.checkin_date)} - ${change_date_from_iso_to_long_date(booking.checkout_date)}
+                </span>
+            </p>
+        `;
+        chk_in_btn_status_style = `style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle"`;
     }
 
     return `
@@ -467,7 +526,7 @@ function return_arrival_guests_markup(guest, booking, invoice, property, index){
                         <i ${chk_in_btn_status_style} aria-hidden="true"></i>
                         Check Guest In
                     </div>
-                    <div onclick="show_include_services_in_booking_div();" style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                    <div onclick="show_include_services_in_booking_div('${guest._id}');" style="background-color:rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
                         Include Service
                     </div>
@@ -494,7 +553,7 @@ function search_and_return_cheap_hotel_guest(type){
     }else if(type === "checkout"){
         post_url = "/search_cheap_hotel_inhouse_guests/";
     }
-    console.log(guest_search_post_data);
+    //console.log(guest_search_post_data);
     return $.ajax({
         type: "POST",
         url: post_url,
@@ -1105,13 +1164,19 @@ async function search_guest_on_submit_function(){
             if(bookings.length > 0){
                 for(let booking of bookings){
                     if(is_today_covered_in_date_range(booking.checkin_date, booking.checkout_date)){//"2022-09-26"
-                        alert("guest is staying");
-                        guests[i].status = "staying";
+                        //alert("guest is staying");
+                        if(guests[i].status!=="staying"){
+                            guests[i].status = `${guests[i].status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkin past due</span>`;
+                        }
                         guest_stay_obj.room = booking.rooms[0].number;
                         guest_stay_obj.checkin = booking.checkin_date;
                         guest_stay_obj.checkout = booking.checkout_date;
                         //update guest information here
                         break;
+                    }else if(!is_today_before_date(booking.checkout_date)){//today is after checkout date
+                        if(guests[i].status==="staying"){
+                            guests[i].status = `${guests[i].status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkout past due</span>`;
+                        }
                     }
                 }
             }
@@ -1213,70 +1278,6 @@ function start_guest_checkin(guest_id, booking_id, index){
             console.log(err);
         }
     });
-}
-
-let initial_total = 400.00;
-let current_invoice_total = 0;
-function include_service_into_running_invoice(service_id, index, event_from_check_box=false){
-
-    if(!event_from_check_box) {
-        document.getElementById("include_services_item_checkbox"+index).checked = true;
-    }else if(event_from_check_box){
-        if(current_invoice_total != 0){
-            remove_service_from_running_invoice(service_id, index, event_from_check_box);
-            return;
-        }
-
-    }
-
-    document.getElementById("include_services_include_item_btn"+index).style.display="none";
-    document.getElementById("include_services_remove_item_btn"+index).style.display="block";
-    $("#include_services_quantity_params"+index).toggle("up");
-    setTimeout(()=>document.getElementById("include_services_quantity_params"+index).style.display="flex",300);
-
-    let unit_price = 19.99;
-    let quantity = document.getElementById("include_services_quantity_input"+index).value;
-    let item_total = unit_price * parseInt(quantity);
-    current_invoice_total = initial_total + item_total;
-    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(unit_price).toFixed(2)}`;
-    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
-}
-
-function remove_service_from_running_invoice(service_id, index){
-
-    document.getElementById("include_services_item_checkbox"+index).checked = false;
-
-    document.getElementById("include_services_include_item_btn"+index).style.display="block";
-    document.getElementById("include_services_remove_item_btn"+index).style.display="none";
-    $("#include_services_quantity_params"+index).toggle("up");
-
-    let unit_price = 19.99;
-    let quantity = document.getElementById("include_services_quantity_input"+index).value;
-    let item_total = unit_price * parseInt(quantity);
-    current_invoice_total = current_invoice_total - item_total;
-    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(unit_price).toFixed(2)}`;
-    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
-    document.getElementById("include_services_quantity_input"+index).value = 1;
-    current_invoice_total = 0;
-
-}
-
-function include_service_change_quantity(service_id, index){
-    if(document.getElementById("include_services_quantity_input"+index).value===""){
-        //document.getElementById("include_services_quantity_input"+index).value = 1;
-        document.getElementById("include_services_quantity_input"+index).style.border='1px solid red';
-        document.getElementById("include_services_quantity_input"+index).style.backgroundColor='rgba(255,55,55,0.5)';
-        return;
-    }else{
-        document.getElementById("include_services_quantity_input"+index).style.border='none';
-        document.getElementById("include_services_quantity_input"+index).style.backgroundColor='white';
-    }
-    let unit_price = 19.99;
-    let quantity = document.getElementById("include_services_quantity_input"+index).value;
-    let item_total = unit_price * parseInt(quantity);
-    current_invoice_total = initial_total + item_total;
-    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(item_total).toFixed(2)}`;
-    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
 }
 
 function start_guest_checkout(index){

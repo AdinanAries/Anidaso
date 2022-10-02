@@ -171,8 +171,7 @@ async function view_a_room_bookings(room_id, room_number){
 async function render_all_bookings_markup(bookings){
 
     document.getElementById("total_bookings_counter").innerHTML = `
-        <span style="color: white; font-size: 14px;">Total:</span>
-        ${bookings.length} bookings
+        ${bookings.length}
     `;
 
     if(bookings.length === 0){
@@ -235,7 +234,7 @@ async function render_all_bookings_markup(bookings){
         }
 
         document.getElementById("booked_rooms_list").innerHTML += `
-            <div class="each_booked_room" style="background-color:rgba(0, 0, 0, 0.8); padding-top: 10px; border-radius: 4px; margin-bottom: 5px;">
+            <div class="each_booked_room" style="background-color:rgba(0, 0, 0, 0.8); padding-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.2);">
                 <div style="padding: 10px;" class="flex_row_default_flex_column_mobile">
                     <div class="flex_child_of_two">
                         <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
@@ -267,19 +266,19 @@ async function render_all_bookings_markup(bookings){
                             <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
                             $${parseFloat(price_paid).toFixed(2)}</span>
                         </p>
-                        <div style="width: 220px; cursor: pointer; margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
-                            <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgb(4, 120, 167); text-align: center; font-size: 13px;">
-                                <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-pencil" aria-hidden="true"></i>Change
-                            </div>
-                            <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: crimson; text-align: center; font-size: 13px;">
-                                <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-trash" aria-hidden="true"></i>Cancel
-                            </div>
-                        </div>
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
                         <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
                             Room Guest(s)</p>
                             ${room_guests_markup}
+                    </div>
+                </div>
+                <div style="cursor: pointer; margin: 0 10px; margin-bottom: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
+                    <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgba(41, 66, 88, 0.555); text-align: center; font-size: 13px;">
+                        <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-pencil" aria-hidden="true"></i>Change
+                    </div>
+                    <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: brown; text-align: center; font-size: 13px;">
+                        <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-trash" aria-hidden="true"></i>Cancel
                     </div>
                 </div>
             </div>

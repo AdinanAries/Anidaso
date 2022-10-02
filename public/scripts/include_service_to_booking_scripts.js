@@ -4,12 +4,157 @@ var include_services_in_booking_search_input_fld = document.getElementById("incl
 var include_services_in_booking_search_btn = document.getElementById("include_services_in_booking_search_btn");
 var include_services_in_booking_items_list = document.getElementById("include_services_in_booking_items_list");
 
-function return_each_inventory_item_markup_on_include_item_to_invoice_page(inventory, index){
+let initial_total = 400.00;
+let current_invoice_total = 0;
+let is_remove_from_checkbox = [];
+function include_inventory_item_into_booking(name, unit_price, index, event_from_check_box=false){
+    
+    if(!event_from_check_box) {
+        document.getElementById("include_services_item_checkbox"+index).checked = true;
+    }else if(event_from_check_box){
+        if(is_remove_from_checkbox[index]){
+            is_remove_from_checkbox[index] = !is_remove_from_checkbox[index];
+            remove_inventory_item_from_booking(name, unit_price, index);
+            return;
+        }
 
-    return `<div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-radius: 4px; padding: 10px; margin-bottom: 5px;">
+    }
+    is_remove_from_checkbox[index] = !is_remove_from_checkbox[index];
+
+    document.getElementById("include_services_include_item_btn"+index).style.display="none";
+    document.getElementById("include_services_remove_item_btn"+index).style.display="block";
+    $("#include_services_quantity_params"+index).toggle("up");
+    setTimeout(()=>document.getElementById("include_services_quantity_params"+index).style.display="flex",300);
+
+    let quantity = document.getElementById("include_services_quantity_input"+index).value;
+    
+    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(unit_price).toFixed(2)}`;
+
+    //remove current item from list first
+    add_invoice_item_post_obj.invoice_items.guest_items = add_invoice_item_post_obj.invoice_items.guest_items.filter(each=>{
+        return (each.name === name/* && each.price === unit_price*/) ? false : true;
+    });
+
+    add_invoice_item_post_obj.invoice_items.guest_items.push({
+        name,
+        price: Math.round(parseFloat(unit_price)),//unit_price,
+        quantity: parseInt(quantity),
+        total: parseFloat(unit_price),
+    });
+
+    let current_total = 0;//parseFloat(unit_price) * parseInt(quantity);
+    add_invoice_item_post_obj.invoice_items.guest_items.forEach(each=>{
+        current_total += each.total;
+    });
+    current_invoice_total = initial_total + current_total;
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
+    console.log(add_invoice_item_post_obj);
+    console.log(running_invoice);
+}
+
+function remove_inventory_item_from_booking(name, unit_price, index){
+
+    document.getElementById("include_services_item_checkbox"+index).checked = false;
+
+    document.getElementById("include_services_include_item_btn"+index).style.display="block";
+    document.getElementById("include_services_remove_item_btn"+index).style.display="none";
+    $("#include_services_quantity_params"+index).toggle("up");
+
+    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(unit_price).toFixed(2)}`;
+    document.getElementById("include_services_quantity_input"+index).value = 1;
+    current_invoice_total = 0;
+
+    //remove current item from list first
+    add_invoice_item_post_obj.invoice_items.guest_items = add_invoice_item_post_obj.invoice_items.guest_items.filter(each=>{
+        return (each.name === name/* && each.price === unit_price*/) ? false : true;
+    });
+
+    let current_total = 0;//parseFloat(unit_price) * parseInt(quantity);
+    add_invoice_item_post_obj.invoice_items.guest_items.forEach(each=>{
+        current_total += each.total;
+    });
+    current_invoice_total = initial_total + current_total;
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
+    console.log(add_invoice_item_post_obj);
+    console.log(running_invoice);
+}
+
+function include_inventory_in_booking_change_quantity(name, unit_price, index){
+    if(document.getElementById("include_services_quantity_input"+index).value==="0"){
+        remove_inventory_item_from_booking(name, unit_price, index);
+        return;
+    }
+    if(document.getElementById("include_services_quantity_input"+index).value===""){
+        //document.getElementById("include_services_quantity_input"+index).value = 1;
+        document.getElementById("include_services_quantity_input"+index).style.border='1px solid red';
+        document.getElementById("include_services_quantity_input"+index).style.backgroundColor='rgba(255,55,55,0.5)';
+        return;
+    }else{
+        document.getElementById("include_services_quantity_input"+index).style.border='none';
+        document.getElementById("include_services_quantity_input"+index).style.backgroundColor='white';
+    }
+    let quantity = document.getElementById("include_services_quantity_input"+index).value;
+    let item_total = parseFloat(unit_price) * parseInt(quantity);
+    document.getElementById("include_services_item_total"+index).innerText = `$${parseFloat(item_total).toFixed(2)}`;
+
+    //remove current item from list first
+    add_invoice_item_post_obj.invoice_items.guest_items = add_invoice_item_post_obj.invoice_items.guest_items.filter(each=>{
+        return (each.name === name/* && each.price === unit_price/*/) ? false : true;
+    });
+
+    add_invoice_item_post_obj.invoice_items.guest_items.push({
+        name,
+        price: Math.round(parseFloat(unit_price)),
+        quantity: parseInt(quantity),
+        total: item_total,
+    });
+
+    let current_total = 0;//parseFloat(unit_price) * parseInt(quantity);
+    add_invoice_item_post_obj.invoice_items.guest_items.forEach(each=>{
+        current_total += each.total;
+    });
+    current_invoice_total = initial_total + current_total;
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
+    console.log(add_invoice_item_post_obj);
+    console.log(running_invoice);
+}
+
+function return_each_inventory_item_markup_on_include_item_to_invoice_page(inventory, index){
+    is_remove_from_checkbox.push(false);
+    included_item = add_invoice_item_post_obj.invoice_items.guest_items.filter(each=>{
+        return (each.name === inventory.name/* && each.price === inventory.unit_price*/);
+    });
+    let current_total = 0;//parseFloat(unit_price) * parseInt(quantity);
+    add_invoice_item_post_obj.invoice_items.guest_items.forEach(each=>{
+        current_total += each.total;
+    });
+    current_invoice_total = initial_total + current_total;
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
+
+    let styles = {
+        quantity_params: 'display: none;',
+        remove_item_btn: 'display: none;',
+        include_item_btn: '',
+        included_check_box: "",
+    }
+    let temp = {
+        total: inventory.unit_price,
+        quantity: 1
+    }
+    if(included_item.length>0){
+        styles.quantity_params='display: flex;';
+        styles.remove_item_btn='display: block;';
+        styles.include_item_btn='display: none;';
+        styles.included_check_box="checked";
+        temp.total = included_item[0].total;
+        temp.quantity = included_item[0].quantity
+        //is_remove_from_checkbox[index]=true;
+    }
+
+    return `<div style="display: flex; flex-direction: row !important; justify-content: space-between; background-color: rgb(0, 16, 27); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px;">
         <div style="margin-right: 5px; display: flex; flex-direction: row !important;">
             <div style="margin-right: 10px;">
-                <input onclick="include_service_into_running_invoice('service_id', ${index}, true);" id="include_services_item_checkbox${index}" type="checkbox"/>
+                <input onclick="include_inventory_item_into_booking('${inventory.name}','${inventory.unit_price}', ${index}, true);" id="include_services_item_checkbox${index}" type="checkbox" ${styles.included_check_box}/>
             </div>
             <div>
                 <p style="color: rgb(255, 94, 0); font-size: 14px; margin-bottom: 5px;">
@@ -18,28 +163,28 @@ function return_each_inventory_item_markup_on_include_item_to_invoice_page(inven
                     $${inventory.unit_price} <span style="color: rgba(255,255,255,0.6); font-size: 13px;">
                     (${inventory.stock_quantity} items)</span>
                 </p>
-                <div id="include_services_quantity_params${index}" style="margin-top: 10px; display: none; flex-direction: row !important; justify-content: space-between; border-top: rgba(255, 208, 187, 0.815) 1px solid; padding-top: 10px;">
+                <div id="include_services_quantity_params${index}" style="margin-top: 10px; ${styles.quantity_params} flex-direction: row !important; justify-content: space-between; border-top: rgba(255, 208, 187, 0.815) 1px solid; padding-top: 10px;">
                     <div style="margin-right: 20px;">
                         <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
                             How many?</p>
-                        <input id="include_services_quantity_input${index}" oninput="include_service_change_quantity('service_id', ${index})" style="border: none; padding: 10px; max-width: 100px;" type="number" value="1" />
+                        <input id="include_services_quantity_input${index}" oninput="include_inventory_in_booking_change_quantity('${inventory.name}','${inventory.unit_price}',${index})" style="border: none; padding: 10px; max-width: 100px;" type="number" value="${temp.quantity}" />
                     </div>
                     <div>
                         <p style="margin-bottom: 5px; color: white; font-size: 13px; font-weight: bolder;">
                             Total:</p>
                         <p id="include_services_item_total${index}" style="color: rgb(255, 149, 87); font-size: 14px; margin-bottom: 5px;">
-                            $${inventory.unit_price}</p>
+                            $${temp.total}</p>
                     </div>
                 </div>
             </div>
             
         </div>
         <div>
-            <div onclick="include_service_into_running_invoice('service_id',${index})" id="include_services_include_item_btn${index}" style="cursor: pointer; font-size: 14px; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
+            <div onclick="include_inventory_item_into_booking('${inventory.name}','${inventory.unit_price}',${index})" id="include_services_include_item_btn${index}" style="${styles.include_item_btn} cursor: pointer; font-size: 14px; color: rgb(137, 235, 174); padding: 10px; border-radius: 4px;">
                 <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
                 Include
             </div>
-            <div onclick="remove_service_from_running_invoice('service_id', ${index})" id="include_services_remove_item_btn${index}" style="display: none; cursor: pointer; font-size: 14px; color: rgb(248, 16, 16); padding: 10px; border-radius: 4px;">
+            <div onclick="remove_inventory_item_from_booking('${inventory.name}','${inventory.unit_price}',${index})" id="include_services_remove_item_btn${index}" style="${styles.remove_item_btn} cursor: pointer; font-size: 14px; color: rgb(248, 16, 16); padding: 10px; border-radius: 4px;">
                 <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-minus" aria-hidden="true"></i>
                 Remove
             </div>
@@ -48,6 +193,7 @@ function return_each_inventory_item_markup_on_include_item_to_invoice_page(inven
 }
 
 async function search_service_items_on_include_item_to_invoice(){
+    is_remove_from_checkbox=[];
     if(include_services_in_booking_search_input_fld.value===""){
         include_services_in_booking_search_input_fld.style.border="1.5px solid red";
         include_services_in_booking_search_input_fld.style.background="rgb(255,160,160)";
@@ -82,6 +228,7 @@ async function search_service_items_on_include_item_to_invoice(){
 include_services_in_booking_search_btn.addEventListener('click', search_service_items_on_include_item_to_invoice);
 
 async function default_search_service_items_on_include_item_to_invoice(){
+    is_remove_from_checkbox=[];
     if(include_services_in_booking_service_type_select_input.value==="inventory"){
         search_inventory_item_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
         search_inventory_item_post_data.property_id = include_services_in_booking_property_select.value;
@@ -118,9 +265,12 @@ function toggle_show_include_services_in_booking_div(){
     $("#include_services_in_booking_div").toggle("up");
 }
 
-async function show_include_services_in_booking_div(){
+async function show_include_services_in_booking_div(guest_id_p=''){
     toggle_show_include_services_in_booking_div();
-    
+    add_invoice_item_post_obj.invoice_items = running_invoice.invoice_items.filter(each=>each.guest_id===guest_id_p)[0];
+    console.log(add_invoice_item_post_obj.invoice_items);
+    console.log(running_invoice.invoice_items);
+
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     include_services_in_booking_property_select.innerHTML = `
