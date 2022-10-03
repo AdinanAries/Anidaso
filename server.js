@@ -2009,8 +2009,33 @@ app.post("/add_new_cheap_hotel_guest_invoice/", async (req, res, next)=> {
   res.send(new_invoice);
 
 });
-
 //update routes
+app.post('/update_cheap_hotel_guest_invoice/', async(req, res, next)=>{
+
+  try{
+    let p_hotel_brand_id=req.body.hotel_brand_id;
+    let p_property_id=req.body.property_id;
+    let p_date_created=req.body.date_created;
+    let p_date_checkedout=req.body.date_checkedout;
+    let p_bookings=req.body.bookings;
+    let p_invoice_items=req.body.invoice_items;
+
+    invoice = await cheap_hotel_invoice.findById(req.body._id);
+    invoice.hotel_brand_id=p_hotel_brand_id;
+    invoice.property_id=p_property_id,
+    invoice.date_created=p_date_created,
+    invoice.date_checkedout=p_date_checkedout,
+    invoice.bookings=p_bookings;
+    invoice.invoice_items=p_invoice_items;
+    let new_invoice = new cheap_hotel_invoice(invoice);
+    let saved_invoice = await new_invoice.save();
+    res.send(saved_invoice);
+  }catch(e){
+    console.log(e.message);
+    res.send({message: 'error on server!'});
+  }
+  
+});
 
 app.post("/update_hotel_room/:room_id", async (req, res, next) => {
 

@@ -224,10 +224,10 @@ async function render_all_bookings_markup(bookings){
                             ${room_guests[g].first_name} ${room_guests[g].last_name}</span>
                     </p>
                     <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);">
-                        <span style="font-size: 12px; color: white;">DOB:</span> ${change_date_from_iso_to_long_date(room_guests[g].DOB)}, 
+                        <span style="font-size: 12px; color: rgba(255,255,255,0.5);">DOB:</span> ${change_date_from_iso_to_long_date(room_guests[g].DOB)}, 
                     </p>
-                    <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgb(245, 196, 151);"> 
-                        <span style="font-size: 12px; color: white;">Gender:</span> ${room_guests[g].gender}
+                    <p style="margin-left: 30px; letter-spacing: 1px; font-size: 13px; margin-top: 5px; color:rgba(245, 196, 151);"> 
+                        <span style="font-size: 12px; color: rgba(255,255,255,0.5);">Gender:</span> ${room_guests[g].gender}
                     </p>
                 </div>
             `
@@ -251,34 +251,38 @@ async function render_all_bookings_markup(bookings){
                                 - ${property_street} (${property_country})
                             </span>
                         </p>
-                        <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                        <p style="letter-spacing: 1px; color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 5px;">
                             Checkin:
                             <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
                             ${change_date_from_iso_to_long_date(booking_checkin_date)}</span>
                         </p>
-                        <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                        <p style="letter-spacing: 1px; color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 5px;">
                             Checkout:
                             <span style="letter-spacing: 1px; margin-left: 10px; font-size: 13px; color:rgb(168, 195, 218);">
                             ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
                         </p>
-                        <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                            Price paid:
+                        <p style="letter-spacing: 1px; color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 5px;">
+                            Guest Cost:
                             <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
-                            $${parseFloat(price_paid).toFixed(2)}</span>
+                            $${parseFloat(price_paid).toFixed(2)} </span>
+                            <span style="color: rgba(255,255,255,0.5); font-size: 13px;">(
+                                <i class="fa fa-info-circle" style="color: lightgreen;"></i>
+                                + services
+                            )</span>
                         </p>
                     </div>
                     <div class="flex_child_of_two flex_non_first_child">
-                        <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
-                            Room Guest(s)</p>
+                        <p style="letter-spacing: 1px; margin-top: 15px; margin-bottom: 10px; font-size: 12px; color:rgba(255, 255, 255, 0.5);">
+                            ROOM GUEST(S)</p>
                             ${room_guests_markup}
                     </div>
                 </div>
-                <div style="cursor: pointer; margin: 0 10px; margin-bottom: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden;">
+                <div style="cursor: pointer; margin: 0 10px; margin-bottom: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);">
                     <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgba(41, 66, 88, 0.555); text-align: center; font-size: 13px;">
-                        <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-pencil" aria-hidden="true"></i>Change
+                        <i style="margin-right: 5px; color:rgba(244, 255, 203, 0.4);margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>Change
                     </div>
                     <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: brown; text-align: center; font-size: 13px;">
-                        <i style="margin-right: 5px; color:rgb(244, 255, 203);" class="fa fa-trash" aria-hidden="true"></i>Cancel
+                        <i style="margin-right: 5px; color:rgba(244, 255, 203, 0.4);margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>Cancel
                     </div>
                 </div>
             </div>

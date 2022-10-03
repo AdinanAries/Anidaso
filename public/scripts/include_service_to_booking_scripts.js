@@ -4,10 +4,10 @@ var include_services_in_booking_search_input_fld = document.getElementById("incl
 var include_services_in_booking_search_btn = document.getElementById("include_services_in_booking_search_btn");
 var include_services_in_booking_items_list = document.getElementById("include_services_in_booking_items_list");
 
-let initial_total = 400.00;
+let initial_total = 0;
 let current_invoice_total = 0;
 let is_remove_from_checkbox = [];
-function include_inventory_item_into_booking(name, unit_price, index, event_from_check_box=false){
+async function include_inventory_item_into_booking(name, unit_price, index, event_from_check_box=false){
     
     if(!event_from_check_box) {
         document.getElementById("include_services_item_checkbox"+index).checked = true;
@@ -50,9 +50,10 @@ function include_inventory_item_into_booking(name, unit_price, index, event_from
     document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
     console.log(add_invoice_item_post_obj);
     console.log(running_invoice);
+    //await update_and_return_cheap_hotel_guest_invoice();
 }
 
-function remove_inventory_item_from_booking(name, unit_price, index){
+async function remove_inventory_item_from_booking(name, unit_price, index){
 
     document.getElementById("include_services_item_checkbox"+index).checked = false;
 
@@ -77,9 +78,10 @@ function remove_inventory_item_from_booking(name, unit_price, index){
     document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
     console.log(add_invoice_item_post_obj);
     console.log(running_invoice);
+    //await update_and_return_cheap_hotel_guest_invoice();
 }
 
-function include_inventory_in_booking_change_quantity(name, unit_price, index){
+async function include_inventory_in_booking_change_quantity(name, unit_price, index){
     if(document.getElementById("include_services_quantity_input"+index).value==="0"){
         remove_inventory_item_from_booking(name, unit_price, index);
         return;
@@ -117,6 +119,7 @@ function include_inventory_in_booking_change_quantity(name, unit_price, index){
     document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(current_invoice_total).toFixed(2)}`;
     console.log(add_invoice_item_post_obj);
     console.log(running_invoice);
+    //await update_and_return_cheap_hotel_guest_invoice();
 }
 
 function return_each_inventory_item_markup_on_include_item_to_invoice_page(inventory, index){
@@ -271,6 +274,19 @@ async function show_include_services_in_booking_div(guest_id_p=''){
     console.log(add_invoice_item_post_obj.invoice_items);
     console.log(running_invoice.invoice_items);
 
+    // INCLUDE All OTHER GUESTS INVOICES THAT AREN'T ASSOCIATED WITH THE CURRENT GUEST TO INITIAL TOTAL
+    initial_total = 0;
+    running_invoice.invoice_items.forEach(each=>{
+        if(each.guest_id!==guest_id_p){
+            each.guest_items.forEach(item=>{
+                initial_total += parseFloat(item.total);
+                console.log('guest total:',item.total)
+                console.log('initial total', initial_total);
+            })
+        }
+    });
+
+    document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(initial_total).toFixed(2)}`;
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     include_services_in_booking_property_select.innerHTML = `
@@ -286,3 +302,20 @@ async function show_include_services_in_booking_div(guest_id_p=''){
     default_search_service_items_on_include_item_to_invoice();
 }
 
+function update_and_return_cheap_hotel_guest_invoice(){
+    return $.ajax({
+        type: "POST",
+        url: "/update_cheap_hotel_guest_invoice/",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(running_invoice),
+        success: data => {
+            //console.log('invoice after backend:',data);
+            return data
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+}

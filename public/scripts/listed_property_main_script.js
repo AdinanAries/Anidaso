@@ -2457,12 +2457,12 @@ function all_rooms_return_each_room_markup(room, checkin, checkout){
                         Checkout: 
                         <span style="font-size: 13px; color: white;">
                             ${checkout}</span></p>
-                    <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 10px;">
+                    <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
                         <div onclick="view_selected_room_full_details('${room_id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgba(41, 66, 88, 0.555); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                             view this room
                         </div>
                         <div onclick="edit_hotel_room_func('${room._id}');" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
+                            <i style="color: rgba(255,255,255,0.5);" class="fa fa-pencil" aria-hidden="true"></i> edit this room
                         </div>
                     </div>
                 </div>
@@ -2575,12 +2575,12 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                     <i style="color: orangered; margin-right: 5px" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                     Closed rooms can't be booked.
                 </p>
-                <div style="display: flex; flex-direction: row !important; width: 250px; margin: 20px 0;">
-                    <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(209, 84, 0); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                        <i class="fa fa-plus" aria-hidden="true"></i> add new room
+                <div style="display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; width: 250px; margin: 10px 0;">
+                    <div onclick="add_new_hotel_room_func();" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgba(41, 66, 88, 0.555); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                        <i style="color: rgba(255,255,255,0.5);" class="fa fa-plus" aria-hidden="true"></i> add new room
                     </div>
                     <div onclick="edit_hotel_room_func('${room._id}');" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                        <i class="fa fa-pencil" aria-hidden="true"></i> edit this room
+                        <i style="color: rgba(255,255,255,0.5);" class="fa fa-pencil" aria-hidden="true"></i> edit this room
                     </div>
                 </div>
                 <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
@@ -2606,8 +2606,8 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                     </span></p>
             </div>
             <div class="flex_child_of_two flex_non_first_child">
-                <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                    Current Guest</p>
+                <p style="color: rgba(255,255,255,0.4); margin-bottom: 10px; font-size: 12px; letter-spacing: 1px;;">
+                    CURRENT GUEST</p>
                 <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     Checkin: 
                     <span style="font-size: 13px; color: white;">
@@ -2625,8 +2625,8 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                     view room ${room_number} bookings
                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                 </p>
-                <p style="color: white; margin-bottom: 10px; margin-top: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                    Room Link</p>
+                <p style="color: rgba(255,255,255,0.4); margin-bottom: 10px; margin-top: 10px; font-size: 12px; letter-spacing: 1px;;">
+                    ROOM LINK</p>
                 <p style="margin: 10px; font-size: 13px; letter-spacing: 1px; color: rgb(121, 223, 252);">
                     The link below can be directly used to book this room. You may share to customers so that they find and book 
                     this room.</p>
@@ -2638,8 +2638,8 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                     <span class="tooltip">
                         Click to copy link</span>
                 </p>
-                <p style="margin-top: 20px; color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                    Availability</p>
+                <p style="margin-top: 20px; color: rgba(255,255,255,0.4); margin-bottom: 10px; font-size: 12px; letter-spacing: 1px;">
+                    AVAILABILITY</p>
                 <!--p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     March 23, 2022 
                     <span style="font-size: 13px; color: white;">
@@ -2652,8 +2652,8 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
         </div>
         <div class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two" style="margin-top: 20px;">
-                <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                    Misc</p>
+                <p style="color: rgba(255,255,255,0.4); margin-bottom: 10px; font-size: 12px; letter-spacing: 1px;">
+                    MISC</p>
                 <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                     Guests Capacitance: 
                     <span style="font-size: 13px; color: white;">
@@ -2676,14 +2676,14 @@ function room_search_result_return_markup(room, guest_name, guest_age, guest_gen
                 </p>
             </div>
             <div style="margin-bottom: 20px; margin-top: 20px;" class="flex_child_of_two flex_non_first_child">
-                <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
-                    Cancellation Request</p>
+                <p style="color: rgba(255,255,255,0.4); margin-bottom: 10px; font-size: 12px; letter-spacing: 1px;">
+                    CANCELLATION REQUESTS</p>
                     <p style="color: whitesmoke; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px;">
                         Guest(s) requested booking cancellation. Click on the button below to view cancellation requests
                         <span style="color:rgb(255, 97, 6); font-size: 13px;">
                             with cancellation fee of $90.00</span>
                     </p>
-                    <p style="background-color: steelblue; color: white; border-radius: 4px; padding: 10px; margin-bottom: 20px; text-align: center; width: 160px; font-size: 13px; letter-spacing: 1px;">
+                    <p style="background-color: rgba(41, 66, 88, 0.555); color: white; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-bottom: 20px; text-align: center; width: 160px; font-size: 13px; letter-spacing: 1px;">
                         View Requests
                     </p>
             </div>
@@ -2969,12 +2969,12 @@ function all_properties_return_each_property_markup(property){
                     ${property.street_address}, ${property.country}
                 </span>
             </p>
-            <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 10px;">
+            <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
                 <div onclick="show_all_hotel_property_rooms('${property._id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgba(41, 66, 88, 0.555); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                <i class="fa fa-list" aria-hidden="true"></i> view rooms
+                    <i style="color: rgba(255,255,255,0.5);" class="fa fa-list" aria-hidden="true"></i> view rooms
                 </div>
                 <div onclick="" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(3, 70, 97); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                    <i class="fa fa-pencil" aria-hidden="true"></i> edit property
+                    <i style="color: rgba(255,255,255,0.5);" class="fa fa-pencil" aria-hidden="true"></i> edit property
                 </div>
             </div>
         </div>
@@ -3013,7 +3013,7 @@ async function all_amenities_add_new_amenity(){
         let return_res = await add_new_amenity(new_amenity, window.localStorage.getItem("ANDSBZID"));
         document.getElementById("full_screen_loader").style.display = "none";
         input_elem.value = "";
-        alert("new amenity added!");
+        //alert("new amenity added!");
         render_all_logged_in_hotel_amenities();
     }
 }
