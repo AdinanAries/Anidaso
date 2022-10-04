@@ -31,6 +31,9 @@ var all_hotel_amenity_options = [
     "Video Surveilance",
     "Fitness Center",
 ]
+var new_hotel_amenities_list_to_save = {
+    items: []
+};
 
 var all_hotel_services = [
     "Car Rental Services",
@@ -1660,13 +1663,21 @@ function general_build_dates_list_from_range(first_date, last_date){
 
 //show_all_hotel_property_rooms(propety_id) use this function to show  rooms of each property;
 
-function add_all_amenity_options_to_select_from_list(){
+async function add_all_amenity_options_to_select_from_list(){
+    let hotel_amenities = await get_all_amenities(localStorage.getItem("ANDSBZID"));
+    all_hotel_amenity_options=all_hotel_amenity_options.map(each=>each.trim());
+    //Removing duplicates
+    hotel_amenities.forEach(emenity=>{
+        all_hotel_amenity_options.splice(all_hotel_amenity_options.indexOf(emenity.trim()), 1);
+    });
+    document.getElementById("select_amenities_list1").innerHTML='';
+    document.getElementById("select_amenities_list2").innerHTML='';
     for(let i=0; i < all_hotel_amenity_options.length; i++){
-        if(i > (all_hotel_amenity_options.length/2)){
+        if(i >= (all_hotel_amenity_options.length/2)){
             document.getElementById("select_amenities_list2").innerHTML += 
             `
                 <div style="padding: 5px;">
-                    <input style="margin-right: 5px;" id="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list" type="checkbox" />
+                    <input class="each_amenity_from_add_amenity_from_list" style="margin-right: 5px;" id="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list" type="checkbox" value="${all_hotel_amenity_options[i]}"/>
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list">${all_hotel_amenity_options[i]}</label>
                 </div>
             `; 
@@ -1674,12 +1685,45 @@ function add_all_amenity_options_to_select_from_list(){
             document.getElementById("select_amenities_list1").innerHTML += 
             `
                 <div style="padding: 5px;">
-                    <input style="margin-right: 5px;" id="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list" type="checkbox" />
+                    <input class="each_amenity_from_add_amenity_from_list" style="margin-right: 5px;" id="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list" type="checkbox"  value="${all_hotel_amenity_options[i]}"/>
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_amenity_options[i].replaceAll(" ", "_").trim()}_amenity_from_add_from_list">${all_hotel_amenity_options[i]}</label>
                 </div>
             `; 
         }
     }
+}
+
+function get_all_select_amenities_values_from_add_from_list_options(){
+    Array.from(document.querySelectorAll('.each_amenity_from_add_amenity_from_list')).forEach(each=>{
+        if(each.checked)
+            new_hotel_amenities_list_to_save.items.push(each.value);
+    });
+}
+
+async function save_all_amenities_selected_from_list(){
+    get_all_select_amenities_values_from_add_from_list_options();
+    //console.log(new_hotel_amenities_list_to_save);
+    await update_amenities_selected_from_all_list();
+    add_all_amenity_options_to_select_from_list()
+}
+
+function update_amenities_selected_from_all_list(){
+   // 
+   return $.ajax({
+    type: "POST",
+    url: `/add_new_amenities_as_list/${localStorage.getItem("ANDSBZID")}`,
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(new_hotel_amenities_list_to_save),
+    success: res => {
+        //console.log(res);
+        return res;
+    },
+    error: err => {
+        //console.log(err);
+        return err;
+    }
+});
 }
 
 add_all_amenity_options_to_select_from_list();
@@ -4119,38 +4163,45 @@ async function render_all_logged_in_hotel_amenities(){
 
 function all_amenities_return_each_amenity_markup(amenity){
     return `
-        <div id="logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity" class="logged_in_hotel_amenity">
+        <div id="logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
             <p>
-                <span style="font-size: 14px; color: white; font-weight: bolder;">
+                <span style="font-size: 14px; color: white;">
                     <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                    ${amenity}
+                    ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    - all properies</span>
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                    <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 20px;" class="fa fa-pencil" aria-hidden="true"></i>
                     <i  onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="color: rgb(250, 122, 122);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </p>
             <div id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
-                <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
                 </p>
-                <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
-                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                <div style="display: flex;">
+                    <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type amenity here" value="" />
+                    <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                        <option>all properties</option>
+                    </select>
+                </div>
+                
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                    <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                         Save
                     </div>
-                    <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                    <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: brown; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                         Cancel
                     </div>
                 </div>
             </div>
             <div id="delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
-                <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
+                <p style="font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                     Are you sure</p>
-                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                    <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Delete
                     </div>
-                    <div onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Cancel
                     </div>
                 </div>
@@ -4162,9 +4213,10 @@ function all_amenities_return_each_amenity_markup(amenity){
 function all_amenities_return_each_amenity_markup_after_update(amenity){
     return `
         <p>
-            <span style="font-size: 14px; color: white; font-weight: bolder;">
+            <span style="font-size: 14px; color: white;">
                 <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                ${amenity}
+                ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                - all properies</span>
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                 <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
@@ -4172,26 +4224,31 @@ function all_amenities_return_each_amenity_markup_after_update(amenity){
             </span>
         </p>
         <div id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
-            <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+            <p id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
             </p>
-            <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
-            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+            <div style="display: flex;">
+                <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type amenity here" value="" />
+                <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                    <option>all properties</option>
+                </select>
+            </div>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                     Save
                 </div>
-                <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: crimson; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: brown; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                     Cancel
                 </div>
             </div>
         </div>
         <div id="delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
-            <p style="font-weight: bolder; font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
+            <p style="font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                 Are you sure</p>
-            <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);">
+                <div onclick="all_amenities_remove_each_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Delete
                 </div>
-                <div onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div onclick="toggle_hide_show_anything('delete__all_amenities_${amenity.replaceAll(" ", "_").trim()}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Cancel
                 </div>
             </div>
@@ -4269,9 +4326,9 @@ function all_cities_return_each_city_markup(city_param){
     let country_for_ids = city_param.country.replaceAll(" ", "_").trim();
 
     return `
-        <div id="all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op" class="logged_in_hotel_amenity">
+        <div id="all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op" class="logged_in_hotel_amenity" style="background-color: rgba(0,0,0,0.5); padding: 5px;border-bottom: 1px solid rgba(255,255,255,0.2)">
             <p>
-                <span style="font-size: 14px; color: white; font-weight: bolder;">
+                <span style="font-size: 14px; color: white;">
                     <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                     ${city_param.city}, ${city_param.country}
                 </span>
@@ -4280,13 +4337,13 @@ function all_cities_return_each_city_markup(city_param){
                 </span>
             </p>
             <div id="all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; margin-bottom: 20px; background: none; width: 100%;" class="confirm_delete_dialog">
-                <p style="font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
+                <p style="font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                     Are you sure</p>
-                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div onclick="all_cities_op_remove_each_city_op('all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op', '${city_param.city}, ${city_param.country}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2);border-radius: 4px;">
+                    <div onclick="all_cities_op_remove_each_city_op('all_cities_logged_in_hote_${city_for_ids}_${country_for_ids}_city_Op', '${city_param.city}, ${city_param.country}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Delete
                     </div>
-                    <div onclick="toggle_hide_show_anything('all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="toggle_hide_show_anything('all_cities_delete_${city_for_ids}_${country_for_ids}_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Cancel
                     </div>
                 </div>

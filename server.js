@@ -2286,7 +2286,31 @@ app.post("/add_new_amenity/:hotel_brand_id", async (req, res, next) => {
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
+  //removing current amenity if it exists
+  hotel.amenities = hotel.amenities.filter(each=>(each.trim().toLowerCase()===req.query.amenity.trim().toLowerCase() ? false : true));
   hotel.amenities.push(amenity);
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.amenities);
+
+});
+
+app.post("/add_new_amenities_as_list/:hotel_brand_id", async (req, res, next) => {
+
+  let amenities = req.body.items;
+  amenities=amenities.map(each=>each.trim());
+
+  let brand_id = req.params.hotel_brand_id;
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  //Removing duplicates
+  amenities.forEach(emenity=>{
+    hotel.amenities.splice(hotel.amenities.indexOf(emenity.trim()), 1);
+  });
+  //hotel.amenities = hotel.amenities.filter(each=>(each.trim().toLowerCase()===req.query.amenity.trim().toLowerCase() ? false : true));
+  hotel.amenities=[...hotel.amenities,...amenities];
 
   let new_hotel = new cheap_hotel(hotel);
   let update_hotel = await new_hotel.save();
@@ -2308,6 +2332,10 @@ app.post("/add_new_city/:hotel_brand_id", async (req, res, next) => {
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
+  //removing new entry if it already exists to avoid duplicates
+  hotel.cities_operating = hotel.cities_operating.filter(each=>
+    (each.city.trim().toLowerCase()===city_obj.city.trim().toLowerCase() 
+    && each.country.trim().toLowerCase()===city_obj.country.trim().toLowerCase() ? false : true));
   hotel.cities_operating.push(city_obj);
 
   let new_hotel = new cheap_hotel(hotel);

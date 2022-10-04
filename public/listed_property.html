@@ -245,14 +245,22 @@
         <div class="page_popup_content_container">
             <div style="padding: 5px; background-color:rgb(3, 70, 97);">
                 <div id="logged_in_hotel_all_amenities_add_amenity_info_form" style="margin-top: 10px;">
-                    <p style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                    <p style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px;">
                     Add New Facilities</p>
-                    <p style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
-                        select facilities from list
-                        <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
-                    </p>
-                    <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                        <input style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter amenity here" value="" />
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <p onclick="show_add_facilities();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px;">
+                            Add From List
+                            <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                        </p>
+                        <div>
+                            <select style="padding: 10px; border-radius: 4px; font-size: 14px; border: 1px solid rgba(255,255,255,0.2); background-color:rgb(5, 21, 32); color: white;">
+                                <option value="all">Select Property</option>
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px; display: flex; flex-direction: row !important;">
+                        <input style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter facility name here" value="" />
                         <div style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                             Save
                         </div>
@@ -260,11 +268,14 @@
                 </div>
             </div>
             <p onclick="toggle_show_all_facilites();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
-                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 10px 0;">
-                    All Facilities</p>
-                <div id="all_hotel_facilities_list" style="padding: 10px;">
-                    
+            <div class="page_popup_content_body" style="height: calc(100% - 140px);">
+                <p style="color: rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 1px; text-align: center; margin-top: 5px;">
+                    Available Facilities</p>
+                <div id="all_hotel_facilities_list" style="padding: 10px 0;">
+                    <div style="border: 1px solid red; background-color: rgba(0,0,0,0.5); padding: 20px; text-align: center; font-size: 14px; color: white;">
+                        <i style="color: red; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        You don't have any facilities
+                    </div>
                 </div>
             </div>
         </div>
@@ -272,15 +283,23 @@
     <div id="all_services_list_container" style="display: none;" class="page_pop_up_cover">
         <div class="page_popup_content_container">
             <div style="padding: 5px; background-color:rgb(3, 70, 97);">
-                <div id="logged_in_hotel_all_amenities_add_amenity_info_form" style="margin-top: 10px;">
-                    <p style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                <div style="margin-top: 10px;">
+                    <p style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px;">
                     Add New Services</p>
-                    <p style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
-                        select amenities from list
-                        <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
-                    </p>
-                    <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                        <input style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter amenity here" value="" />
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <p onclick="show_add_services();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px;">
+                            Add From List
+                            <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                        </p>
+                        <div>
+                            <select style="padding: 10px; border-radius: 4px; font-size: 14px; border: 1px solid rgba(255,255,255,0.2); background-color:rgb(5, 21, 32); color: white;">
+                                <option value="all">Select Property</option>
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px; display: flex; flex-direction: row !important;">
+                        <input style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter service name here" value="" />
                         <div style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                             Save
                         </div>
@@ -288,11 +307,14 @@
                 </div>
             </div>
             <p onclick="toggle_show_all_services();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
-                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 10px 0;">
-                    All Services</p>
-                <div id="all_hotel_services_list" style="padding: 10px;">
-                    
+            <div class="page_popup_content_body" style="height: calc(100% - 140px);">
+                <p style="color: rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 1px; text-align: center; margin-top: 5px;">
+                    Available Services</p>
+                <div id="all_hotel_services_list" style="padding: 10px 0;">
+                    <div style="border: 1px solid red; background-color: rgba(0,0,0,0.5); padding: 20px; text-align: center; font-size: 14px; color: white;">
+                        <i style="color: red; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        You don't have any services
+                    </div>
                 </div>
             </div>
         </div>
@@ -2357,16 +2379,16 @@
     </div>
     <div id="add_amenities_from_list_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
-            <div style="padding: 10px; height: 80px;">
+            <div style="padding: 5px;">
                 <p onclick="toggle_show_select_all_amenities_from_list_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin-top: 10px; margin-bottom: 5px;">
                     Select Your Amenities
                 </p>
-                <div style="text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
+                <div onclick="save_all_amenities_selected_from_list();" style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
                     Save Selected
                 </div>
             </div>
-            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
+            <div class="page_popup_content_body" style="height: calc(100% - 90px);">
                 <div style="padding: 10px;">
                     <div class="flex_row_default_flex_column_mobile">
                         <div id="select_amenities_list1" class="flex_child_of_two">
@@ -3198,13 +3220,21 @@
         <div class="page_popup_content_container">
             <div style="padding: 5px; background-color:rgb(3, 70, 97);">
                 <div id="logged_in_hotel_all_amenities_add_amenity_info_form" style="margin-top: 10px;">
-                    <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                    <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px;">
                     Add New Amenity</p>
-                    <p onclick="toggle_show_select_all_amenities_from_list_div();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px; margin: 15px;">
-                        select amenities from list
-                        <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
-                    </p>
-                    <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <p onclick="toggle_show_select_all_amenities_from_list_div();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px;">
+                            Add From List
+                            <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                        </p>
+                        <div>
+                            <select style="padding: 10px; border-radius: 4px; font-size: 14px; border: 1px solid rgba(255,255,255,0.2); background-color:rgb(5, 21, 32); color: white;">
+                                <option value="all">Select Property</option>
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px; display: flex; flex-direction: row !important;">
                         <input id="logged_in_hotel_all_amenities_add_new_amenity_form_input" style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter amenity here" value="" />
                         <div onclick="all_amenities_add_new_amenity();" style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                             Save
@@ -3214,9 +3244,9 @@
             </div>
             <p onclick="toggle_show_all_amenities();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div class="page_popup_content_body" style="height: calc(100% - 120px);">
-                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 10px 0;">
-                    Current Amenities</p>
-                <div id="all_hotel_amenities_list" style="padding: 10px;">
+                <p style="color: rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 1px; text-align: center; margin-top: 10px;">
+                    Available Amenities</p>
+                <div id="all_hotel_amenities_list" style="padding: 10px 0;">
                     
                 </div>
             </div>
@@ -3226,7 +3256,7 @@
         <div class="page_popup_content_container">
             <div style="padding: 10px; background-color:rgb(3, 70, 97);">
                 <div id="logged_in_hotel_all_amenities_add_amenity_info_form" style="margin-top: 10px;">
-                    <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
+                    <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px;">
                     Add New City</p>
                     <div style="margin-top: 10px; display: flex; flex-direction: row !important; position: relative;">
                         <input id="logged_in_hotel_all_cities_list_add_city_form_input" style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: calc(100% - 120px); border: none;" type="text" placeholder="enter city here" value="" />
@@ -3246,9 +3276,9 @@
             </div>
             <p onclick="toggle_show_all_cities();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div class="page_popup_content_body" style="height: calc(100% - 115px);">
-                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
-                    All Cities</p>
-                <div id="all_cities_list" style="padding: 10px;">
+                <p style="color: rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 1px; text-align: center; margin-top: 10px;">
+                    Your Current Cities</p>
+                <div id="all_cities_list" style="padding: 10px 0;">
                     
                 </div>
             </div>
@@ -3442,8 +3472,8 @@
                             <p onclick="show_all_amenities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Amenity</p>
                             <p onclick="show_all_cities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New City</p>
                             <p onclick="toggle_show_all_policies();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">New Policy</p>
-                            <p onclick="show_add_services();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Services</p>
-                            <p onclick="show_add_facilities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Facilities</p>
+                            <p onclick="show_all_services();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Services</p>
+                            <p onclick="show_all_facilities();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">Add Facilities</p>
                         </div>
                     </div>
                     <div onclick="show_notifications();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; margin-right: 10px;">
