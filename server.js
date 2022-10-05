@@ -2246,6 +2246,28 @@ app.post("/update_amenity/:hotel_brand_id", async (req, res, next) => {
 
 });
 
+app.post("/update_service/:hotel_brand_id", async (req, res, next) => {
+
+  let new_service = req.query.new_service;
+  let old_service = req.query.old_service;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.services = hotel.services.map( each => {
+    if(each === old_service){
+      return new_service;
+    }else
+      return each;
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(new_service);
+
+});
+
 app.post("/remove_photo_url_from_photos/:hotel_brand_id", async (req, res, next) => {
 
   let hotel = await cheap_hotel.findById(req.params.hotel_brand_id);
@@ -2441,7 +2463,24 @@ app.delete("/remove_amenity/:hotel_brand_id", async(req, res, next) => {
   let new_hotel = new cheap_hotel(hotel);
   let update_hotel = await new_hotel.save();
 
-  res.send(update_hotel.cities_operating);
+  res.send(update_hotel.amenities);
+
+});
+app.delete("/remove_service/:hotel_brand_id", async(req, res, next) => {
+
+  let service = req.query.q_service;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.services = hotel.services.filter( each => {
+    return each !== service;
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.services);
 
 });
 
