@@ -2268,6 +2268,28 @@ app.post("/update_service/:hotel_brand_id", async (req, res, next) => {
 
 });
 
+app.post("/update_facility/:hotel_brand_id", async (req, res, next) => {
+
+  let new_facility = req.query.new_facility;
+  let old_facility = req.query.old_facility;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.facilities = hotel.facilities.map( each => {
+    if(each === old_facility){
+      return new_facility;
+    }else
+      return each;
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(new_facility);
+
+});
+
 app.post("/remove_photo_url_from_photos/:hotel_brand_id", async (req, res, next) => {
 
   let hotel = await cheap_hotel.findById(req.params.hotel_brand_id);
@@ -2333,6 +2355,23 @@ app.post("/add_new_service/:hotel_brand_id", async (req, res, next) => {
   let update_hotel = await new_hotel.save();
 
   res.send(update_hotel.services);
+
+});
+
+app.post("/add_new_facility/:hotel_brand_id", async (req, res, next) => {
+
+  let facility = req.query.facility;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  //removing current service if it exists
+  hotel.facilities = hotel.facilities.filter(each=>(each.trim().toLowerCase()===req.query.facility.trim().toLowerCase() ? false : true));
+  hotel.facilities.push(facility);
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.facilities);
 
 });
 
@@ -2417,6 +2456,17 @@ app.get("/get_all_services/:hotel_brand_id", async (req, res, next) => {
 
 });
 
+//get all cheap hotel facilities
+app.get("/get_all_facilities/:hotel_brand_id", async (req, res, next) => {
+
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  res.send(hotel.facilities);
+
+});
+
 //get all cheap hotel policies
 app.get("/get_all_policies/:hotel_brand_id", async (req, res, next) => {
 
@@ -2466,6 +2516,7 @@ app.delete("/remove_amenity/:hotel_brand_id", async(req, res, next) => {
   res.send(update_hotel.amenities);
 
 });
+
 app.delete("/remove_service/:hotel_brand_id", async(req, res, next) => {
 
   let service = req.query.q_service;
@@ -2481,6 +2532,24 @@ app.delete("/remove_service/:hotel_brand_id", async(req, res, next) => {
   let update_hotel = await new_hotel.save();
 
   res.send(update_hotel.services);
+
+});
+
+app.delete("/remove_facility/:hotel_brand_id", async(req, res, next) => {
+
+  let facility = req.query.q_facility;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+
+  hotel.facilities = hotel.facilities.filter( each => {
+    return each !== facility;
+  });
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.facilities);
 
 });
 

@@ -1141,6 +1141,7 @@ function toggle_show_all_facilites() {
 
 function show_all_facilities() {
     toggle_show_all_facilites();
+    render_all_logged_in_hotel_facilities();
 }
 
 function toggle_show_front_desk_accounts() {
@@ -2154,6 +2155,23 @@ async function all_services_update_existing_service(all_services_each_service_el
     document.getElementById("full_screen_loader").style.display = "none";
 }
 
+async function all_facilities_update_existing_facility(all_facilities_each_facility_elem_id, facility_input_id, old_facility) {
+
+    if (document.getElementById(facility_input_id).value === "") {
+        document.getElementById(facility_input_id).focus();
+        document.getElementById(facility_input_id).placeholder = "this input field cant be empty";
+        return null;
+    }
+
+    document.getElementById("full_screen_loader").style.display = "flex";
+
+    let new_facility = document.getElementById(facility_input_id).value;
+    let returned_facility = await update_existing_facility(old_facility, new_facility, window.localStorage.getItem("ANDSBZID"));
+    document.getElementById(all_facilities_each_facility_elem_id).innerHTML = all_facilities_return_each_facility_markup_after_update(returned_facility);
+    document.getElementById(all_facilities_each_facility_elem_id).id = `logged_in_hotel_all_facilities_${returned_facility.replaceAll(" ", "_").trim()}_facility`;
+    document.getElementById("full_screen_loader").style.display = "none";
+}
+
 function all_amenities_start_edit_amenity_info(elem_id, info, title) {
     toggle_hide_show_anything("logged_in_hotel_all_amenities_edit_" + info.replaceAll(" ", "_") + "_amenity_info_form");
     document.getElementById("logged_in_hotel_all_amenities_edit_" + info.replaceAll(" ", "_") + "_amenity_form_title").innerText = title;
@@ -3159,6 +3177,25 @@ async function all_services_add_new_service() {
         input_elem.value = "";
         //alert("new amenity added!");
         render_all_logged_in_hotel_services();
+    }
+}
+
+async function all_facilities_add_new_facility() {
+
+    document.getElementById("full_screen_loader").style.display = "flex";
+    let input_elem = document.getElementById("logged_in_hotel_all_facilities_add_new_facility_form_input");
+    let new_facility = input_elem.value
+
+    if (new_facility === "") {
+        input_elem.focus();
+        input_elem.placeholder = "please enter new facility";
+        document.getElementById("full_screen_loader").style.display = "none";
+    } else {
+        let return_res = await add_new_facility(new_facility, window.localStorage.getItem("ANDSBZID"));
+        document.getElementById("full_screen_loader").style.display = "none";
+        input_elem.value = "";
+        //alert("new amenity added!");
+        render_all_logged_in_hotel_facilities();
     }
 }
 
@@ -4179,6 +4216,20 @@ function add_new_service(service, hotel_id) {
         }
     });
 }
+function add_new_facility(facility, hotel_id) {
+    return $.ajax({
+        type: "POST",
+        url: "/add_new_facility/" + hotel_id + "?facility=" + facility,
+        success: res => {
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            //console.log(err);
+            return err
+        }
+    });
+}
 
 function update_existing_amenity(old_amenity, new_amenity, hotel_id) {
     return $.ajax({
@@ -4200,6 +4251,22 @@ function update_existing_service(old_service, new_service, hotel_id) {
     return $.ajax({
         type: "POST",
         url: "/update_service/" + hotel_id + "?new_service=" + new_service + "&old_service=" + old_service,
+        success: res => {
+            /*/console.log(res);
+            if (document.getElementById("no_amenities_to_display_msg"))
+                document.getElementById("no_amenities_to_display_msg").style.display = "none";*/
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+function update_existing_facility(old_facility, new_facility, hotel_id) {
+    return $.ajax({
+        type: "POST",
+        url: "/update_facility/" + hotel_id + "?new_facility=" + new_facility + "&old_facility=" + old_facility,
         success: res => {
             /*/console.log(res);
             if (document.getElementById("no_amenities_to_display_msg"))
@@ -4274,12 +4341,30 @@ function remove_service(elem_id, service, hotel_id) {
     });
 }
 
+function remove_facility(elem_id, facility, hotel_id) {
+    $.ajax({
+        type: "DELETE",
+        url: "/remove_facility/" + hotel_id + "?q_facility=" + facility,
+        success: res => {
+            //console.log(res);
+            toggle_hide_show_anything(elem_id);
+        },
+        error: err => {
+            console.log(err);
+        }
+    });
+}
+
 function all_amenities_remove_each_amenity(elem_id_param, amenity_param) {
     remove_amenity(elem_id_param, amenity_param, window.localStorage.getItem("ANDSBZID"));
 }
 
 function all_services_remove_each_service(elem_id_param, service_param) {
     remove_service(elem_id_param, service_param, window.localStorage.getItem("ANDSBZID"));
+}
+
+function all_facilities_remove_each_facility(elem_id_param, facility_param) {
+    remove_facility(elem_id_param, facility_param, window.localStorage.getItem("ANDSBZID"));
 }
 
 function get_all_amenities(hotel_id) {
@@ -4301,6 +4386,21 @@ function get_all_services(hotel_id) {
     return $.ajax({
         type: "GET",
         url: "/get_all_services/" + hotel_id,
+        success: res => {
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+}
+
+function get_all_facilities(hotel_id) {
+    return $.ajax({
+        type: "GET",
+        url: "/get_all_facilities/" + hotel_id,
         success: res => {
             //console.log(res);
             return res;
@@ -4342,6 +4442,25 @@ async function render_all_logged_in_hotel_services() {
         }
     } else {
         document.getElementById("all_hotel_services_list").innerHTML = `
+            <div style="border: 1px solid red; background-color: rgba(0,0,0,0.5); padding: 20px; text-align: center; font-size: 14px; color: white;">
+                <i style="color: red; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                You don't have any services
+            </div>`;
+    }
+
+}
+
+async function render_all_logged_in_hotel_facilities() {
+
+    document.getElementById("all_hotel_facilities_list").innerHTML = ``;
+    let all_facilities = await get_all_facilities(window.localStorage.getItem("ANDSBZID"));
+
+    if (all_facilities.length > 0) {
+        for (let i = 0; i < all_facilities.length; i++) {
+            document.getElementById("all_hotel_facilities_list").innerHTML += all_facilities_return_each_facility_markup(all_facilities[i]);
+        }
+    } else {
+        document.getElementById("all_hotel_facilities_list").innerHTML = `
             <div style="border: 1px solid red; background-color: rgba(0,0,0,0.5); padding: 20px; text-align: center; font-size: 14px; color: white;">
                 <i style="color: red; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 You don't have any services
@@ -4451,7 +4570,7 @@ function all_services_return_each_service_markup_after_update(service) {
             <span style="font-size: 14px; color: white;">
                 <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                 ${service} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
-                - all properies</span>
+                - all properies - $45.23</span>
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                 <i onclick="all_services_start_edit_service_info('logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service', '${service}', 'Edit Service');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
@@ -4462,8 +4581,9 @@ function all_services_return_each_service_markup_after_update(service) {
             <p id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
             </p>
             <div style="display: flex;">
-                <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type service name here" value="" />
-                <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type service name here" value="" />
+                <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="" />
+                <select style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
                     <option>all properties</option>
                 </select>
             </div>
@@ -4484,6 +4604,53 @@ function all_services_return_each_service_markup_after_update(service) {
                     Delete
                 </div>
                 <div onclick="toggle_hide_show_anything('delete__all_services_${service.replaceAll(" ", "_").trim()}_services_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function all_facilities_return_each_facility_markup_after_update(facility) {
+    return `
+        <p>
+            <span style="font-size: 14px; color: white;">
+                <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                ${facility} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                - all properies - $45.23</span>
+            </span>
+            <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                <i onclick="all_facilities_start_edit_facility_info('logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility', '${facility}', 'Edit Facility');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                <i  onclick="toggle_hide_show_anything('delete__all_facilities_${facility.replaceAll(" ", "_").trim()}_facilities_confirm_dialog')" style="color: rgb(250, 122, 122);" class="fa fa-trash" aria-hidden="true"></i>
+            </span>
+        </p>
+        <div id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
+            <p id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
+            </p>
+            <div style="display: flex;">
+                <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type facility name here" value="" />
+                <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="" />
+                <select style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                    <option>all properties</option>
+                </select>
+            </div>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                <div onclick="all_facilities_update_existing_facility('logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility', 'logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input', '${facility}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                    Save
+                </div>
+                <div onclick="toggle_hide_show_anything('logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: brown; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                    Cancel
+                </div>
+            </div>
+        </div>
+        <div id="delete__all_facilities_${facility.replaceAll(" ", "_").trim()}_facilities_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
+            <p style="font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
+                Are you sure</p>
+            <div style="margin-top: 10px; display: flex; flex-direction: row !important; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);">
+                <div onclick="all_facilities_remove_each_facility('logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility', '${facility}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    Delete
+                </div>
+                <div onclick="toggle_hide_show_anything('delete__all_facilities_${facility.replaceAll(" ", "_").trim()}_facilities_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                     Cancel
                 </div>
             </div>
@@ -4604,8 +4771,9 @@ function all_services_return_each_service_markup(service) {
                 <p id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
                 </p>
                 <div style="display: flex;">
-                    <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type service name here" value="" />
-                    <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                    <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type service name here" value="" />
+                    <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="" />
+                    <select style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
                         <option>all properties</option>
                     </select>
                 </div>
@@ -4634,7 +4802,7 @@ function all_services_return_each_service_markup(service) {
         </div>
     `;
 }
-let some_services = ['Car Rental Services', 'Mail Services', 'Massages', 'Room Service', 'Dry Cleaning'];
+//let some_services = ['Car Rental Services', 'Mail Services', 'Massages', 'Room Service', 'Dry Cleaning'];
 /*document.getElementById("all_hotel_services_list").innerHTML='';
 some_services.forEach(each=>{
     document.getElementById("all_hotel_services_list").innerHTML+=all_services_return_each_service_markup(each);
@@ -4658,8 +4826,9 @@ function all_facilities_return_each_facility_markup(facility) {
                 <p id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
                 </p>
                 <div style="display: flex;">
-                    <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type facility name here" value="" />
-                    <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                    <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type facility name here" value="" />
+                    <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="" />
+                    <select style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
                         <option>all properties</option>
                     </select>
                 </div>
