@@ -2297,6 +2297,23 @@ app.post("/add_new_amenity/:hotel_brand_id", async (req, res, next) => {
 
 });
 
+app.post("/add_new_service/:hotel_brand_id", async (req, res, next) => {
+
+  let service = req.query.service;
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  //removing current service if it exists
+  hotel.services = hotel.services.filter(each=>(each.trim().toLowerCase()===req.query.service.trim().toLowerCase() ? false : true));
+  hotel.services.push(service);
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.services);
+
+});
+
 app.post("/add_new_amenities_as_list/:hotel_brand_id", async (req, res, next) => {
 
   let amenities = req.body.items;
@@ -2364,6 +2381,17 @@ app.get("/get_all_amenities/:hotel_brand_id", async (req, res, next) => {
   let hotel = await cheap_hotel.findById(brand_id);
   
   res.send(hotel.amenities);
+
+});
+
+//get all cheap hotel services
+app.get("/get_all_services/:hotel_brand_id", async (req, res, next) => {
+
+  let brand_id = req.params.hotel_brand_id;
+
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  res.send(hotel.services);
 
 });
 
