@@ -1,3 +1,4 @@
+const taxRate = 0.15; //percentage
 var the_full_screen_loader = document.getElementById("full_screen_loader");
 var all_hotel_amenity_options = [
     "Business Center",
@@ -266,6 +267,7 @@ var current_info_update_type = "name"; //[name, email, mobile, web_url, fax, avg
 var current_misc_edit_elem_id;
 var current_contact_edit_elem_id;
 var current_amenity_edit_elem_id;
+var current_service_edit_elem_id;
 var current_edited_amenity_obj;
 var current_op_cities_edit_elem_id;
 var global_is_room_closed = false;
@@ -333,6 +335,18 @@ function change_iso_date_to_readable_format(isoString){
   
     return formatted_date;
 }
+function calculatePriceTotals(price=0,discount=0,tax=taxRate){
+    let obj = {
+        base: parseFloat(price),
+        taxRate: parseFloat(tax),
+        taxAmount: (parseFloat(price) * parseFloat(tax)),
+        discountAmount: parseFloat(discount),
+        total: 0
+    }
+    obj.total=((obj.taxAmount + obj.base) - obj.discountAmount)
+    return obj
+}
+//console.log(calculatePriceTotals(100));
 //alert(calculateAge("1995-03-23"));
 //alert(is_today_before_date("2022-10-01"));
 //console.log(calculate_age(new Date(1992, 03, 23)));
@@ -1032,8 +1046,20 @@ function show_guests_invoice_div(){
 
 async function view_each_guest_running_bill(){
     show_guests_invoice_div();
-    console.log(running_invoice);
-
+    //console.log(running_invoice);
+    let item_sum = 0;
+    running_invoice.invoice_items.forEach(each=>{
+        each.guest_items.forEach(item=>{
+            item_sum += parseFloat(item.total)
+        })
+    });
+    let totals = calculatePriceTotals(item_sum);
+    document.getElementById("running_invoice_sub_total_display_span").innerText=`$${totals.base}`;
+    document.getElementById("running_invoice_discount_display_span").innerText=`$${totals.discountAmount}`;
+    document.getElementById("running_invoice_tax_display_span").innerText=`$${totals.taxAmount}`;
+    document.getElementById("running_invoice_main_total_display_span").innerText=`$${totals.total}`;
+    document.getElementById("running_invoice_number_display_span").innerHTML=`${running_invoice._id.toString().substring(0,10)}...`;
+    document.getElementById("guests_invoices_date_created").innerText=change_iso_date_to_readable_format(running_invoice.date_created);
     document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML = "";
     for(let i=0; i<running_invoice.invoice_items.length; i++){
 
@@ -1041,8 +1067,8 @@ async function view_each_guest_running_bill(){
 
         document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML += `
             <div>
-                <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px; font-weight: bolder;">
-                    <span style="font-size: 13px; color: rgb(255, 147, 147); ">
+                <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px;">
+                    <span style="font-size: 13px; color: rgba(255,255,255,0.5);">
                         Guest ${i+1}</span>
                     <span style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
                         <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
@@ -1052,21 +1078,21 @@ async function view_each_guest_running_bill(){
                 <p style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
                     ${guest.first_name} ${guest.last_name}</p>
                 <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
-                    ${guest.gender}, ${guest.age}yrs</p>
-                <div style="padding: 10px;">
+                    ${guest.gender}, ${calculateAge(guest.DOB)}yrs</p>
+                <div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
                     <table style="width: 100%; border-spacing: 5px;">
                         <tbody id="each_guest_invoice_items_list">
                             <tr>
-                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
                                     Item
                                 </td>
-                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
                                     Quantity
                                 </td>
-                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
                                     Unit Cost
                                 </td>
-                                <td style="font-size: 13px; color: white; padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
                                     Total
                                 </td>
                             </tr>
@@ -2027,6 +2053,35 @@ function start_edit_amenity_info(elem_id, txt_span_elem_id, info, title){
     }
 
 }
+function start_edit_service_info(elem_id, txt_span_elem_id, info, title){
+
+    if(document.getElementById("logged_in_hotel_edit_service_info_form").style.display === "none"){
+        toggle_show_edit_service_info_form(elem_id)
+    }else{
+        $("#"+elem_id).toggle("up");
+        if(current_service_edit_elem_id){
+            $("#"+current_service_edit_elem_id).toggle("up");
+        }
+    }
+    current_service_edit_elem_id = elem_id;
+    document.getElementById("logged_in_hotel_edit_service_form_title").innerText = title;
+    document.getElementById("logged_in_hotel_edit_service_form_input").value = info;
+
+    if(info === ""){
+        current_edited_amenity_obj = {
+            edit_type: "add new",
+            old_amenity: "",
+            text_span_elem_id: ""
+        }
+    }else{
+        current_edited_amenity_obj = {
+            edit_type: "edit old",
+            old_amenity: info,
+            text_span_elem_id: txt_span_elem_id
+        }
+    }
+
+}
 
 function delete_amenity_submit(elem_id, amenity){
     remove_amenity(elem_id, amenity, window.localStorage.getItem("ANDSBZID"));
@@ -2087,6 +2142,16 @@ function all_amenities_start_edit_amenity_info(elem_id, info, title){
     toggle_hide_show_anything("logged_in_hotel_all_amenities_edit_"+info.replaceAll(" ", "_")+"_amenity_info_form");
     document.getElementById("logged_in_hotel_all_amenities_edit_"+info.replaceAll(" ", "_")+"_amenity_form_title").innerText = title;
     document.getElementById("logged_in_hotel_all_amenities_edit_"+info.replaceAll(" ", "_")+"_amenity_form_input").value = info;
+}
+function all_services_start_edit_service_info(elem_id, info, title){
+    toggle_hide_show_anything("logged_in_hotel_all_services_edit_"+info.replaceAll(" ", "_")+"_service_info_form");
+    document.getElementById("logged_in_hotel_all_services_edit_"+info.replaceAll(" ", "_")+"_service_form_title").innerText = title;
+    document.getElementById("logged_in_hotel_all_services_edit_"+info.replaceAll(" ", "_")+"_service_form_input").value = info;
+}
+function all_facilities_start_edit_facility_info(elem_id, info, title){
+    toggle_hide_show_anything("logged_in_hotel_all_facilities_edit_"+info.replaceAll(" ", "_")+"_facility_info_form");
+    document.getElementById("logged_in_hotel_all_facilities_edit_"+info.replaceAll(" ", "_")+"_facility_form_title").innerText = title;
+    document.getElementById("logged_in_hotel_all_facilities_edit_"+info.replaceAll(" ", "_")+"_facility_form_input").value = info;
 }
 
 //for operating cities info
@@ -4155,9 +4220,19 @@ async function render_all_logged_in_hotel_amenities(){
     document.getElementById("all_hotel_amenities_list").innerHTML = ``;
     let all_amenities = await get_all_amenities(window.localStorage.getItem("ANDSBZID"));
 
-    for(let i=0; i < all_amenities.length; i++){
+    if(all_amenities.length>0){
+        for(let i=0; i < all_amenities.length; i++){
         document.getElementById("all_hotel_amenities_list").innerHTML += all_amenities_return_each_amenity_markup(all_amenities[i]);
     }
+    } else {
+        document.getElementById("all_hotel_amenities_list").innerHTML=`
+            <div style="border: 1px solid red; background-color: rgba(0,0,0,0.5); padding: 20px; text-align: center; font-size: 14px; color: white;">
+                <i style="color: red; margin-right: 10px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                You don't have any services
+            </div>`;
+    }
+
+    
     
 }
 
@@ -4350,6 +4425,114 @@ function all_cities_return_each_city_markup(city_param){
             </div>
         </div>`;
 }
+
+function all_services_return_each_service_markup(service){
+    return `
+        <div id="logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
+            <p>
+                <span style="font-size: 14px; color: white;">
+                    <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    ${service} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    - all properies - $45.23</span>
+                </span>
+                <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i onclick="all_services_start_edit_service_info('logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service', '${service}', 'Edit Service');" style="color: rgb(85, 188, 226); margin-right: 20px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i  onclick="toggle_hide_show_anything('delete__all_services_${service.replaceAll(" ", "_").trim()}_services_confirm_dialog')" style="color: rgb(250, 122, 122);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </p>
+            <div id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
+                <p id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
+                </p>
+                <div style="display: flex;">
+                    <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type service name here" value="" />
+                    <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                        <option>all properties</option>
+                    </select>
+                </div>
+                
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                    <div onclick="all_services_update_existing_service('logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service', 'logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input', '${service}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                        Save
+                    </div>
+                    <div onclick="toggle_hide_show_anything('logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: brown; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+            <div id="delete__all_services_${service.replaceAll(" ", "_").trim()}_services_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
+                <p style="font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                    <div onclick="all_services_remove_each_sevice('logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service', '${service}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('delete__all_services_${service.replaceAll(" ", "_").trim()}_services_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+let some_services = ['Car Rental Services', 'Mail Services', 'Massages', 'Room Service', 'Dry Cleaning'];
+document.getElementById("all_hotel_services_list").innerHTML='';
+some_services.forEach(each=>{
+    document.getElementById("all_hotel_services_list").innerHTML+=all_services_return_each_service_markup(each);
+});
+
+function all_facilities_return_each_facility_markup(facility){
+    return `
+        <div id="logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
+            <p>
+                <span style="font-size: 14px; color: white;">
+                    <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    ${facility} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    - all properies - $45.23</span>
+                </span>
+                <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i onclick="all_facilities_start_edit_facility_info('logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility', '${facility}', 'Edit Facility');" style="color: rgb(85, 188, 226); margin-right: 20px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i  onclick="toggle_hide_show_anything('delete__all_facilities_${facility.replaceAll(" ", "_").trim()}_facilities_confirm_dialog')" style="color: rgb(250, 122, 122);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </p>
+            <div id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_info_form" style="margin-top: 10px; margin-bottom: 10px; display: none;">
+                <p id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_title" style="display: block; text-align: center; margin-bottom: 10px; font-size: 14px;">
+                </p>
+                <div style="display: flex;">
+                    <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type facility name here" value="" />
+                    <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                        <option>all properties</option>
+                    </select>
+                </div>
+                
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                    <div onclick="all_facilities_update_existing_facility('logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility', 'logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input', '${facility}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                        Save
+                    </div>
+                    <div onclick="toggle_hide_show_anything('logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: brown; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+            <div id="delete__all_facilities_${facility.replaceAll(" ", "_").trim()}_facilities_confirm_dialog" style="position: initial; margin: 10px 0; width: 100%; padding: 0; background: none;" class="confirm_delete_dialog">
+                <p style="font-size: 14px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                    <div onclick="all_facilities_remove_each_facility('logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility', '${facility}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('delete__all_facilities_${facility.replaceAll(" ", "_").trim()}_facilities_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+let some_facilites = ['Bar', 'Computer Facility', 'Pet Friendly', 'Smoking Rooms', 'Lounge'];
+document.getElementById("all_hotel_facilities_list").innerHTML='';
+some_facilites.forEach(each=>{
+    document.getElementById("all_hotel_facilities_list").innerHTML+=all_facilities_return_each_facility_markup(each);
+});
 
 function room_booking_enforce_child_age_input(input_id){
     if(document.getElementById(input_id).value > 17){

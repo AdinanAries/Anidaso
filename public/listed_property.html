@@ -1784,32 +1784,66 @@
         <div class="page_popup_content_container" style="overflow: hidden;">
             <div style="position: relative; background-color: rgb(0, 69, 97); width: calc(100% - 10px); height: 100%; padding: 10px 5px;">
                 <p onclick="toggle_show_guests_invoice_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-                <p style="font-size: 15px; color: rgb(248, 112, 0); text-align: center; margin-top: 5px; font-weight: bolder;;">
+                <p style="font-size: 15px; color: rgb(248, 112, 0); text-align: center; margin-top: 5px;;">
                     Invoice Preview</p>
                 <p style="text-align: center; margin: 10px; margin-top: 0; color:rgb(138, 138, 138); font-size: 11px;">
-                    <span style="font-size: 12px; color:rgb(235, 86, 0); font-weight: bolder;">
-                    Anidaso<span style="color: white; font-size: 12px; font-weight: initial;">.com</span></span> 
+                    <span style="font-size: 12px; color:rgb(235, 86, 0);">
+                    Anidaso<span style="color: white; font-size: 12px;">.com</span></span> 
                     &copy; all rights reserved
                 </p>
-                <div style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; color: white; background-color:  rgb(0, 105, 153); width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 20px;">
-                    <i style="margin-right: 5px; color:rgb(255, 102, 0);" class="fa fa-print" aria-hidden="true"></i>
-                    Print Invoice</div>
-                <div class="page_popup_content_body" style="height: calc(100% - 146px); background-color: rgba(0, 0, 0, 0.4); padding: 10px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
-                    <div style="padding: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 5px;">
+                    <div style="text-align: center; padding: 10px; background-color:rgb(0, 28, 29); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 13px; cursor: pointer; border-right: none;">
+                        <i style="margin-right: 5px; color:rgba(255,255,255,0.5);" class="fa fa-envelope" aria-hidden="true"></i>
+                        Send Email
+                    </div>
+                    <div style="cursor: pointer; font-size: 13px; padding: 10px; border: 1px solid rgba(255,255,255,0.2); color: white; background-color:rgb(0, 16, 27); border-right: none;">
+                        <i style="margin-right: 5px; color:rgba(255,255,255,0.5);" class="fa fa-print" aria-hidden="true"></i>
+                        Print Invoice
+                    </div>
+                    <div onclick="go_to_checkout_from_invoice();" style="text-align: center; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; background-color: rgb(0, 30, 35); color: white; font-size: 13px; padding: 10px;">
+                        <i style="margin-right: 5px; color:rgba(137,204,235,0.5);" class="fa fa-credit-card" aria-hidden="true"></i>
+                        Checkout
+                    </div>
+                </div>
+                <div class="page_popup_content_body" style="height: calc(100% - 126px); background-color: rgba(0, 0, 0, 0.4); padding: 10px 5px; border-top: rgb(255, 97, 6) 1px solid; min-height: 400px;">
+                    <div style="padding: 5px 0; display: flex; flex-direction: row !important; justify-content: space-between;">
                         <div>
-                            <p style="color: rgb(215, 255, 205); font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
-                                Invoice Number: 2421242122</p>
-                            <p style="color: rgb(205, 245, 255); font-size: 13px; margin-bottom: 5px;">
-                                <span style="font-size: 13px; color:rgb(255, 132, 132);">Email: </span>
+                            <p style="color: rgb(215, 255, 205); font-size: 13px; margin-bottom: 5px;">
+                                <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Invoice Number: </span>
+                                <span id="running_invoice_number_display_span" style="font-size: 13px;"></span></p>
+                            <p style="margin-bottom: 5px;">
+                                <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Since:</span>
+                                <span id="guests_invoices_date_created" style="font-size: 13px; color: rgb(215, 255, 205); margin-left: 10px;">March 23, 2022</span>
+                            </p>
+                            <p style="color: rgb(205, 245, 255); font-size: 13px; margin-bottom: 10px;">
+                                <span style="font-size: 13px; color:rgba(255,255,255,0.5);">Email: </span>
                                 adinanaries@outlook.com</p>
-                            <div style="text-align: center; padding: 10px; background-color:rgb(7, 60, 85); color: white; font-size: 13px; border-radius: 4px; cursor: pointer;">
-                                Send to Email
-                            </div>
+                            
                         </div>
                         <div>
-                            <p style="color: rgb(215, 255, 205); font-weight: bolder; font-size: 13px; margin-bottom: 5px;">
-                                Date: March 23, 2022</p>
-                            
+                            <div style="min-width: 120px;">
+                                <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
+                                    <span style="font-size: 13px; color:rgba(255,255,255,0.5);">Sub Total:</span>
+                                    <span id="running_invoice_sub_total_display_span" style="font-size: 13px; color: white; margin-left: 10px;">
+                                        </span>
+                                </p>
+                                <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
+                                    <span style="font-size: 13px; color:rgba(255,255,255,0.5);">Tax:</span>
+                                    <span id="running_invoice_tax_display_span" style="font-size: 13px; color: white; margin-left: 10px;">
+                                        </span>
+                                </p>
+                                <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
+                                    <span style="font-size: 13px; color:rgba(255,255,255,0.5);">Discount:</span>
+                                    <span id="running_invoice_discount_display_span" style="font-size: 13px; color: white; margin-left: 10px;">
+                                        </span>
+                                </p>
+                                <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-top: 2px; margin-bottom: 3px;">
+                                    <span style="font-size: 13px; color:rgba(255,255,255,0.5);">Total:</span>
+                                    <span id="running_invoice_main_total_display_span" style="font-size: 13px; color: white; margin-left: 10px;">
+                                        </span>
+                                </p>
+                                
+                            </div>
                         </div>
                     </div>
                     <div id="guests_invoice_div_all_guests_items_list">
@@ -1826,7 +1860,7 @@
                                 Mohammed Adinan</p>
                             <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
                             Male, 29yrs</p>
-                            <div style="padding: 10px;">
+                            <div style="padding: 10px 0;">
                                 <table style="width: 100%; border-spacing: 5px;">
                                     <tbody>
                                         <tr>
@@ -1911,28 +1945,7 @@
                         </div>
                     </div>
                     <div style="padding: 10px; display: flex; flex-direction: row !; justify-content: flex-end;">
-                        <div style="min-width: 150px;">
-                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
-                                <span style="font-size: 14px; color:rgb(233, 128, 0);">SUB TOTAL:</span>
-                                <span style="font-size: 14px; color: white; margin-left: 10px;">$185.99</span>
-                            </p>
-                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
-                                <span style="font-size: 14px; color:rgb(233, 128, 0);">TAX:</span>
-                                <span style="font-size: 14px; color: white; margin-left: 10px;">$15.43</span>
-                            </p>
-                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-bottom: 3px;">
-                                <span style="font-size: 14px; color:rgb(233, 128, 0);">DISCOUNT:</span>
-                                <span style="font-size: 14px; color: white; margin-left: 10px;">$0</span>
-                            </p>
-                            <p style="display: flex; flex-direction: row !; justify-content: space-between; margin-top: 2px; margin-bottom: 3px;">
-                                <span style="font-size: 14px; color:rgb(0, 179, 233); font-weight: bolder;">TOTAL:</span>
-                                <span style="font-size: 14px; color: white; margin-left: 10px;">$15.43</span>
-                            </p>
-                            <div onclick="go_to_checkout_from_invoice();" style="text-align: center; margin-top: 5px; cursor: pointer; background-color: rgb(0, 59, 70); color: white; font-size: 13px; padding: 10px; border-radius: 4px;">
-                                <i style="margin-right: 5px; color:rgb(137, 204, 235)" class="fa fa-credit-card" aria-hidden="true"></i>
-                                Go to Checkout
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -3068,7 +3081,7 @@
                 <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0; margin-top: 10px;">
                 Your Bookings</p>
                 <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
-                    <div style="width: calc(50% - 15px); border: none; border-radius: 4px; border: rgb(5, 44, 59) 1px solid; background-color: rgba(255,255,255,0.7);">
+                    <div style="width: calc(50% - 5px); border: none; border-radius: 4px; border: rgb(5, 44, 59) 1px solid; background-color: rgba(255,255,255,0.7);">
                         <i style="margin-left: 10px;" class="fa fa-calendar" aria-hidden="true"></i>
                         <input id="all_bookings_date_range_input" readonly="true" style="width: calc(100% - 60px); border: none; cursor: pointer; font-size: 13px; background: none; font-weight: bolder; padding: 10px;" value="" type="text" />
                     </div>
@@ -3076,7 +3089,7 @@
                         <div>
                             <p style="letter-spacing: 1px; color: aliceblue; font-size: 13px; margin-bottom: 5px;">Earned:</p>
                             <p style="margin-left: 10px; letter-spacing: 1px; font-size: 14px; color: white;">
-                                <span style="font-size: 14px; color:rgb(255, 97, 6); font-weight: bolder;">
+                                <span id="total_earned_from_bookings_div_display" style="font-size: 14px; color:rgb(255, 97, 6); font-weight: bolder;">
                                     $80,000</span>
                             </p>
                         </div>
@@ -3088,12 +3101,12 @@
                     </div>
                 </div>
                 <div class="flex_row_default_flex_column_mobile" class="page_popup_content_header" style="margin-top: 5px;">
-                    <div class="flex_child_of_two">
+                    <div class="flex_child_of_two" style="width: calc(50% - 2px);">
                         <select id="booked_rooms_filter_by_properties_input" style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
                             
                         </select>
                     </div>
-                    <div class="flex_child_of_two flex_non_first_child" style="display: flex; justify-content: space-between">
+                    <div class="flex_child_of_two flex_non_first_child" style="display: flex; justify-content: space-between; width: calc(50% - 2px);">
                         <select id="booked_rooms_filter_by_room_input" style="width: 60%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
                             
                         </select>

@@ -87,6 +87,12 @@ const cheap_hotel_schema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    services: {
+        type: Array,
+    },
+    facilities: {
+        type: Array,
+    },
     sentiments: {
         type: Array,
         required: true

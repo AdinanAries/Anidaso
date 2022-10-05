@@ -185,6 +185,8 @@ async function render_all_bookings_markup(bookings){
         document.getElementById("booked_rooms_list").innerHTML = '';
     }
 
+    let bookings_total_made = 0;
+
     for(let i=0; i<bookings.length; i++){
 
         let property = await get_and_return_hotel_property_by_id(bookings[i].property_id);
@@ -196,6 +198,7 @@ async function render_all_bookings_markup(bookings){
         let booking_checkin_date = bookings[i].checkin_date;
         let booking_checkout_date = bookings[i].checkout_date;
         let price_paid = bookings[i].price_paid;
+        bookings_total_made+=price_paid;
         let room_guests = bookings[i].guests;
 
         let room_number = rooms[0].number;
@@ -288,6 +291,8 @@ async function render_all_bookings_markup(bookings){
             </div>
         `;
     }
+
+    document.getElementById("total_earned_from_bookings_div_display").innerText=`$${parseFloat(bookings_total_made).toFixed(2)}`;
 }
 
 $(function() {

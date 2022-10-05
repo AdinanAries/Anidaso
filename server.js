@@ -2310,7 +2310,7 @@ app.post("/add_new_amenities_as_list/:hotel_brand_id", async (req, res, next) =>
     hotel.amenities.splice(hotel.amenities.indexOf(emenity.trim()), 1);
   });
   //hotel.amenities = hotel.amenities.filter(each=>(each.trim().toLowerCase()===req.query.amenity.trim().toLowerCase() ? false : true));
-  hotel.amenities=[...hotel.amenities,...amenities];
+  hotel.amenities=[].concat(hotel.amenities,amenities);
 
   let new_hotel = new cheap_hotel(hotel);
   let update_hotel = await new_hotel.save();
