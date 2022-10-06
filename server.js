@@ -1683,24 +1683,125 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
   
   let res_objects = [];
   
-  let first_name = req.body.first_name;
-  let last_name = req.body.last_name;
+  let f_name = req.body.first_name;
+  let l_name = req.body.last_name;
   let req_email = req.body.email;
   let req_mobile = req.body.mobile;
 
   let bookings = null;
-  let the_guests = null;
+  let the_guests = [];
   let the_invoices = null;
 
-  if(first_name !== "" && last_name !== "" && req_email !== "" && req_mobile !== ""){
-
+  if(f_name && l_name && req_email && req_mobile){
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
       email: req_email,
       mobile: req_mobile,
       status: "staying"
     }).exec();
+  }
+  if(f_name && l_name && req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
+      email: req_email,
+      status: "staying"
+    }).exec();
+  }
+  if(f_name && l_name && (req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
+      mobile: req_mobile,
+      status: "staying"
+    }).exec();
+  }
+  if(f_name && l_name && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
+      status: "staying"
+    }).exec();
+  }
+  if(f_name && (req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      mobile: req_mobile,
+      status: "staying"
+    }).exec();
+  }
+  if(l_name && (req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      last_name: l_name,
+      mobile: req_mobile,
+      status: "staying"
+    }).exec();
+  }
+  if(f_name && req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      email: req_email,
+      status: "staying"
+    }).exec();
+  }
+  if(l_name && req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      last_name: l_name,
+      email: req_email,
+      status: "staying"
+    }).exec();
+  }
+  if(f_name && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      status: "staying"
+    }).exec();
+  }
+  if(l_name && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      last_name: l_name,
+      status: "staying"
+    }).exec();
+  }
+  if((req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      mobile: req_mobile,
+      status: "staying"
+    }).exec();
+  }
+  if(req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      email: req_email,
+      status: "staying"
+    }).exec();
+  }
+
+  if(the_guests.length > 0){
 
     for(let g=0; g < the_guests.length; g++){
       res_objects.push({
@@ -1789,24 +1890,125 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
   
   let res_objects = [];
   
-  let first_name = req.body.first_name;
-  let last_name = req.body.last_name;
-  let req_email = req.body.email;
-  let req_mobile = req.body.mobile;
+  let f_name = req.body.first_name.trim();
+  let l_name = req.body.last_name.trim();
+  let req_email = req.body.email.trim();
+  let req_mobile = req.body.mobile.trim();
   
   let bookings = null;
-  let the_guests = null;
+  let the_guests = [];
   let the_invoices = null;
 
-  if(first_name !== "" && last_name !== "" && req_email !== "" && req_mobile !== ""){
-
+  if(f_name && l_name && req_email && req_mobile){
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
       email: req_email,
       mobile: req_mobile,
       status: "booked"
     }).exec();
+  }
+  if(f_name && l_name && req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
+      email: req_email,
+      status: "booked"
+    }).exec();
+  }
+  if(f_name && l_name && (req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
+      mobile: req_mobile,
+      status: "booked"
+    }).exec();
+  }
+  if(f_name && l_name && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      last_name: l_name,
+      status: "booked"
+    }).exec();
+  }
+  if(f_name && (req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      mobile: req_mobile,
+      status: "booked"
+    }).exec();
+  }
+  if(l_name && (req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      last_name: l_name,
+      mobile: req_mobile,
+      status: "booked"
+    }).exec();
+  }
+  if(f_name && req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      email: req_email,
+      status: "booked"
+    }).exec();
+  }
+  if(l_name && req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      last_name: l_name,
+      email: req_email,
+      status: "booked"
+    }).exec();
+  }
+  if(f_name && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      first_name: f_name,
+      status: "booked"
+    }).exec();
+  }
+  if(l_name && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      last_name: l_name,
+      status: "booked"
+    }).exec();
+  }
+  if((req_mobile.split(" ").length > 0) && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      mobile: req_mobile,
+      status: "booked"
+    }).exec();
+  }
+  if(req_email && the_guests.length === 0){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      email: req_email,
+      status: "booked"
+    }).exec();
+  }
+
+  if(the_guests.length > 0){
 
     for(let g=0; g < the_guests.length; g++){
       res_objects.push({
@@ -1913,11 +2115,45 @@ app.get("/get_booking_by_id/:id/", async(req, res, next)=>{
   res.send(booking);
 });
 
-app.get("/cheap_hotel_checkin_guest/:guest_id/:booking_id", async(req, res, next)=>{
-    console.log(req.params.booking_id);
-    console.log(req.params.guest_id);
-    setTimeout(()=>{res.send({checkedIn: true})},2000);
-    ;
+app.get("/cheap_hotel_checkin_guest/:guest_id/:booking_id/:brand_id/:property_id", async(req, res, next)=>{
+
+  try{
+    
+    let booking_id = req.params.booking_id;
+    let guest_id = req.params.guest_id;
+    let brand_id = req.params.brand_id;
+    let prop_id = req.params.property_id;
+
+    let booking = await cheap_hotel_booking.findOne({
+      _id: booking_id,
+      hotel_brand_id: brand_id,
+      property_id: prop_id
+    });
+
+    if(booking){
+      booking.booking_status="staying";
+      booking.rooms.forEach(async each=>{
+        let room = await cheap_hotel_room.findById(each.id);
+        room.booked = true;
+        let new_room = await new cheap_hotel_room(room);
+        await new_room.save();
+      });
+      booking.guests.forEach(async each=>{
+        let guest = await cheap_hotel_guest.findById(each.id);
+        guest.status = "staying";
+        let new_guest = await new cheap_hotel_guest(guest);
+        await new_guest.save();
+      });
+      
+      if(!booking)
+        res.send({checkedIn: false});
+      else res.send({checkedIn: true, booking});
+    }
+  }catch(e){
+    console.log(e.message);
+    res.send({error: "server error!"})
+  };
+    
 });
 
 app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {
@@ -1974,23 +2210,81 @@ app.post("/edit_existing_cheap_hotel_guest/:guest_id", async (req, res, next)=> 
 
 app.post("/search_cheap_hotel_guest/", async (req, res, next)=> {
 
-  let f_name = req.body.first_name;
-  let l_name = req.body.last_name;
-  let mobile_p = req.body.mobile;
+  let f_name = req.body.first_name.trim();
+  let l_name = req.body.last_name.trim();
+  let mobile_p = req.body.mobile.trim();
   let DOB_p = req.body.DOB;
   let property_id_p = req.body.property_id;
   let hotel_brand_id_p = req.body.hotel_id;
 
-  let guest = await cheap_hotel_guest.find({
-    first_name: f_name,
-    last_name: l_name,
-    DOB: DOB_p,
-    mobile: mobile_p,
-    hotel_brand_id: hotel_brand_id_p,
-    property_id: property_id_p,
-  });
+  let guests=[];
+  if(f_name && l_name && (mobile_p.split(" ").length > 1) && DOB_p){
+    guests = await cheap_hotel_guest.find({
+      first_name: f_name,
+      last_name: l_name,
+      DOB: DOB_p,
+      mobile: mobile_p,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  }
+  if(f_name && l_name && DOB_p && guests.length===0){
+    guests = await cheap_hotel_guest.find({
+      first_name: f_name,
+      last_name: l_name,
+      mobile: mobile_p,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  } 
+  if(f_name && l_name && (mobile_p.split(" ").length > 1) && guests.length===0){
+    guests = await cheap_hotel_guest.find({
+      first_name: f_name,
+      last_name: l_name,
+      mobile: mobile_p,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  } 
+  if(f_name && l_name && guests.length===0){
+    guests = await cheap_hotel_guest.find({
+      first_name: f_name,
+      last_name: l_name,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  }
+  if(f_name && guests.length===0){
+    guests = await cheap_hotel_guest.find({
+      first_name: f_name,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  }
+  if(l_name && guests.length===0){
+    guests = await cheap_hotel_guest.find({
+      last_name: l_name,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  }
+  if(mobile_p.split(" ").length > 1 && guests.length===0){
+    guests = await cheap_hotel_guest.find({
+      mobile: mobile_p,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  }
+  if(DOB_p && guests.length===0){
+    guests = await cheap_hotel_guest.find({
+      DOB: DOB_p,
+      mobile: mobile_p,
+      hotel_brand_id: hotel_brand_id_p,
+      property_id: property_id_p,
+    });
+  }
 
-  res.send(guest);
+  res.send(guests);
 
 });
 

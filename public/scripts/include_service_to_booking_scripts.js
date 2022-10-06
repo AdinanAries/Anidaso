@@ -268,8 +268,9 @@ function toggle_show_include_services_in_booking_div(){
     $("#include_services_in_booking_div").toggle("up");
 }
 
-async function show_include_services_in_booking_div(guest_id_p=''){
+async function show_include_services_in_booking_div(guest_id_p='', property_id='', index){
     toggle_show_include_services_in_booking_div();
+    running_invoice = all_running_invoices[index];
     add_invoice_item_post_obj.invoice_items = running_invoice.invoice_items.filter(each=>each.guest_id===guest_id_p)[0];
     console.log(add_invoice_item_post_obj.invoice_items);
     console.log(running_invoice.invoice_items);
@@ -288,6 +289,8 @@ async function show_include_services_in_booking_div(guest_id_p=''){
 
     document.getElementById("current_running_invoice_total_amount_span").innerText = `$${parseFloat(initial_total).toFixed(2)}`;
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    let guest = await get_and_return_hotel_guest_by_id(localStorage.getItem("ANDSBZID"), property_id, guest_id_p);
+    document.getElementById("include_services_in_booking_guest_fullname").innerText = `${guest.first_name} ${guest.last_name}`;
 
     include_services_in_booking_property_select.innerHTML = `
         <option value="all">All</option>

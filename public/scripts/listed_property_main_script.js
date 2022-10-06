@@ -130,6 +130,7 @@ var add_facilities_post_data = {
     ]
 }
 
+var all_running_invoices = [];
 var running_invoice = {
     hotel_brand_id: "",
     property_id: "",
@@ -1042,10 +1043,11 @@ function show_guests_invoice_div() {
     toggle_show_guests_invoice_div();
 }
 
-async function view_each_guest_running_bill() {
+async function view_each_guest_running_bill(index) {
     show_guests_invoice_div();
-    //console.log(running_invoice);
+    console.log(all_running_invoices);
     let item_sum = 0;
+    running_invoice = all_running_invoices[index];
     running_invoice.invoice_items.forEach(each => {
         each.guest_items.forEach(item => {
             item_sum += parseFloat(item.total)
@@ -4651,7 +4653,7 @@ async function all_services_return_each_service_markup_after_update(service_p) {
             <span style="font-size: 14px; color: white;">
                 <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                 ${service} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
-                - ${property} - ${price}</span>
+                - ${property} - $${price}</span>
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                 <i onclick="all_services_start_edit_service_info('logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service', '${service}', 'Edit Service');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>

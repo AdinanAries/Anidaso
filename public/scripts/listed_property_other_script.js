@@ -9,7 +9,7 @@ var guest_search_post_data = {
     date: "",
 }
 
-async function go_to_checkout_from_inhouse_guests(guest_id, booking_id){ //remove these parameters if not needed
+async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking_id){ //remove these parameters if not needed
 
     toggle_show_in_house_guests_div();
     toggle_show_guests_checkout_div();
@@ -29,10 +29,19 @@ async function go_to_checkout_from_inhouse_guests(guest_id, booking_id){ //remov
     }
     document.getElementById("checkout_guests_search_property_select").value = guest_search_post_data.property_id;
 
+    let guest = await get_and_return_hotel_guest_by_id(localStorage.getItem("ANDSBZID"), property_id, guest_id);
+    if(guest){
+        guest_search_post_data.first_name = guest.first_name;
+        guest_search_post_data.last_name = guest.last_name;
+        guest_search_post_data.mobile = guest.mobile;
+        guest_search_post_data.email = guest.email;
+    }
+
     guest_search_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
     document.getElementById("checkout_guests_search_first_name_input").value = guest_search_post_data.first_name;
     document.getElementById("checkout_guests_search_last_name_input").value = guest_search_post_data.last_name;
     document.getElementById("checkout_guests_search_mobile_input").value = guest_search_post_data.mobile.split(" ")[1];
+    document.getElementById("checkout_guests_search_country_calling_code_select").value = guest_search_post_data.mobile.split(" ")[0];
     document.getElementById("checkout_guests_search_email_input").value = guest_search_post_data.email;
 
     document.getElementById("checkout_guests_list").innerHTML = `
@@ -77,6 +86,8 @@ async function go_to_checkout_from_inhouse_guests(guest_id, booking_id){ //remov
 }
 
 async function hotel_guests_search_function(type){
+
+    all_running_invoices=[];
 
     if(type === "inhouse"){
         
@@ -300,9 +311,10 @@ function collect_checkout_guests_search_post_data(){
 }
 
 function return_inhouse_guest_markup(guest, booking, invoice, property, index){
-    running_invoice = invoice;
+    //running_invoice = invoice;
+    all_running_invoices.push(invoice);
     return `
-        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+        <div style="margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2);" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
                 <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
                     <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
@@ -329,16 +341,16 @@ function return_inhouse_guest_markup(guest, booking, invoice, property, index){
             </div>
             <div class="flex_child_of_two flex_non_first_child">
                 <div style="display: flex; flex-direction: row !important;">
-                    <div onclick="view_each_guest_running_bill();" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                    <div onclick="view_each_guest_running_bill(${index});" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         View Running Bill
                     </div>
-                    <div onclick="show_include_services_in_booking_div('${guest._id}');" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                    <div onclick="show_include_services_in_booking_div('${guest._id}', '${property._id}', ${index});" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
                         Include Service
                     </div>
                 </div>
                 <div style="display: flex; flex-direction: row !important;">
-                    <div onclick="go_to_checkout_from_inhouse_guests('guest_id', 'booking_id');" style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                    <div onclick="go_to_checkout_from_inhouse_guests('${guest._id}', '${property._id}', '${booking._id}');" style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                         go to checkout
                         <i style="color:rgb(255, 46, 46); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
@@ -353,9 +365,10 @@ function return_inhouse_guest_markup(guest, booking, invoice, property, index){
 }
 
 function return_guest_checkout_markup(guest, booking, invoice, property, index){
-    running_invoice = invoice;
+    //running_invoice = invoice;
+    all_running_invoices.push(invoice);
     return `
-        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+        <div style="margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2);" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
                 <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
                     <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
@@ -381,6 +394,15 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
                 </p>
             </div>
             <div id="checkout_guest_btn_set${index}" class="flex_child_of_two flex_non_first_child">
+                <div style="display: flex; flex-direction: row !important; margin-bottom: 10px">
+                    <div onclick="view_each_guest_running_bill(${index});" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        View Running Bill
+                    </div>
+                    <div onclick="show_include_services_in_booking_div('${guest._id}', '${property._id}', ${index});" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
+                        Include Service
+                    </div>
+                </div>
                 <div style="display: flex; flex-direction: row !important;">
                     <div style="background-color: rgba(0,0,0,0.5); color: white; width: fit-content; padding: 10px; margin-right: 10px; border: 1px solid lightgreen; font-size: 13px;">
                         <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
@@ -391,7 +413,7 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
                     </div>
                 </div>
                 <div style="display: flex; flex-direction: row !important;">
-                    <div onclick="view_many_guests_running_invoice();" style="font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                    <div onclick="view_many_guests_running_invoice();" style="display: none; font-size: 13px; color: rgb(252, 255, 211); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                         view invoice
                         <i style="color:rgb(144, 255, 227); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
@@ -428,7 +450,8 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
 }
 
 function return_arrival_guests_markup(guest, booking, invoice, property, index){
-    running_invoice = invoice;
+    //running_invoice = invoice;
+    all_running_invoices.push(invoice);
     let checkin_status_dspl = `
         <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid lightgreen;">
             <i class="fa fa-check" style="margin-right: 5px; color: lightgreen;"></i>
@@ -465,7 +488,7 @@ function return_arrival_guests_markup(guest, booking, invoice, property, index){
     }
 
     return `
-        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+        <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px;" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
                 <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
                     <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
@@ -522,7 +545,7 @@ function return_arrival_guests_markup(guest, booking, invoice, property, index){
                         <i class="fa fa-check" style="margin-right: 10px; color: lightgreen;" aria-hidden="true"></i>
                         Guest Staying!
                     </div>
-                    <div id="arrival_guest_checkin_btn_main${index}" onclick="start_guest_checkin('${guest._id}','${booking._id}', '${index}');" style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                    <div id="arrival_guest_checkin_btn_main${index}" onclick="start_guest_checkin('${guest._id}','${booking._id}', '${property._id}', '${index}');" style="background-color:rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                         <i ${chk_in_btn_status_style} aria-hidden="true"></i>
                         Check Guest In
                     </div>
@@ -542,6 +565,8 @@ function return_arrival_guests_markup(guest, booking, invoice, property, index){
 
 function search_and_return_cheap_hotel_guest(type){
     
+    all_running_invoices=[];
+
     guest_search_post_data.hotel_brand_id = window.localStorage.getItem("ANDSBZID");
     guest_search_post_data.date = convert_date_object_to_db_string_format(new Date());
 
@@ -1197,7 +1222,7 @@ function return_each_guest_manager_guest_markup(guest, property, stay){
                 ${change_iso_date_to_readable_format(stay.checkin)} - ${change_iso_date_to_readable_format(stay.checkout)}</span></p>` : "";
 
     return `
-        <div style="margin-bottom: 25px;" class="flex_row_default_flex_column_mobile">
+        <div style="margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2);" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
                 <p style="color:rgb(177, 208, 255); font-size: 14px; margin-bottom: 5px;">
                     <i aria-hidden="true" class="fa fa-dot-circle-o" style="color:rgb(255, 97, 6); margin-right: 5px;"></i>
@@ -1245,14 +1270,14 @@ function return_each_guest_manager_guest_markup(guest, property, stay){
     `;
 }
 
-function start_guest_checkin(guest_id, booking_id, index){
+function start_guest_checkin(guest_id, booking_id, property_id, index){
 
     $("#arrival_guest_checkin_btn_set"+index).toggle('up');
     $("#arrival_guest_checkin_loader"+index).toggle('up');
 
     $.ajax({
         type: "GET",
-        url: `/cheap_hotel_checkin_guest/${guest_id}/${booking_id}`,
+        url: `/cheap_hotel_checkin_guest/${guest_id}/${booking_id}/${localStorage.getItem("ANDSBZID")}/${property_id}`,
         success: res =>{
 
             document.getElementById("arrival_guest_checkin_loader_spinner"+index).style.display = "none";
@@ -1291,6 +1316,6 @@ function guest_checkout_cancel_checkout(index){
 }
 
 function go_to_checkout_from_invoice(){
-    document.getElementById("in_guests_checkout_div").style.display="block";
+    document.getElementById("in_guests_checkout_div").style.display="flex";
     $("#guests_invoice_div").toggle("up");
 }
