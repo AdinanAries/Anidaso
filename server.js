@@ -2248,14 +2248,17 @@ app.post("/update_amenity/:hotel_brand_id", async (req, res, next) => {
 
 app.post("/update_service/:hotel_brand_id", async (req, res, next) => {
 
-  let new_service = req.query.new_service;
-  let old_service = req.query.old_service;
+  let new_service = {
+    name: req.body.new_service,
+    price: req.body.new_price,
+    property: req.body.new_property
+  };
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
 
   hotel.services = hotel.services.map( each => {
-    if(each === old_service){
+    if(each.name === req.body.old_service){
       return new_service;
     }else
       return each;
@@ -2270,14 +2273,17 @@ app.post("/update_service/:hotel_brand_id", async (req, res, next) => {
 
 app.post("/update_facility/:hotel_brand_id", async (req, res, next) => {
 
-  let new_facility = req.query.new_facility;
-  let old_facility = req.query.old_facility;
+  let new_facility = {
+    name: req.body.new_facility,
+    price: req.body.new_price,
+    property: req.body.new_property
+  };
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
 
   hotel.facilities = hotel.facilities.map( each => {
-    if(each === old_facility){
+    if(each.name === req.body.old_facility){
       return new_facility;
     }else
       return each;
@@ -2343,12 +2349,16 @@ app.post("/add_new_amenity/:hotel_brand_id", async (req, res, next) => {
 
 app.post("/add_new_service/:hotel_brand_id", async (req, res, next) => {
 
-  let service = req.query.service;
+  let service = {
+    name: req.body.service,
+    price: req.body.price,
+    property: req.body.property
+  }
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
   //removing current service if it exists
-  hotel.services = hotel.services.filter(each=>(each.trim().toLowerCase()===req.query.service.trim().toLowerCase() ? false : true));
+  hotel.services = hotel.services.filter(each=>(each.name.trim().toLowerCase()===service.name.trim().toLowerCase() ? false : true));
   hotel.services.push(service);
 
   let new_hotel = new cheap_hotel(hotel);
@@ -2360,12 +2370,16 @@ app.post("/add_new_service/:hotel_brand_id", async (req, res, next) => {
 
 app.post("/add_new_facility/:hotel_brand_id", async (req, res, next) => {
 
-  let facility = req.query.facility;
+  let facility = {
+    name: req.body.facility,
+    price: req.body.price,
+    property: req.body.property
+  }
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
   //removing current service if it exists
-  hotel.facilities = hotel.facilities.filter(each=>(each.trim().toLowerCase()===req.query.facility.trim().toLowerCase() ? false : true));
+  hotel.facilities = hotel.facilities.filter(each=>(each.name.trim().toLowerCase()===facility.name.trim().toLowerCase() ? false : true));
   hotel.facilities.push(facility);
 
   let new_hotel = new cheap_hotel(hotel);
@@ -2525,7 +2539,7 @@ app.delete("/remove_service/:hotel_brand_id", async(req, res, next) => {
   let hotel = await cheap_hotel.findById(brand_id);
 
   hotel.services = hotel.services.filter( each => {
-    return each !== service;
+    return each.name !== service;
   });
 
   let new_hotel = new cheap_hotel(hotel);
@@ -2543,7 +2557,7 @@ app.delete("/remove_facility/:hotel_brand_id", async(req, res, next) => {
   let hotel = await cheap_hotel.findById(brand_id);
 
   hotel.facilities = hotel.facilities.filter( each => {
-    return each !== facility;
+    return each.name !== facility;
   });
 
   let new_hotel = new cheap_hotel(hotel);
