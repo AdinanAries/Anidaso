@@ -693,10 +693,11 @@ async function render_search_booking_results_markup(booking) {
                     </p>
             </div>
         `
+        break; // this code may be removed if all room guests have to be displayed
     }
 
     document.getElementById("view_booking_result_details").innerHTML = `
-        <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555);">
+        <div style="padding: 10px 5px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555);">
             <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
             <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
                 Room ${room_number}:
@@ -727,7 +728,12 @@ async function render_search_booking_results_markup(booking) {
                             ${change_date_from_iso_to_long_date(booking_checkout_date)}</span>
                     </p>
                     <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
-                        Price paid:
+                        Room Price:
+                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
+                            $${parseFloat(price_paid).toFixed(2)}</span>
+                    </p>
+                    <p style="letter-spacing: 1px; color: white; font-size: 13px; margin-bottom: 5px;">
+                        Booking total:
                         <span style="letter-spacing: 1px; margin-left: 10px; font-size: 15px; color:rgb(245, 196, 151);">
                             $${parseFloat(price_paid).toFixed(2)}</span>
                     </p>
@@ -736,16 +742,55 @@ async function render_search_booking_results_markup(booking) {
                     <p style="letter-spacing: 1px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
                         Room Guest(s)</p>
                         ${room_guests_markup}
+                        <div onclick="" style="font-size: 13px; color: rgb(132, 216, 255); padding-bottom: 10px; margin-bottom: 5px; padding-left: 0; cursor: pointer;">
+                            see all room guests
+                            <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        </div>
                 </div>
             </div>
-            <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.3);">
-                <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color:  rgb(8, 42, 58); color: white;">
+            <div style="background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); padding: 10px;">
+                <p style="letter-spacing: 1px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
+                    Summary & Actions</p>
+                <p style="color: rgba(255,255,255,0.5); margin-bottom: 10px; font-size: 14px;">Booking Status: <span style="color: lightgreen; font-size: 14px;">
+                    staying
+                </span></p>
+                <div style="border-top: 1px solid rgba(255,255,255,0.2); padding: 10px 0;">
+                    <p style="color: rgba(255,255,255,0.5); margin-bottom: 10px; font-size: 14px;">
+                        <i style="color:lightgreen; margin-right: 5px;" class="fa fa-info-circle" aria-hidden="true"></i>
+                        Notice:
+                    </span></p>
+                    <p style="color: white; font-size: 14px; color: rgba(255,255,255,0.7);">
+                    This booking may include extra services and additional rooms and guests. Click on "see invoice" button below to see all items included</p>
+                </div>
+                <div style="display: flex;">
+                    <div onclick="" style="border: 1px solid rgb(55, 97, 107); background-color: rgba(41, 66, 88, 0.555); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-bed" aria-hidden="true"></i>
+                        Checkin
+                    </div>
+                    <div onclick="go_to_checkout_from_inhouse_guests('$guest._id}', '$property._id}', '$booking._id}', 'guest_manager');" style="display: none; background-color: brown; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
+                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
+                        Go to Checkout
+                    </div>
+                    <div style="display: flex; flex-direction: row !important;">
+                        <div onclick="view_each_guest_running_bill($index});" style="border: 1px solid rgb(55, 107, 75); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
+                            <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-bars" aria-hidden="true"></i>    
+                            Invoice
+                        </div>
+                        <div onclick="show_include_services_in_booking_div('$guest._id}', '$property._id}', $index});" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
+                            <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
+                            Include Service
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 10px;">
+                <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color: rgb(8, 42, 58); color: white; border: 1px solid rgba(255,255,255,0.2);">
                     <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
-                    edit booking
+                    Edit Booking
                 </div>
                 <div style="cursor: pointer; padding: 10px; color: white; font-size: 14px;">
                     <i aria-hidden="true" class="fa fa-trash" style="margin-right: 5px; color:rgb(255, 53, 53);"></i>
-                    delete booking
+                    Cancel Booking
                 </div>
             </div>
             
@@ -760,7 +805,12 @@ function start_edit_booking() {
     toggle_show_edit_booking_edit_page()
 }
 
-async function show_view_booking_div(booking_id) {
+async function show_view_booking_div(booking_id, source='default') {
+
+    if(source==='all_bookings'){
+        $('#booked_rooms_container').toggle('up');
+    }
+
     if (document.getElementById("view_booking_div").style.display === "none") {
         toggle_show_view_booking_div();
     }

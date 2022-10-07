@@ -234,6 +234,7 @@ async function render_all_bookings_markup(bookings){
                     </p>
                 </div>
             `
+            break; //will change if needed so that all guests will be displayed
         }
 
         document.getElementById("booked_rooms_list").innerHTML += `
@@ -281,11 +282,11 @@ async function render_all_bookings_markup(bookings){
                     </div>
                 </div>
                 <div style="cursor: pointer; margin: 0 10px; margin-bottom: 10px; display: flex; flex-direction: row !important; justify-content: space-between; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);">
-                    <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgba(41, 66, 88, 0.555); text-align: center; font-size: 13px;">
-                        <i style="margin-right: 5px; color:rgba(244, 255, 203, 0.4);margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>Change
+                    <div onclick="show_view_booking_div('${bookings[i]._id}', 'all_bookings');" style="padding: 10px; width: calc(50% - 20px); color: white; background-color: rgba(41, 66, 88, 0.555); text-align: center; font-size: 13px;">
+                        See Details
                     </div>
                     <div style="padding: 10px; width: calc(50% - 20px); color: white; background-color: brown; text-align: center; font-size: 13px;">
-                        <i style="margin-right: 5px; color:rgba(244, 255, 203, 0.4);margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>Cancel
+                        <i style="margin-right: 5px; color:rgba(244, 255, 203, 0.4); margin-right: 10px;" class="fa fa-trash" aria-hidden="true"></i>Cancel
                     </div>
                 </div>
             </div>

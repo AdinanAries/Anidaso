@@ -2088,18 +2088,36 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
 app.post("/search_booking_by_booking_info/", async(req, res, next)=>{
 
   console.log(req.body);
+  let room_id_p = req.body.room.room_id;
+  let g_first_name = req.body.guest.first_name;
+  let g_last_name = req.body.guest.last_name;
+  let g_DOB = req.body.guest.DOB;
+  let g_gender = req.body.guest.gender;
 
-  let booking = await cheap_hotel_booking.findOne({
-    hotel_brand_id: req.body.hotel_brand_id,
-    property_id: req.body.room.property_id,
-    "rooms.id": req.body.room.room_id,
-    checkin_date: req.body.dates.checkin_date,
-    checkout_date: req.body.dates.checkout_date,
-    "guests.first_name": req.body.guest.first_name,
-    "guests.last_name": req.body.guest.last_name,
-    "guests.DOB": req.body.guest.DOB,
-    "guests.gender": req.body.guest.gender
-  });
+  let booking;
+  if(g_first_name && g_last_name){
+    booking = await cheap_hotel_booking.findOne({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.room.property_id,
+      "rooms.id": room_id_p,
+      checkin_date: req.body.dates.checkin_date,
+      checkout_date: req.body.dates.checkout_date,
+      "guests.first_name": g_first_name,
+      "guests.last_name": g_last_name,
+      //"guests.DOB": g_DOB,
+      //"guests.gender": g_gender
+    });
+  }else{
+    booking = await cheap_hotel_booking.findOne({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.room.property_id,
+      "rooms.id": room_id_p,
+      checkin_date: req.body.dates.checkin_date,
+      checkout_date: req.body.dates.checkout_date,
+    });
+  }
+
+  
 
   console.log(booking);
   if(booking){
