@@ -79,7 +79,7 @@ async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking
         document.getElementById("checkout_guests_list").innerHTML = "";
         for(let i=0; i<search_results.length; i++){
             let property = await get_and_return_hotel_property_by_id(search_results[i].booking.property_id);
-            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property);
+            document.getElementById("checkout_guests_list").innerHTML += return_guest_checkout_markup(search_results[i].guest, search_results[i].booking, search_results[i].invoice, property, i);
         }
 
 

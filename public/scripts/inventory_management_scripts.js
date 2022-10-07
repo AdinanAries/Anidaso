@@ -15,6 +15,184 @@ var edit_inventory_description_input = document.getElementById("edit_inventory_d
 var cheap_hotel_inventory_list_table_body = document.getElementById("cheap_hotel_inventory_list_table_body");
 var cheap_hotel_inventory_list_select_property_display = document.getElementById("cheap_hotel_inventory_list_select_property");
 
+
+function toggle_show_add_inventory_form_div() {
+    $("#add_inventory_form_div").toggle("up");
+}
+
+function toggle_show_edit_inventory_form_div() {
+    $("#edit_inventory_form_div").toggle("up");
+}
+
+function get_and_return_iventory_item(code, name, property_id) {
+    return $.ajax({
+        type: "GET",
+        url: `/get_inventory_item_by_name_and_code/${code}/${name}/${property_id}/${localStorage.getItem("ANDSBZID")}`,
+        success: res => {
+            update_inventory_old_obj.code = res.code;
+            new_inventory_item_post_data.item.code = res.code;
+            update_inventory_old_obj.name = res.name;
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err
+        }
+    });
+}
+async function start_edit_inventory_item(code, name, property_id) {
+    toggle_show_edit_inventory_form_div();
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("edit_inventory_property_input").innerHTML = `
+    <option value="all">All</option>
+    `;
+
+    for (let i = 0; i < properties.length; i++) {
+        document.getElementById("edit_inventory_property_input").innerHTML += `
+        <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+        `;
+    }
+
+    let item = await get_and_return_iventory_item(code, name, property_id);
+    console.log(item);
+    if (item) {
+        document.getElementById("edit_inventory_name_input").value = item.name;
+        document.getElementById("edit_inventory_quantity_input").value = item.stock_quantity;
+        document.getElementById("edit_inventory_unit_price_input").value = item.unit_price;
+        document.getElementById("edit_inventory_service_department_input").value = item.service_department;
+        document.getElementById("edit_inventory_description_input").value = item.description.trim();
+        document.getElementById("edit_inventory_property_input").value = item.property_id;
+    }
+}
+
+async function show_add_inventory_item_form() {
+
+    toggle_show_add_inventory_form_div();
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("add_new_inventory_property_input").innerHTML = `
+    <option value="all">All</option>
+    `;
+
+    for (let i = 0; i < properties.length; i++) {
+        document.getElementById("add_new_inventory_property_input").innerHTML += `
+        <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+        `;
+    }
+    document.getElementById("add_new_inventory_property_input").value = search_inventory_item_post_data.property_id;
+}
+
+async function start_delete_inventory_item(code, name, property_id) {
+    show_confirmation_dialog_to_confirm_user_action(
+        "Confirm Delete",
+        `Are you sure you want to delete ${name} from inventory?`,
+        () => delete_one_inventory_item_and_return_all_other_iventory_items(code, name, property_id)
+    );
+}
+
+function delete_one_inventory_item_and_return_all_other_iventory_items(code, name, property_id) {
+    return $.ajax({
+        type: "GET",
+        url: `/delete_inventory_item/${code}/${name}/${property_id}/${localStorage.getItem("ANDSBZID")}`,
+        success: res => {
+            //console.log(res);
+            if (res.items.length > 0) {
+                cheap_hotel_inventory_list_table_body.innerHTML = `
+                <tr>
+                    <td class="its_inventory_header">Item</td>
+                    <td class="its_inventory_header">Code</td>
+                    <td class="its_inventory_header">Quantity</td>
+                    <td class="its_inventory_header">Price</td>
+                </tr>`;
+                for (let i = 0; i < res.items.length; i++) {
+                    cheap_hotel_inventory_list_table_body.innerHTML += return_each_inventory_markup(res.items[i]);
+                }
+
+            } else {
+                cheap_hotel_inventory_list_table_body.innerHTML = `<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                    <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                        <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        Nothing was found!
+                    </p>
+                </div>`;
+            }
+            confirmation_required_action_finished_call_back();
+            /*if(cheap_hotel_inventory_list_table_body.innerHTML.includes( `
+            <div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                    <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Nothing was found!
+                </p>
+            </div>`)){
+                cheap_hotel_inventory_list_table_body.innerHTML = `
+                    <tr>
+                        <td class="its_inventory_header">Item</td>
+                        <td class="its_inventory_header">Code</td>
+                        <td class="its_inventory_header">Quantity</td>
+                        <td class="its_inventory_header">Price</td>
+                    </tr>`;
+            }*/
+
+        },
+        error: err => {
+            confirmation_required_action_finished_call_back();
+            console.log(err);
+        }
+    });
+}
+
+function toggle_show_inventory_sales() {
+    $("#front_inventory_sales_container").toggle("up");
+}
+
+function show_inventory_sales() {
+    toggle_show_inventory_sales();
+}
+
+function toggle_show_inventory_div() {
+    $("#inventory_manager_div").toggle("up");
+}
+
+async function show_inventory_select_property() {
+
+    $("#inventory_manager_select_property_div").toggle("up");
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+
+    document.getElementById("inventory_manager_select_property").innerHTML = `
+        <div style="padding: 10px; background-color: white; border-radius: 4px; margin-bottom: 5px;">
+            <p style="color: rgb(0, 82, 121); font-weight: bolder; font-size: 14px;">
+                <i style="margin-right: 5px; color:rgb(235, 86, 0);" class="fa fa-building" aria-hidden="true"></i>
+                All Properties</p>
+            <div onclick="get_and_show_all_inventory('all');" style="cursor: pointer; font-size: 14px; color: white; margin-top: 10px; width: fit-content; background-color:rgb(0, 28, 54); border-radius: 4px; padding: 10px;">
+                manage inventory
+            </div>
+        </div>
+    `;
+    for (let i = 0; i < properties.length; i++) {
+        document.getElementById("inventory_manager_select_property").innerHTML += `
+            <div style="padding: 10px; background-color: white; border-radius: 4px; margin-bottom: 5px;">
+                <p style="color: rgb(0, 82, 121); font-weight: bolder; font-size: 14px;">
+                    <i style="margin-right: 5px; color:rgb(235, 86, 0);" class="fa fa-building" aria-hidden="true"></i>
+                    ${properties[i].city}</p>
+                <p style="margin-top: 5px; font-size: 13px; color:rgb(25, 90, 90);">
+                    ${properties[i].street_address}, ${properties[i].country}
+                </p>
+                <div onclick="get_and_show_all_inventory('${properties[i]._id}');" style="cursor: pointer; font-size: 14px; color: white; margin-top: 10px; width: fit-content; background-color:rgb(0, 28, 54); border-radius: 4px; padding: 10px;">
+                    manage inventory
+                </div>
+            </div>
+        `;
+    }
+}
+
+function show_inventory_div() {
+    toggle_show_inventory_div();
+    show_inventory_select_property();
+}
+
 function get_and_return_all_inventory(hotel_id, property_id){   
     return $.ajax({
         type: "GET",
@@ -166,13 +344,14 @@ document.getElementById("add_new_inventory_save_btn").addEventListener("click", 
 
         $("#add_inventory_form_div").toggle("up");
 
-        if(cheap_hotel_inventory_list_table_body.innerHTML.includes( `
+        /*if(cheap_hotel_inventory_list_table_body.innerHTML.trim().includes(`
             <div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
                 <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
                     <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                     Nothing was found!
                 </p>
-            </div>`)){
+            </div>`))*/
+            if(cheap_hotel_inventory_list_table_body.innerHTML.includes('Nothing was found!')){
                 cheap_hotel_inventory_list_table_body.innerHTML = `
                     <tr>
                         <td class="its_inventory_header">Item</td>
@@ -181,7 +360,7 @@ document.getElementById("add_new_inventory_save_btn").addEventListener("click", 
                         <td class="its_inventory_header">Price</td>
                     </tr>`;
             }
-
+            
         cheap_hotel_inventory_list_table_body.innerHTML += return_each_inventory_markup(res.items[res.items.length - 1]);
 
     }
