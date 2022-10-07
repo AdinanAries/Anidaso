@@ -2475,14 +2475,14 @@
     </div>
     <div id="make_reservation_pane" style="display: none; z-index: 100;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;">
-            <p onclick="toggle_show_make_room_reservation_div();" style="z-index: 11;" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
+            <p onclick="toggle_show_make_room_reservation_div();" style="z-index: 11; top: -10px;" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div style="height: 100%; position: relative;">
-                <p style="margin: 20px 0; margin-bottom: 10px; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
+                <p style="margin: 10px 0; margin-bottom: 5px; color:rgb(5, 44, 59); font-size: 14px; font-weight: bolder; text-align: center;">
                     Make Reservation</p>
-                <div class="flex_row_default_flex_column_mobile page_popup_content_header">
+                <div class="flex_row_default_flex_column_mobile page_popup_content_header" style="padding-top: 15px; background-color:rgb(14, 31, 61); border-bottom: 1px solid rgba(255,255,255,0.2);">
                     <div class="flex_child_of_two" style="width: calc(50% - 2px);">
-                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Property</p>
-                        <select id="make_reservation_property_select" style="padding: 10px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                        <p style="margin-bottom: 5px; font-size: 13px; color:rgb(149, 215, 241);">Select Property</p>
+                        <select id="make_reservation_property_select" style="padding: 10px; width: 100%; border: none; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-size: 13px; color: white;">
                             <option>
                                 New York, 1223 Mont Gomery, United States
                             </option>
@@ -2492,45 +2492,57 @@
                         </select>
                     </div>
                     <div class="flex_child_of_two flex_non_first_child make_reservation" style="width: calc(50% - 2px);">
-                        <p style="margin-bottom: 10px; font-size: 13px; font-weight: bolder; color:rgb(8, 40, 66);">Select Room</p>
-                        <select id="make_reservation_room_select" style="width: 50%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
-                            <option>
-                                5D
-                            </option>
-                            <option>
-                                10A
-                            </option>
-                        </select>
-                        <button id="make_reservation_submit_button" style="width: calc(50% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">
-                        <i style="color:rgb(255, 97, 6); margin-right: 5px;" class="fa fa-ticket" aria-hidden="true"></i>Reserve Room
-                        </button>
+                        <p style="margin-bottom: 5px; font-size: 13px; color:rgb(149, 215, 241);">Select Room</p>
+                        <div style="display: flex; justify-content: space-between;">
+                            <select id="make_reservation_room_select" style="width: 50%; padding: 10px; border: none; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 4px; font-size: 13px;">
+                                <option>
+                                    5D
+                                </option>
+                                <option>
+                                    10A
+                                </option>
+                            </select>
+                            <div id="make_reservation_submit_button" style="text-align: center; width: calc(50% - 23px); border: 1px solid rgba(255,255,255,0.2); padding: 8px; background-color:rgb(209, 84, 0); color: white; border-radius: 4px; font-size: 13px;">
+                                <i style="color:coral; margin-right: 5px;" class="fa fa-ticket" aria-hidden="true"></i>Reserve Room
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="page_popup_content_body">
                     <div id="make_reservation_find_spot_pane" style="padding-bottom: 60px;">
-                        <p style="font-size: 13px; margin-top: 10px; margin-bottom: 5px; color: rgb(149, 215, 241); font-weight: bolder;">
-                            Checkin - Checkout</p>
-                        <div class="make_reservation_date_range_on_popup_chekin_checkout_input_container" style="padding-left: 10px; background-color:rgb(149, 215, 241); border-radius: 4px; ">
-                            <i style="color:rgb(0, 25, 54);" class="fa fa-calendar" aria-hidden="true"></i>
-                           <input id="make_reservation_date_range_on_popup_chekin_checkout_input" style="padding: 10px; border-radius: 0; background: none;
-                            border: none; font-size: 14px; width: calc(100% - 50px);" type="text" readonly="true"/>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="width: 50%;">
+                                <p style="font-size: 13px; margin-bottom: 5px; color: rgb(149, 215, 241);">
+                                    Checkin - Checkout</p>
+                                <div class="make_reservation_date_range_on_popup_chekin_checkout_input_container" style="padding-left: 10px; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; ">
+                                    <i style="color: white;" class="fa fa-calendar" aria-hidden="true"></i>
+                                    <input id="make_reservation_date_range_on_popup_chekin_checkout_input" style="padding: 10px; border-radius: 0; background: none; color: white;
+                                        border: none; font-size: 14px; width: calc(100% - 50px);" type="text" readonly="true"/>
+                                </div>
+                            </div>
+                            <div style="width: calc(50% - 4px);">
+                                <p style="font-size: 13px; margin-bottom: 5px; color: rgb(149, 215, 241);">
+                                    Preview Span</p>
+                                <div style=" background-color: rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); overflow: hidden; border-radius: 4px;">
+                                    <input id="make_reservation_date_range_on_popup_input" style="letter-spacing: 1px; color: white; background: none; padding: 10px; border-radius: 0; border: none; font-size: 14px; width: 100%;" type="text" readonly="true"/>
+                                </div>
+                            </div>
                         </div>
-                        <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0; margin-top: 20px;">
+                        
+                        <p style="color: rgba(255, 255, 255, 0.5); text-align: center; font-size: 13px; margin: 10px 0; margin-top: 20px;">
                             Availability Preview</p>
                         <div>
-                            <div style="border-top-left-radius: 4px; border-top-right-radius: 4px; background-color: white; overflow: hidden; padding-right: 10px;">
-                                <input id="make_reservation_date_range_on_popup_input" style="text-align: center; letter-spacing: 1px; font-weight: bolder; color: rgb(136, 17, 17); padding: 10px; border-radius: 0; border: none; font-size: 14px; width: calc(100% - 50px);" type="text" readonly="true"/>
-                                <i style="margin-left: 10px; color: rgb(0, 16, 27);" class="fa fa-caret-down" aria-hidden="true"></i>
-                            </div>
+                            
                             <div style="width: 100%; overflow-x: auto; background-color: rgba(0, 0, 0, 0.4); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
                                 <div style="margin: 10px;">
-                                    <span style="font-size: 14px; color: white; margin-right: 20px;">
+                                    <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-right: 20px;">
                                         <i style="color: #00ffbf;" class="fa fa-square" aria-hidden="true"></i> Booked
                                     </span>
-                                    <span style="font-size: 14px; color: white; margin-right: 20px;">
+                                    <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5);; margin-right: 20px;">
                                         <i style="color: rgb(0, 46, 105);" class="fa fa-square" aria-hidden="true"></i> Chosen
                                     </span>
-                                    <span style="font-size: 14px; color: white;">
+                                    <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5);">
                                         <i style="color: crimson;" class="fa fa-square" aria-hidden="true"></i> Overlaps
                                     </span>
                                 </div>
