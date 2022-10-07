@@ -4,6 +4,16 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+header{
+  position: fixed;
+  width: calc(100vw - 40px);
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+body{
+  padding-top: 70px;
+}
 select {
   -webkit-appearance: none;
 }

@@ -9,9 +9,16 @@ var guest_search_post_data = {
     date: "",
 }
 
-async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking_id){ //remove these parameters if not needed
+async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking_id, source='inhouse_guests'){ //remove these parameters if not needed
+    
+    if(source==='guest_manager'){
+        guest_search_post_data.property_id=property_id;
+        toggle_show_guests_manager_div();
+    }
+        
+    if(source==='inhouse_guests')
+        toggle_show_in_house_guests_div();
 
-    toggle_show_in_house_guests_div();
     toggle_show_guests_checkout_div();
 
     setTimeout(async ()=>{
@@ -1206,7 +1213,7 @@ async function search_guest_on_submit_function(){
                 }
             }
             
-            document.getElementById("guest_mamager_search_guests_list").innerHTML += return_each_guest_manager_guest_markup(guests[i], property, guest_stay_obj);
+            document.getElementById("guest_mamager_search_guests_list").innerHTML += return_each_guest_manager_guest_markup(guests[i], property, guest_stay_obj, bookings[(bookings.length-1)]);
             //reset guest dob
             guest_manager_search_guest_DOB = "";
         }
@@ -1214,7 +1221,29 @@ async function search_guest_on_submit_function(){
 
 }
 
-function return_each_guest_manager_guest_markup(guest, property, stay){
+function return_each_guest_manager_guest_markup(guest, property, stay, booking){
+
+    let guest_main_action_btn='';
+    if(guest.status.includes("not_staying") || guest.status.includes("unbooked")){
+        guest.status="not staying";
+        guest_main_action_btn = `
+            <div onclick="" style="border: 1px solid rgb(55, 97, 107); background-color: rgb(3, 70, 97); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-ticket" aria-hidden="true"></i>
+                Make Reservation
+            </div>`;
+    }else if(guest.status.includes("staying")){
+        guest_main_action_btn = `
+            <div onclick="go_to_checkout_from_inhouse_guests('${guest._id}', '${property._id}', '${booking._id}', 'guest_manager');" style="background-color: brown; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
+                Go to Checkout
+            </div>`;
+    }else if(guest.status.includes("booked")){
+        guest_main_action_btn = `
+            <div onclick="" style="border: 1px solid rgb(55, 97, 107); background-color: rgba(41, 66, 88, 0.555); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+                <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-bed" aria-hidden="true"></i>
+                Go to Checkin
+            </div>`;
+    }
 
     let stay_info = stay.room ? `
         <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
@@ -1250,10 +1279,7 @@ function return_each_guest_manager_guest_markup(guest, property, stay){
                         <i style="color:rgb(136, 191, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
                         Edit Guests
                     </div>
-                    <div onclick="" style="border: 1px solid rgb(55, 97, 107); background-color: rgba(0, 0, 0, 0.4); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
-                        <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-ticket" aria-hidden="true"></i>
-                        Make Reservation
-                    </div>
+                    ${guest_main_action_btn}
                 </div>
                 <div style="display: flex; flex-direction: row !important;">
                     <div onclick="" style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 10px; padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
