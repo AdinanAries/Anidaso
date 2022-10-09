@@ -656,8 +656,10 @@ footer a {
 }
 .recently_booked_and_rooms_div{
   border: 1px solid rgba(255,255,255,0.2);
+  background-color: rgba(0,0,0,0.79);
   border-radius: 4px;
   padding: 10px 0;
+  padding-left: 10px;
   display: flex;
   justify-content: center;
 }
@@ -678,6 +680,7 @@ footer a {
   .recently_booked_and_rooms_div{
     border: none;
     display: block;
+    padding: 0;
   }
   #logged_in_hotel_recently_booked_rooms_list{
     min-width: auto;

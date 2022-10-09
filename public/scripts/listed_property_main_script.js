@@ -3620,7 +3620,7 @@ async function render_recent_hotel_booking(recent_booking) {
                     Room Guest(s)</p>
                     ${room_guests_markup}
             </div>
-            <p onclick="toggle_show_booked_rooms();" style="text-align: center; color: white; font-size: 13px; font-weight: bolder; padding: 10px; border-radius: 14px; background-color: cadetblue; cursor: pointer; margin: 10px 0;">
+            <p onclick="toggle_show_booked_rooms();" style="text-align: center; color: white; font-size: 13px; padding: 10px; border-radius: 4px; background-color: rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; margin: 10px 0;">
                 See all bookings
             </p>
         </div>
