@@ -3354,7 +3354,7 @@ async function render_hotel_rooms(rooms_list) {
         `;
         return null;
     }
-
+    
     let property = await get_and_return_hotel_property_by_id(rooms_list[0].property_id);
 
     let property_city = "";
