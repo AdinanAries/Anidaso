@@ -1224,6 +1224,16 @@ app.get("/get_cheap_hotel_properties/:id", async (req, res, next) =>{
 
 });
 
+app.post("/get_cheap_hotel_guest_invoice/", async (req,res, next)=>{
+  let the_invoice = await cheap_hotel_invoice.findOne({
+    hotel_brand_id: req.body.hotel_brand_id,
+    property_id: req.body.property_id,
+    "invoice_items.booking_id": req.body.booking_id,
+    "invoice_items.guest_id": req.body.guest_id
+  }).exec();
+  res.send(the_invoice);
+});
+
 //booking a room
 app.post("/book_a_cheap_room/", async (req, res, next) => {
 
@@ -1342,6 +1352,25 @@ app.get("/is_room_booked_on_a_certain_date/:booking_date/:room_id/:room_number",
 
   res.send(answer);
 
+});
+
+app.post('/get_all_bookings_based_on_date_ranges/', async(req, res, next) => {
+ 
+  try{
+    let bookings = await cheap_hotel_booking.find({
+      /*all_dates_of_occupancy: {
+        "$all": req.body.first_date,
+        "$all": req.body.last_date
+      },*/
+      hotel_brand_id: req.body.brand_id,
+    }).exec();
+    res.send(bookings);
+
+  }catch(e){
+    console.log(e.message);
+    res.send([]);
+  }
+  
 });
 
 app.get("/get_listed_property_room_bookings/:hotel_id", async (req, res, next) => {

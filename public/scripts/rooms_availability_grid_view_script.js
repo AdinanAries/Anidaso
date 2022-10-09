@@ -12,6 +12,7 @@
         ]
     }
 ]*/
+var all_bookings_based_ranges_from_mk_reservations=[];
 
 var make_reservation_guests_list = document.getElementById("make_reservation_guests_list");
 
@@ -359,7 +360,85 @@ function check_if_date_is_booked_for_current_room(date, room_id, room_number, da
     let the_date = convert_date_object_to_db_string_format(date);
     //console.log(date, ", ", the_date)
 
-    return $.ajax({
+    let answer = {
+        isChekin: false,
+        isBooked: false,
+        isCheckout: false,
+        all_dates_of_occupancy: []
+    }
+    
+    //get bookings for current room
+    let booked_for_room = [];
+    all_bookings_based_ranges_from_mk_reservations.forEach(booking=>{
+        booking.rooms.forEach(room=>{
+            if(room.id.toString().trim() === room_id && room.number.toString().trim() === room_number){
+                booked_for_room.push(booking);
+            }
+        });
+    });
+    
+    //get based on checkin date
+    let booked = booked_for_room.filter(each=>(each.checkin_date.toString().trim()===the_date));
+
+    if(booked.length > 0){
+        answer.isChekin = true;
+        answer.isBooked = true;
+        answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+    }
+
+    //find based on checkout date
+    if(booked.length === 0){
+        booked = booked_for_room.filter(each=>(each.checkout_date.toString().trim()===the_date));
+    }
+
+    if(booked.length > 0 && !answer.isChekin){
+        answer.isCheckout = true;
+        answer.isBooked = true;
+        answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+    }
+
+    if(booked.length === 0){
+        //find based all dates of accupancy
+        booked = booked_for_room.filter(each=>(each.all_dates_of_occupancy.includes(the_date)));
+    }
+
+    if(booked.length > 0 && !answer.isChekin && !answer.isCheckout){
+        answer.isBooked = true;
+        answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+    }
+
+    if(answer.isBooked){
+        day.classes.push("booked_date");
+        for(let e=0; e<checking_checkout_dates_list.length; e++){
+            if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
+                day.classes.push("overlap");
+                is_there_overlap = true;
+            }
+        }
+    }
+    if(answer.isChekin){
+        day.classes.push("booked_checkin");
+        if(answer.all_dates_of_occupancy.length === 1){
+            day.classes.push("booked_checkout");
+        }
+        for(let e=0; e<checking_checkout_dates_list.length; e++){
+            if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
+                day.classes.push("overlap");
+                is_there_overlap = true;
+            }
+        }
+    }
+    if(answer.isCheckout){
+        day.classes.push("booked_checkout");
+        for(let e=0; e<checking_checkout_dates_list.length; e++){
+            if((day.full_date.getDate() + ", " + day.full_date.getMonth()) === checking_checkout_dates_list[e]){
+                day.classes.push("overlap");
+                is_there_overlap = true;
+            }
+        }
+    }
+
+    /*return $.ajax({
         type: "GET",
         url: `/is_room_booked_on_a_certain_date/${the_date}/${room_id}/${room_number}`,
         success: res => {
@@ -399,7 +478,7 @@ function check_if_date_is_booked_for_current_room(date, room_id, room_number, da
             console.log(err);
             return err;
         }
-    });
+    });*/
     
 }
 
@@ -407,7 +486,67 @@ function check_if_date_is_booked(date, room_id, room_number, day){
 
     let the_date = convert_date_object_to_db_string_format(date);
 
-    return $.ajax({
+    let answer = {
+        isChekin: false,
+        isBooked: false,
+        isCheckout: false,
+        all_dates_of_occupancy: []
+    }
+
+    //get bookings for current room
+    let booked_for_room = [];
+    all_bookings_based_ranges_from_mk_reservations.forEach(booking=>{
+        booking.rooms.forEach(room=>{
+            if(room.id.toString().trim() === room_id && room.number.toString().trim() === room_number){
+                booked_for_room.push(booking);
+            }
+        });
+    });
+    
+    //get based on checkin date
+    let booked = booked_for_room.filter(each=>(each.checkin_date.toString().trim()===the_date));
+    
+    if(booked.length > 0){
+    answer.isChekin = true;
+    answer.isBooked = true;
+    answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+    }
+
+    //find based on checkout date
+    if(booked.length === 0){
+        booked = booked_for_room.filter(each=>(each.checkout_date.toString().trim()===the_date));
+    }
+
+    if(booked.length > 0 && !answer.isChekin){
+        answer.isCheckout = true;
+        answer.isBooked = true;
+        answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+    }
+
+    if(booked.length === 0){
+        //find based all dates of accupancy
+        booked = booked_for_room.filter(each=>(each.all_dates_of_occupancy.includes(the_date)));
+    }
+
+    if(booked.length > 0 && !answer.isChekin && !answer.isCheckout){
+        answer.isBooked = true;
+        answer.all_dates_of_occupancy = booked[0].all_dates_of_occupancy
+    }
+
+    if(answer.isBooked){
+        day.classes.push("booked_date");
+    }
+    if(answer.isChekin){
+        day.classes.push("booked_checkin");
+        if(answer.all_dates_of_occupancy.length === 1){
+            day.classes.push("booked_checkout");
+        }
+    }
+    if(answer.isCheckout){
+        day.classes.push("booked_checkout");
+    }
+    
+    /*return $.ajax({
         type: "GET",
         url: `/is_room_booked_on_a_certain_date/${the_date}/${room_id}/${room_number}`,
         success: res => {
@@ -429,7 +568,7 @@ function check_if_date_is_booked(date, room_id, room_number, day){
             console.log(err);
             return err;
         }
-    });
+    });*/
     
 }
 
@@ -511,6 +650,8 @@ function return_bookings_grid_view_other_rooms_markup(rooms_list, current_room){
 }
 
 async function generate_and_display_grid_view_bookings(){
+
+    all_bookings_based_ranges_from_mk_reservations = await get_all_bookings_withing_date_range(rooms_grid_view_config.calendar.first, rooms_grid_view_config.calendar.last, localStorage.getItem('ANDSBZID'));
 
     is_there_overlap = false;
 
@@ -963,6 +1104,27 @@ async function create_guest_invoice(booking){
         },
         error: err => {
             console.log(err);
+            return err;
+        }
+    })
+}
+
+function get_all_bookings_withing_date_range(first_date, last_date, brand_id){
+    return $.ajax({
+        url: '/get_all_bookings_based_on_date_ranges/',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+            first_date,
+            last_date,
+            brand_id,
+        }),
+        success: res => {
+            console.log('bookings based on date ranges', res);
+            return res;
+        },
+        error: err => {
             return err;
         }
     })

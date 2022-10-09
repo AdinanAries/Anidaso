@@ -1,6 +1,7 @@
 async function preprocess_bookings_rooms_and_guests(){
 
     //current_edit_booking_object.rooms_and_guests.booking_id = "";
+    all_running_invoices=[];
     current_edit_booking_object.rooms_and_guests.booking_total_adults = 0;
     current_edit_booking_object.rooms_and_guests.booking_total_children = 0;
     current_edit_booking_object.rooms_and_guests.room_guests = [];
@@ -13,6 +14,13 @@ async function preprocess_bookings_rooms_and_guests(){
     document.getElementById("edit_booking_guest_mobile_country_code_select").value = current_edit_booking_object.booking.guest_contact.mobile.split(" ")[0];
     document.getElementById("edit_booking_checkin_checkout_input").placeholder = `${current_edit_booking_object.booking.checkin_date} - ${current_edit_booking_object.booking.checkout_date}`;
     
+    let invoice = await get_cheap_hotel_guest_invioce(
+        current_edit_booking_object.booking.guests[0].id, 
+        current_edit_booking_object.booking._id,
+        localStorage.getItem('ANDSBZID'),
+        current_edit_booking_object.booking.property_id);
+    all_running_invoices.push(invoice);
+
     for(let i=0; i <current_edit_booking_object.booking.rooms.length; i++){
 
         let room = await get_and_return_hotel_room_by_id(current_edit_booking_object.booking.rooms[i].id);
@@ -258,6 +266,15 @@ function remove_existing_room_from_edit_booking(i){
         }
     }
 
+    let start_index=0;
+    let end_index=current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length;
+    for(let y=0;y<current_edit_booking_object.rooms_and_guests.room_guests.length;y++){
+        if(y===i){
+            break;
+        }
+        start_index += current_edit_booking_object.rooms_and_guests.room_guests[y].guests.length;
+    }
+    remove_guest_from_running_invoice(start_index, 0, end_index, 0);
     current_edit_booking_object.rooms_and_guests.room_guests.splice(i,1);
 
     edit_booking_render_initial_rooms_markup("rooms", "properties", current_edit_booking_object.rooms_and_guests.room_guests);
@@ -280,6 +297,14 @@ function remove_existing_guest_from_edit_booking(room_index, guest_index){
         current_edit_booking_object.rooms_and_guests.booking_total_children -= 1;
     }
 
+    let start_index=0;
+    for(let y=0;y<current_edit_booking_object.rooms_and_guests.room_guests.length;y++){
+        if(y===room_index){
+            break;
+        }
+        start_index += current_edit_booking_object.rooms_and_guests.room_guests[y].guests.length;
+    }
+    remove_guest_from_running_invoice(start_index, guest_index, 1, 0);
     current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.splice(guest_index, 1);
     edit_booking_render_initial_rooms_markup("rooms", "properties", current_edit_booking_object.rooms_and_guests.room_guests);
     //$(`#edit_booking_room_guest_form_${room_index}_${guest_index}`).toggle("up");
@@ -304,9 +329,9 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
                 <p style="margin-left: 5px; font-size: 16px; color:rgb(168, 195, 218); font-weight: bolder;">
                     <i style="margin-right: 5px; color:rgb(255, 97, 6);" aria-hidden="true" class="fa fa-building"></i>
                     Room ${new_index + 1}</p>
-                <p onclick="remove_existing_room_from_edit_booking(${new_index});" style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
-                    <i style="margin-right: 5px; color:rgb(255, 61, 61);" aria-hidden="true" class="fa fa-trash"></i>
-                    Remove</p>
+                <p onclick="remove_existing_room_from_edit_booking(${new_index});" style="margin-left: 5px; font-size: 14px; padding: 5px 10px; background-color: brown; border-radius: 4px; color: white; cursor: pointer;">
+                    <i style="margin-right: 5px; color:rgba(255, 255, 255,0.5);" aria-hidden="true" class="fa fa-trash"></i>
+                    Remove Room ${new_index + 1}</p>
             </div>
             <div>
                 <div>
@@ -325,7 +350,7 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
                         </div>
                     </div>
                 </div>
-                <p id="edit_booking_rooms_capacitance_display_${new_index}" style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; margin-left: 10px; color:rgb(255, 97, 6); font-weight: bolder;">
+                <p id="edit_booking_rooms_capacitance_display_${new_index}" style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; margin-left: 10px; color:rgba(255,255,255,0.5);">
                     Up to ${number_of_adults_display}, ${number_of_children_display}
                 </p>
                 <div id="edit_booking_room_guests_forms_list_${new_index}">
@@ -346,7 +371,7 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
         </div>
     `;
 
-    set_properties_and_rooms_for_select_inputs(`edit_booking_properties_select_${new_index}`, `edit_booking_rooms_select_${new_index}`);
+    set_properties_and_rooms_for_select_inputs(`edit_booking_properties_select_${new_index}`, `edit_booking_rooms_select_${new_index}`, new_index);
 
     document.getElementById(`edit_booking_rooms_select_${new_index}`).addEventListener("change", e => {
         edit_booking_onchange_rooms_select_render_room_markup("skip_rooms", "skip_properties", new_index);
@@ -370,14 +395,14 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
         let number_of_children_display = rooms[i].total_children > 1 ? `${rooms[i].total_children} Children` : `${rooms[i].total_children} Child`;
 
         document.getElementById("edit_booking_rooms_and_guestslist").innerHTML += `
-            <div id="edit_booking_another_room_${i}" style="padding: 20px 0; margin-bottom: 5px;">
+            <div id="edit_booking_another_room_${i}" style="padding: 20px 5px; margin-bottom: 10px; background-color: rgba(0,0,0,0.4);">
                 <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
                     <p style="margin-left: 5px; font-size: 16px; color:rgb(168, 195, 218); font-weight: bolder;">
                         <i style="margin-right: 5px; color:rgb(255, 97, 6);" aria-hidden="true" class="fa fa-building"></i>
-                        Room ${i + 1}</p>
-                    <p onclick="remove_existing_room_from_edit_booking(${i});" style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer;">
-                        <i style="margin-right: 5px; color:rgb(255, 61, 61);" aria-hidden="true" class="fa fa-trash"></i>
-                        Remove</p>
+                        Room ${rooms[i].number}</p>
+                    <p onclick="remove_existing_room_from_edit_booking(${i});" style="margin-left: 5px; font-size: 14px; color: white; cursor: pointer; background-color: brown; padding: 5px 10px; border-radius: 4px;">
+                        <i style="margin-right: 5px; color:rgba(255,255,255,0.5);" aria-hidden="true" class="fa fa-trash"></i>
+                        Remove ${rooms[i].number}</p>
                 </div>
                 <div>
                     <div>
@@ -396,28 +421,27 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                             </div>
                         </div>
                     </div>
-                    <p id="edit_booking_rooms_capacitance_display_${i}" style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; margin-left: 10px; color:rgb(255, 97, 6); font-weight: bolder;">
+                    <p id="edit_booking_rooms_capacitance_display_${i}" style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; margin-left: 10px; color:rgba(255,255,255,0.5);">
                         Up to ${number_of_adults_display}, ${number_of_children_display}
                     </p>
                     <div id="edit_booking_room_guests_forms_list_${i}">
                         
                     </div>
                 </div>
-                <div style="color: white; cursor: pointer; margin-top: 10px; display: flex; flex-direction: row !important; overflow: hidden;
-                        border-radius: 4px; background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255, 0.3);">
+                <div style="color: white; cursor: pointer; display: flex; flex-direction: row !important; background-color: rgba(41, 66, 88, 0.555); border: 1px solid rgba(255,255,255, 0.3);">
                     <div onclick="edit_booking_add_new_guest('adult', ${i});" style="padding: 10px; text-align: center; font-size: 14px; width: calc(50% - 20px); border-right: 1px solid rgba(255,255,255, 0.3);">
                         <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
-                        Add Adult
+                        Add Adult to ${rooms[i].number}
                     </div>
                     <div onclick="edit_booking_add_new_guest('child', ${i});" style="padding: 10px; text-align: center; font-size: 14px; width: calc(50% - 20px);">
                         <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-plus" aria-hidden="true"></i>
-                        Add Child
+                        Add Child to ${rooms[i].number}
                     </div>
                 </div>
             </div>
         `;
 
-        set_properties_and_rooms_for_select_inputs(`edit_booking_properties_select_${i}`, `edit_booking_rooms_select_${i}`);
+        set_properties_and_rooms_for_select_inputs(`edit_booking_properties_select_${i}`, `edit_booking_rooms_select_${i}`, i);
 
         let adult_number = 0;
         let child_number = 0;
@@ -427,8 +451,14 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
 
                 document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML += `
                     <div id="edit_booking_room_guest_form_${i}_${g}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
-                        <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
-                            Adult ${++adult_number}</p>
+                        <!--p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                            Adult ${++adult_number}</p-->
+                        <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="border-radius: 4px; width: fit-content; background-color: brown; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 5px;">
+                            <p style="font-size: 14px; color: white;" >
+                                <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                                remove ${rooms[i].guests[g].first_name} from ${rooms[i].number}
+                            </p>
+                        </div>
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
@@ -452,12 +482,6 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
-                        </div>
-                        <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
-                            <p style="font-size: 14px; color: white; text-align: center;">
-                                <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
-                                remove adult ${adult_number}
-                            </p>
                         </div>
                     </div>
                 `;
@@ -471,8 +495,14 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
 
                 document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML += `
                     <div id="edit_booking_room_guest_form_${i}_${g}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
-                        <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
-                            Child ${++child_number}</p>
+                        <!--p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                            Child ${++child_number}</p-->
+                            <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="border-radius: 4px; width: fit-content; background-color: brown; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 5px;">
+                            <p style="font-size: 14px; color: white;" >
+                                <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                                remove ${rooms[i].guests[g].first_name} from ${rooms[i].number}
+                            </p>
+                        </div>
                         <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                             <div style="width: calc(50% - 5px);">
                                 <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
@@ -497,12 +527,12 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                                 </select>
                             </div>
                         </div>
-                        <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                        <!--div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="padding: 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">
                             <p style="font-size: 14px; color: white; text-align: center;">
                                 <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
-                                remove child ${child_number}
+                                remove ${rooms[i].guests[g].first_name}
                             </p>
-                        </div>
+                        </div-->
                     </div>
                 `;
 
@@ -580,8 +610,14 @@ function edit_booking_add_new_guest(guest_type, room_index){
 
         document.getElementById("edit_booking_room_guests_forms_list_"+room_index).innerHTML += `
             <div id="edit_booking_room_guest_form_${room_index}_${guest_index}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
-                <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
-                    Adult ${added_adults.length+1}</p>
+                <!--p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                    Adult ${added_adults.length+1}</p-->
+                <div onclick="remove_existing_guest_from_edit_booking(${room_index}, ${guest_index});" style=" padding: 5px 10px; width: fit-content; background-color: brown; border-radius: 4px; cursor: pointer;">
+                    <p style="font-size: 14px; color: white; text-align: center;">
+                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                        remove adult ${added_adults.length+1}
+                    </p>
+                </div>
                 <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                     <div style="width: calc(50% - 5px);">
                         <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
@@ -605,12 +641,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
                         </select>
                     </div>
                 </div>
-                <div onclick="remove_existing_guest_from_edit_booking(${room_index}, ${guest_index});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
-                    <p style="font-size: 14px; color: white; text-align: center;">
-                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
-                        remove adult ${added_adults.length+1}
-                    </p>
-                </div>
+                
             </div>
         `;
 
@@ -646,8 +677,14 @@ function edit_booking_add_new_guest(guest_type, room_index){
 
         document.getElementById("edit_booking_room_guests_forms_list_"+room_index).innerHTML += `
             <div id="edit_booking_room_guest_form_${room_index}_${guest_index}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
-                <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
-                    Child ${added_children.length+1}</p>
+                <!--p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                    Child ${added_children.length+1}</p-->
+                <div onclick="remove_existing_guest_from_edit_booking(${room_index}, ${guest_index});" style="padding: 5px 10px; width: fit-content; background-color: brown; cursor: pointer; border-radius: 4px;">
+                    <p style="font-size: 14px; color: white; text-align: center;">
+                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                        remove child ${added_children.length+1}
+                    </p>
+                </div>
                 <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
                     <div style="width: calc(50% - 5px);">
                         <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
@@ -670,12 +707,6 @@ function edit_booking_add_new_guest(guest_type, room_index){
                             <option value="Female">Female</option>
                         </select>
                     </div>
-                </div>
-                <div onclick="remove_existing_guest_from_edit_booking(${room_index}, ${guest_index});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
-                    <p style="font-size: 14px; color: white; text-align: center;">
-                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
-                        remove child ${added_children.length+1}
-                    </p>
                 </div>
             </div>
         `;
@@ -709,6 +740,13 @@ function edit_booking_add_new_guest(guest_type, room_index){
         <i style="margin-right: 5px; color:rgb(137, 235, 174);" class="fa fa-info-circle" aria-hidden="true"></i>
         This booking has  ${rooms_display_txt} ${guests_display_txt}
     `;
+    include_guest_in_running_invoice(
+        current_edit_booking_object.booking._id,
+        "guest_id_before_creation",
+        current_edit_booking_object.rooms_and_guests.room_guests[room_index].id,
+        [],
+        0
+    );
 }
 
 function add_guest_first_name_to_edit_booking_object(input_id, room_index, guest_index){

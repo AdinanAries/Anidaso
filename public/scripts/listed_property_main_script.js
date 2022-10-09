@@ -407,7 +407,7 @@ function return_new_hotel_guest_obj(hotel_brand_id_param, property_id_param, pro
     }
 }
 
-async function set_properties_and_rooms_for_select_inputs(properties_select, rooms_select) {
+async function set_properties_and_rooms_for_select_inputs(properties_select, rooms_select, index) {
 
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
@@ -417,6 +417,7 @@ async function set_properties_and_rooms_for_select_inputs(properties_select, roo
             <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
         `;
     }
+    //document.getElementById(properties_select).value=;
 
     let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById(properties_select).value);
 
@@ -426,6 +427,7 @@ async function set_properties_and_rooms_for_select_inputs(properties_select, roo
             <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
         `;
     }
+    document.getElementById(rooms_select).value=current_edit_booking_object.rooms_and_guests.room_guests[index].id;
 
     document.getElementById(properties_select).onchange = async e => {
 
@@ -476,7 +478,7 @@ async function toggle_show_edit_booking_edit_page() {
 
     setTimeout(() => {
         load_country_calling_codes_on_select_input("edit_booking_guest_mobile_country_code_select");
-        preprocess_bookings_rooms_and_guests();
+        preprocess_bookings_rooms_and_guests();//
     }, 510);
 
 }
