@@ -1725,9 +1725,9 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
-      email: req_email,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       mobile: req_mobile,
       status: "staying"
     }).exec();
@@ -1736,9 +1736,9 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
-      email: req_email,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "staying"
     }).exec();
   }
@@ -1746,8 +1746,8 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       mobile: req_mobile,
       status: "staying"
     }).exec();
@@ -1756,8 +1756,8 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       status: "staying"
     }).exec();
   }
@@ -1765,7 +1765,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
       mobile: req_mobile,
       status: "staying"
     }).exec();
@@ -1774,7 +1774,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      last_name: l_name,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       mobile: req_mobile,
       status: "staying"
     }).exec();
@@ -1783,8 +1783,8 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      email: req_email,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "staying"
     }).exec();
   }
@@ -1792,8 +1792,8 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      last_name: l_name,
-      email: req_email,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "staying"
     }).exec();
   }
@@ -1801,7 +1801,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
       status: "staying"
     }).exec();
   }
@@ -1809,7 +1809,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      last_name: l_name,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       status: "staying"
     }).exec();
   }
@@ -1825,7 +1825,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      email: req_email,
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "staying"
     }).exec();
   }
@@ -1932,9 +1932,9 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
-      email: req_email,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       mobile: req_mobile,
       status: "booked"
     }).exec();
@@ -1943,9 +1943,9 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
-      email: req_email,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "booked"
     }).exec();
   }
@@ -1953,8 +1953,8 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       mobile: req_mobile,
       status: "booked"
     }).exec();
@@ -1963,8 +1963,8 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       status: "booked"
     }).exec();
   }
@@ -1972,7 +1972,7 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
       mobile: req_mobile,
       status: "booked"
     }).exec();
@@ -1981,7 +1981,7 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      last_name: l_name,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       mobile: req_mobile,
       status: "booked"
     }).exec();
@@ -1990,8 +1990,8 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
-      email: req_email,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "booked"
     }).exec();
   }
@@ -1999,8 +1999,8 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      last_name: l_name,
-      email: req_email,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "booked"
     }).exec();
   }
@@ -2008,7 +2008,7 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      first_name: f_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
       status: "booked"
     }).exec();
   }
@@ -2016,7 +2016,7 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      last_name: l_name,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       status: "booked"
     }).exec();
   }
@@ -2032,7 +2032,7 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
     the_guests = await cheap_hotel_guest.find({
       hotel_brand_id: req.body.hotel_brand_id,
       property_id: req.body.property_id,
-      email: req_email,
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
       status: "booked"
     }).exec();
   }
@@ -2267,8 +2267,8 @@ app.post("/search_cheap_hotel_guest/", async (req, res, next)=> {
   let guests=[];
   if(f_name && l_name && (mobile_p.split(" ").length > 1) && DOB_p){
     guests = await cheap_hotel_guest.find({
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       DOB: DOB_p,
       mobile: mobile_p,
       hotel_brand_id: hotel_brand_id_p,
@@ -2277,8 +2277,8 @@ app.post("/search_cheap_hotel_guest/", async (req, res, next)=> {
   }
   if(f_name && l_name && DOB_p && guests.length===0){
     guests = await cheap_hotel_guest.find({
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       mobile: mobile_p,
       hotel_brand_id: hotel_brand_id_p,
       property_id: property_id_p,
@@ -2286,8 +2286,8 @@ app.post("/search_cheap_hotel_guest/", async (req, res, next)=> {
   } 
   if(f_name && l_name && (mobile_p.split(" ").length > 1) && guests.length===0){
     guests = await cheap_hotel_guest.find({
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       mobile: mobile_p,
       hotel_brand_id: hotel_brand_id_p,
       property_id: property_id_p,
@@ -2295,22 +2295,22 @@ app.post("/search_cheap_hotel_guest/", async (req, res, next)=> {
   } 
   if(f_name && l_name && guests.length===0){
     guests = await cheap_hotel_guest.find({
-      first_name: f_name,
-      last_name: l_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       hotel_brand_id: hotel_brand_id_p,
       property_id: property_id_p,
     });
   }
   if(f_name && guests.length===0){
     guests = await cheap_hotel_guest.find({
-      first_name: f_name,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
       hotel_brand_id: hotel_brand_id_p,
       property_id: property_id_p,
     });
   }
   if(l_name && guests.length===0){
     guests = await cheap_hotel_guest.find({
-      last_name: l_name,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
       hotel_brand_id: hotel_brand_id_p,
       property_id: property_id_p,
     });

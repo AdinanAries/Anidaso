@@ -1424,7 +1424,7 @@
             </div>
         </div>
     </div>
-    <div id="include_services_in_booking_div" class="page_pop_up_cover" style="display: none; z-index: 12;">
+    <div id="include_services_in_booking_div" class="page_pop_up_cover" style="display: none; z-index: 13;">
         <div class="page_popup_content_container" style="overflow: hidden;">
             <div style="position: relative; background-color: rgb(0, 69, 97); width: calc(100% - 10px); height: 100%; padding: 10px 5px;">
                 <p onclick="toggle_show_include_services_in_booking_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
@@ -3706,7 +3706,7 @@
                         </div>
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
-                                Policies/Restrictions</p>
+                                Your Policies</p>
                             <div id="dashboard_displayed_last_added_hotel_policy">
                                 <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
                                     <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -3727,13 +3727,13 @@
                                   </div>
                             </div>
                             <p onclick="toggle_show_all_policies();" id="logged_in_hotel_manage_policies_btn" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
-                                click here to manage policies
+                                manage policies
                                 <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                             </p>
                         </div>
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 14px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
-                                Amenities</p>
+                                Your Amenities</p>
                             <div id="logged_in_hotel_amenities_list">
                                 <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
                                     <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -3779,7 +3779,7 @@
                     </div>
                     <div class="logged_in_hotel_details_each_section_content">
                         <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
-                            Payments</p>
+                            Payouts Card</p>
                         <p class="logged_in_payments_card_display" style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">Card Number:</span>
                              ****1342
                              <i onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
@@ -3791,9 +3791,9 @@
                         <div id="loggedin_hotel_edit_payments_forms" >
                             <p style="color: rgb(206, 0, 0);" onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
                             <p style="font-weight: bolder; color: white; font-size: 13px; text-align: center; margin-bottom: 10px;">
-                                Payments</p>
+                                Add Payouts Card</p>
                             <p style="color: white; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px; text-align: center;">
-                                Change your payments card below</p>
+                                Change your payouts card below</p>
                             <div>
                                 <form id="payment-form">
                                     <div style="padding: 10px; background-color: white; border-radius: 4px;" id="card-element">
@@ -3833,7 +3833,44 @@
                         </div>
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
-                                Subscriptions</p>
+                                Your Payouts</p>
+                            <p class="logged_in_payments_card_display" style="display: none; margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">
+                                Account:</span>
+                                ****3241
+                                <i onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
+                            </p>
+                            <p style="color: white; font-size: 14px; margin-top: 5px;">
+                                <span style="color:aqua; font-size: 14px;">Current Period:</span>
+                                Mar 23rd - Mar 29th
+                            </p>
+                            <p style="color: white; font-size: 14px; margin-top: 5px;">
+                                <span style="color:aqua; font-size: 14px;">Total Sold:</span>
+                                $140.00
+                            </p>
+                            <p style="color: white; font-size: 14px; margin-top: 5px;">
+                                <span style="color:aqua; font-size: 14px;">Pay Date:</span>
+                                Feb 4, 2022
+                            </p>
+                            <p onclick="show_all_payouts();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 13px; padding: 10px;">
+                                see all payouts</p>
+                            <div style="background-color: rgba(0, 0, 0, 0.5); margin-top: 10px; border: 1px solid aqua; padding: 0 10px; overflow: hidden;">
+                                <span style="color:aqua; font-size: 14px;">Payment Cycle:</span>
+                                <select class="payouts_cycle_select_input" style="border: none; background: none; padding: 10px; color: white; font-size: 14px;">
+                                    <option value="1">Instant</option>
+                                    <option value="1">Weekly</option>
+                                    <option value="1">Bi-Weekly</option>
+                                    <option value="1">Monthly</option>
+                                    <option value="1">Quaterly</option>
+                                    <option value="1">6-Monthly</option>
+                                    <option value="1">Yearly</option>
+                                </select>
+                                <span>
+                                    <i style="color: aqua; font-size: 14px;" class="fa fa-caret-down" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
+                            <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
+                                Bills & Payments</p>
                             <div id="logged_in_hotel_invoices_list">
                                 <div class="logged_in_hotel_invoice">
                                     <p>
@@ -3863,39 +3900,7 @@
                         </div>
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
-                                Payouts</p>
-                            <p class="logged_in_payments_card_display" style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">
-                                Account:</span>
-                                ****3241
-                                <i onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
-                            </p>
-                            <p style="color: white; font-size: 14px; margin-top: 5px;">
-                                <span style="color:aqua; font-size: 14px;">Total Sold:</span>
-                                $140.00
-                            </p>
-                            <p style="color: white; font-size: 14px; margin-top: 5px;">
-                                <span style="color:aqua; font-size: 14px;">Next Date:</span>
-                                Feb 4, 2022
-                            </p>
-                            <p onclick="show_all_payouts();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 13px; padding: 10px;">
-                                see all payouts</p>
-                            <div style="background-color: rgba(0, 0, 0, 0.5); margin-top: 10px; border: 1px solid aqua; padding: 0 10px; overflow: hidden;">
-                                <span style="color:aqua; font-size: 14px;">Payment Cycle:</span>
-                                <select class="payouts_cycle_select_input" style="border: none; background: none; padding: 10px; color: white; font-size: 14px;">
-                                    <option value="1">Weekly</option>
-                                    <option value="1">Bi-Weekly</option>
-                                    <option value="1">Monthly</option>
-                                    <option value="1">Quaterly</option>
-                                    <option value="1">6-Monthly</option>
-                                    <option value="1">Yearly</option>
-                                </select>
-                                <span>
-                                    <i style="color: aqua; font-size: 14px;" class="fa fa-caret-down" aria-hidden="true"></i></span>
-                            </div>
-                        </div>
-                        <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
-                            <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
-                                Operating Cities</p>
+                                Your Cities</p>
                             <div id="logged_in_hotel_cities_op_list">
                                 <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
                                     <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

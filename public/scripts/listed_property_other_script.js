@@ -15,6 +15,10 @@ async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking
         guest_search_post_data.property_id=property_id;
         toggle_show_guests_manager_div();
     }
+    if(source==="booking_editor"){
+        guest_search_post_data.property_id=property_id;
+        toggle_show_view_booking_div();
+    }
         
     if(source==='inhouse_guests')
         toggle_show_in_house_guests_div();
@@ -1296,32 +1300,61 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking){
     `;
 }
 
-function start_guest_checkin(guest_id, booking_id, property_id, index){
+function start_guest_checkin(guest_id, booking_id, property_id, index, source="default"){
 
-    $("#arrival_guest_checkin_btn_set"+index).toggle('up');
-    $("#arrival_guest_checkin_loader"+index).toggle('up');
+    if(source==="booking_editor"){
+        $("#booking_editor_guest_checkin_btn_set").toggle('up');
+        $("#booking_editor_checkin_loader").toggle('up');
+    }else{
+        $("#arrival_guest_checkin_btn_set"+index).toggle('up');
+        $("#arrival_guest_checkin_loader"+index).toggle('up');
+    }
+    
 
     $.ajax({
         type: "GET",
         url: `/cheap_hotel_checkin_guest/${guest_id}/${booking_id}/${localStorage.getItem("ANDSBZID")}/${property_id}`,
         success: res =>{
 
-            document.getElementById("arrival_guest_checkin_loader_spinner"+index).style.display = "none";
-            document.getElementById("arrival_guest_checkin_confirm_msg"+index).style.display = "block";
-
+            if(source==="booking_editor"){
+                document.getElementById("booking_editor_checkin_loader_spinner").style.display = "none";
+                document.getElementById("booking_editor_checkin_confirm_msg").style.display = "block";
+            }else{
+                document.getElementById("arrival_guest_checkin_loader_spinner"+index).style.display = "none";
+                document.getElementById("arrival_guest_checkin_confirm_msg"+index).style.display = "block";
+            }
+            
             console.log(res);
             if(res.checkedIn){
-                document.getElementById("arrival_guest_checkin_confirm_msg_p"+index).innerHTML = `
-                    <i style="color: lightgreen; margin-right: 5px;" class="fa fa-check"></i>
-                    Guest Checkin Successfull!
-                `;
-                document.getElementById("arrival_guest_checkin_btn_main"+index).style.display="none";
-                document.getElementById("arrival_guest_already_checked_in_msg"+index).style.display="block";
+                if(source==="booking_editor"){
+                    document.getElementById("booking_editor_checkin_confirm_msg_p").innerHTML = `
+                        <i style="color: lightgreen; margin-right: 5px;" class="fa fa-check"></i>
+                        Guest Checkin Successfull!
+                    `;
+                    document.getElementById("booking_editor_checkin_btn_main").style.display="none";
+                    document.getElementById("booking_editor_already_checked_in_msg").style.display="block";
+                }else{
+                    document.getElementById("arrival_guest_checkin_confirm_msg_p"+index).innerHTML = `
+                        <i style="color: lightgreen; margin-right: 5px;" class="fa fa-check"></i>
+                        Guest Checkin Successfull!
+                    `;
+                    document.getElementById("arrival_guest_checkin_btn_main"+index).style.display="none";
+                    document.getElementById("arrival_guest_already_checked_in_msg"+index).style.display="block";
+                }
+                
             }else{
-                document.getElementById("arrival_guest_checkin_confirm_msg_p"+index).innerHTML = `
-                    <span style="color: red; font-size: 14px;"><i style="color: red; margin-right: 5px;" class="fa fa-exclamation-triangle"></i>
-                    Oops! Guest Checkin Failed.</span>
-                `;
+                if(source==="booking_editor"){
+                    document.getElementById("booking_editor_checkin_confirm_msg_p").innerHTML = `
+                        <span style="color: red; font-size: 14px;"><i style="color: red; margin-right: 5px;" class="fa fa-exclamation-triangle"></i>
+                        Oops! Guest Checkin Failed.</span>
+                    `;
+                }else{
+                    document.getElementById("arrival_guest_checkin_confirm_msg_p"+index).innerHTML = `
+                        <span style="color: red; font-size: 14px;"><i style="color: red; margin-right: 5px;" class="fa fa-exclamation-triangle"></i>
+                        Oops! Guest Checkin Failed.</span>
+                    `;
+                }
+                
             }
             //return res;
         },

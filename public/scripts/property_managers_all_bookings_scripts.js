@@ -176,7 +176,7 @@ async function render_all_bookings_markup(bookings){
 
     if(bookings.length === 0){
         document.getElementById("booked_rooms_list").innerHTML = `
-            <p style="color: white; font-size: 14px; font-weight: bolder; text-align: center; margin-top: 50px; letter-spacing: 1px;">
+            <p style="color: white; font-size: 14px; text-align: center; margin-top: 10px; letter-spacing: 1px; padding: 40px 10px; background-color: rgba(0,0,0,0.5); border: 1px solid red;">
                 <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 No booking found!
             </p>
