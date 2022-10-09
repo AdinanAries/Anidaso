@@ -1004,6 +1004,10 @@ async function save_updated_hotel_booking(){
         data: JSON.stringify(current_edit_booking_object.booking),
         success: data => {
             console.log(data);
+            for(let i=0;i<data.guests.length;i++){
+                bind_user_id_to_running_invoice(data.guests[i].id, i);
+            }
+            update_and_return_cheap_hotel_guest_invoice()
             the_full_screen_loader.style.display = "none";
             toggle_show_view_booking_div();
             //document.getElementById("view_booking_div").style.display = "none";

@@ -46,26 +46,24 @@
                 </p>
             </div>
             <div class="page_popup_content_body" style="height: calc(100% - 80px);">
-                <p style="font-size: 17px; font-weight: bolder; color: white; text-align: center; margin-bottom: 20px; margin-top: 10px;">MENU</p>
                 <ul>
                     <li>
-                        <p style="color:rgb(255, 97, 6); margin: 10px; margin-top: 20px; font-weight: bolder; font-size: 13px;">
-                            Front Desk</p>
-
+                        <p style="color:rgb(255, 97, 6); margin: 10px; font-weight: bolder; font-size: 13px;">
+                            Menu</p>
                         <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-bottom: 5px;">
+                            <div onclick="show_guests_manager();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
+                                <p style="text-align: center;">
+                                    <i class="fa fa-user-plus" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                </p>
+                                <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
+                                    Front Desk</p>
+                            </div>
                             <div onclick="show_arrival_guests();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
                                     <i class="fa fa-key" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    Arrivals</p>
-                            </div>
-                            <div onclick="show_guests_checkout();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
-                                <p style="text-align: center;">
-                                    <i class="fa fa-credit-card" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                </p>
-                                <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    Guests Checkout</p>
+                                    Checkin Guest</p>
                             </div>
                         </div>
                     </li>
@@ -76,14 +74,14 @@
                                     <i class="fa fa-users" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    In House Guests</p>
+                                    Staying Guests</p>
                             </div>
-                            <div onclick="show_guests_manager();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
+                            <div onclick="show_guests_checkout();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
-                                    <i class="fa fa-user-plus" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                    <i class="fa fa-credit-card" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    Guests Manager</p>
+                                    Checkout Guest</p>
                             </div>
                         </div>
                     </li>
@@ -94,14 +92,14 @@
                                     <i class="fa fa-calendar-check-o" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    Bookings</p>
+                                    All Bookings</p>
                             </div>
-                            <div onclick="continue_room_reservation();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
+                            <div onclick="start_search_booking();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
-                                    <i class="fa fa-hotel" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                    <i class="fa fa-pencil-square-o" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    Reservations</p>
+                                    Search Booking</p>
                             </div>
                         </div>
                     </li>
@@ -114,12 +112,12 @@
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
                                     View Rooms</p>
                             </div>
-                            <div onclick="start_search_booking();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
+                            <div onclick="continue_room_reservation();document.getElementById('mobile_menu_div').style.display='none';" style="border: 1px solid rgb(255, 70, 70); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
-                                    <i class="fa fa-pencil-square-o" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                    <i class="fa fa-hotel" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    Booking Editor</p>
+                                    Book a Room</p>
                             </div>
                         </div>
                     </li>
@@ -130,7 +128,7 @@
                                     <i class="fa fa-usd" style="font-size: 50px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin-top: 10px; font-size: 14px;">
-                                    Accounts</p>
+                                    Sales Accounts</p>
                             </div>
                         </div>
                     </li>
@@ -188,7 +186,7 @@
                         </div>
                     </li>
                 </ul>
-                <div onclick="hotel_manager_logout();" style="text-align: center; background-color: crimson; color: white; border-radius: 4px; padding: 10px; margin: 20px 0;">
+                <div onclick="hotel_manager_logout();" style="text-align: center; background-color: crimson; color: white; border-radius: 4px; padding: 10px; margin-top: 10px; margin-bottom: 150px;">
                     logout
                 </div>
             </div>
@@ -641,24 +639,24 @@
     </div>
     <div id="guests_manager_div" style="display: none; z-index: 12;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden;  background-color: rgb(14, 31, 61);">
-            <div style="padding: 10px; height: 30px;">
+            <div style="padding: 10px;">
                 <p onclick="toggle_show_guests_manager_div();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-                <p style="color: white; font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0; margin-top: 10px;">
-                    Guests Manager
+                <p style="color: white; font-weight: bolder; font-size: 14px; text-align: center; margin-top: 10px;">
+                    Front Desk
                 </p>
             </div>
             <div id="guest_manager_menu_div" class="page_popup_content_body" style="position: relative; display: none; height: calc(100% - 70px);">
-                <p style="font-size: 13px; font-weight: bolder; color: rgb(134, 221, 255); text-align: center; margin-bottom: 20px; margin-top: 10px;">
+                <p style="font-size: 13px; font-weight: bolder; color: rgb(134, 221, 255); text-align: center; margin-bottom: 20px;">
                 What do you want to do?</p>
                 <ul>
                     <li>
                         <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-bottom: 5px;">
-                            <div onclick="show_guest_manager_add_new_guest();" style="border: 1px solid rgb(70, 203, 255); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
+                            <div onclick="continue_room_reservation();toggle_show_guests_manager_div();" style="border: 1px solid rgb(70, 203, 255); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
-                                    <i class="fa fa-user-plus" style="font-size: 50px; color:rgb(70, 203, 255);" aria-hidden="true"></i>
+                                    <i class="fa fa-person-walking-luggage" style="font-size: 50px; color:rgb(70, 203, 255);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgb(174, 232, 255); margin-top: 10px; font-size: 14px;">
-                                    Add New Guest</p>
+                                    Book a Room</p>
                             </div>
                             <div onclick="show_guest_manager_find_guest();" style="border: 1px solid rgb(70, 203, 255); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
@@ -676,14 +674,14 @@
                                     <i class="fa fa-key" style="font-size: 50px; color:rgb(70, 203, 255);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgb(174, 232, 255); margin-top: 10px; font-size: 14px;">
-                                    Arrivals</p>
+                                    Checkin Guest</p>
                             </div>
                             <div onclick="show_guests_checkout();" style="border: 1px solid rgb(70, 203, 255); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
                                     <i class="fa fa-credit-card" style="font-size: 50px; color:rgb(70, 203, 255);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgb(174, 232, 255); margin-top: 10px; font-size: 14px;">
-                                    Guests Checkout</p>
+                                    Checkout Guest</p>
                             </div>
                         </div>
                     </li>
@@ -694,14 +692,14 @@
                                     <i class="fa fa-users" style="font-size: 50px; color:rgb(70, 203, 255);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgb(174, 232, 255); margin-top: 10px; font-size: 14px;">
-                                    In House Guests</p>
+                                    Staying Guests</p>
                             </div>
-                            <div onclick="" style="border: 1px solid rgb(70, 203, 255); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
+                            <div onclick="show_guest_manager_add_new_guest();" style="border: 1px solid rgb(70, 203, 255); cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; width: calc( 50% - 3px); height: 130px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;;">
                                 <p style="text-align: center;">
-                                    <i class="fa fa-person-walking-luggage" style="font-size: 50px; color:rgb(70, 203, 255);" aria-hidden="true"></i>
+                                    <i class="fa fa-user-plus" style="font-size: 50px; color:rgb(70, 203, 255);" aria-hidden="true"></i>
                                 </p>
                                 <p style="text-align: center; font-weight: bolder; color: rgb(174, 232, 255); margin-top: 10px; font-size: 14px;">
-                                    Walk-Ins</p>
+                                    Add Guest</p>
                             </div>
                         </div>
                     </li>
@@ -3439,13 +3437,13 @@
                     <div onclick="continue_room_reservation();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
                         <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
                             <i class="fa fa-hotel" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                            Reservations
+                            Book Room
                         </p>
                     </div>
                     <div onclick="toggle_show_booked_rooms();" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center;">
                         <p style="font-weight: bolder; color: rgba(255, 208, 187, 0.815); margin: 0 10px; font-size: 14px;">
                             <i class="fa fa-calendar-check-o" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                            Bookings
+                            All Bookings
                         </p>
                     </div>
                     <div id="top_nav_front_desk_drop_down_btn" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; position: relative;">
@@ -3454,25 +3452,24 @@
                             <i class="fa fa-caret-down" style="margin-left: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
                         </p>
                         <div id="top_nav_front_desk_drop_down_menu" class="bubble_popup arrow_on_top" style="display: none; position: absolute; background-color: rgb(5, 44, 59); border: 1px solid rgb(80, 114, 129); border-radius: 4px; top: calc(100% - 10px); left: -30%; padding: 10px; width: 200px;">
-                            <p onclick="show_arrival_guests();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
-                                <i class="fa fa-key" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Arrivals</p>
-                            <p onclick="show_guests_checkout();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
-                                <i class="fa fa-credit-card" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Guests Checkout</p>
-                            <p onclick="show_in_house_guests();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
-                                <i class="fa fa-users" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                In House Guests</p>
                             <p onclick="show_guests_manager();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-user-plus" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Guests Manager</p>
-                            <p onclick="show_front_desk_accounts();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
-                                <i class="fa fa-usd" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Accounts</p>
+                                Front Desk</p>
+                            <p onclick="show_arrival_guests();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                                <i class="fa fa-key" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                Guest Checkin</p>
+                            <p onclick="show_guests_checkout();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                                <i class="fa fa-credit-card" style="margin-right: 2px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                Guest Checkout</p>
+                            <p onclick="show_in_house_guests();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                                <i class="fa fa-users" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                Staying Guests</p>
                             <p onclick="start_search_booking();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-pencil-square-o" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Booking Editor</p>
-                                
+                                Search Booking</p>
+                            <p onclick="show_front_desk_accounts();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
+                                <i class="fa fa-usd" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
+                                Sales Accounts</p>
                         </div>
                     </div>
                     <div id="top_nav_more_menu_drop_down_btn" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; position: relative;">

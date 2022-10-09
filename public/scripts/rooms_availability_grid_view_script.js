@@ -1132,6 +1132,7 @@ function get_all_bookings_withing_date_range(first_date, last_date, brand_id){
 
 $(document).ready(function(){
     setTimeout(()=>{
-        continue_room_reservation();
+        //continue_room_reservation();
+        show_guests_manager();
     }, 400);
 })

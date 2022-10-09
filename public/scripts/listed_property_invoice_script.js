@@ -48,3 +48,8 @@ async function remove_guest_from_running_invoice(start_index=0, guest_index, end
 
     console.log('after removing a guest', running_invoice);
 }
+
+function bind_user_id_to_running_invoice(guest_id, guest_position){
+    if(running_invoice.invoice_items[guest_position].guest_id==='guest_id_before_creation')
+        running_invoice.invoice_items[guest_position].guest_id=guest_id;
+}
