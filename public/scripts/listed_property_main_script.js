@@ -720,7 +720,7 @@ async function render_search_booking_results_markup(booking) {
 
     document.getElementById("view_booking_result_details").innerHTML = `
         <div style="padding: 10px 5px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555);">
-            <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
+            <p style="display: none; margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
             <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
                 Room ${room_number}:
                 <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
@@ -943,11 +943,17 @@ async function view_each_guest_running_bill(index) {
     console.log(all_running_invoices);
     let item_sum = 0;
     running_invoice = all_running_invoices[index];
+    let all_item_names = [];
     running_invoice.invoice_items.forEach(each => {
         each.guest_items.forEach(item => {
-            item_sum += parseFloat(item.total)
+            if(!all_item_names.includes(item.name)){
+                all_item_names.push(item.name);
+                item_sum += parseFloat(item.total);
+            }
+            
         })
     });
+    document.getElementById("guest_invoice_checkout_btn").onclick=()=>go_to_checkout_from_inhouse_guests(running_invoice.invoice_items[0].guest_id, running_invoice.property_id, running_invoice.bookings[0], 'invoice_div');
     let totals = calculatePriceTotals(item_sum);
     document.getElementById("running_invoice_sub_total_display_span").innerText = `$${parseFloat(totals.base).toFixed(2)}`;
     document.getElementById("running_invoice_discount_display_span").innerText = `$${parseFloat(totals.discountAmount).toFixed(2)}`;
@@ -965,7 +971,7 @@ async function view_each_guest_running_bill(index) {
                 <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px;">
                     <span style="font-size: 13px; color: rgba(255,255,255,0.5);">
                         Guest ${i + 1}</span>
-                    <span style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
+                    <span style="display: none; cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
                         <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
                         Remove Guest
                     </span>
@@ -976,7 +982,7 @@ async function view_each_guest_running_bill(index) {
                     ${guest.gender}, ${calculateAge(guest.DOB)}yrs</p>
                 <div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
                     <table style="width: 100%; border-spacing: 5px;">
-                        <tbody id="each_guest_invoice_items_list">
+                        <tbody id="each_guest_invoice_items_list_${i}">
                             <tr>
                                 <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
                                     Item
@@ -998,7 +1004,7 @@ async function view_each_guest_running_bill(index) {
         `;
 
         for (let k = 0; k < running_invoice.invoice_items[i].guest_items.length; k++) {
-            document.getElementById("each_guest_invoice_items_list").innerHTML += `
+            document.getElementById(`each_guest_invoice_items_list_${i}`).innerHTML += `
                 <tr>
                     <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
                         ${running_invoice.invoice_items[i].guest_items[k].name}

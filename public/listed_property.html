@@ -196,8 +196,8 @@
         <div class="page_popup_content_container">
             <p onclick="toggle_show_front_desk_accounts();" class="page_popup_close_btn" style="top: -8px;"><i aria-hidden="true" class="fa fa-times"></i></p>
             <div style="padding: 0; background-color:rgb(7, 60, 85);">
-                <p style="color: white; font-size: 13px; letter-spacing: 1px; text-align: center; padding: 10px 0;">
-                Sales Accounts</p>
+                <p style="color: white; font-size: 14px; letter-spacing: 1px; text-align: center; padding: 10px 0;">
+                Sales</p>
                 <div class="page_popup_content_header" style="height: auto; padding: 5px; background-color:rgb(0, 16, 27); border-bottom: 1px solid rgba(255,255,255,0.2);">
                     <div class="flex_row_default_flex_column_mobile">
                         <div class="flex_child_of_two" style="width: calc(50% - 2px);">
@@ -236,11 +236,57 @@
                 
             </div>
             <div class="page_popup_content_body" style="height: calc(100% - 180px);">
-                
-                <p id="total_accounts_item_counter" style="color:rgb(6, 205, 255); font-size: 14px; margin: 20px;"></p>
+                <p id="total_accounts_item_counter" style="display: none; color:rgb(6, 205, 255); font-size: 14px; margin: 20px;"></p>
+                <div id="front_desk_accounts_list" style="display: none; margin-top: 10px;">
                     
-                <div id="front_desk_accounts_list" style="margin-top: 10px;">
-                    
+                </div>
+                <div class="flex_row_default_flex_column_mobile" style="border: 1px solid rgba(255,255,255,0.2); background-color:rgb(0, 14, 30); border-radius: 4px; padding: 10px;">
+                    <div class="flex_child_of_two" style="width: calc(50% - 2px);">
+                        <p style="margin-bottom: 5px; font-size: 15px; color: rgba(255,255,255,0.5);">
+                            Totals: <span style="font-size: 15px; color: orangered">
+                            5
+                            </span> items, <span style="font-size: 15px; color: orangered">
+                            $23,000 
+                            </span> sold
+                        </p>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.2); margin-top: 10px; padding: 10px 0;">
+                            <p style="margin-bottom: 10px; font-size: 14px; color: rgba(255,255,255,0.5);">
+                                Summary</p>
+                            <div style="border: 1px solid red; margin: 5px; padding: 10px; margin-bottom: 10px;">
+                                <p style="color: white; font-size: 14px;">
+                                    <i class="fa fa-exclamation-triangle" style="color: red; margin-right: 5px;" aria-hidden="true"></i>
+                                    We are still building this feature into a fully integrated accounting feature.
+                                    In the meantime, this page lets you see totals and items sold
+                                </p>
+                            </div>
+                            <p style="margin-bottom: 10px; font-size: 14px; color: rgba(255,255,255,0.5);">
+                                Activities</p>
+                            <div>
+                                <p style="background-color: rgba(95, 138, 202, 0.114); border: 1px solid rgba(144, 238, 144, 0.388); color: white; padding: 5px; margin-bottom: 1px; font-size: 14px;">
+                                    <i class="fa fa-check" style="color: lightgreen; margin-right: 5px;" aria-hidden="true"></i>
+                                    $23,000 out of $23,000 was paid out to your Bank
+                                </p>
+                                <p style="background-color: rgba(95, 138, 202, 0.114); border: 1px solid rgba(255, 81, 81, 0.486); color: white; padding: 5px; margin-bottom: 1px; font-size: 14px;">
+                                    <i class="fa fa-exclamation-triangle" style="color: red; margin-right: 5px;" aria-hidden="true"></i>
+                                    Room 5D was cancelled - $89 was refunded to customer.
+                                </p>
+                                <p style="cursor: pointer; text-align: center; color: white; margin-top: 20px;">see all...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex_child_of_two flex_non_first_child" style="width: calc(50% - 2px);">
+                        <p style="margin-bottom: 5px; font-size: 14px; color: rgba(255,255,255,0.5); text-align: center;">Items Sold</p>
+                        <div style="padding: 10px 5px;">
+                            <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px; font-size: 14px; color: white;">
+                                <i class="fa fa-check" style="margin-right: 10px; color:rgba(0, 179, 233, 0.459);" aria-hidden="true"></i>
+                                Room 5D - $84.00
+                            </p>
+                            <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px; font-size: 14px; color: white;">
+                                <i class="fa fa-check" style="margin-right: 10px; color:rgba(0, 179, 233, 0.459);" aria-hidden="true"></i>
+                                Room 5D - $84.00
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1811,7 +1857,7 @@
                         <i style="margin-right: 5px; color:rgba(255,255,255,0.5);" class="fa fa-print" aria-hidden="true"></i>
                         Print Invoice
                     </div>
-                    <div onclick="go_to_checkout_from_invoice();" style="text-align: center; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; background-color: rgb(0, 30, 35); color: white; font-size: 13px; padding: 10px;">
+                    <div id="guest_invoice_checkout_btn" onclick="go_to_checkout_from_invoice();" style="text-align: center; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; background-color: rgb(0, 30, 35); color: white; font-size: 13px; padding: 10px;">
                         <i style="margin-right: 5px; color:rgba(137,204,235,0.5);" class="fa fa-credit-card" aria-hidden="true"></i>
                         Checkout
                     </div>
@@ -3474,7 +3520,7 @@
                                 Search Booking</p>
                             <p onclick="show_front_desk_accounts();" style="padding: 5px 0; color: rgba(255, 255, 255, 0.781); font-size: 14px;">
                                 <i class="fa fa-usd" style="margin-right: 5px; color:rgb(255, 70, 70);" aria-hidden="true"></i>
-                                Sales Accounts</p>
+                                Sales</p>
                         </div>
                     </div>
                     <div id="top_nav_more_menu_drop_down_btn" style="cursor: pointer; display: flex; flex-direction: column !important; justify-content: center; position: relative;">
@@ -3803,7 +3849,7 @@
                         </div>
                     </div>
                     <div class="logged_in_hotel_details_each_section_content">
-                        <div style="width: fit-content; margin: auto; margin-top: 10px; margin-bottom: 10px; padding: 20px 0; border-radius: 4px; background-color:rgb(0, 28, 29); border: 1px solid rgba(255,255,255,0.2)">
+                        <div style="margin: auto; margin-top: 10px; margin-bottom: 10px; padding: 20px 0; border-radius: 4px; background-color:rgb(0, 28, 29); border: 1px solid rgba(255,255,255,0.2)">
                             <p style="color: rgb(199, 237, 255); font-size: 14px; font-weight: bolder; text-align: center; margin-bottom: 10px;">
                                 Book a Room</p>
                             <div class="flex_child_of_two flex_non_first_child" style="margin: 10px; margin-bottom: 0; width: fit-content !important; border-radius: 4px;">

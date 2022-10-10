@@ -19,7 +19,12 @@ async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking
         guest_search_post_data.property_id=property_id;
         toggle_show_view_booking_div();
     }
-        
+    if(source==="invoice_div"){
+        document.getElementById("view_booking_div").style.display='none';
+        guest_search_post_data.property_id=property_id;
+        toggle_show_guests_invoice_div();
+    }
+
     if(source==='inhouse_guests')
         toggle_show_in_house_guests_div();
 
