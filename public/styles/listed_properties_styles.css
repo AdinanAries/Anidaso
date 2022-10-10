@@ -597,6 +597,9 @@ header {
   font-size: 13px;
   letter-spacing: 1px;
 }
+.all_rooms_list_table tr:hover td {
+  border: 1px solid rgb(255, 38, 0) !important;
+}
 .all_rooms_list_table tr:nth-child(1) td {
   background: none;
   color: rgb(212, 113, 0);
@@ -606,6 +609,16 @@ header {
 .rooms_list_edit_room_icon {
   cursor: pointer;
   color: rgb(114, 147, 197) !important;
+  background-color: #00244a !important;
+  border-radius: 100% !important;
+  border-color: rgba(126, 177, 255, 0.285) !important;
+}
+.all_rooms_list_table tr:hover .rooms_list_edit_room_icon{
+  color: rgb(255, 125, 125) !important;
+  background-color: #8c00004d !important;
+}
+.all_rooms_list_table tr:nth-child(1):hover td{
+  border: none !important;
 }
 footer {
   background-color: #000d1a;
