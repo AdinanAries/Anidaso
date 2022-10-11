@@ -274,7 +274,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex_child_of_two flex_non_first_child" style="width: calc(50% - 2px);">
+                    <div class="flex_child_of_two flex_non_first_child" style="width: calc(50% - 2px); border-left: 1px solid rgba(255,255,255,0.2);">
                         <p style="margin-bottom: 5px; font-size: 14px; color: rgba(255,255,255,0.5); text-align: center;">Items Sold</p>
                         <div style="padding: 10px 5px;">
                             <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px; font-size: 14px; color: white;">
@@ -3939,7 +3939,11 @@
                                     select amenities from list
                                     <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                                 </p>
-                                <input id="logged_in_hotel_edit_amenity_form_input" style="padding: 10px; border-radius: 4px; width: calc(100% - 20px); border: none;" type="text" placeholder="type amenity here" value="" />
+                                <input id="logged_in_hotel_edit_amenity_form_input" style="padding: 10px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; width: 50%; border: none;" type="text" placeholder="type amenity here" value="" />
+                                <input id="logged_in_hotel_edit_amenity_price_form_input" style="display: none; padding: 10px; width: calc(25% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="0" />
+                                <select id="logged_in_hotel_edit_amenity_property_form_input" style="padding: 10px; width: calc(50% - 25px); border-top-right-radius: 4px; border-bottom-right-radius: 4px; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                                    <option value="all">all properties</option>
+                                </select>
                                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                                     <div onclick="add_new_amenity_onclick();" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: darkslateblue; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                                         Save

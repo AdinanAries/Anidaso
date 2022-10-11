@@ -3003,37 +3003,6 @@ function display_logged_in_hotel_description(desc) {
     document.getElementById("logged_in_hotel_desc_info_txt_loader").style.display = "none";
 }
 
-//function to render each amenity
-function render_each_hotel_amenity(amenity) {
-    return `
-        <div id="logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity" class="logged_in_hotel_amenity">
-            <p>
-                <span style="font-size: 14px;">
-                    <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                    <span id="logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity_txt_span_elem" style="font-size: 14px;">
-                    ${amenity}</span>
-                </span>
-                <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                    <i onclick="start_edit_amenity_info('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', 'logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity_txt_span_elem','${amenity}', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
-                    <i  onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog')" style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
-                </span>
-            </p>
-            <div id="delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
-                <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
-                    Are you sure</p>
-                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div onclick="delete_amenity_submit('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', '${amenity}')" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                        Delete
-                    </div>
-                    <div onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
-                        Cancel
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
 //function to render each city operating in
 function render_each_operation_city(city, country) {
     return `
@@ -3196,15 +3165,14 @@ function get_logged_in_hotel_infor() {
 
                 document.getElementById("logged_in_hotel_amenities_see_all_amenities_btn").style.display = "block";
                 document.getElementById("logged_in_hotel_amenities_list").innerHTML = "";
-                for (let i = 0; i < data.amenities.length; i++) {
-
-                    if (i > 2)
-                        break;
-
-                    let amenity = data.amenities[i];
-
-                    document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(amenity);
-                }
+                (async ()=>{
+                    for (let i = 0; i < data.amenities.length; i++) {
+                        if (i > 2)
+                            break;
+                        let amenity = data.amenities[i];
+                        document.getElementById("logged_in_hotel_amenities_list").innerHTML += await render_each_hotel_amenity(amenity);   
+                    }
+                })();
             }
 
             //cities operating

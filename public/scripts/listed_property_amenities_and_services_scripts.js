@@ -149,7 +149,7 @@ async function add_all_amenity_options_to_select_from_list() {
     all_hotel_amenity_options = all_hotel_amenity_options.map(each => each.trim());
     //Removing duplicates
     hotel_amenities.forEach(emenity => {
-        all_hotel_amenity_options.splice(all_hotel_amenity_options.indexOf(emenity.trim()), 1);
+        all_hotel_amenity_options.splice(all_hotel_amenity_options.indexOf(emenity.name.trim()), 1);
     });
     document.getElementById("select_amenities_list1").innerHTML = '';
     document.getElementById("select_amenities_list2").innerHTML = '';
@@ -281,7 +281,46 @@ function start_edit_service_info(elem_id, txt_span_elem_id, info, title) {
 function delete_amenity_submit(elem_id, amenity) {
     remove_amenity(elem_id, amenity, window.localStorage.getItem("ANDSBZID"));
 }
-
+//function to render each amenity
+async function render_each_hotel_amenity(amenity_p) {
+    let amenity = amenity_p.name;
+    let property = amenity_p.property;
+    let prop_obj;
+    if(property !== "all"){
+        prop_obj = await get_and_return_hotel_property_by_id(property);
+        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+    }
+    property = (property==="all") ? `all properties` : property;
+    let price = amenity_p.price;
+    return `
+        <div id="logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity" class="logged_in_hotel_amenity">
+            <p>
+                <span style="font-size: 14px;">
+                    <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                    <span id="logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity_txt_span_elem" style="font-size: 14px;">
+                    ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    - ${property}</span></span>
+                </span>
+                <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
+                    <i onclick="start_edit_amenity_info('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', 'logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity_txt_span_elem','${amenity}', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i  onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog')" style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
+                </span>
+            </p>
+            <div id="delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
+                <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+                    Are you sure</p>
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                    <div onclick="delete_amenity_submit('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', '${amenity}')" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Delete
+                    </div>
+                    <div onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
 async function add_new_amenity_onclick() {
 
     if (document.getElementById("logged_in_hotel_edit_amenity_form_input").value === "") {
@@ -293,30 +332,32 @@ async function add_new_amenity_onclick() {
     document.getElementById("full_screen_loader").style.display = "flex";
 
     let new_amenity = document.getElementById("logged_in_hotel_edit_amenity_form_input").value;
+    let new_price = document.getElementById("logged_in_hotel_edit_amenity_price_form_input").value;
+    let new_property = document.getElementById("logged_in_hotel_edit_amenity_property_form_input").value;
     if (current_edited_amenity_obj.edit_type === "add new") {
-        let returned_amenities = await add_new_amenity(new_amenity, window.localStorage.getItem("ANDSBZID"));
+        let returned_amenities = await add_new_amenity(new_amenity, new_price, new_property, window.localStorage.getItem("ANDSBZID"));
 
         if (document.getElementById("no_amenities_to_display_msg"))
             document.getElementById("no_amenities_to_display_msg").style.display = "none";
-        document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(returned_amenities[returned_amenities.length - 1]);
+        document.getElementById("logged_in_hotel_amenities_list").innerHTML += await render_each_hotel_amenity(returned_amenities[returned_amenities.length - 1]);
         toggle_hide_show_anything("logged_in_hotel_edit_amenity_info_form");
         toggle_hide_show_anything("logged_in_hotel_add_amenity_btn");
         document.getElementById("full_screen_loader").style.display = "none";
 
     } else {
-        let returned_amenity = await update_existing_amenity(current_edited_amenity_obj.old_amenity, new_amenity, window.localStorage.getItem("ANDSBZID"));
+        let returned_amenity = await update_existing_amenity(current_edited_amenity_obj.old_amenity, new_amenity, new_price, new_property, window.localStorage.getItem("ANDSBZID"));
         /*document.getElementById(current_edited_amenity_obj.text_span_elem_id).innerText = returned_amenity;
         if(current_amenity_edit_elem_id){
             $("#"+current_amenity_edit_elem_id).toggle("up");
             document.getElementById(current_amenity_edit_elem_id).id = `logged_in_hotel_${returned_amenity.replaceAll(" ","_")}_amenity`;
         }*/
-        document.getElementById("logged_in_hotel_amenities_list").innerHTML += render_each_hotel_amenity(returned_amenity);
+        document.getElementById("logged_in_hotel_amenities_list").innerHTML += await render_each_hotel_amenity(returned_amenity);
         toggle_hide_show_anything("logged_in_hotel_edit_amenity_info_form");
         document.getElementById("full_screen_loader").style.display = "none";
     }
 }
 
-async function all_amenities_update_existing_amenity(all_amenities_each_amenity_elem_id, amenity_input_id, old_amenity) {
+async function all_amenities_update_existing_amenity(all_amenities_each_amenity_elem_id, amenity_input_id, price_input_id, prop_input_id, old_amenity) {
 
     if (document.getElementById(amenity_input_id).value === "") {
         document.getElementById(amenity_input_id).focus();
@@ -327,9 +368,11 @@ async function all_amenities_update_existing_amenity(all_amenities_each_amenity_
     document.getElementById("full_screen_loader").style.display = "flex";
 
     let new_amenity = document.getElementById(amenity_input_id).value;
-    let returned_amenity = await update_existing_amenity(old_amenity, new_amenity, window.localStorage.getItem("ANDSBZID"));
+    let new_price = document.getElementById(price_input_id).value;
+    let new_prop = document.getElementById(prop_input_id).value;
+    let returned_amenity = await update_existing_amenity(old_amenity, new_amenity, new_price, new_prop, window.localStorage.getItem("ANDSBZID"));
     document.getElementById(all_amenities_each_amenity_elem_id).innerHTML = all_amenities_return_each_amenity_markup_after_update(returned_amenity);
-    document.getElementById(all_amenities_each_amenity_elem_id).id = `logged_in_hotel_all_amenities_${returned_amenity.replaceAll(" ", "_").trim()}_amenity`;
+    document.getElementById(all_amenities_each_amenity_elem_id).id = `logged_in_hotel_all_amenities_${returned_amenity.name.replaceAll(" ", "_").trim()}_amenity`;
     document.getElementById("full_screen_loader").style.display = "none";
 }
 
@@ -471,10 +514,13 @@ function toggle_show_select_all_amenities_from_list_div() {
     $("#add_amenities_from_list_div").toggle("up");
 }
 
-function add_new_amenity(amenity, hotel_id) {
+function add_new_amenity(amenity, price, property, hotel_id) {
     return $.ajax({
         type: "POST",
-        url: "/add_new_amenity/" + hotel_id + "?amenity=" + amenity,
+        url: "/add_new_amenity/" + hotel_id,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({amenity,price,property}),
         success: res => {
             //console.log(res);
             return res;
@@ -530,10 +576,13 @@ function add_new_facility(facility, price, property, hotel_id) {
     });
 }
 
-function update_existing_amenity(old_amenity, new_amenity, hotel_id) {
+function update_existing_amenity(old_amenity, new_amenity, new_price, new_property, hotel_id) {
     return $.ajax({
         type: "POST",
-        url: "/update_amenity/" + hotel_id + "?new_amenity=" + new_amenity + "&old_amenity=" + old_amenity,
+        url: "/update_amenity/" + hotel_id,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({old_amenity,new_amenity,new_price,new_property}),
         success: res => {
             //console.log(res);
             if (document.getElementById("no_amenities_to_display_msg"))
@@ -703,7 +752,7 @@ async function render_all_logged_in_hotel_amenities() {
 
     if (all_amenities.length > 0) {
         for (let i = 0; i < all_amenities.length; i++) {
-            document.getElementById("all_hotel_amenities_list").innerHTML += all_amenities_return_each_amenity_markup(all_amenities[i]);
+            document.getElementById("all_hotel_amenities_list").innerHTML += await all_amenities_return_each_amenity_markup(all_amenities[i]);
         }
     } else {
         document.getElementById("all_hotel_amenities_list").innerHTML = `
@@ -753,14 +802,23 @@ async function render_all_logged_in_hotel_facilities() {
 
 }
 
-function all_amenities_return_each_amenity_markup(amenity) {
+async function all_amenities_return_each_amenity_markup(amenity_p) {
+    let amenity = amenity_p.name;
+    let property = amenity_p.property;
+    let prop_obj;
+    if(property !== "all"){
+        prop_obj = await get_and_return_hotel_property_by_id(property);
+        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+    }
+    property = (property==="all") ? `all properties` : property;
+    let price = amenity_p.price;
     return `
         <div id="logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
             <p>
                 <span style="font-size: 14px; color: white;">
                     <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                     ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
-                    - all properies</span>
+                    - ${property}</span>
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                     <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 20px;" class="fa fa-pencil" aria-hidden="true"></i>
@@ -772,13 +830,14 @@ function all_amenities_return_each_amenity_markup(amenity) {
                 </p>
                 <div style="display: flex;">
                     <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type amenity here" value="" />
-                    <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                        <option>all properties</option>
+                    <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_price_form_input" style="display: none; padding: 10px; width: calc(25% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
+                    <select id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_property_form_input" style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                        <option value="all">all properties</option>
                     </select>
                 </div>
                 
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
-                    <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                    <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_price_form_input', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_property_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                         Save
                     </div>
                     <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: brown; color: white; font-size: 14px; text-align: center; padding: 10px 0;">
@@ -802,13 +861,23 @@ function all_amenities_return_each_amenity_markup(amenity) {
     `;
 }
 
-function all_amenities_return_each_amenity_markup_after_update(amenity) {
+async function all_amenities_return_each_amenity_markup_after_update(amenity_p) {
+    let amenity = amenity_p.name;
+    let property = amenity_p.property;
+    let prop_obj;
+    if(property !== "all"){
+        prop_obj = await get_and_return_hotel_property_by_id(property);
+        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+    }
+    property = (property==="all") ? `all properties` : property;
+    let price = amenity_p.price;
+
     return `
         <p>
             <span style="font-size: 14px; color: white;">
                 <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                 ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
-                - all properies</span>
+                - ${property}</span>
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                 <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
@@ -820,12 +889,13 @@ function all_amenities_return_each_amenity_markup_after_update(amenity) {
             </p>
             <div style="display: flex;">
                 <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type amenity here" value="" />
-                <select style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                    <option>all properties</option>
+                <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_price_form_input" style="display: none; padding: 10px; width: calc(25% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
+                <select id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_property_form_input" style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
+                    <option value="all">all properties</option>
                 </select>
             </div>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
-                <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                <div onclick="all_amenities_update_existing_amenity('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_price_form_input', 'logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_property_form_input', '${amenity}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
                     Save
                 </div>
                 <div onclick="toggle_hide_show_anything('logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_info_form');" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: brown; color: white; font-size: 14px; text-align: center; padding: 10px 0;">

@@ -2567,14 +2567,18 @@ app.post("/update_cheap_hotel_name/:hotel_brand_id", async (req, res, next) => {
 
 app.post("/update_amenity/:hotel_brand_id", async (req, res, next) => {
 
-  let new_amenity = req.query.new_amenity;
-  let old_amenity = req.query.old_amenity;
+  let new_amenity = {
+    name: req.body.new_amenity,
+    price: req.body.new_price,
+    property: req.body.new_property
+  };
+  let old_amenity = req.body.old_amenity;
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
 
   hotel.amenities = hotel.amenities.map( each => {
-    if(each === old_amenity){
+    if(each.name === old_amenity){
       return new_amenity;
     }else
       return each;
@@ -2673,12 +2677,16 @@ app.post("/save_newly_uploaded_photo_url/:hotel_brand_id", async (req, res, next
 
 app.post("/add_new_amenity/:hotel_brand_id", async (req, res, next) => {
 
-  let amenity = req.query.amenity;
+  let amenity = {
+    name: req.body.amenity,
+    property: req.body.property,
+    price: req.body.price
+  };
   let brand_id = req.params.hotel_brand_id;
 
   let hotel = await cheap_hotel.findById(brand_id);
   //removing current amenity if it exists
-  hotel.amenities = hotel.amenities.filter(each=>(each.trim().toLowerCase()===req.query.amenity.trim().toLowerCase() ? false : true));
+  hotel.amenities = hotel.amenities.filter(each=>(each.name.trim().toLowerCase()===amenity.name.trim().toLowerCase() ? false : true));
   hotel.amenities.push(amenity);
 
   let new_hotel = new cheap_hotel(hotel);
