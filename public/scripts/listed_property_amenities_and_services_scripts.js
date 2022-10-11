@@ -371,7 +371,7 @@ async function all_amenities_update_existing_amenity(all_amenities_each_amenity_
     let new_price = document.getElementById(price_input_id).value;
     let new_prop = document.getElementById(prop_input_id).value;
     let returned_amenity = await update_existing_amenity(old_amenity, new_amenity, new_price, new_prop, window.localStorage.getItem("ANDSBZID"));
-    document.getElementById(all_amenities_each_amenity_elem_id).innerHTML = all_amenities_return_each_amenity_markup_after_update(returned_amenity);
+    document.getElementById(all_amenities_each_amenity_elem_id).innerHTML = await all_amenities_return_each_amenity_markup_after_update(returned_amenity);
     document.getElementById(all_amenities_each_amenity_elem_id).id = `logged_in_hotel_all_amenities_${returned_amenity.name.replaceAll(" ", "_").trim()}_amenity`;
     document.getElementById("full_screen_loader").style.display = "none";
 }
@@ -436,8 +436,21 @@ function toggle_show_all_amenities() {
     $("#all_amenities_list_container").toggle("up");
 }
 
-function show_all_amenities() {
+async function show_all_amenities() {
     toggle_show_all_amenities();
+
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    document.getElementById("logged_in_hotel_all_amenities_add_new_amenity_property_form_input").innerHTML = `
+        <option value="all">Select Property</option>
+        <option value="all">All</option>
+    `;
+
+    for (let i = 0; i < properties.length; i++) {
+        document.getElementById("logged_in_hotel_all_amenities_add_new_amenity_property_form_input").innerHTML += `
+            <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+        `;
+    }
+
     render_all_logged_in_hotel_amenities();
 }
 
@@ -445,14 +458,21 @@ async function all_amenities_add_new_amenity() {
 
     document.getElementById("full_screen_loader").style.display = "flex";
     let input_elem = document.getElementById("logged_in_hotel_all_amenities_add_new_amenity_form_input");
+    let prop_elem = document.getElementById("logged_in_hotel_all_amenities_add_new_amenity_property_form_input");
+    let price_elem = document.getElementById("logged_in_hotel_all_amenities_add_new_amenity_price_form_input");
     let new_amenity = input_elem.value
+    let property = prop_elem.value;
+    price = price_elem.value;
+    if(!price){
+        price=0;
+    }
 
     if (new_amenity === "") {
         input_elem.focus();
         input_elem.placeholder = "please enter new amenity";
         document.getElementById("full_screen_loader").style.display = "none";
     } else {
-        let return_res = await add_new_amenity(new_amenity, window.localStorage.getItem("ANDSBZID"));
+        let return_res = await add_new_amenity(new_amenity, price, property, window.localStorage.getItem("ANDSBZID"));
         document.getElementById("full_screen_loader").style.display = "none";
         input_elem.value = "";
         //alert("new amenity added!");
@@ -749,10 +769,11 @@ async function render_all_logged_in_hotel_amenities() {
 
     document.getElementById("all_hotel_amenities_list").innerHTML = ``;
     let all_amenities = await get_all_amenities(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     if (all_amenities.length > 0) {
         for (let i = 0; i < all_amenities.length; i++) {
-            document.getElementById("all_hotel_amenities_list").innerHTML += await all_amenities_return_each_amenity_markup(all_amenities[i]);
+            document.getElementById("all_hotel_amenities_list").innerHTML += await all_amenities_return_each_amenity_markup(all_amenities[i], properties);
         }
     } else {
         document.getElementById("all_hotel_amenities_list").innerHTML = `
@@ -768,10 +789,11 @@ async function render_all_logged_in_hotel_services() {
 
     document.getElementById("all_hotel_services_list").innerHTML = ``;
     let all_services = await get_all_services(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     if (all_services.length > 0) {
         for (let i = 0; i < all_services.length; i++) {
-            document.getElementById("all_hotel_services_list").innerHTML += await all_services_return_each_service_markup(all_services[i]);
+            document.getElementById("all_hotel_services_list").innerHTML += await all_services_return_each_service_markup(all_services[i], properties);
         }
     } else {
         document.getElementById("all_hotel_services_list").innerHTML = `
@@ -787,10 +809,11 @@ async function render_all_logged_in_hotel_facilities() {
 
     document.getElementById("all_hotel_facilities_list").innerHTML = ``;
     let all_facilities = await get_all_facilities(window.localStorage.getItem("ANDSBZID"));
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     if (all_facilities.length > 0) {
         for (let i = 0; i < all_facilities.length; i++) {
-            document.getElementById("all_hotel_facilities_list").innerHTML += await all_facilities_return_each_facility_markup(all_facilities[i]);
+            document.getElementById("all_hotel_facilities_list").innerHTML += await all_facilities_return_each_facility_markup(all_facilities[i], properties);
         }
     } else {
         document.getElementById("all_hotel_facilities_list").innerHTML = `
@@ -802,16 +825,29 @@ async function render_all_logged_in_hotel_facilities() {
 
 }
 
-async function all_amenities_return_each_amenity_markup(amenity_p) {
+async function all_amenities_return_each_amenity_markup(amenity_p, properties=[]) {
     let amenity = amenity_p.name;
     let property = amenity_p.property;
     let prop_obj;
     if(property !== "all"){
-        prop_obj = await get_and_return_hotel_property_by_id(property);
+        prop_obj = properties.filter(each=>each._id===property)[0];//await get_and_return_hotel_property_by_id(property);
         property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = amenity_p.price;
+
+    let props_markup = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            props_markup += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+            `;
+        }
+    }
+
     return `
         <div id="logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
             <p>
@@ -832,7 +868,7 @@ async function all_amenities_return_each_amenity_markup(amenity_p) {
                     <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type amenity here" value="" />
                     <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_price_form_input" style="display: none; padding: 10px; width: calc(25% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
                     <select id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_property_form_input" style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                        <option value="all">all properties</option>
+                        ${props_markup}
                     </select>
                 </div>
                 
@@ -872,6 +908,19 @@ async function all_amenities_return_each_amenity_markup_after_update(amenity_p) 
     property = (property==="all") ? `all properties` : property;
     let price = amenity_p.price;
 
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    let props_markup = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            props_markup += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+            `;
+        }
+    }
+
     return `
         <p>
             <span style="font-size: 14px; color: white;">
@@ -891,7 +940,7 @@ async function all_amenities_return_each_amenity_markup_after_update(amenity_p) 
                 <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_form_input" style="padding: 10px; width: 50%; border: none;" type="text" placeholder="type amenity here" value="" />
                 <input id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_price_form_input" style="display: none; padding: 10px; width: calc(25% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
                 <select id="logged_in_hotel_all_amenities_edit_${amenity.replaceAll(" ", "_").trim()}_amenity_property_form_input" style="padding: 10px; width: calc(50% - 24px); border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                    <option value="all">all properties</option>
+                    ${props_markup}
                 </select>
             </div>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
@@ -928,6 +977,20 @@ async function all_services_return_each_service_markup_after_update(service_p) {
     }
     property = (property==="all") ? `all properties` : property;
     let price = service_p.price;
+    
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    let props_markup = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            props_markup += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+            `;
+        }
+    }
+
     return `
         <p>
             <span style="font-size: 14px; color: white;">
@@ -947,7 +1010,7 @@ async function all_services_return_each_service_markup_after_update(service_p) {
                 <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type service name here" value="" />
                 <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
                 <select id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_property_form_input" style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                    <option value="all">all properties</option>
+                    ${props_markup}
                 </select>
             </div>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
@@ -984,6 +1047,20 @@ async function all_facilities_return_each_facility_markup_after_update(facility_
     }
     property = (property==="all") ? `all properties` : property;
     let price = facility_p.price;
+        
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    let props_markup = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            props_markup += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+            `;
+        }
+    }
+
     return `
         <p>
             <span style="font-size: 14px; color: white;">
@@ -1003,7 +1080,7 @@ async function all_facilities_return_each_facility_markup_after_update(facility_
                 <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type facility name here" value="" />
                 <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
                 <select id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_property_form_input" style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                    <option value="all">all properties</option>
+                    ${props_markup}
                 </select>
             </div>
             <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
@@ -1030,16 +1107,29 @@ async function all_facilities_return_each_facility_markup_after_update(facility_
     `;
 }
 
-async function all_services_return_each_service_markup(service_p) {
+async function all_services_return_each_service_markup(service_p, properties=[]) {
     let service = service_p.name;
     let property = service_p.property;
     let prop_obj;
     if(property !== "all"){
-        prop_obj = await get_and_return_hotel_property_by_id(property);
+        prop_obj = properties.filter(each=>each._id===property)[0];//await get_and_return_hotel_property_by_id(property);
         property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = service_p.price;
+
+    let props_markup = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            props_markup += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+            `;
+        }
+    }
+
     return `
         <div id="logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
             <p>
@@ -1060,7 +1150,7 @@ async function all_services_return_each_service_markup(service_p) {
                     <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type service name here" value="" />
                     <input id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
                     <select id="logged_in_hotel_all_services_edit_${service.replaceAll(" ", "_").trim()}_service_property_form_input" style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                        <option value="all">all properties</option>
+                        ${props_markup}
                     </select>
                 </div>
                 
@@ -1094,16 +1184,29 @@ some_services.forEach(each=>{
     document.getElementById("all_hotel_services_list").innerHTML+=all_services_return_each_service_markup(each);
 });*/
 
-async function all_facilities_return_each_facility_markup(facility_p) {
+async function all_facilities_return_each_facility_markup(facility_p, properties=[]) {
     let facility = facility_p.name;
     let property = facility_p.property;
     let prop_obj;
     if(property !== "all"){
-        prop_obj = await get_and_return_hotel_property_by_id(property);
+        prop_obj = properties.filter(each=>each._id===property)[0];//await get_and_return_hotel_property_by_id(property);
         property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = facility_p.price;
+    
+    let props_markup = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            props_markup += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+            `;
+        }
+    }
+
     return `
         <div id="logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
             <p>
@@ -1124,7 +1227,7 @@ async function all_facilities_return_each_facility_markup(facility_p) {
                     <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_form_input" style="padding: 10px; width: 40%; border: none;" type="text" placeholder="type facility name here" value="" />
                     <input id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_price_form_input" style="padding: 10px; width: calc(25% - 24px); border: none;border-left: 1px solid rgba(0,0,0,0.4);" type="number" placeholder="price in USD" value="${price}" />
                     <select id="logged_in_hotel_all_facilities_edit_${facility.replaceAll(" ", "_").trim()}_facility_property_form_input" style="padding: 10px; width: 35%; border: none; border-left: 1px solid rgba(0,0,0,0.4);">
-                        <option value="all">all properties</option>
+                        ${props_markup}
                     </select>
                 </div>
                 
