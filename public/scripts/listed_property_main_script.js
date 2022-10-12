@@ -1,6 +1,6 @@
 const taxRate = 0.15; //percentage
 var the_full_screen_loader = document.getElementById("full_screen_loader");
-var all_hotel_amenity_options = [
+var main_all_hotel_amenity_options= [
     "Business Center",
     "Coffee Shop",
     "Disabled Facilities",
@@ -32,6 +32,7 @@ var all_hotel_amenity_options = [
     "Video Surveilance",
     "Fitness Center",
 ]
+var all_hotel_amenity_options = main_all_hotel_amenity_options;
 var new_hotel_amenities_list_to_save = {
     items: []
 };

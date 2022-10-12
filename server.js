@@ -2739,19 +2739,62 @@ app.post("/add_new_facility/:hotel_brand_id", async (req, res, next) => {
 });
 
 app.post("/add_new_amenities_as_list/:hotel_brand_id", async (req, res, next) => {
-
+  
   let amenities = req.body.items;
-  amenities=amenities.map(each=>each.trim());
+  amenities=amenities.map(each=>{
+    return {name: each.name.trim(), price: each.price, property: each.property}
+  });
 
   let brand_id = req.params.hotel_brand_id;
   let hotel = await cheap_hotel.findById(brand_id);
   
-  //Removing duplicates
-  amenities.forEach(emenity=>{
-    hotel.amenities.splice(hotel.amenities.indexOf(emenity.trim()), 1);
+  //Removing duplicates from list from DB
+  let unique_from_db=[];
+  hotel.amenities.forEach(amenity => {
+    let found=false;
+    unique_from_db.forEach(un=>{
+      if(un?.name?.trim()===amenity.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      unique_from_db.push(amenity);
+    }
   });
+  hotel.amenities=unique_from_db;
+
+  //Removing duplicates from list from client
+  /*amenities = amenities.filter((amenity, index) => {
+    return amenities.indexOf(amenity) === index;
+  });*/
+  let unique_from_req=[];
+  amenities.forEach(amenity => {
+    let found=false;
+    unique_from_req.forEach(un=>{
+      if(un?.name?.trim()===amenity.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      unique_from_req.push(amenity);
+    }
+  });
+  amenities=unique_from_req;
   //hotel.amenities = hotel.amenities.filter(each=>(each.trim().toLowerCase()===req.query.amenity.trim().toLowerCase() ? false : true));
   hotel.amenities=[].concat(hotel.amenities,amenities);
+  let all_amenities=[];
+  hotel.amenities.forEach(amenity => {
+    let found=false;
+    all_amenities.forEach(un=>{
+      if(un?.name?.trim()===amenity.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      all_amenities.push(amenity);
+    }
+  });
+  hotel.amenities=all_amenities;
 
   let new_hotel = new cheap_hotel(hotel);
   let update_hotel = await new_hotel.save();
@@ -2870,7 +2913,7 @@ app.delete("/remove_amenity/:hotel_brand_id", async(req, res, next) => {
   let hotel = await cheap_hotel.findById(brand_id);
 
   hotel.amenities = hotel.amenities.filter( each => {
-    return each !== amenity;
+    return each.name !== amenity;
   });
 
   let new_hotel = new cheap_hotel(hotel);

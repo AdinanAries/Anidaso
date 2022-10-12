@@ -2454,9 +2454,16 @@
                 <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin-top: 10px; margin-bottom: 5px;">
                     Select Your Amenities
                 </p>
-                <div onclick="save_all_amenities_selected_from_list();" style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
-                    Save Selected
+                <div>
+                    <select id="add_amenities_from_list_property_select" style="width: calc(100% - 85px); padding: 10px; border-radius: 4px; background-color:rgb(0, 14, 30); color: white;">
+                        <option value="all">Select Property</option>
+                    </select>
+                    <input id="add_amenities_from_list_price_select" type="number" value="0" style="display: none" />
+                    <button onclick="save_all_amenities_selected_from_list();" style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px; border: none; background-color: darkslateblue; color: white; width: 80px; border-radius: 4px;">
+                        Save
+                    </button>
                 </div>
+                
             </div>
             <div class="page_popup_content_body" style="height: calc(100% - 90px);">
                 <div style="padding: 10px;">
@@ -2479,8 +2486,13 @@
                 <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
                     Select Services to Add
                 </p>
-                <div style="text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
-                    Save Selected
+                <div>
+                    <select style="width: calc(100% - 85px); padding: 10px; border-radius: 4px; background-color:rgb(0, 14, 30); color: white;">
+                        <option>Select Property</option>
+                    </select>
+                    <button onclick="" style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px; border: none; background-color: darkslateblue; color: white; width: 80px; border-radius: 4px;">
+                        Save
+                    </button>
                 </div>
             </div>
             <div class="page_popup_content_body" style="height: calc(100% - 120px);">
@@ -2504,8 +2516,13 @@
                 <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0;">
                     Select Facilities to Add
                 </p>
-                <div style="text-align: center; font-size: 13px; padding: 10px 0; background-color: darkslateblue; color: white; width: 150px; margin: auto; border-radius: 4px;">
-                    Save Selected
+                <div>
+                    <select style="width: calc(100% - 85px); padding: 10px; border-radius: 4px; background-color:rgb(0, 14, 30); color: white;">
+                        <option>Select Property</option>
+                    </select>
+                    <button onclick="" style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px; border: none; background-color: darkslateblue; color: white; width: 80px; border-radius: 4px;">
+                        Save
+                    </button>
                 </div>
             </div>
             <div class="page_popup_content_body" style="height: calc(100% - 120px);">
@@ -3305,7 +3322,7 @@
                     <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px;">
                     Add New Amenity</p>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <p onclick="toggle_show_select_all_amenities_from_list_div();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px;">
+                        <p onclick="show_select_all_amenities_from_list_div();" style="cursor: pointer; font-size: 13px; color:rgb(137, 235, 174); letter-spacing: 1px;">
                             Add From List
                             <i style="margin-left: 5px; color:rgb(216, 74, 74);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                         </p>

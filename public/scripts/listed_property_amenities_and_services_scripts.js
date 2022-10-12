@@ -145,12 +145,19 @@ async function show_all_facilities() {
 //show_all_hotel_property_rooms(propety_id) use this function to show  rooms of each property;
 
 async function add_all_amenity_options_to_select_from_list() {
+    all_hotel_amenity_options = main_all_hotel_amenity_options;
     let hotel_amenities = await get_all_amenities(localStorage.getItem("ANDSBZID"));
     all_hotel_amenity_options = all_hotel_amenity_options.map(each => each.trim());
     //Removing duplicates
-    hotel_amenities.forEach(emenity => {
-        all_hotel_amenity_options.splice(all_hotel_amenity_options.indexOf(emenity.name.trim()), 1);
+    hotel_amenities.forEach(amenity => {
+        all_hotel_amenity_options.forEach(option=>{
+            if(option && option.trim()===amenity.name.trim()){
+                all_hotel_amenity_options[all_hotel_amenity_options.indexOf(option)]=null;
+            }
+        });
+        //all_hotel_amenity_options.splice(all_hotel_amenity_options.indexOf(amenity.name.trim()), 1);
     });
+    all_hotel_amenity_options=all_hotel_amenity_options.filter(each=>each);
     document.getElementById("select_amenities_list1").innerHTML = '';
     document.getElementById("select_amenities_list2").innerHTML = '';
     for (let i = 0; i < all_hotel_amenity_options.length; i++) {
@@ -172,24 +179,42 @@ async function add_all_amenity_options_to_select_from_list() {
             `;
         }
     }
+
+    if(all_hotel_amenity_options.length===0){
+        document.getElementById("select_amenities_list1").innerHTML = `
+            <div style="padding: 10px; display: flex; justify-content: center; margin-top: 20px; border: 1px solid lightgreen; background-color: rgba(0,0,0,0.5);">
+                <p><i class="fa fa-info-circle" style="margin-right: 10px; color: lightgreen;"></i><p>
+                <p style="color: white; font-size: 14px;">
+                    Your account already hass all the emenities we can recommend!</p>
+            </div>
+        `;
+    }
 }
 
 function get_all_select_amenities_values_from_add_from_list_options() {
+    let property = document.getElementById("add_amenities_from_list_property_select").value;
+    let price = document.getElementById("add_amenities_from_list_price_select").value;
     Array.from(document.querySelectorAll('.each_amenity_from_add_amenity_from_list')).forEach(each => {
-        if (each.checked)
-            new_hotel_amenities_list_to_save.items.push(each.value);
+        if (each.checked){
+            new_hotel_amenities_list_to_save.items.push({
+                name: each.value,
+                property, price
+            });
+        }
     });
 }
 
 async function save_all_amenities_selected_from_list() {
     get_all_select_amenities_values_from_add_from_list_options();
     //console.log(new_hotel_amenities_list_to_save);
+    
     await update_amenities_selected_from_all_list();
     add_all_amenity_options_to_select_from_list()
+    setTimeout(()=>render_all_logged_in_hotel_amenities(),300);
 }
 
 function update_amenities_selected_from_all_list() {
-    // 
+    console.log(new_hotel_amenities_list_to_save);
     return $.ajax({
         type: "POST",
         url: `/add_new_amenities_as_list/${localStorage.getItem("ANDSBZID")}`,
@@ -206,8 +231,6 @@ function update_amenities_selected_from_all_list() {
         }
     });
 }
-
-add_all_amenity_options_to_select_from_list();
 
 function toggle_show_edit_amenity_info_form(elem_id) {
     $("#logged_in_hotel_edit_amenity_info_form").toggle("up");
@@ -450,8 +473,7 @@ async function show_all_amenities() {
             <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
         `;
     }
-
-    render_all_logged_in_hotel_amenities();
+    setTimeout(()=>render_all_logged_in_hotel_amenities(),300);
 }
 
 async function all_amenities_add_new_amenity() {
@@ -532,6 +554,24 @@ async function all_facilities_add_new_facility() {
 
 function toggle_show_select_all_amenities_from_list_div() {
     $("#add_amenities_from_list_div").toggle("up");
+}
+
+async function show_select_all_amenities_from_list_div(){
+    toggle_show_select_all_amenities_from_list_div();
+    add_all_amenity_options_to_select_from_list();
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    document.getElementById("add_amenities_from_list_property_select").innerHTML = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            document.getElementById("add_amenities_from_list_property_select").innerHTML += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
+            `;
+        }
+    }
+    
 }
 
 function add_new_amenity(amenity, price, property, hotel_id) {
@@ -767,10 +807,28 @@ function get_all_facilities(hotel_id) {
 
 async function render_all_logged_in_hotel_amenities() {
 
-    document.getElementById("all_hotel_amenities_list").innerHTML = ``;
+    document.getElementById("all_hotel_amenities_list").innerHTML = `
+        <div style="background-color: rgba(0,0,0,0.5); padding: 50px 10px; margin-top: 10px; width: calc(100% - 20px); text-align: center;" class="loader loader--style2" title="1">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="50px" height="50px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+            <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+            </path>
+            </svg>
+            <p style="text-align: center; font-size: 10px; color:white;">
+            loading...
+            </p>
+        </div>
+    `;
     let all_amenities = await get_all_amenities(window.localStorage.getItem("ANDSBZID"));
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
-
+    document.getElementById("all_hotel_amenities_list").innerHTML='';
     if (all_amenities.length > 0) {
         for (let i = 0; i < all_amenities.length; i++) {
             document.getElementById("all_hotel_amenities_list").innerHTML += await all_amenities_return_each_amenity_markup(all_amenities[i], properties);
