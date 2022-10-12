@@ -225,7 +225,34 @@ async function search_service_items_on_include_item_to_invoice(){
             </div>`;
         }
         
-        console.log(inventory);
+        //console.log(inventory);
+    }else if(include_services_in_booking_service_type_select_input.value==="services"){
+        search_inventory_item_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+        search_inventory_item_post_data.property_id = include_services_in_booking_property_select.value;
+        search_inventory_item_post_data.search_param = include_services_in_booking_search_input_fld.value;
+        let services = await search_service_post();
+        services = services.map(service=>{
+            return {
+                name: service.name,
+                unit_price: service.price,
+                stock_quantity: 0,
+            }
+        });
+        if(services.length>0){
+            include_services_in_booking_items_list.innerHTML='';
+            for(let i=0; i<services.length; i++){
+                include_services_in_booking_items_list.innerHTML += return_each_inventory_item_markup_on_include_item_to_invoice_page(services[i], i);
+            }
+        }else{
+            include_services_in_booking_items_list.innerHTML= `<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                    <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Nothing was found!
+                </p>
+            </div>`;
+        }
+        
+        console.log(services);
     }
 }
 include_services_in_booking_search_btn.addEventListener('click', search_service_items_on_include_item_to_invoice);
@@ -250,7 +277,33 @@ async function default_search_service_items_on_include_item_to_invoice(){
                 </p>
             </div>`;
         }
-        console.log(inventories);
+        //console.log(inventories);
+    }else if(include_services_in_booking_service_type_select_input.value==="services"){
+        search_inventory_item_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+        search_inventory_item_post_data.property_id = include_services_in_booking_property_select.value;
+        search_inventory_item_post_data.search_param = include_services_in_booking_search_input_fld.value;
+        let services = await default_search_services_post();
+        services = services.map(service=>{
+            return {
+                name: service.name,
+                unit_price: service.price,
+                stock_quantity: 0,
+            }
+        });
+        if(services.length>0){
+            include_services_in_booking_items_list.innerHTML='';
+            for(let i=0; i<services.length; i++){
+                include_services_in_booking_items_list.innerHTML += return_each_inventory_item_markup_on_include_item_to_invoice_page(services[i], i);
+            }
+        }else{
+            include_services_in_booking_items_list.innerHTML= `<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                    <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Nothing was found!
+                </p>
+            </div>`;
+        }
+        //console.log(services);
     }else{
         include_services_in_booking_items_list.innerHTML= `<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
             <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
