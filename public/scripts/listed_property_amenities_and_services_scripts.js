@@ -2,15 +2,27 @@ function toggle_show_add_services_from_list_div() {
     $("#add_services_from_list_div").toggle("up");
 }
 
-function show_add_services() {
-    toggle_show_add_services_from_list_div();
-
+async function add_all_service_options_to_select_from_list(){
+    all_hotel_services = main_all_hotel_services;
+    let hotel_services = await get_all_services(localStorage.getItem("ANDSBZID"));
+    all_hotel_services = all_hotel_services.map(each => each.trim());
+    //Removing duplicates
+    hotel_services.forEach(services => {
+        all_hotel_services.forEach(option=>{
+            if(option && option.trim()===services.name.trim()){
+                all_hotel_services[all_hotel_services.indexOf(option)]=null;
+            }
+        });
+    });
+    all_hotel_services=all_hotel_services.filter(each=>each);
+    document.getElementById("select_services_list1").innerHTML = '';
+    document.getElementById("select_services_list2").innerHTML = '';
     for (let i = 0; i < all_hotel_services.length; i++) {
         if (i > (all_hotel_services.length / 2)) {
             document.getElementById("select_services_list2").innerHTML +=
                 `
-                <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
-                    <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" type="checkbox" />
+                <div class="item_of_add_services_from_list" style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
+                    <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" value="${all_hotel_services[i].trim()}" type="checkbox" />
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list">${all_hotel_services[i]}</label>
                     <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; padding: 10px; margin-top: 10px; border-top: 1px solid rgb(92, 195, 255); background-color: rgba(255,255,255,0.3);">
                         <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgb(92, 195, 255);">
@@ -28,8 +40,8 @@ function show_add_services() {
         } else {
             document.getElementById("select_services_list1").innerHTML +=
                 `
-                <div style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
-                    <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" type="checkbox" />
+                <div class="item_of_add_services_from_list" style="padding: 10px; margin: 5px 0; background-color: rgba(0, 0, 0, 0.5); border-radius: 4px;">
+                    <input onclick="toggle_hide_show_anything('${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input')" style="margin-right: 5px;" id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list" value="${all_hotel_services[i].trim()}" type="checkbox" />
                     <label style="font-size: 14px; color: white; letter-spacing: 1px;" for="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_from_add_from_list">${all_hotel_services[i]}</label>
                     <div id="${all_hotel_services[i].replaceAll(" ", "_").trim()}_service_unit_price_input" style="display: none; padding: 10px; margin-top: 10px; border-top: 1px solid rgb(92, 195, 255); background-color: rgba(255,255,255,0.3);">
                         <p style="font-size: 13px; font-weight: bolder; margin: 10px 0; color: rgb(92, 195, 255);">
@@ -43,6 +55,23 @@ function show_add_services() {
                         </p>
                     </div>
                 </div>
+            `;
+        }
+    }
+}
+
+async function show_add_services() {
+    toggle_show_add_services_from_list_div();
+    add_all_service_options_to_select_from_list();
+    let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    document.getElementById("add_services_from_list_property_select").innerHTML = `
+            <option value="all">Select Property</option>
+            <option value="all">All</option>
+        `;
+    if(properties.length>0){
+        for (let i = 0; i < properties.length; i++) {
+            document.getElementById("add_services_from_list_property_select").innerHTML += `
+                <option value="${properties[i]._id}">${properties[i].city} - ${properties[i].street_address} (${properties[i].country})</option>
             `;
         }
     }
@@ -204,6 +233,19 @@ function get_all_select_amenities_values_from_add_from_list_options() {
     });
 }
 
+function get_all_select_services_values_from_add_from_list_options() {
+    let property = document.getElementById("add_services_from_list_property_select").value;
+    Array.from(document.querySelectorAll('.item_of_add_services_from_list')).forEach(each => {
+        if (each.childNodes[1].checked){
+            new_hotel_services_list_to_save.items.push({
+                name: each.childNodes[1].value,
+                property,
+                price: each.childNodes[5].childNodes[3].value
+            });
+        }
+    });
+}
+
 async function save_all_amenities_selected_from_list() {
     get_all_select_amenities_values_from_add_from_list_options();
     //console.log(new_hotel_amenities_list_to_save);
@@ -213,14 +255,40 @@ async function save_all_amenities_selected_from_list() {
     setTimeout(()=>render_all_logged_in_hotel_amenities(),300);
 }
 
+async function save_all_services_selected_from_list() {
+    get_all_select_services_values_from_add_from_list_options();
+    console.log(new_hotel_services_list_to_save);
+    
+    await update_services_selected_from_all_list();
+    add_all_service_options_to_select_from_list()
+    setTimeout(()=>render_all_logged_in_hotel_services(),300);
+}
+
 function update_amenities_selected_from_all_list() {
-    console.log(new_hotel_amenities_list_to_save);
     return $.ajax({
         type: "POST",
         url: `/add_new_amenities_as_list/${localStorage.getItem("ANDSBZID")}`,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(new_hotel_amenities_list_to_save),
+        success: res => {
+            //console.log(res);
+            return res;
+        },
+        error: err => {
+            //console.log(err);
+            return err;
+        }
+    });
+}
+
+function update_services_selected_from_all_list() {
+    return $.ajax({
+        type: "POST",
+        url: `/add_new_services_as_list/${localStorage.getItem("ANDSBZID")}`,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(new_hotel_services_list_to_save),
         success: res => {
             //console.log(res);
             return res;

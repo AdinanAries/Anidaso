@@ -2487,10 +2487,10 @@
                     Select Services to Add
                 </p>
                 <div>
-                    <select style="width: calc(100% - 85px); padding: 10px; border-radius: 4px; background-color:rgb(0, 14, 30); color: white;">
-                        <option>Select Property</option>
+                    <select id="add_services_from_list_property_select" style="width: calc(100% - 85px); padding: 10px; border-radius: 4px; background-color:rgb(0, 14, 30); color: white;">
+                        
                     </select>
-                    <button onclick="" style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px; border: none; background-color: darkslateblue; color: white; width: 80px; border-radius: 4px;">
+                    <button onclick="save_all_services_selected_from_list();" style="cursor: pointer; text-align: center; font-size: 13px; padding: 10px; border: none; background-color: darkslateblue; color: white; width: 80px; border-radius: 4px;">
                         Save
                     </button>
                 </div>
@@ -3873,22 +3873,22 @@
                             <div class="flex_child_of_two flex_non_first_child" style="margin: 10px; margin-bottom: 0; width: fit-content !important; border-radius: 4px;">
                                 <p style="margin-bottom: 11px; color:rgba(255,255,255,0.5); text-align: center; letter-spacing: 1px; font-size: 14px;">
                                 Add date and guests</p>
-                                <input id="make_reservation_date_range_input" style="padding: 10px; border-radius: 4px; color: white; font-size: 14px; width: calc(100% - 20px); background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2);" type="text" readonly="true" placeholder="checkin - checkout"/>
+                                <input id="make_reservation_date_range_input" style="padding: 10px; border-radius: 4px; color: white; font-size: 14px; width: calc(100% - 20px) !important; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2);" type="text" readonly="true" placeholder="checkin - checkout"/>
                                 
-                                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
+                                <div style="margin-top: 10px; display: flex; flex-direction: row !important; width: 100% !important;">
                                     <div style="width: 50%;">
                                         <p style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px;">
                                             Adults: <span style="font-size: 12px; color: rgb(137, 204, 235);">
                                             (above 17)</span>
                                         </p>
-                                        <input id="make_reservation_number_of_adults_input" style="width: calc(100% - 20px); background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 4px; color: white; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
+                                        <input id="make_reservation_number_of_adults_input" style="width: calc(100% - 20px) !important; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 4px; color: white; font-size: 14px;" type="number" value="1" placeholder="how many adults"/>
                                     </div>
                                     <div style="width: 50%; margin-left: 5px;">
                                         <p style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px;">
                                             Children: <span style="font-size: 12px; color: rgb(137, 204, 235);">
                                             (below 18)</span>
                                         </p>
-                                        <input id="make_reservation_number_of_children_input" style="width: calc(100% - 20px); background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 4px; color: white; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
+                                        <input id="make_reservation_number_of_children_input" style="width: calc(100% - 20px) !important; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 4px; color: white; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
                                     </div>
                                 </div>
                             </div>

@@ -37,7 +37,7 @@ var new_hotel_amenities_list_to_save = {
     items: []
 };
 
-var all_hotel_services = [
+var main_all_hotel_services = [
     "Car Rental Services",
     "Catering Services",
     "Concierge Services",
@@ -57,6 +57,10 @@ var all_hotel_services = [
     "Turndown Service",
     "Valet Parking",
 ]
+var all_hotel_services = main_all_hotel_services;
+var new_hotel_services_list_to_save = {
+    items: []
+};
 
 var all_hotel_facilities = [
     "Banquet Facilities",

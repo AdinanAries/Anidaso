@@ -2803,6 +2803,71 @@ app.post("/add_new_amenities_as_list/:hotel_brand_id", async (req, res, next) =>
 
 });
 
+app.post("/add_new_services_as_list/:hotel_brand_id", async (req, res, next) => {
+  
+  let services = req.body.items;
+  services=services.map(each=>{
+    return {name: each.name.trim(), price: each.price, property: each.property}
+  });
+
+  let brand_id = req.params.hotel_brand_id;
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  //Removing duplicates from list from DB
+  let unique_from_db=[];
+  hotel.services.forEach(service => {
+    let found=false;
+    unique_from_db.forEach(un=>{
+      if(un?.name?.trim()===service.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      unique_from_db.push(service);
+    }
+  });
+  hotel.services=unique_from_db;
+
+  //Removing duplicates from list from client
+  /*services = services.filter((service, index) => {
+    return services.indexOf(service) === index;
+  });*/
+  let unique_from_req=[];
+  services.forEach(service => {
+    let found=false;
+    unique_from_req.forEach(un=>{
+      if(un?.name?.trim()===service.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      unique_from_req.push(service);
+    }
+  });
+  services=unique_from_req;
+  //hotel.services = hotel.services.filter(each=>(each.trim().toLowerCase()===req.query.service.trim().toLowerCase() ? false : true));
+  hotel.services=[].concat(hotel.services,services);
+  let all_services=[];
+  hotel.services.forEach(service => {
+    let found=false;
+    all_services.forEach(un=>{
+      if(un?.name?.trim()===service.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      all_services.push(service);
+    }
+  });
+  hotel.services=all_services;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.services);
+
+});
+
 //add new city
 app.post("/add_new_city/:hotel_brand_id", async (req, res, next) => {
 
