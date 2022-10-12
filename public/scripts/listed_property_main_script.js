@@ -62,7 +62,7 @@ var new_hotel_services_list_to_save = {
     items: []
 };
 
-var all_hotel_facilities = [
+var main_all_hotel_facilities = [
     "Banquet Facilities",
     "Bar",
     "Computer Facility",
@@ -81,6 +81,10 @@ var all_hotel_facilities = [
     "Summer Terrace",
     "Throughout Hotel Wifi",
 ]
+var all_hotel_facilities = main_all_hotel_facilities;
+var new_hotel_facilities_list_to_save = {
+    items: []
+};
 
 var all_room_types = [
     "Single Room",

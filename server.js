@@ -2868,6 +2868,71 @@ app.post("/add_new_services_as_list/:hotel_brand_id", async (req, res, next) => 
 
 });
 
+app.post("/add_new_facilities_as_list/:hotel_brand_id", async (req, res, next) => {
+  
+  let facilities = req.body.items;
+  facilities=facilities.map(each=>{
+    return {name: each.name.trim(), price: each.price, property: each.property}
+  });
+
+  let brand_id = req.params.hotel_brand_id;
+  let hotel = await cheap_hotel.findById(brand_id);
+  
+  //Removing duplicates from list from DB
+  let unique_from_db=[];
+  hotel.facilities.forEach(facility => {
+    let found=false;
+    unique_from_db.forEach(un=>{
+      if(un?.name?.trim()===facility.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      unique_from_db.push(facility);
+    }
+  });
+  hotel.facilities=unique_from_db;
+
+  //Removing duplicates from list from client
+  /*facilities = facilities.filter((facility, index) => {
+    return facilities.indexOf(facility) === index;
+  });*/
+  let unique_from_req=[];
+  facilities.forEach(facility => {
+    let found=false;
+    unique_from_req.forEach(un=>{
+      if(un?.name?.trim()===facility.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      unique_from_req.push(facility);
+    }
+  });
+  facilities=unique_from_req;
+  //hotel.facilities = hotel.facilities.filter(each=>(each.trim().toLowerCase()===req.query.facility.trim().toLowerCase() ? false : true));
+  hotel.facilities=[].concat(hotel.facilities,facilities);
+  let all_facilities=[];
+  hotel.facilities.forEach(facility => {
+    let found=false;
+    all_facilities.forEach(un=>{
+      if(un?.name?.trim()===facility.name.trim()){
+        found=true;
+      }
+    });
+    if(!found){
+      all_facilities.push(facility);
+    }
+  });
+  hotel.facilities=all_facilities;
+
+  let new_hotel = new cheap_hotel(hotel);
+  let update_hotel = await new_hotel.save();
+
+  res.send(update_hotel.facilities);
+
+});
+
 //add new city
 app.post("/add_new_city/:hotel_brand_id", async (req, res, next) => {
 
