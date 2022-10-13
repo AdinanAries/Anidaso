@@ -6,7 +6,6 @@ require("mongoose-type-url");
 const cheap_hotel_rooms_schema = new mongoose.Schema({
     id: {
         type: mongoose.Schema.ObjectId,
-        reqiured: true,
         index: true
     },
     property_id: {

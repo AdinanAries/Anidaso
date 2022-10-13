@@ -4,7 +4,6 @@ require("mongoose-type-url");
 let booked_hotels_log_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
     },
     booking_type: {
         type: String

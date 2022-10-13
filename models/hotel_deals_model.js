@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const hotels_deals_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.ObjectId,
-        reqiured: true
     },
     hotel_name: {
         type: String,

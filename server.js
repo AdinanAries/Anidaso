@@ -3195,6 +3195,18 @@ app.get("/get_all_cheap_hotel_wellgo_invoices/:hotel_brand_id", async(req, res, 
   
 });
 
+app.post("/save_cheap_hotel_wellgo_invoices/", async(req, res, next) => {
+  try{
+    let item = req.body;
+    let invoice = await new wellgo_invoices_for_cheap_hotels(item);
+    invoice = await invoice.save();
+    res.send(invoice);
+  }catch(e){
+    console.log(e)
+    res.send({})
+  }
+});
+
 app.get("/get_wellgo_cheap_hotel_account_status/:hotel_brand_id", async(req, res, next) => {
   try{
     let account = await wellgo_cheap_hotel_account_status.findOne({

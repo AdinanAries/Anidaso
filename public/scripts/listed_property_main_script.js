@@ -262,6 +262,60 @@ let add_invoice_item_post_obj = {
     property_id: "",
 };
 
+let wellgo_invoices_for_cheap_hotels = {
+    hotel_brand_id: window.localStorage.getItem("ANDSBZID"),
+    date_created: "10/13/2022",
+    invoice_items: [
+        {
+            name: "subscription invoice",
+            status: 'paid',
+            amount: 500,
+            tax: 0,
+            penalty: 0,
+            deductions: 0,
+            discounts: 0,
+            total: 500,
+            card: {
+                number: "***2345",
+                holder: "Mohammed Adinan",
+                ccv: "123",
+                exp: "09/25"
+            },
+            date_due: "09/10/2022",
+            date_paid: "09/10/2022",
+            period: "09/10/2022 - 10/10/2022"
+        },
+        {
+            name: "subscription invoice",
+            status: 'pending',
+            amount: 500,
+            tax: 0,
+            penalty: 0,
+            deductions: 0,
+            discounts: 0,
+            total: 500,
+            card: {
+                number: "***2345",
+                holder: "Mohammed Adinan",
+                ccv: "123",
+                exp: "09/25"
+            },
+            date_due: "09/10/2022",
+            date_paid: "09/10/2022",
+            period: "09/10/2022 - 10/10/2022"
+        },
+    ],
+    status: "pending",
+    due: "11/11/2022",
+    card: {
+        number: "***2345",
+        holder: "Mohammed Adinan",
+        ccv: "123",
+        exp: "09/25"
+    }
+}
+let current_cheap_hotel_wellgo_invoice = wellgo_invoices_for_cheap_hotels;
+
 let todays_date = new Date();
 let todays_date2 = new Date();
 
@@ -2089,8 +2143,11 @@ async function get_all_room_of_property(property_id) {
 
     if (rooms.length === 0) {
         document.getElementById("hotel_property_all_rooms_body_title").innerHTML = `
-            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
-            no rooms were found`;
+            <div style="font-weight: initial; padding: 30px 10px; margin-top: 10px; border: 1px solid red; background-color: rgba(0,0,0,0.5);">
+                <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
+                no rooms were found
+            </div>`;
+        
         return null;
     }
 
@@ -2677,8 +2734,8 @@ function toggle_show_make_reservation_add_guests_pane() {
 
     if (is_there_overlap) {
         show_prompt_to_user(`
-            <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            Unavailable Spots`,
+            <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            OVERLAPPING SPOTS`,
             "The spots you've chosen overlaps with exsiting bookings");
         return null;
     }
@@ -3224,6 +3281,10 @@ function get_logged_in_hotel_infor() {
                         </div>
                     </div>
                 `
+                show_prompt_to_user(
+                    `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+                    INACTIVE ACCOUNT`,
+                    `Your account is not active at the moment.`);
                 return;
             }
             let avg_room_price = `$${data.price}`;
@@ -3340,7 +3401,13 @@ function get_logged_in_hotel_infor() {
             //get_hotel_buildings(data._id);
 
             //getting hotel bookings
-            get_hotel_bookings(data._id)
+            get_hotel_bookings(data._id);
+
+            //getting bills and payments
+            (async ()=>{
+                current_cheap_hotel_wellgo_invoice = await get_all_cheap_hotel_wellgo_invoices(data._id);
+                await cheap_hotel_render_initial_wellgo_invoices(current_cheap_hotel_wellgo_invoice);
+            })()
         },
         error: err => {
             console.log(err);
@@ -4053,8 +4120,7 @@ async function cheap_hotel_preview_image(event, elem) {
             show_prompt_to_user(
                 `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
                 NOT ALLOWED`,
-                `You don't have any rooms on your account. Please add rooms first`);
-            alert("please enter room  number first");
+                `please enter room  number first`);
             return null;
         }
 
@@ -4431,7 +4497,10 @@ async function save_new_property() {
     } else {
         let new_building = await collect_add_hotel_property_inputs_data();
         let response = await add_new_hotel_building(new_building);
-        alert("new building added successfully!")
+        show_prompt_to_user(
+            `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-check'></i>
+            SUCCESS`,
+            `new building added successfully!`, "success");
         reset_add_new_building_inputs();
     }
 }

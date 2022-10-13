@@ -4,7 +4,6 @@ require("mongoose-type-url");
 let wellgo_invoices_for_cheap_hotels_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
     },
     hotel_brand_id: {
         type: String,

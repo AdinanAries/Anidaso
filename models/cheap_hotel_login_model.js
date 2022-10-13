@@ -4,7 +4,6 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 const cheap_hotel_login_schema = mongoose.Schema({
     id: {
-
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'cheap_hotel'
     },
