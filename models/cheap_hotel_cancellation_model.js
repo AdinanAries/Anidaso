@@ -4,7 +4,7 @@ require("mongoose-type-url");
 let cheap_hotel_cancellation_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
-        reqiured: true,
+        required: true,
     },
     booking_id: {
         type: mongoose.Schema.Types.ObjectId,

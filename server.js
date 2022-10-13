@@ -34,7 +34,7 @@ const expressSession = require('express-session')({
 });
 
 //instantiating Amandues...
-var amadeus = new Amadeus({
+let amadeus = new Amadeus({
   clientId: process.env.AMADEUS_CLIENT_ID,
   clientSecret: process.env.AMADEUS_API_SECRETE
 });
@@ -43,24 +43,26 @@ var amadeus = new Amadeus({
 const stripe = require("stripe")(process.env.STRIPE_SECRETE_KEY);
 
 //mongo db atlass stuff
-var mongo_db_url = process.env.MONGO_DB_URL;
+let mongo_db_url = process.env.MONGO_DB_URL;
 mongoose.connect(mongo_db_url, {useNewUrlParser: true, useUnifiedTopology: true}, ()=>{
   console.log("connected to database successfully")
 });
 
 //data models
-var cheap_hotel = require("./models/cheap_hotel_model");
-var cheap_hotel_login = require("./models/cheap_hotel_login_model");
-var cheap_hotel_booking = require("./models/cheap_hotel_bookings_model");
-var cheap_hotel_property = require("./models/each_cheap_hotel_building_model");
-var cheap_hotel_room = require("./models/cheap_hotel_rooms_model");
-var login_user = require("./models/login_user_model");
-var signup_user = require("./models/signup_user_model");
-var cheap_hotel_inventory_model = require("./models/cheap_hotel_inventory_model");
-var cheap_hotel_guest = require("./models/cheap_hotel_guests_Model");
-var hotel_deals = require("./models/hotel_deals_model");
-var cheap_hotel_invoice = require("./models/cheap_hotel_invoices_model");
-var bookings_data = require("./models/bookings_log_model");
+let cheap_hotel = require("./models/cheap_hotel_model");
+let cheap_hotel_login = require("./models/cheap_hotel_login_model");
+let cheap_hotel_booking = require("./models/cheap_hotel_bookings_model");
+let cheap_hotel_property = require("./models/each_cheap_hotel_building_model");
+let cheap_hotel_room = require("./models/cheap_hotel_rooms_model");
+let login_user = require("./models/login_user_model");
+let signup_user = require("./models/signup_user_model");
+let cheap_hotel_inventory_model = require("./models/cheap_hotel_inventory_model");
+let cheap_hotel_guest = require("./models/cheap_hotel_guests_Model");
+let hotel_deals = require("./models/hotel_deals_model");
+let cheap_hotel_invoice = require("./models/cheap_hotel_invoices_model");
+let bookings_data = require("./models/bookings_log_model");
+let wellgo_invoices_for_cheap_hotels = require("./models/wellgo_invoices_for_cheap_hotels_model");
+let wellgo_cheap_hotel_account_status = require("./models/wellgo_cheap_hotel_account_status_model");
 //var booked_hotel_data = require("./models/booked_hotels_log");
 
 
@@ -90,7 +92,29 @@ app.use(express.static(path.join(__dirname, "public")));
 //Setting ports
 const PORT = process.env.PORT || 5000;
 
-
+//Middleware for all cheap hotel authorization purposes
+app.use(async(req, res,next)=>{
+  try{
+    if(req.headers.referer.includes("/listed_property.html")){
+      let brand_id = req.headers.hotel_brand_id;
+      if(brand_id){
+        let hotel = await cheap_hotel.findById(brand_id);
+        if(hotel.subscribed && hotel.approved){
+          next();
+        }else{
+          res.send([]);
+        }
+      }else{
+        res.send([]);
+      }
+    }else{
+      next();
+    }
+  }catch(e){
+    console.log(e);
+    res.send([]);
+  } 
+});
 
 function convert_date_object_to_db_string_format(dateObj){
     
@@ -3156,6 +3180,31 @@ app.delete("/remove_facility/:hotel_brand_id", async(req, res, next) => {
 
   res.send(update_hotel.facilities);
 
+});
+
+app.get("/get_all_cheap_hotel_wellgo_invoices/:hotel_brand_id", async(req, res, next) => {
+  try{
+    let invoices = await wellgo_invoices_for_cheap_hotels.find({
+      hotel_brand_id: req.params.hotel_brand_id
+    });
+    res.send(invoices);
+  }catch(e){
+    console.log(e.message);
+    res.send([]);
+  }
+  
+});
+
+app.get("/get_wellgo_cheap_hotel_account_status/:hotel_brand_id", async(req, res, next) => {
+  try{
+    let account = await wellgo_cheap_hotel_account_status.findOne({
+      hotel_brand_id: req.params.hotel_brand_id
+    })
+    res.send(account)
+  }catch(e){
+    console.log(e.message);
+    res.status(500).send("error occured on server")
+  }
 });
 
 //Spinning the server here

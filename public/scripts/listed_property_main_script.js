@@ -1292,10 +1292,13 @@ function toggle_show_hide_page_full_screen_prompt() {
     $("#page_full_screen_prompt").toggle("up");
 }
 
-function show_prompt_to_user(title, msg) {
+function show_prompt_to_user(title, msg, status='fail') {
     toggle_show_hide_page_full_screen_prompt();
     document.getElementById("page_full_screen_prompt_title").innerHTML = title;
     document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
+    if(status!=='fail'){
+        document.getElementById("page_full_screen_prompt_title").style.backgroundColor="green";
+    }
 }
 
 function toggle_show_notifications_div() {
@@ -1905,12 +1908,18 @@ async function toggle_show_search_room_pane() {
 
     if (rooms) {
         if ((rooms.length === 0)) {
-            alert("You don't have any rooms in your account. Please add rooms first");
+            show_prompt_to_user(
+                `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+                NOT ALLOWED`,
+                `You don't have any rooms on your account. Please add rooms first`);
             toggle_show_add_room_pane();
             return null;
         }
     } else {
-        alert("You don't have any rooms in your account. Please add rooms first");
+        show_prompt_to_user(
+            `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+            NOT ALLOWED`,
+            `You don't have any rooms on your account. Please add rooms first`);
         toggle_show_add_room_pane();
         return null;
     }
@@ -2561,13 +2570,25 @@ async function continue_room_reservation() {
 
     if (the_rooms) {
         if ((the_rooms.length === 0)) {
-            alert("You don't have any rooms in your account. Please add rooms first");
-            toggle_show_add_room_pane();
+            show_prompt_to_user(
+                `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+                NOT ALLOWED`,
+                `You don't have any rooms on your account. Please add rooms first`);
+            setTimeout(()=>{
+                document.getElementById("make_reservation_pane").style.display="none";
+                toggle_show_add_room_pane();
+            },500)
             return null;
         }
     } else {
-        alert("You don't have any rooms in your account. Please add rooms first");
-        toggle_show_add_room_pane();
+        show_prompt_to_user(
+            `<i style='margin-right: 5px; color: crimson;' class='fa fa-exclamation-triangle'></i>
+            NOT ALLOWED`,
+            `You don't have any rooms on your account. Please add rooms first`);
+        setTimeout(()=>{
+            document.getElementById("make_reservation_pane").style.display="none";
+            toggle_show_add_room_pane();
+        },500)
         return null;
     }
 
@@ -2610,12 +2631,18 @@ async function show_room_availability(room_id, property_id) {
 
     if (the_rooms) {
         if ((the_rooms.length === 0)) {
-            alert("You don't have any rooms in your account. Please add rooms first");
+            show_prompt_to_user(
+                `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+                NOT ALLOWED`,
+                `You don't have any rooms on your account. Please add rooms first`);
             toggle_show_add_room_pane();
             return null;
         }
     } else {
-        alert("You don't have any rooms in your account. Please add rooms first");
+        show_prompt_to_user(
+            `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+            NOT ALLOWED`,
+            `You don't have any rooms on your account. Please add rooms first`);
         toggle_show_add_room_pane();
         return null;
     }
@@ -2684,12 +2711,18 @@ async function toggle_show_all_hotel_properties() {
 
     if (properties) {
         if ((properties.length === 0)) {
-            alert("You don't have any property in your account. Please add property first");
+            show_prompt_to_user(
+                `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+                NOT ALLOWED`,
+                `You don't have any property on your account. Please add property first`);;
             toggle_show_add_hotel_property_pane();
             return null;
         }
     } else {
-        alert("You don't have any property in your account. Please add property first");
+        show_prompt_to_user(
+            `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+            NOT ALLOWED`,
+            `You don't have any property on your account. Please add property first`);
         toggle_show_add_hotel_property_pane();
         return null;
     }
@@ -2836,7 +2869,10 @@ async function all_cities_add_new_city() {
         let return_res = await add_new_cities_op(new_city, window.localStorage.getItem("ANDSBZID"));
         document.getElementById("full_screen_loader").style.display = "none";
         input_elem.value = "";
-        alert("new city added!");
+        show_prompt_to_user(
+            `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-check'></i>
+            Success`,
+            `new city added!`, "success");
         render_all_logged_in_hotel_cities();
     }
 }
@@ -3142,6 +3178,54 @@ function get_logged_in_hotel_infor() {
         success: data => {
 
             //console.log(data);
+            if(!data || (Array.isArray(data) && data.length===0)){
+                //basic info
+                display_logged_in_hotel_name("Not Available", false, false);
+                logged_in_hotel_ratings_area.innerHTML = return_cheap_hotel_rating_markup(0);
+                //contact info
+                render_each_loggin_hotel_info_item("logged_in_hotel_email_infor_item", "Email", "N/A", "start_edit_contact_info");
+                render_each_loggin_hotel_info_item("logged_in_hotel_mobile_infor_item", "Mobile", "N/A", "start_edit_contact_info");
+                render_each_loggin_hotel_info_item("logged_in_hotel_Fax_infor_item", "Fax", "N/A", "start_edit_contact_info");
+                //misc info
+                render_each_loggin_hotel_info_item("logged_in_hotel_url_infor_item", "URL", "N/A", "start_edit_misc_info");
+                render_each_loggin_hotel_info_item("logged_in_hotel_office_location_infor_item", "Office", "N/A", "start_edit_misc_info");
+                render_each_loggin_hotel_info_item("logged_in_hotel_avg_price_infor_item", "Avg. Room Price", "N/A", "start_edit_misc_info");
+                //description info
+                display_logged_in_hotel_description("N/A");
+                //last review
+                display_logged_in_hotel_description_last_review("", "", "", 0);
+                document.getElementById("logged_in_hotel_cities_op_list").innerHTML = `
+                    <p id="no_cities_to_display_msg" style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+                        Not Available<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    </p>
+                `;
+                document.getElementById("dashboard_displayed_last_added_hotel_policy").innerHTML = `
+                    <p id="no_cities_to_display_msg" style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+                        Not Available<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    </p>
+                `;
+                document.getElementById("logged_in_hotel_amenities_list").innerHTML = `
+                    <p id="no_amenities_to_display_msg" style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+                        Not Available<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    </p>
+                `;
+                document.querySelector(".logged_in_hotel_gallery").style.display='none';
+                document.querySelector(".logged_in_hotel_reviews").style.display='none';
+                get_hotel_rooms("no id");
+                get_hotel_bookings("no id");
+                document.getElementById("logged_in_hotel_add_amenity_btn").style.display="none";
+                document.getElementById("logged_in_hotel_add_op_city_btn").style.display="none";
+                document.querySelectorAll(".logged_in_hotel_details_each_section_content")[2].innerHTML=`
+                    <div style="text-align: center; padding: 20px; border-radius: 4px; border: 1px solid red; background-color: rgba(0,0,0,0.5); color: white;">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true" style="margin-right: 5px; color: red;"></i>
+                        No payments information can be displayed at the Moment!
+                        <div style="border-top: 1px solid rgba(255,255,255,0.2); margin-top: 10px; padding-top: 10px; font-size: 14px; color: rgba(255,255,255,0.5);">
+                            Please make sure your account is active or verified!
+                        </div>
+                    </div>
+                `
+                return;
+            }
             let avg_room_price = `$${data.price}`;
 
             let reviewer_name = data.reviews[data.reviews.length - 1].person;
@@ -3166,10 +3250,10 @@ function get_logged_in_hotel_infor() {
             display_logged_in_hotel_description_last_review(reviewer_name, reviewer_msg, reviewer_img, reviewer_rated);
             //amenities
             document.getElementById("logged_in_hotel_amenities_list").innerHTML = `
-            <p id="no_amenities_to_display_msg" style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
-                You have not added any amenity<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            </p>
-            `
+                <p id="no_amenities_to_display_msg" style="color:white; font-size: 14px; text-align: center; margin-bottom: 20px;">
+                    You have not added any amenity<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                </p>
+            `;
             if (data.amenities.length > 0) {
 
                 document.getElementById("logged_in_hotel_amenities_see_all_amenities_btn").style.display = "block";
@@ -3325,10 +3409,10 @@ async function render_hotel_rooms(rooms_list) {
 
     if (rooms_list.length === 0) {
         document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
-            <p style="font-size: 13px; text-align: center; color: white; paddin: 20px;">
+            <p style="font-size: 14px; text-align: center; color: white; padding: 20px; border: 1px solid red; margin: 10px;">
                 <i style="color: orangered; margin-right: 5px; " class="fa fa-exclamation-triangle"></i>
-                You don't have any room. <br/>
-                Without any room added to your account, guests can't book
+                You don't have any rooms. <br/><br/>
+                No bookings are possible.
                 your brand.
                 <br/><br/> 
                 <span style="color: rgba(255, 255, 255, 0.6); font-weight: bolder;">
@@ -3619,6 +3703,26 @@ function get_hotel_bookings(hotel_id) {
             let recent_booking = res[res.length - 1];
             if (recent_booking) {
                 render_recent_hotel_booking(recent_booking);
+            }else{
+                document.getElementById("logged_in_hotel_recently_booked_rooms_list").innerHTML = `
+                    <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); max-width: 500px; margin: auto;">
+                        <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
+                        <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                            <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                                <i style="color:red; margin-right: 5px;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
+                                No bookings yet to show
+                            </span>
+                        </p>
+                        <p style="color: white; margin: 20px 0; font-size: 14px; text-align: center;">
+                            Oops! We haven't found any bookings yet to show here.
+                            If you expect to have bookings, then please make sure 
+                            that your account is active or verified.
+                        </p>
+                        <p style="text-align: center; color: white; font-size: 13px; padding: 10px; border-radius: 4px; background-color: rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; margin: 10px 0;">
+                            Book A Room
+                        </p>
+                    </div>
+                `;
             }
         },
         error: err => {
@@ -3946,6 +4050,10 @@ async function cheap_hotel_preview_image(event, elem) {
     reader.onload = function () {
 
         if (document.getElementById("add_room_form_room_number_input").value === "") {
+            show_prompt_to_user(
+                `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+                NOT ALLOWED`,
+                `You don't have any rooms on your account. Please add rooms first`);
             alert("please enter room  number first");
             return null;
         }
@@ -4229,7 +4337,10 @@ async function save_room_new_room(type, room_id) {
         add_room_form_room_cancellation_percentage_select.focus();
         add_room_form_room_cancellation_percentage_select.placeholder = "please select cancellation percentage";
     } else if (add_room_form_room_photo_input.value === "" && !global_is_room_for_update) {
-        alert("please add a photo")
+        show_prompt_to_user(
+            `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
+            SUCCESS`,
+            `photo added!`, "success");
         add_room_form_room_photo_input.click();
     } else {
         if (type === "update") {
@@ -4239,7 +4350,7 @@ async function save_room_new_room(type, room_id) {
             show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
                  Update Finished`,
-                "room " + returned_added_room.data.room_number + " has been updated successfully");
+                "room " + returned_added_room.data.room_number + " has been updated successfully", "success");
             reset_all_add_room_inputs();
         } else {
             let new_room_obj = await collect_all_add_new_room_inputs();
@@ -4248,7 +4359,7 @@ async function save_room_new_room(type, room_id) {
             show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
                  Room Added`,
-                "room " + returned_added_room.data.room_number + " has been added successfully");
+                "room " + returned_added_room.data.room_number + " has been added successfully", "success");
             reset_all_add_room_inputs();
         }
 

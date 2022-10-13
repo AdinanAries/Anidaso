@@ -4,7 +4,7 @@ require("mongoose-type-url");
 let cheap_hotel_extra_services_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
-        reqiured: true,
+        required: true,
     },
     hotel_brand_id: {
         type: mongoose.Schema.Types.ObjectId,

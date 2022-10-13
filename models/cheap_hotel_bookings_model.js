@@ -4,7 +4,8 @@ require("mongoose-type-url");
 let cheap_hotel_bookings_schema = mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
-        reqiured: true,
+        required: true,
+        index: true
     },
     hotel_brand_id: {
         type: mongoose.Schema.Types.ObjectId,

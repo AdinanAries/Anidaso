@@ -2554,24 +2554,14 @@
                     <div class="flex_child_of_two" style="width: calc(50% - 2px);">
                         <p style="margin-bottom: 5px; font-size: 13px; color:rgb(149, 215, 241);">Select Property</p>
                         <select id="make_reservation_property_select" style="padding: 10px; width: 100%; border: none; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-size: 13px; color: white;">
-                            <option>
-                                New York, 1223 Mont Gomery, United States
-                            </option>
-                            <option>
-                                New York, 1223 Mont Gomery, United States
-                            </option>
+                            
                         </select>
                     </div>
                     <div class="flex_child_of_two flex_non_first_child make_reservation" style="width: calc(50% - 2px);">
                         <p style="margin-bottom: 5px; font-size: 13px; color:rgb(149, 215, 241);">Select Room</p>
                         <div style="display: flex; justify-content: space-between;">
                             <select id="make_reservation_room_select" style="width: 50%; padding: 10px; border: none; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 4px; font-size: 13px;">
-                                <option>
-                                    5D
-                                </option>
-                                <option>
-                                    10A
-                                </option>
+                                
                             </select>
                             <div id="make_reservation_submit_button" style="text-align: center; width: calc(50% - 23px); border: 1px solid rgba(255,255,255,0.2); padding: 8px; background-color:rgb(209, 84, 0); color: white; border-radius: 4px; font-size: 13px; cursor: pointer;">
                                 <i style="color:coral; margin-right: 5px;" class="fa fa-ticket" aria-hidden="true"></i>Reserve Room
@@ -3437,21 +3427,21 @@
     <div id="page_full_screen_prompt" style="z-index: 200; display: none;" class="page_pop_up_cover">
 
         <div style="display: flex; height: 100%; flex-direction: column !important; justify-content: center; padding: 0 10px;">
-          <div style="background: white; padding: 20px; max-width: 500px; margin: auto; border-radius: 4px;">
-            <p id="page_full_screen_prompt_title" style="font-size: 14px; font-weight: bolder; letter-spacing: 1px;">
+          <div style="background: white; padding: 10px; max-width: 500px; margin: auto; border-radius: 4px;">
+            <p id="page_full_screen_prompt_title" style="font-weight: bolder; letter-spacing: 1px;text-align: center; background-color: crimson; padding: 10px; color: white; font-size: 14px;">
               <i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
               
             </p>
-            <p id="page_full_screen_prompt_msg" style="margin: 20px; font-size: 14px; letter-spacing: 1px;">
+            <p id="page_full_screen_prompt_msg" style="margin: 20px; font-size: 14px; letter-spacing: 1px; text-align: center;">
               
             </p>
-            <div onclick="toggle_show_hide_page_full_screen_prompt();" style="text-align: center; font-size: 14px; padding: 15px; width: 100px; cursor: pointer; border-radius: 4px;
-             background-color: #2a4255; color: white; margin: auto; margin-top: 20px;">
+            <div onclick="toggle_show_hide_page_full_screen_prompt();" style="text-align: center; font-size: 14px; padding: 10px; width: 100px; cursor: pointer; border-radius: 4px;
+             background-color: #2a4255; color: white; margin: auto; margin-top: 10px;">
               OK
             </div>
-            <p style="text-align: right; font-size: 10px; font-weight: bolder; letter-spacing: 1px; margin-top: 20px;">
+            <p style="text-align: center; font-size: 12px; margin-top: 10px;">
                all rights reserved &copy; 
-              <span style="color:rgb(228, 83, 0); font-size: 10px; font-weight: bolder; letter-spacing: 1px;">
+              <span style="color:brown; font-size: 10px; font-weight: bolder; letter-spacing: 1px;">
                 Wellgo
               </span>
             </p>
@@ -4693,6 +4683,7 @@
           </div>
         </div>
       </footer>
+      <script src="scripts/listed_property_authorization.js" type="text/javascript"></script>
     <script src="scripts/country_calling_codes.js" type="text/javascript"></script>
     <script src="scripts/listed_property_main_script.js" type="text/javascript"></script>
     <script src="scripts/listed_property_invoice_script.js" type="text/javascript"></script>
@@ -4705,5 +4696,6 @@
     <script src="scripts/inventory_management_scripts.js" type="text/javascript"></script>
     <script src="scripts/include_service_to_booking_scripts.js" type="text/javascript"></script>
     <script src="scripts/guests_and_rooms_tracker.js" type="text/javascript"></script>
+    <script src="scripts/wellgo_cheap_hotel_invoices.js" type="text/javascript"></script>
 </body>
 </html>
