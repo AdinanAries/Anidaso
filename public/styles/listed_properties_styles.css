@@ -159,7 +159,7 @@ li{
   color: white;
   width: 100%;
   padding: 0 10px;
-  border-spacing: 0 10px;
+  border-spacing: 0;
 }
 .room_availability_grid_view tr {
   animation-name: room_calender_mounting;
@@ -185,6 +185,9 @@ li{
   padding: 5px;
   font-size: 14px;
   background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-left: 0;
+  text-align: center;
 }
 .room_availability_grid_view .date_day_picked {
   color: rgb(143, 191, 255) !important;
@@ -255,6 +258,8 @@ li{
 .room_availability_grid_view .focused_on_room td {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
+  border-color: #2769af;
+  color: white;
 }
 #room_status_switch_toggle {
   position: relative;
