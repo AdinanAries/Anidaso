@@ -592,7 +592,7 @@ function return_bookings_grid_view_headers(grid_dates_list, checking_checkout_da
 
 function return_bookings_grid_view_current_room_markup(current_room){
 
-    let tr_tag = `<td style="border-right: 5px solid rgba(0, 0, 0, 0.6); color: rgb(95, 96, 225); font-weight: bolder; font-size: 17px; border-left: 3px solid rgb(95, 96, 225) !important; padding-left: 10px;">
+    let tr_tag = `<td style="border: rgb(143, 191, 255) 1px solid; background-color: rgb(11, 67, 104) !important; color: rgb(143, 191, 255); font-weight: bolder; font-size: 17px; border-left: 3px solid rgb(143, 191, 255) !important; padding-left: 10px;">
     ${current_room.the_room.room_number}</td>`;
 
     for(let i=0; i<current_room.days.length; i++){
