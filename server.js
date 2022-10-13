@@ -1661,6 +1661,28 @@ app.post("/search_service_item/", async (req, res, next) => {
 
 });
 
+app.post("/search_facility_item/", async (req, res, next) => {
+
+  let hotel = await cheap_hotel.findById(req.body.hotel_brand_id);
+
+  let property_inventory = hotel.facilities;
+  if(req.body.property_id !== "all" && req.body.property_id){
+    property_inventory = property_inventory.filter( each => {
+      return (each.property === req.body.property_id || each.property === "all")
+    });
+  }
+
+  let items = property_inventory;
+  if(req.body.search_param){
+    items = property_inventory.filter( each => {
+        return (each.name.toLowerCase() === req.body.search_param.toLowerCase());
+    });
+  }
+
+  res.send(items);
+
+});
+
 app.post("/search_inventory_item_default/", async (req, res, next) => {
   
   let inventory = await cheap_hotel_inventory_model.findOne({hotel_brand_id: req.body.hotel_brand_id});
@@ -1688,6 +1710,28 @@ app.post("/search_service_item_default/", async (req, res, next) => {
   let hotel = await cheap_hotel.findById(req.body.hotel_brand_id);
 
   let property_inventory = hotel.services;
+  if(req.body.property_id !== "all" && req.body.property_id){
+    property_inventory = property_inventory.filter( each => {
+      return (each.property === req.body.property_id || each.property === "all")
+    });
+  }
+
+  let items = property_inventory;
+  if(req.body.search_param){
+    items = property_inventory.filter( each => {
+        return (each.name.toLowerCase() === req.body.search_param.toLowerCase());
+    });
+  }
+
+  res.send(items);
+
+});
+
+app.post("/search_facility_item_default/", async (req, res, next) => {
+  
+  let hotel = await cheap_hotel.findById(req.body.hotel_brand_id);
+
+  let property_inventory = hotel.facilities;
   if(req.body.property_id !== "all" && req.body.property_id){
     property_inventory = property_inventory.filter( each => {
       return (each.property === req.body.property_id || each.property === "all")

@@ -3,6 +3,7 @@ var include_services_in_booking_service_type_select_input = document.getElementB
 var include_services_in_booking_search_input_fld = document.getElementById("include_services_in_booking_search_input_fld");
 var include_services_in_booking_search_btn = document.getElementById("include_services_in_booking_search_btn");
 var include_services_in_booking_items_list = document.getElementById("include_services_in_booking_items_list");
+var include_services_in_booking_refresh_btn = document.getElementById("include_services_in_booking_refresh_btn");
 
 let initial_total = 0;
 let current_invoice_total = 0;
@@ -252,7 +253,34 @@ async function search_service_items_on_include_item_to_invoice(){
             </div>`;
         }
         
-        console.log(services);
+        //console.log(services);
+    }else if(include_services_in_booking_service_type_select_input.value==="facilities"){
+        search_inventory_item_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+        search_inventory_item_post_data.property_id = include_services_in_booking_property_select.value;
+        search_inventory_item_post_data.search_param = include_services_in_booking_search_input_fld.value;
+        let facilities = await search_facility_post();
+        facilities = facilities.map(facility=>{
+            return {
+                name: facility.name,
+                unit_price: facility.price,
+                stock_quantity: 0,
+            }
+        });
+        if(facilities.length>0){
+            include_services_in_booking_items_list.innerHTML='';
+            for(let i=0; i<facilities.length; i++){
+                include_services_in_booking_items_list.innerHTML += return_each_inventory_item_markup_on_include_item_to_invoice_page(facilities[i], i);
+            }
+        }else{
+            include_services_in_booking_items_list.innerHTML= `<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                    <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Nothing was found!
+                </p>
+            </div>`;
+        }
+        
+        console.log(facilities);
     }
 }
 include_services_in_booking_search_btn.addEventListener('click', search_service_items_on_include_item_to_invoice);
@@ -304,6 +332,32 @@ async function default_search_service_items_on_include_item_to_invoice(){
             </div>`;
         }
         //console.log(services);
+    }else if(include_services_in_booking_service_type_select_input.value==="facilities"){
+        search_inventory_item_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
+        search_inventory_item_post_data.property_id = include_services_in_booking_property_select.value;
+        search_inventory_item_post_data.search_param = include_services_in_booking_search_input_fld.value;
+        let facilities = await default_search_facilities_post();
+        facilities = facilities.map(facility=>{
+            return {
+                name: facility.name,
+                unit_price: facility.price,
+                stock_quantity: 0,
+            }
+        });
+        if(facilities.length>0){
+            include_services_in_booking_items_list.innerHTML='';
+            for(let i=0; i<facilities.length; i++){
+                include_services_in_booking_items_list.innerHTML += return_each_inventory_item_markup_on_include_item_to_invoice_page(facilities[i], i);
+            }
+        }else{
+            include_services_in_booking_items_list.innerHTML= `<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
+                <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
+                    <i style="margin-right: 5px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    Nothing was found!
+                </p>
+            </div>`;
+        }
+        //console.log(facilities);
     }else{
         include_services_in_booking_items_list.innerHTML= `<div style="padding: 40px 10px; border-radius: 4px; background-color: rgba(0,0,0,0.4);">
             <p style="padding: 10px; color: white; text-align: center; font-size: 14px;">
@@ -316,6 +370,10 @@ async function default_search_service_items_on_include_item_to_invoice(){
 
 include_services_in_booking_service_type_select_input.addEventListener('change', default_search_service_items_on_include_item_to_invoice);
 include_services_in_booking_property_select.addEventListener('change', default_search_service_items_on_include_item_to_invoice);
+include_services_in_booking_refresh_btn.addEventListener('click', ()=>{
+    document.getElementById("include_services_in_booking_search_input_fld").value="";
+    default_search_service_items_on_include_item_to_invoice();
+});
 
 function toggle_show_include_services_in_booking_div(){
     $("#include_services_in_booking_div").toggle("up");

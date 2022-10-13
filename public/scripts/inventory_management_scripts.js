@@ -499,6 +499,24 @@ function search_service_post(){
     });
 }
 
+function search_facility_post(){
+    return $.ajax({
+        type: "POST",
+        url: "/search_facility_item/",
+        data: JSON.stringify(search_inventory_item_post_data),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
 function default_search_inventory_post(){
     return $.ajax({
         type: "POST",
@@ -521,6 +539,24 @@ function default_search_services_post(){
     return $.ajax({
         type: "POST",
         url: "/search_service_item_default/",
+        data: JSON.stringify(search_inventory_item_post_data),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
+function default_search_facilities_post(){
+    return $.ajax({
+        type: "POST",
+        url: "/search_facility_item_default/",
         data: JSON.stringify(search_inventory_item_post_data),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
