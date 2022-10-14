@@ -2180,6 +2180,7 @@ async function get_all_room_of_property(property_id) {
 
 function all_rooms_return_each_room_markup(room, checkin, checkout) {
 
+    let property_id = room.property_id;
     let room_id = room._id;
     let is_closed = room.closed;
     let is_booked = room.booked;
@@ -2217,11 +2218,31 @@ function all_rooms_return_each_room_markup(room, checkin, checkout) {
 
     return `
         <div class="each_property_info" style="background-color: rgba(0, 0, 0, 0.4); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px;">
-            <div class="flex_row_default_flex_column_mobile">
+            <div class="all_rooms_each_room_item_info" style="display: flex; justify-content: space-between; padding: 10px; padding-top: 0;">
+                <div onclick="view_selected_room_full_details('${room_id}');" style="display: flex; cursor: pointer;">
+                    <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center;">
+                        ${room_number}
+                        <span style="color: rgba(255,255,255,0.2); margin-left: 5px;">|</span>
+                        <span style="letter-spacing: 1px; margin-left: 5px; font-size: 13px; color:rgb(168, 195, 218);">
+                            ${room_booked_status}
+                        </span>
+                    </p>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px;">
+                        <span style="color: rgba(255,255,255,0.2); margin-left: 5px;">|</span>
+                        <span style="font-size: 13px; color: orange;">${room_type} </span>
+                        , <span style="font-size: 13px; color: orange;">${bed_type}</span>
+                    </p>
+                </div>
+                <div style="cursor: pointer;" onclick="$('#all_rooms_list_each_room_item_details${room_id}').toggle('left'); var ard_elem_icon=document.getElementById('all_rooms_toggle_show_details_btn_icon${room_id}'); ard_elem_icon.style.transform==='rotate(180deg)' ? ard_elem_icon.style.transform='rotate(0)' : ard_elem_icon.style.transform='rotate(180deg)'">
+                    <span style="color: rgba(255,255,255,0.2); margin-left: 5px; margin-right: 10px;">|</span>
+                    <i id="all_rooms_toggle_show_details_btn_icon${room_id}" class="fa fa-caret-down" style="color: orangered; transition: all 0.5s" aria-hidden="true"></i>
+                </div>
+            </div>    
+            <div id="all_rooms_list_each_room_item_details${room_id}" style="display: none !important; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);" class="flex_row_default_flex_column_mobile">
                 <div class="flex_child_of_two">
-                    <p style="margin-bottom: 20px; font-size: 15px; color:rgb(212, 228, 241); font-weight: bolder;">
+                    <p style="margin-bottom: 10px; font-size: 15px; color:rgba(212, 228, 241, 0.6);">
                         Room ${room_number}
-                        <span style="color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
+                        <span style="display: none; color: white; font-weight: initial; margin-left: 10px; font-size: 12px; letter-spacing: 1px;">
                             ${room_booked_status}
                         </span>
                     </p>
@@ -2250,8 +2271,8 @@ function all_rooms_return_each_room_markup(room, checkin, checkout) {
                         </span>
                     </p>
                 </div>
-                <div class="flex_child_of_two flex_non_first_child">
-                    <p style="color: white; margin-bottom: 10px; font-size: 13px; font-weight: bolder; letter-spacing: 1px;;">
+                <div class="flex_child_of_two flex_non_first_child rooms_list_second_each_flex_child">
+                    <p style="color: rgba(255,255,255,0.5); margin-bottom: 10px; font-size: 13px; letter-spacing: 1px;">
                         Current Stay</p>
                     <p style="letter-spacing: 1px; margin-bottom: 5px; font-size: 13px; color:rgb(255, 136, 0);">
                         Checkin: 
@@ -2262,6 +2283,14 @@ function all_rooms_return_each_room_markup(room, checkin, checkout) {
                         <span style="font-size: 13px; color: white;">
                             ${checkout}</span></p>
                     <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                        <div onclick="show_room_availability('${room_id}', '${property_id}');" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(4, 35, 47); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                            book new guest
+                        </div>
+                        <div onclick="view_a_room_bookings('${room_id}', '${room_number}');" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgb(0, 16, 27); border-top-right-radius: 4px; border-bottom-right-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                            see bookings
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: row !important; width: 250px; margin-top: 5px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
                         <div onclick="view_selected_room_full_details('${room_id}')" style="padding: 10px 0; width: 50%; cursor: pointer; background-color: rgba(41, 66, 88, 0.555); border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
                             view this room
                         </div>

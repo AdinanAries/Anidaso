@@ -697,6 +697,24 @@ footer a {
   }
 }
 @media only screen and (max-width: 1000px) {
+  .all_rooms_each_room_item_info{
+    padding-bottom: 0 !important;
+  }
+  .rooms_list_second_each_flex_child{
+    margin-top: 15px !important;
+  }
+  .each_property_info > div:nth-child(2){
+    margin-top: 10px !important;
+  }
+  #hotel_property_all_rooms_list > div > div.all_rooms_each_room_item_info > div:nth-child(1){
+    display: block !important;
+  }
+  #hotel_property_all_rooms_list > div > div.all_rooms_each_room_item_info > div:nth-child(1) p:nth-child(1){
+    margin-bottom: 10px !important;
+  }
+  #hotel_property_all_rooms_list > div > div.all_rooms_each_room_item_info > div:nth-child(1) > p:nth-child(2) > span:nth-child(1){
+    display: none; 
+  }
   .each_invoice_item_flex{
     display: block !important;
   }
