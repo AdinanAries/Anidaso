@@ -697,6 +697,12 @@ footer a {
   }
 }
 @media only screen and (max-width: 1000px) {
+  .each_invoice_item_flex{
+    display: block !important;
+  }
+  .each_invoice_item_flex p:nth-child(1){
+    margin-bottom: 10px;
+  }
   .recently_booked_and_rooms_div{
     border: none;
     display: block;
@@ -762,7 +768,20 @@ footer a {
     display: inline;
   }
   .logged_in_hotel_amenity_edit_btns {
+    width: 55px;
     display: block;
+  }
+  #all_amenities_list_container .logged_in_hotel_amenity_edit_btns{
+    width: 62px !important;
+  }
+  #logged_in_hotel_cities_op_list .logged_in_hotel_amenity_edit_btns{
+    width: auto !important;
+  }
+  #logged_in_hotel_all_amenities_add_amenity_info_form > div:nth-child(2) > p{
+    width: 180px !important;
+  }
+  #logged_in_hotel_all_amenities_add_new_amenity_property_form_input{
+    width: calc(100%) !important;
   }
   .logged_in_hotel_details_section_content {
     display: block; /*resetting flex*/

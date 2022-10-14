@@ -93,7 +93,7 @@ async function render_all_cheap_hotel_wellgo_invoices(invoice_obj){
             let f_status = invoice_obj[0].invoice_items[j].status
             let f_name = invoice_obj[0].invoice_items[j].name.includes("subscription") ? "Subscription" : invoice_obj[0].invoice_items[j].name;
             document.getElementById("all_invoices_current_invoice").innerHTML=`
-                <div style="cursor: pointer; background-color: rgba(0,0,0,0.5); padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
+                <div class="each_invoice_item_flex" style="cursor: pointer; background-color: rgba(0,0,0,0.5); padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
                     <p style="color:rgb(0, 179, 233); font-size: 14px;">
                         <span style="font-size: 14px; margin-right: 5px;">
                             <span style="color: rgba(255,255,255,0.5);">
@@ -137,7 +137,7 @@ async function render_all_cheap_hotel_wellgo_invoices(invoice_obj){
             let name = invoice_obj[0].invoice_items[j].name.includes("subscription") ? "Subscription" : invoice_obj[0].invoice_items[j].name;
             document.getElementById("all_invoices_list_container").innerHTML += `
                 <div style="padding: 10px;">
-                    <div style="cursor: pointer; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
+                    <div class="each_invoice_item_flex" style="cursor: pointer; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
                         <p style="font-size: 14px; color: lightgreen;">
                             <span style="font-size: 14px; margin-right: 5px;">
                                 <span style="color: rgba(255,255,255,0.5);">
