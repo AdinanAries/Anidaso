@@ -882,7 +882,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
 
     if(is_there_overlap){
         show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Unavailable Spots`, 
             "The spots you've chosen overlaps with exsiting bookings");
         return null;
@@ -891,7 +891,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
     if(make_reservations_post_data.checkin_date === "" || make_reservations_post_data.checkout_date === "" || make_reservations_post_data.all_dates_of_occupancy.length === 0){
 
         show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Dates Not Added`, 
             "Please add checkin and checkout dates");
         if(document.getElementById("make_reservation_find_spot_pane").style.display === "none")
@@ -902,7 +902,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
     if(make_reservations_post_data.rooms.length === 0){
 
         show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Room Not Added`, 
             "Please select a room for reservation");
         if(document.getElementById("make_reservation_find_spot_pane").style.display === "none")
@@ -912,7 +912,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
 
     if(!check_if_reservation_guesst_data_is_completed()){
         show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Guest(s) Info Not Added`, 
             "Please add all guests information");
         toggle_show_make_reservation_add_guests_pane();
@@ -921,7 +921,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
 
     if(document.getElementById("mk_reservation_guest_email_input").value === ""){
         show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Guest Email Not Added`, 
             "Please add guest email address");
         toggle_show_make_reservation_add_guests_pane();
@@ -930,7 +930,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
     
     if(document.getElementById("mk_reservation_guest_mobile_input").value === ""){
         show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Guest Mobile Not Added`, 
             "Please add guest mobile number");
         toggle_show_make_reservation_add_guests_pane();
@@ -939,7 +939,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
 
     if(make_reservations_post_data.guests.length === 0){
         show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Guest(s) Not Added`, 
             "Please add how many adult and child guests");
         toggle_show_make_reservation_add_guests_pane();
@@ -1017,9 +1017,9 @@ function make_a_reservation_post_function(){
             console.log(data);
             create_guest_invoice(data.data);
             show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-check" aria-hidden="true"></i>
                  Finished Reservation`, 
-            "Your Reservation Finished Successfully!");
+            "Your Reservation Finished Successfully!", "success");
             after_reservation_clean_up_func();
         },
         error: err => {

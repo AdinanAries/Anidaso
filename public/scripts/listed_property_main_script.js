@@ -3746,9 +3746,16 @@ async function render_recent_hotel_booking(recent_booking) {
                     Room Guest(s)</p>
                     ${room_guests_markup}
             </div>
-            <p onclick="toggle_show_booked_rooms();" style="text-align: center; color: white; font-size: 13px; padding: 10px; border-radius: 4px; background-color: rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; margin: 10px 0;">
-                See all bookings
-            </p>
+            <div style="border-radius: 4px; background-color: rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); display: flex; margin: 10px 0; overflow: hidden;" >
+                <p onclick="toggle_show_booked_rooms();" style="width: calc(50% - 1px); border-right: 1px solid rgba(255,255,255,0.2); text-align: center; color: white; font-size: 13px; padding: 10px; cursor: pointer;">
+                    See bookings
+                </p>
+                <p onclick="continue_room_reservation();" style="width: 50%; text-align: center; background-color: rgb(4, 35, 47); color: white; font-size: 13px; padding: 10px; cursor: pointer">
+                    Book New Guest
+                </p>
+            </div>
+            
+            
         </div>
     `;
 }
@@ -3777,8 +3784,8 @@ function get_hotel_bookings(hotel_id) {
                             If you expect to have bookings, then please make sure 
                             that your account is active or verified.
                         </p>
-                        <p style="text-align: center; color: white; font-size: 13px; padding: 10px; border-radius: 4px; background-color: rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; margin: 10px 0;">
-                            Book A Room
+                        <p onclick="continue_room_reservation();" style="text-align: center; color: white; font-size: 13px; padding: 10px; border-radius: 4px; background-color: rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; margin: 10px 0;">
+                            Book New Guest
                         </p>
                     </div>
                 `;
