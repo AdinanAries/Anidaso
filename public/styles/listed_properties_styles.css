@@ -252,9 +252,9 @@ li{
   overflow: visible;
 }
 .room_availability_grid_view .overlap {
-  border-radius: 0 !important;
+  /*border-radius: 0 !important;*/
   background-color: crimson !important;
-  border: none !important;
+  border-color: rgb(53, 0, 11) !important;
 }
 .room_availability_grid_view .focused_on_room td {
   padding-top: 10px !important;

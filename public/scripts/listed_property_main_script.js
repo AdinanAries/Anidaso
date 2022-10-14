@@ -1207,14 +1207,6 @@ async function show_guest_manager_edit_guest_div() {
     toggle_show_guest_manager_edit_guest();
 }
 
-function show_all_invoices() {
-    $("#all_invioces_pane").toggle("up");
-}
-
-function hide_all_invoices() {
-    $("#all_invioces_pane").toggle("up");
-}
-
 function show_all_payouts() {
     $("#all_payouts_pane").toggle("up");
 }

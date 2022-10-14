@@ -1,3 +1,13 @@
+async function show_all_invoices() {
+    $("#all_invioces_pane").toggle("up");
+    current_cheap_hotel_wellgo_invoice = await get_all_cheap_hotel_wellgo_invoices(window.localStorage.getItem("ANDSBZID"));
+    await render_all_cheap_hotel_wellgo_invoices(current_cheap_hotel_wellgo_invoice);
+}
+
+function hide_all_invoices() {
+    $("#all_invioces_pane").toggle("up");
+}
+
 function get_all_cheap_hotel_wellgo_invoices(brand_id){
     return $.ajax({
         type: "GET",
@@ -19,7 +29,7 @@ async function cheap_hotel_render_initial_wellgo_invoices(invoice_obj){
             <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>
             Nothing to show at the moment
         </div>
-    `
+    `;
     if(invoice_obj[0].invoice_items.length > 0){
         document.getElementById('logged_in_hotel_invoices_list').innerHTML='';
         for(let i=0; i<invoice_obj[0].invoice_items.length; i++){
@@ -61,6 +71,93 @@ function save_cheap_hotel_wellgo_invoices(){
             return err;
         }
     });
+}
+
+async function render_all_cheap_hotel_wellgo_invoices(invoice_obj){
+
+    document.getElementById('all_invoices_list_container').innerHTML=`
+        <div style="text-align: center; padding: 30px 10px; color: white; border: 1px solid red; background-color: rgba(0,0,0,0.5); font-size: 14px;">
+            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>
+            Nothing to show at the moment
+        </div>
+    `;
+
+    if(invoice_obj[0].invoice_items.length > 0){
+
+        //Current Invoice which is the pending one
+        let j = (invoice_obj[0].invoice_items.length - 1);
+        if(invoice_obj[0].invoice_items[j].status==="pending"){
+            let f_card = invoice_obj[0].invoice_items[j].card.number;
+            let f_date = change_iso_date_to_readable_format(invoice_obj[0].invoice_items[j].date_paid || invoice_obj[0].invoice_items[j].date_due);
+            let f_amount = invoice_obj[0].invoice_items[j].total;
+            let f_status = invoice_obj[0].invoice_items[j].status
+            let f_name = invoice_obj[0].invoice_items[j].name.includes("subscription") ? "Subscription" : invoice_obj[0].invoice_items[j].name;
+            document.getElementById("all_invoices_current_invoice").innerHTML=`
+                <div style="cursor: pointer; background-color: rgba(0,0,0,0.5); padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
+                    <p style="color:rgb(0, 179, 233); font-size: 14px;">
+                        <span style="font-size: 14px; margin-right: 5px;">
+                            <span style="color: rgba(255,255,255,0.5);">
+                            ${f_card}</span>
+                            <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                            ${f_name}
+                            <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                            (current)
+                        </span>
+                    </p>
+                    <p style="margin-left: 10px; color: white;">
+                        <span style="font-size: 14px; color: rgb(255, 132, 132);">${f_date}</span>
+                        <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                        <span style="margin-left: 5px; font-size: 14px;">$${f_amount}</span>
+                    </p>
+                </div>
+            `;
+        }
+        
+
+        document.getElementById('all_invoices_list_container').innerHTML='';
+        for(let i=0; i<invoice_obj[0].invoice_items.length; i++){
+            let card = invoice_obj[0].invoice_items[i].card.number;
+            let date = change_iso_date_to_readable_format(invoice_obj[0].invoice_items[i].date_paid || invoice_obj[0].invoice_items[i].date_due);
+            let amount = invoice_obj[0].invoice_items[i].total;
+            let status = invoice_obj[0].invoice_items[i].status;
+            if(status.toLowerCase().includes('paid')){
+                status = `
+                    <i class="fa fa-check" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
+                    ${status}
+                `;
+            }else{
+                status = `
+                    <span style="color: red; font-size: 14px;">
+                        <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>
+                        ${status}
+                    </span>
+                `;
+                
+            }
+            let name = invoice_obj[0].invoice_items[j].name.includes("subscription") ? "Subscription" : invoice_obj[0].invoice_items[j].name;
+            document.getElementById("all_invoices_list_container").innerHTML += `
+                <div style="padding: 10px;">
+                    <div style="cursor: pointer; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
+                        <p style="font-size: 14px; color: lightgreen;">
+                            <span style="font-size: 14px; margin-right: 5px;">
+                                <span style="color: rgba(255,255,255,0.5);">
+                                ${card}</span>
+                                <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                                ${name}
+                                <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                                (${status})
+                            </span>
+                        </p>
+                        <p style="margin-left: 10px; color: white;">
+                            <span style="font-size: 14px;">${date}</span>
+                            <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
+                            <span style="margin-left: 5px; font-size: 13px;">$${amount}</span>
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+    }
 }
 
 //save_cheap_hotel_wellgo_invoices();
