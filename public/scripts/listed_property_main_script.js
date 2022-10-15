@@ -2770,7 +2770,8 @@ async function show_room_availability(room_id, property_id) {
 
     toggle_show_make_room_reservation_div();
 
-    let the_rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
+    //let the_rooms = await get_and_return_rooms(window.localStorage.getItem("ANDSBZID"));
+    let the_rooms = await get_and_return_cheap_hotel_rooms_by_property_id(property_id);
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
     if (the_rooms) {
@@ -2797,18 +2798,16 @@ async function show_room_availability(room_id, property_id) {
             <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
         `;
     }
+    rooms_grid_view_config.property_id = property_id;
+    document.getElementById("make_reservation_property_select").value = property_id;
 
     document.getElementById("make_reservation_room_select").innerHTML = '';
-
     let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(document.getElementById("make_reservation_property_select").value);
     for (let i = 0; i < rooms.length; i++) {
         document.getElementById("make_reservation_room_select").innerHTML += `
             <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
         `;
     }
-
-    rooms_grid_view_config.property_id = property_id;
-    document.getElementById("make_reservation_property_select").value = property_id;
     rooms_grid_view_config.rooms_id = room_id;
     document.getElementById("make_reservation_room_select").value = room_id;
 
