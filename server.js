@@ -861,8 +861,8 @@ app.post("/cheap_hotels/", async (req, res, next) =>{
 
   let hotels = await cheap_hotel.find();
 
-  res.send([]);
-  //res.send(hotels);
+  //res.send([]);
+  res.send(hotels);
   /*/this code should be replaced with that to read data from DB
   fs.readFile('./book_cheap_hotels_data.json', 'utf8', function (err,data) {
     if (err) {

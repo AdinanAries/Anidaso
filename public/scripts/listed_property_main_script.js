@@ -3561,7 +3561,7 @@ function update_cheap_room(room_obj, room_id) {
     });
 }
 
-async function render_hotel_rooms(rooms_list, property_id) {
+async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
 
     if (rooms_list.length === 0) {
         document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
@@ -3592,6 +3592,24 @@ async function render_hotel_rooms(rooms_list, property_id) {
         return each.property_id === property_id
     });
 
+    //generating paginations
+    document.getElementById("hero_section_all_property_rooms_paginator").style.display="none";
+    let total_pages = (rooms_sublist.length/skip);
+    if(total_pages > 1){
+        document.getElementById("hero_section_all_property_rooms_paginator").style.display="flex";
+        document.getElementById("hero_section_all_property_rooms_paginator").innerHTML=""
+        for(let pg=1; pg<=total_pages; pg++){
+            document.getElementById("hero_section_all_property_rooms_paginator").innerHTML += `
+                <div id="hero_section_all_property_rooms_paginator_item${pg}" style="background-color: #00244a; cursor: pointer; color: white; border: 1px solid rgba(126, 177, 255, 0.285); width: 30px; height: 30px; border-radius: 100%; margin: 0 2px; display: flex; justify-content: center; align-items: center;">
+                    ${pg}
+                </div>
+            `;
+            if(pg===((page/skip)+1)){
+                document.getElementById("hero_section_all_property_rooms_paginator_item"+pg).style.backgroundColor="crimson";
+            }
+        }
+    }
+
     //console.log(rooms_sublist);
     let all_properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
     let all_props_markup = "";
@@ -3620,7 +3638,7 @@ async function render_hotel_rooms(rooms_list, property_id) {
             </p>
             <div id="all_rooms_on_hero_section_props_select" style="display: none; width: calc(100% - 20px); position: absolute; top: 0; background-color: rgb(41, 66, 88); box-shadow: 1px 2px 3px rgba(0,0,0,0.5); border-radius: 4px; padding: 5px;">
                 <p onclick="$('#all_rooms_on_hero_section_props_select').slideUp('fast');"
-                    style="position: absolute; top: 4px; right: 4px; background-color: crimson; border-radius: 50px; width: 25px; height: 25px; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer;">
+                    style="position: absolute; box-shadow: 1px 2px 3px rgba(0,0,0,0.4); top: 4px; right: 4px; background-color: crimson; border-radius: 50px; width: 25px; height: 25px; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer;">
                     <i class="fa fa-times" ></i><p>
                 ${all_props_markup}
             </div>
@@ -3642,8 +3660,11 @@ async function render_hotel_rooms(rooms_list, property_id) {
         </p>
     `;
 
-
-    for (let r = 0; r < rooms_sublist.length; r++) {
+    let last = page+skip;
+    if(last>=rooms_sublist.length){
+        last = (rooms_sublist.length);
+    }
+    for(let r = page; r < last; r++){
 
         let checkin = "N/A";
         let checkout = "N/A";
@@ -3718,8 +3739,11 @@ async function render_hotel_rooms(rooms_list, property_id) {
             </tr>
         `;
 
-        if (r > 2)
+        /*if (r >= 2){
             break;
+            
+        }*/
+            
 
     }
 
@@ -3732,10 +3756,20 @@ async function render_hotel_rooms(rooms_list, property_id) {
         `
     }
 
+    //property select onclicks
     if(all_properties.length>0){
         for(let prop of all_properties){
             document.getElementById("r_prop"+prop._id).onclick=()=>{
-                render_hotel_rooms(rooms_list, prop._id);
+                render_hotel_rooms(rooms_list, prop._id, 0, 3);
+            }
+        }
+    }
+
+    //pagination onclicks
+    if(total_pages > 1){
+        for(let pg=1; pg<=total_pages; pg++){
+            document.getElementById("hero_section_all_property_rooms_paginator_item"+pg).onclick=()=>{
+                render_hotel_rooms(rooms_list, property_id, ((pg-1)*skip), skip);
             }
         }
     }
