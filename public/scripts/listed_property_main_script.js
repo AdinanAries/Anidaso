@@ -3561,7 +3561,7 @@ function update_cheap_room(room_obj, room_id) {
     });
 }
 
-async function render_hotel_rooms(rooms_list) {
+async function render_hotel_rooms(rooms_list, property_id) {
 
     if (rooms_list.length === 0) {
         document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
@@ -3578,7 +3578,7 @@ async function render_hotel_rooms(rooms_list) {
         return null;
     }
     
-    let property = await get_and_return_hotel_property_by_id(rooms_list[0].property_id);
+    let property = await get_and_return_hotel_property_by_id(property_id);
 
     let property_city = "";
     let property_address_tail = "";
@@ -3589,18 +3589,42 @@ async function render_hotel_rooms(rooms_list) {
     }
 
     let rooms_sublist = rooms_list.filter(each => {
-        return each.property_id === rooms_list[0].property_id
+        return each.property_id === property_id
     });
 
     //console.log(rooms_sublist);
-
+    let all_properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
+    let all_props_markup = "";
+    if(all_properties.length>0){
+        for(let prop of all_properties){
+            all_props_markup += `
+                <p id="r_prop${prop._id}" style="padding: 10px; letter-spacing: 1px; text-align: center; color: white; cursor: pointer; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                    ${prop.city},
+                    <span style="color: rgba(255,255,255,0.6); font-size: 12px; letter-spacing: 1px;">
+                    ${prop.street_address}, ${prop.country}
+                    </span>
+                </p>
+            `;
+        }
+    }
     document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
-        <p style="margin-top: 15px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
-            ${property_city},
-            <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
-                ${property_address_tail}
-            </span>
-        </p>
+        <div style="position: relative;">
+            <p style="margin-top: 15px; letter-spacing: 1px; text-align: center; color: rgb(205, 218, 168); font-size: 13px; margin-bottom: 5px;">
+                ${property_city},
+                <span style="color:rgb(127, 144, 175); font-size: 12px; letter-spacing: 1px;">
+                    ${property_address_tail}
+                </span>
+                <span onclick="$('#all_rooms_on_hero_section_props_select').slideDown('fast');">
+                    <i class="fa fa-refresh" style="color: rgba(255,255,255,0.5); margin-left: 10px; cursor: pointer;"></i>
+                </span>
+            </p>
+            <div id="all_rooms_on_hero_section_props_select" style="display: none; width: calc(100% - 20px); position: absolute; top: 0; background-color: rgb(41, 66, 88); box-shadow: 1px 2px 3px rgba(0,0,0,0.5); border-radius: 4px; padding: 5px;">
+                <p onclick="$('#all_rooms_on_hero_section_props_select').slideUp('fast');"
+                    style="position: absolute; top: 4px; right: 4px; background-color: crimson; border-radius: 50px; width: 25px; height: 25px; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer;">
+                    <i class="fa fa-times" ></i><p>
+                ${all_props_markup}
+            </div>
+        </div>
         <table class="all_rooms_list_table">
             <tbody id="dashboard_onload_displayed_rooms_list">
                 <tr>
@@ -3612,7 +3636,7 @@ async function render_hotel_rooms(rooms_list) {
                 </tr>
             </tbody>
         </table>
-        <p onclick="show_all_hotel_property_rooms('${rooms_list[0].property_id}')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+        <p onclick="show_all_hotel_property_rooms('${property_id}')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
             view all rooms
             <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
         </p>
@@ -3699,6 +3723,23 @@ async function render_hotel_rooms(rooms_list) {
 
     }
 
+    if(rooms_sublist.length===0){
+        document.getElementById("dashboard_onload_displayed_rooms_list").innerHTML = `
+            <div style="font-weight: initial; padding: 30px; min-width: 280px; text-align: center; margin-top: 10px; color: white; font-size: 14px; border: 1px solid red; background-color: rgba(0,0,0,0.5);">
+                <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
+                no rooms were found!
+            </div>
+        `
+    }
+
+    if(all_properties.length>0){
+        for(let prop of all_properties){
+            document.getElementById("r_prop"+prop._id).onclick=()=>{
+                render_hotel_rooms(rooms_list, prop._id);
+            }
+        }
+    }
+
 }
 
 //functions after loading hotel
@@ -3708,7 +3749,7 @@ function get_hotel_rooms(hotel_id) {
         url: "/get_cheap_hotel_rooms/" + hotel_id,
         success: res => {
             //console.log(res);
-            render_hotel_rooms(res)
+            render_hotel_rooms(res, res[0].property_id);
         },
         error: err => {
             console.log(err);
