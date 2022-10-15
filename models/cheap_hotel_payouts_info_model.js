@@ -1,26 +1,24 @@
 const mongoose = require("mongoose");
 require("mongoose-type-url");
 
-let signup_user_schema = mongoose.Schema({
-    id: {
-        type: mongoose.Schema.ObjectId,
-    },
-    first_name: {
-        type: String,
-        required: true
-    },
-    last_name: {
-        type: String,
-        required: true
-    },
-    email: {
+let payouts_schema = mongoose.Schema({
+    hotel_brand_id: {
         type: String,
         required: true,
+        index: true
     },
-    profile_picture: {
-        type: String,
-        required: true
+    card: {
+        type: Object
+    },
+    current: {
+        type: Object
+    },
+    past: {
+        type: Array
+    },
+    cycle: {
+        type: String
     }
 });
 
-module.exports = new mongoose.model("User", signup_user_schema);
+module.exports = new mongoose.model("cheap_hotel_payouts", payouts_schema);

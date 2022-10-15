@@ -2330,42 +2330,21 @@
                 </p>
                 <div style="background-color:rgb(0, 29, 46); font-size: 14px; padding-left: 10px;">
                     <i style="color: orangered;" class="fa fa-calendar" aria-hidden="true"></i>
-                    <input readonly="true" style="font-size: 14px; padding: 10px; background: none; border: none; color: white; width: calc(100% - 50px)" type="text" value="March 25, 2022 - Dec 25, 2022" />
+                    <input readonly="true" style="font-size: 14px; padding: 10px; background: none; border: none; color: white; width: calc(100% - 136px)" type="text" value="March 25, 2022 - Dec 25, 2022" />
+                    <select style="border: none; font-size: 14px; border-left: 1px solid rgba(255,255,255,0.2); text-align: center; padding: 10px; color: white; background:rgb(9, 62, 83);">
+                        <option>Sort Here</option>
+                        <option>ascending</option>
+                        <option>descending</option>
+                    </select>
                 </div>
             </div>
             <div class="page_popup_content_body" style="height: calc(100% - 109px);">
                 <div>
-                    <div>
-                        <div style="cursor: pointer; background-color: rgba(0,0,0,0.5); padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
-                            <p style="color:rgb(0, 179, 233); font-size: 14px;">
-                                <span style="font-size: 13px; color: rgb(255, 132, 132); margin-right: 5px;">Next:</span>
-                                ****3241
-                            </p>
-                            <p style="margin-left: 10px; color: white;">
-                                <span style="margin-left: 5px; font-size: 13px;">$500.00</span>
-                                <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
-                                <span style="margin-left: 5px; font-size: 13px; color: rgb(255, 132, 132);">March 23 2022</span>
-                                <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
-                                <span style="margin-left: 5px; font-size: 13px; color: rgb(255, 132, 132);">Monthly</span>
-                            </p>
-                        </div>
+                    <div id="all_payouts_current_payout_cycle">
+                        <!--current payout cycle goes here-->
                     </div>
-                    <div id="all_invoices_list_container">
-                        <div style="padding: 10px;">
-                            <div style="cursor: pointer; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
-                                <p style="color:rgb(0, 179, 233); font-size: 14px;">
-                                    <span style="font-size: 13px; color: olive; margin-right: 5px;">On:</span>
-                                    ****3241
-                                </p>
-                                <p style="margin-left: 10px; color: white;">
-                                    <span style="margin-left: 5px; font-size: 13px;">$500.00</span>
-                                    <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
-                                    <span style="font-size: 13px;">March 23 2022</span>
-                                    <span style="margin-left: 5px; color: rgba(255,255,255,0.2);">|</span>
-                                    <span style="margin-left: 5px; font-size: 13px;">Monthly</span>
-                                </p>
-                            </div>
-                        </div>
+                    <div id="all_payouts_list_container">
+                        
                         <div style="padding: 10px;">
                             <div style="cursor: pointer; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); display: flex; justify-content: space-between;">
                                 <p style="color:rgb(0, 179, 233); font-size: 14px;">
@@ -3217,7 +3196,7 @@
                 
             </p>
             <div class="page_popup_content_body" style="height: calc(100% - 75px);">
-                <p id="hotel_property_all_rooms_body_title" style="color: white; font-size: 13px; margin: 10px 0; text-align: center; font-weight: bolder;">
+                <p id="hotel_property_all_rooms_body_title" style="color: rgba(255,255,255,0.5); font-size: 13px; margin: 10px 0; text-align: center;">
                 </p>
                 <div id="hotel_property_all_rooms_list">
                     <div class="each_property_info" style="background-color: rgba(0, 0, 0, 0.4); border-radius: 4px; padding: 10px;">
@@ -3954,8 +3933,9 @@
                     <div class="logged_in_hotel_details_each_section_content">
                         <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                             Payouts Card</p>
-                        <p class="logged_in_payments_card_display" style="margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">Card Number:</span>
-                             ****1342
+                        <p class="logged_in_payments_card_display" style="margin-top: 10px; font-weight: bolder; color: white;">
+                            <span style="color:aqua; font-size: 14px;">Card Number:</span>
+                            <span id="initial_payouts_card_number_display"></span>
                              <i onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
                         </p>
                         <p style="color: white; font-size: 14px; margin-top: 5px;">
@@ -4008,23 +3988,12 @@
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
                                 Your Payouts</p>
-                            <p class="logged_in_payments_card_display" style="display: none; margin-top: 10px; font-weight: bolder; color: white;"><span style="color:aqua; font-size: 14px;">
-                                Account:</span>
-                                ****3241
-                                <i onclick="toggle_hide_show_anything('loggedin_hotel_edit_payments_forms')" style="color:rgb(127, 144, 175); font-size: 18px; margin-left: 15px; cursor: pointer;" class="fa fa-pencil" aria-hidden="true"></i>
-                            </p>
-                            <p style="color: white; font-size: 14px; margin-top: 5px;">
-                                <span style="color:aqua; font-size: 14px;">Current Period:</span>
-                                Mar 23rd - Mar 29th
-                            </p>
-                            <p style="color: white; font-size: 14px; margin-top: 5px;">
-                                <span style="color:aqua; font-size: 14px;">Total Sold:</span>
-                                $140.00
-                            </p>
-                            <p style="color: white; font-size: 14px; margin-top: 5px;">
-                                <span style="color:aqua; font-size: 14px;">Pay Date:</span>
-                                Feb 4, 2022
-                            </p>
+                            <div id="cheap_hotel_payouts_info_display">
+                                <p style="font-size: 14px; border: 1px solid red; text-align: center; padding: 30px 10px; margin: 10px; color: white; background-color: rgba(0,0,0,0.5);">
+                                    <i style="margin-right: 10px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                    no information available
+                                </p>
+                            </div>
                             <p onclick="show_all_payouts();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 13px; padding: 10px;">
                                 see all payouts</p>
                             <div style="background-color: rgba(0, 0, 0, 0.5); margin-top: 10px; border: 1px solid aqua; padding: 0 10px; overflow: hidden;">
@@ -4659,5 +4628,6 @@
     <script src="scripts/include_service_to_booking_scripts.js" type="text/javascript"></script>
     <script src="scripts/guests_and_rooms_tracker.js" type="text/javascript"></script>
     <script src="scripts/wellgo_cheap_hotel_invoices.js" type="text/javascript"></script>
+    <script src="scripts/listed_property_payouts_script.js" type="text/javascript"></script>
 </body>
 </html>

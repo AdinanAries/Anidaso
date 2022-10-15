@@ -86,6 +86,80 @@ var new_hotel_facilities_list_to_save = {
     items: []
 };
 
+var main_cheap_hotel_payouts_object = {
+    hotel_brand_id: window.localStorage.getItem("ANDSBZID"),
+    card: {
+        number: "***2552",
+        exp: "09/25",
+        cvv: 902,
+        holder: "Mohammed Adinan"
+    },
+    current: {
+        period: "2022-10-14 - 2022-11-14",
+        date_due: "2022-11-14",
+        date_paid_out: "",
+        status: "pending",
+        items_sold: [
+            {
+                name: "Room 5D",
+                item_id: "",
+                invoice_id: "",
+                total: 83.2
+            }
+        ],
+        invoices: [
+            "invoice id",
+            "invoice id",
+        ],
+        cards: [
+            {
+                number: "***2552",
+                exp: "09/25",
+                cvv: 902,
+                holder: "Mohammed Adinan"
+            }
+        ],
+        cycle: "monthly"
+    },
+    cycle: "monthly",
+    past: [
+        {
+            period: "2022-09-14 - 2022-10-14",
+            date_due: "2022-10-14",
+            date_paid_out: "2022-10-14",
+            status: "pending",
+            items_sold: [
+                {
+                    name: "Room 10C",
+                    item_id: "",
+                    invoice_id: "",
+                    total: 45.2
+                },
+                {
+                    name: "Room 5D",
+                    item_id: "",
+                    invoice_id: "",
+                    total: 83.2
+                }
+            ],
+            invoices: [
+                "invoice id",
+                "invoice id",
+            ],
+            cards: [
+                {
+                    number: "***2552",
+                    exp: "09/25",
+                    cvv: 902,
+                    holder: "Mohammed Adinan"
+                }
+            ],
+            cycle: "monthly"
+        }
+    ]
+}
+var cheap_hotel_payouts_object = main_cheap_hotel_payouts_object;
+
 var all_room_types = [
     "Single Room",
     "Double Room",
@@ -1205,14 +1279,6 @@ async function show_guest_manager_edit_guest_div() {
     }
 
     toggle_show_guest_manager_edit_guest();
-}
-
-function show_all_payouts() {
-    $("#all_payouts_pane").toggle("up");
-}
-
-function hide_all_payouts() {
-    $("#all_payouts_pane").toggle("up");
 }
 
 function toggle_show_guest_manager_menu() {
@@ -3424,11 +3490,14 @@ function get_logged_in_hotel_infor() {
             //getting hotel bookings
             get_hotel_bookings(data._id);
 
-            //getting bills and payments
+            //getting bills and payments and payouts
             (async ()=>{
                 current_cheap_hotel_wellgo_invoice = await get_all_cheap_hotel_wellgo_invoices(data._id);
                 await cheap_hotel_render_initial_wellgo_invoices(current_cheap_hotel_wellgo_invoice);
+                cheap_hotel_payouts_object = await get_all_cheap_hotel_payouts(data._id);
+                await cheap_hotel_render_initial_payout_information(cheap_hotel_payouts_object);
             })()
+
         },
         error: err => {
             console.log(err);

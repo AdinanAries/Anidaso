@@ -63,6 +63,7 @@ let cheap_hotel_invoice = require("./models/cheap_hotel_invoices_model");
 let bookings_data = require("./models/bookings_log_model");
 let wellgo_invoices_for_cheap_hotels = require("./models/wellgo_invoices_for_cheap_hotels_model");
 let wellgo_cheap_hotel_account_status = require("./models/wellgo_cheap_hotel_account_status_model");
+let cheap_hotel_payouts = require('./models/cheap_hotel_payouts_info_model');
 //var booked_hotel_data = require("./models/booked_hotels_log");
 
 
@@ -3217,6 +3218,31 @@ app.get("/get_wellgo_cheap_hotel_account_status/:hotel_brand_id", async(req, res
     console.log(e.message);
     res.status(500).send("error occured on server")
   }
+});
+
+app.post('/save_cheap_hotel_payouts/', async(req, res, next) => {
+  try{
+    let payouts = await new cheap_hotel_payouts(req.body);
+    payouts = await payouts.save();
+    res.send(payouts);
+  }catch(e){
+    console.log(e.message);
+    res.send([]);
+  }
+    
+});
+
+app.get('/get_all_cheap_hotel_payouts/:hotel_brand_id', async(req, res, next) => {
+  try{
+      let payouts = await cheap_hotel_payouts.find({
+        hotel_brand_id: req.params.hotel_brand_id
+      });
+      res.send(payouts);
+  }catch(e){
+    console.log(e.message);
+    res.send([]);
+  }
+  
 });
 
 //Spinning the server here
