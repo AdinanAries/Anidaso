@@ -1735,31 +1735,52 @@ function return_cheap_hotel_rating_markup(rating_number = 1) {
 
     return `
             <p style="margin-top: 10px; margin-bottom: 5px; color: aliceblue; font-weight: bolder; font-size: 13px; letter-spacing: 1px;">
-                    Your Rating 
+                    Brand Quality 
                     <span style="font-size: 12px; color: rgb(137, 204, 235); margin-left: 10px;">
                         ${rating_remark}
                     </span>
                 </p>
-            <div style="width: 250px; background: linear-gradient(to right, rgb(201, 43, 15), tomato, rgb(206, 255, 71),rgb(88, 236, 51),rgb(6, 175, 14));">
+            <div style="position: relative; width: 300px; background: linear-gradient(to right, rgb(201, 43, 15), tomato, rgb(206, 255, 71),rgb(88, 236, 51),rgb(6, 175, 14));">
+                <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 2px; left: 4px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                    Overall Rating<p>    
                 <div style="padding: 3px; border-right: black 4px solid; width: calc(${rating_percentage}% - 12px);">
                     <p style="font-size: 12px; font-weight: bolder; text-align: right;">${rating_percentage}%</p>
                 </div>
             </div>
-            <div style="width: 250px; height: 20px; display: flex; flex-direction: row !important; margin: 10px 0; margin-top: 5px;">
-                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <div style="background-color: rgb(201, 43, 15);  height: 20%;"></div>
+            <div style="width: 300px; height: 60px; display: flex; flex-direction: row !important; margin: 10px 0; margin-top: 5px;">
+                <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                        Verified Account<p>   
+                    <div style="background-color: rgb(201, 43, 15);  height: 45%;"></div>
                 </div>
-                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <div style="background-color: tomato; height: 40%;"></div>
+                <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                        Room Quality<p>
+                    <div style="background-color: tomato; height: 30%;"></div>
                 </div>
-                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <div style="background-color: rgb(206, 255, 71); height: 60%;"></div>
+                <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                        Guest Review<p>
+                    <div style="background-color: rgb(206, 255, 71); height: 40%;"></div>
                 </div>
-                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <div style="background-color: rgb(88, 236, 51); height: 80%;"></div>
+                <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                        Amenity Mark<p>
+                    <div style="background-color: rgb(88, 236, 51); height: 35%;"></div>
                 </div>
-                <div style="width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <div style="background-color: rgb(6, 175, 14); height: 100%;"></div>
+                <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
+                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                        Market
+                        Access<p>    
+                    <div style="background-color: rgb(6, 175, 14); height: 90%;"></div>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: space-between; background-color: rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 3px; align-items: center;">
+                    <p style="font-size: 11px; color: orange; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 2px;">
+                    100%</p>
+                    <p style="font-size: 11px; color: orange; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 2px;">
+                    50%</p>
+                    <p style="font-size: 11px; color: orange;">
+                    0%</p>
                 </div>
             </div>
     `;
@@ -3594,7 +3615,7 @@ async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
 
     //generating paginations
     document.getElementById("hero_section_all_property_rooms_paginator").style.display="none";
-    let total_pages = (rooms_sublist.length/skip);
+    let total_pages = (Math.ceil(rooms_sublist.length/skip));
     if(total_pages > 1){
         document.getElementById("hero_section_all_property_rooms_paginator").style.display="flex";
         document.getElementById("hero_section_all_property_rooms_paginator").innerHTML=""
