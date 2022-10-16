@@ -2556,7 +2556,6 @@
                         <p style="color: rgba(255, 255, 255, 0.5); text-align: center; font-size: 13px; margin: 10px 0; margin-top: 20px;">
                             Availability Preview</p>
                         <div>
-                            
                             <div style="width: 100%; overflow-x: auto; background-color: rgba(0, 0, 0, 0.4); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
                                 <div style="margin: 10px;">
                                     <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-right: 20px;">
@@ -2739,7 +2738,7 @@
                         </div>
                     </div>
                     <div id="make_reservation_add_guests_pane" style="display: none; padding-bottom: 60px;">
-                        <p style="font-size: 13px; margin-top: 10px; margin-bottom: 5px; color: rgb(149, 215, 241); font-weight: bolder;">
+                        <p style="font-size: 13px; margin-top: 10px; margin-bottom: 5px; color: rgb(149, 215, 241);">
                             Number of Guests</p>
                         <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
                             <div style="width: calc(50% - 5px);">
@@ -2757,24 +2756,24 @@
                               <input id="make_reservation_popup_number_Of_children_input" onchange="make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false);" style="width: calc(100% - 20px); padding: 10px; border-radius: 4px; border: none; font-size: 14px;" type="number" value="0" placeholder="how many children"/>
                             </div>
                           </div>
-                        <p style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; color: rgb(149, 215, 241); font-weight: bolder;">
+                        <p style="font-size: 13px; margin-top: 20px; margin-bottom: 10px; color: rgb(149, 215, 241);">
                             Add Guest(s) Information Below</p>
                     
                         <div id="make_reservation_number_guests_display_p">
                             
                         </div>
                         <div>
-                            <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 15px 0; margin-top: 20px;">
+                            <p style="color: white; text-align: center; font-size: 13px; margin: 15px 0; margin-top: 20px;">
                                 Contanct Information</p>
                             <div class="flex_row_default_flex_column_mobile" style="margin-top: 10px;">
                                 <div class="flex_child_of_two" style="width: calc(50% - 5px);">
                                     <div>
-                                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Email:</p>
+                                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">Email:</p>
                                         <input id="mk_reservation_guest_email_input" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="email" placeholder="add email here"/>
                                     </div>
                                 </div>
                                 <div class="flex_child_of_two flex_non_first_child" style="width: calc(50% - 5px);">
-                                    <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Mobile:</p>
+                                    <p style="color: white; font-size: 13px; margin-bottom: 10px;">Mobile:</p>
                                     <div style="display: flex; flex-direction: row !important;">
                                         <select id="mk_reservation_guest_mobile_country_code_select" style="border: none; padding: 10px; width: 75px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 14px;">
                                             <option value="1">
@@ -2790,7 +2789,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p style="color: white; text-align: center; font-weight: bolder; font-size: 13px; margin: 10px 0; margin-top: 20px;">
+                        <p style="color: white; text-align: center; font-size: 13px; margin: 10px 0; margin-top: 20px;">
                             Personal Information</p>
                         <div id="make_reservation_guests_list">
                             <!--p style="color:rgb(245, 196, 151); font-size: 13px; letter-spacing: 1px; margin: 10px;">
@@ -2798,12 +2797,13 @@
                         </div>
                     </div>
                 </div>
-                <div style="position: absolute; width: calc(100% - 50px); bottom: 30px; left: 25px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                    <div onclick="toggle_show_make_reservation_find_spot_pane();" id="make_reservation_pane_back_btn" style="opacity: 0.2; cursor: pointer; padding: 10px; color: white; font-size: 14px; background-color:rgb(25, 90, 90); border-radius: 4px;">
-                        <i style="margin-right: 10px; color: rgb(255, 59, 59)" class="fa fa-long-arrow-left" aria-hidden="true"></i>back
+                <div style="position: absolute; width: calc(100% - 20px); padding: 10px; padding-bottom: 20px; bottom: 0; left: 0; display: flex; flex-direction: row !important; justify-content: space-between; border-top: 2px solid rgba(255,255,255,0.3); background-color:rgb(80, 114, 129);">
+                    <div onclick="toggle_show_make_reservation_find_spot_pane();" id="make_reservation_pane_back_btn" style="opacity: 0.2; cursor: pointer; padding: 10px; color: white; font-size: 13px; background-color:rgb(0, 28, 29); border-radius: 4px; border: 1px solid rgba(255,255,255,0.2)">
+                        <i style="margin-right: 10px; color: rgba(255,255,255,0.6);" class="fa fa-calendar" aria-hidden="true"></i>View Spots
                     </div>
-                    <div onclick="toggle_show_make_reservation_add_guests_pane();" id="make_reservation_pane_next_btn" style="cursor: pointer; padding: 10px; color: white; font-size: 14px; background-color:rgb(25, 90, 90); border-radius: 4px;">
-                        Next<i style="margin-left: 10px; color: rgb(0, 166, 243)" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    <div onclick="toggle_show_make_reservation_add_guests_pane();" id="make_reservation_pane_next_btn" style="cursor: pointer; padding: 10px; color: white; font-size: 13px; background-color:rgb(0, 28, 29); border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);">
+                        <i style="margin-right: 10px; color: rgba(255,255,255,0.6)" class="fa fa-users" aria-hidden="true"></i>
+                        Add Guests
                     </div>
                 </div>
             </div>
@@ -3432,20 +3432,20 @@
     </div-->
     <div id="page_full_screen_prompt" style="z-index: 200; display: none;" class="page_pop_up_cover">
 
-        <div style="display: flex; height: 100%; flex-direction: column !important; justify-content: center; padding: 0 10px;">
-          <div style="background: white; padding: 10px; max-width: 500px; margin: auto; border-radius: 4px;">
-            <p id="page_full_screen_prompt_title" style="font-weight: bolder; letter-spacing: 1px;text-align: center; background-color: crimson; padding: 10px; color: white; font-size: 14px;">
+        <div style="display: flex; height: 100%; flex-direction: column !important; justify-content: center;">
+          <div style="background: white; max-width: 500px; margin: auto; border-radius: 4px; overflow: hidden;">
+            <p id="page_full_screen_prompt_title" style="font-weight: bolder; letter-spacing: 1px;text-align: center; background-color: crimson; padding: 15px 10px; color: white; font-size: 14px;">
               <i style="color: orangered; font-size: 22px; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
               
             </p>
-            <p id="page_full_screen_prompt_msg" style="margin: 20px; font-size: 14px; letter-spacing: 1px; text-align: center;">
+            <p id="page_full_screen_prompt_msg" style="margin: 20px; font-size: 14px; letter-spacing: 1px; text-align: center; padding: 0 10px;">
               
             </p>
-            <div onclick="toggle_show_hide_page_full_screen_prompt();" style="text-align: center; font-size: 14px; padding: 10px; width: 100px; cursor: pointer; border-radius: 4px;
+            <div onclick="toggle_show_hide_page_full_screen_prompt();" style="text-align: center; font-size: 13px; padding: 10px; width: 100px; cursor: pointer; border-radius: 4px;
              background-color: #2a4255; color: white; margin: auto; margin-top: 10px;">
               OK
             </div>
-            <p style="text-align: center; font-size: 12px; margin-top: 10px;">
+            <p style="text-align: center; font-size: 12px; margin: 10px;">
                all rights reserved &copy; 
               <span style="color:brown; font-size: 10px; font-weight: bolder; letter-spacing: 1px;">
                 Wellgo

@@ -448,7 +448,7 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
                         <i style="color: red; margin-right: 5px;" class="fa fa-times" aria-hidden="true"></i>
                         cancel
                     </div>
-                    <div onclick="view_many_guests_running_invoice();" style="font-size: 14px; color: rgb(252, 255, 211); margin-left: 10px; padding: 5px; padding-left: 10px; cursor: pointer; border-left: 1px solid rgba(255,255,255,0.2);">
+                    <div onclick="view_each_guest_running_bill(${index});" style="font-size: 14px; color: rgb(252, 255, 211); margin-left: 10px; padding: 5px; padding-left: 10px; cursor: pointer; border-left: 1px solid rgba(255,255,255,0.2);">
                         view details
                     </div>
                 </div>

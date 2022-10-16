@@ -1408,8 +1408,11 @@ function show_prompt_to_user(title, msg, status='fail') {
     toggle_show_hide_page_full_screen_prompt();
     document.getElementById("page_full_screen_prompt_title").innerHTML = title;
     document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
-    if(status!=='fail'){
+    if(status==='success'){
         document.getElementById("page_full_screen_prompt_title").style.backgroundColor="green";
+    }
+    if(status=="warning"){
+        document.getElementById("page_full_screen_prompt_title").style.backgroundColor="rgb(212, 113, 0)";
     }
 }
 
@@ -2139,7 +2142,7 @@ async function search_room_get_selected_room() {
 
 }
 
-function set_search_room_inputs_options(properties) {
+async function set_search_room_inputs_options(properties, property_id="", room_id="") {
 
     document.getElementById("search_room_select_property_input").innerHTML = '';
     for (let i = 0; i < properties.length; i++) {
@@ -2148,7 +2151,14 @@ function set_search_room_inputs_options(properties) {
         `;
     }
 
-    set_rooms_for_search_selection();
+    if(property_id)
+        document.getElementById("search_room_select_property_input").value=property_id;
+    
+    await set_rooms_for_search_selection();
+    if(room_id)
+        document.getElementById("search_room_select_room_input").value=room_id;
+
+    
 }
 
 async function view_selected_room_full_details(room_id) {
@@ -2157,14 +2167,12 @@ async function view_selected_room_full_details(room_id) {
 
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
 
-    set_search_room_inputs_options(properties);
-
     $("#search_room_panel").toggle("up");
 
     let room = await get_and_return_hotel_room_by_id(room_id);
+    set_search_room_inputs_options(properties, room.property_id, room._id);
 
-    document.getElementById("search_room_select_room_input").value = room._id;
-    document.getElementById("search_room_select_property_input").value = room.property_id;
+    //document.getElementById("search_room_select_room_input").value = room._id;
 
     room.checkin = "N/A";
     room.checkout = "N/A";
@@ -2843,7 +2851,7 @@ function toggle_show_make_reservation_add_guests_pane() {
         show_prompt_to_user(`
             <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             OVERLAPPING SPOTS`,
-            "The spots you've chosen overlaps with exsiting bookings");
+            "The spots you've chosen overlaps with exsiting bookings", "warning");
         return null;
     }
 

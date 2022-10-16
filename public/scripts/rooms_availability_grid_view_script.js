@@ -164,29 +164,37 @@ function add_a_guest_DOB(input, index, type){
 
 function make_reservation_return_each_adult_guest_markup(number, index){
     return `
-        <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-            <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Adult ${number + 1}</p>
+        <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
+            <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
+                <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
+                <input style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <button style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
+                Search</button>
+            </div>
+            <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
+                <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
+                Adult ${number + 1}</p>
             <div class="flex_row_default_flex_column_mobile">
                 <div class="flex_child_of_two">
                     <div style="margin-top: 10px;">
-                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
+                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">First Name:</p>
                         <input id="mk_reservationS_adult_first_name_input_${number}" onchange="add_a_guest_first_name('mk_reservationS_adult_first_name_input_${number}', ${index});" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
                     </div>
                     <div style="margin-top: 20px;">
-                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
+                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
                         <input id="mk_reservationS_adult_last_name_input_${number}" onchange="add_a_guest_last_name('mk_reservationS_adult_last_name_input_${number}', ${index});" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
                     </div>
                 </div>
                 <div class="flex_child_of_two flex_non_first_child">
                     <div style="margin-top: 10px;">
-                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">
                             Gender</p>
                         <select id="mk_reservationS_adult_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_adult_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                         <div style="margin-top: 20px;">
-                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                            <p style="color: white; font-size: 13px; margin-bottom: 10px;">
                                 Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
                             <input id="mk_reservationS_adult_DOB_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
                         </div>
@@ -199,29 +207,37 @@ function make_reservation_return_each_adult_guest_markup(number, index){
 
 function make_reservation_return_each_child_guest_markup(number, index){
     return `
-        <div class="each_room_reservation_guest" style="background-color: #37a0f5; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-            <p style="font-size: 14px; font-weight: bolder; color:rgb(167, 2, 2); letter-spacing: 1px;">Child ${number + 1}</p>
+        <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
+            <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
+                <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
+                <input style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <button style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
+                Search</button>
+            </div>
+            <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
+                <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
+                Child ${number + 1}</p>
             <div class="flex_row_default_flex_column_mobile">
                 <div class="flex_child_of_two">
                     <div style="margin-top: 10px;">
-                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">First Name:</p>
+                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">First Name:</p>
                         <input id="mk_reservationS_child_first_name_input_${number}" onchange="add_a_guest_first_name('mk_reservationS_child_first_name_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
                     </div>
                     <div style="margin-top: 20px;">
-                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
+                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
                         <input id="mk_reservationS_child_last_name_input_${number}" onchange="add_a_guest_last_name('mk_reservationS_child_last_name_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
                     </div>
                 </div>
                 <div class="flex_child_of_two flex_non_first_child">
                     <div style="margin-top: 10px;">
-                        <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">
                             Gender</p>
                         <select id="mk_reservationS_child_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_child_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                         <div style="margin-top: 20px;">
-                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-bottom: 10px;">
+                            <p style="color: white; font-size: 13px; margin-bottom: 10px;">
                                 Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
                             <input id="mk_reservationS_child_DOB_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
                         </div>
@@ -883,8 +899,8 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
     if(is_there_overlap){
         show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                 Unavailable Spots`, 
-            "The spots you've chosen overlaps with exsiting bookings");
+                 OVERLAPPING SPOTS`, 
+            "The spots you've chosen overlaps with exsiting bookings",  "warning");
         return null;
     }
 
@@ -892,8 +908,8 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
 
         show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                 Dates Not Added`, 
-            "Please add checkin and checkout dates");
+                 DATES NOT ADDED`, 
+            "Please add checkin and checkout dates", "warning");
         if(document.getElementById("make_reservation_find_spot_pane").style.display === "none")
             toggle_show_make_reservation_find_spot_pane()
         return null;
@@ -913,8 +929,8 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
     if(!check_if_reservation_guesst_data_is_completed()){
         show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                 Guest(s) Info Not Added`, 
-            "Please add all guests information");
+                 GUEST(S) INFO NOT ADDED`, 
+            "Please add all guests information", "warning");
         toggle_show_make_reservation_add_guests_pane();
         return null
     }
@@ -975,7 +991,7 @@ function check_if_reservation_guesst_data_is_completed(){
     return true;
 }
 
-function after_reservation_clean_up_func(){
+function after_reservation_clean_up_func(booking_id=""){
      
     make_reservations_post_data.hotel_brand_id = "";
     make_reservations_post_data.property_id = "";
@@ -998,7 +1014,10 @@ function after_reservation_clean_up_func(){
         toggle_show_make_reservation_find_spot_pane();
     
     generate_and_display_grid_view_bookings();
-
+    if(booking_id){
+        document.getElementById("make_reservation_pane").style.display="none";
+        show_view_booking_div(booking_id, '');
+    }
 }
 
 function make_a_reservation_post_function(){
@@ -1020,7 +1039,7 @@ function make_a_reservation_post_function(){
                 <i style="margin-right: 10px; font-size: 20px; color: rgba(255,255,255,0.5);" class="fa fa-check" aria-hidden="true"></i>
                  Finished Reservation`, 
             "Your Reservation Finished Successfully!", "success");
-            after_reservation_clean_up_func();
+            after_reservation_clean_up_func(data.data._id.toString());
         },
         error: err => {
             console.log(err);
