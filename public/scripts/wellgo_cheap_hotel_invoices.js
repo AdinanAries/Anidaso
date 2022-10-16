@@ -160,4 +160,34 @@ async function render_all_cheap_hotel_wellgo_invoices(invoice_obj){
     }
 }
 
+$(function() {
+    $('#wellgo_cheap_hotel_invoices_date_filter_input').daterangepicker({
+      opens: 'left',
+      locale: {
+        cancelLabel: 'Clear'
+      }
+    }, function(start, end, label) {
+  
+      setTimeout(()=>{
+        document.getElementById("wellgo_cheap_hotel_invoices_date_filter_input").value = start.toString().substring(0,11) +" - "+ end.toString().substring(0,11);
+      }, 100);
+  
+      /*rooms_grid_view_config.picked_dates.checkin = start.format('YYYY-MM-DD');
+      rooms_grid_view_config.picked_dates.checkout = end.format('YYYY-MM-DD');
+
+      rooms_grid_view_config.calendar.first = start.format('YYYY-MM-DD');
+      rooms_grid_view_config.calendar.last = end.format('YYYY-MM-DD');
+
+      make_reservations_post_data.checkin_date = start.format('YYYY-MM-DD');
+      make_reservations_post_data.checkout_date = end.format('YYYY-MM-DD');
+
+      //fligh_search_data.departure_date = start.format('YYYY-MM-DD');
+      //fligh_search_data.return_date = end.format('YYYY-MM-DD');
+  
+      //window.localStorage.setItem("flights_post_data", JSON.stringify(fligh_search_data));
+  
+      //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));*/
+    });
+});
+
 //save_cheap_hotel_wellgo_invoices();

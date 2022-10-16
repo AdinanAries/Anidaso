@@ -21,7 +21,7 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <header style="border: none; padding-bottom: 20px;">
+    <header style="border: none;">
         <div class="wrapper">
             <div class="header_content">
                 <div class="site_logo_container">
@@ -38,65 +38,69 @@
         </div>
     </header>
     <main>
-        
-        <div class="hero_section" style="display: none;">
-            <div class="wrapper">
-                <h1 style="font-family: 'Courgette'; color: white; text-align: center; font-size: 24px; letter-spacing: 1px;">
-                    Reach the global market</h1>
-                <p style="font-family: 'Courgette'; color: white; text-align: center; letter-spacing: 1px; font-size: 15px;">
-                    Sell your brand world-wide
+        <div class="hero_section" style="padding-top: 40px;">
+            <div class="wrapper" style="width: 100%;">
+              <div style="max-width: 400px; background-color:rgb(0, 13, 24); margin: auto; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); box-shadow: 1px 2px 3px rgba(0,0,0,0.6); margin-bottom: 40px;">
+                  <div style="color: white; font-size: 18px; text-align: center; letter-spacing: 1px; margin-bottom: 5px; background-color: darkslategray; padding: 20px;">
+                    LOGIN
+                    <p style="font-size: 14px; text-align: center; color: rgba(255, 255, 255, 0.548); letter-spacing: 1px; margin-top: 4px;">Login and manage your properties</p>
+                  </div>
+                  <div style="margin: auto; padding: 20px; padding-top: 10px;">
+                      <!--form-->
+                          <div style="margin-bottom: 20px;">
+                              <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; margin: 10px 0;">
+                                  <i class="fa fa-envelope" aria-hidden="true" style="margin-right: 5px;"></i>
+                                  Email</p>
+                              <input id="listed_property_login_email_input" style="padding: 10px; width: calc(100% - 20px); border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="email" placeholder="please enter email" />
+                          </div>
+                          <div style="margin-bottom: 20px;">
+                              <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; margin: 10px 0;">
+                                <i class="fa fa-key" aria-hidden="true" style="margin-right: 5px;"></i>  
+                                Password</p>
+                              <input id="listed_property_login_password_input" style="padding: 10px; width: calc(100% - 20px); border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="password" placeholder="please enter password" />
+                          </div>
+                          <div id="listed_property_login_submit_loader" style="display: none;">
+                            <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
+                                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="30px" height="30px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                                <animateTransform attributeType="xml"
+                                    attributeName="transform"
+                                    type="rotate"
+                                    from="0 25 25"
+                                    to="360 25 25"
+                                    dur="0.6s"
+                                    repeatCount="indefinite"/>
+                                </path>
+                                </svg>
+                                <p style="text-align: center; font-size: 14px; color:white;">
+                                loading...
+                                </p>
+                            </div>
+                          </div>
+                          <div>
+                              <button id="listed_property_login_btn" style="background-color: #002e54; color: white; font-size: 14px; padding: 10px; border-radius: 4px; width: 100%; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                  Login
+                              </button>
+                          </div>
+                      <!--/form-->
+                  </div>
+                  <p style="margin-bottom: 10px; text-align: center;">
+                    <a  href="" style="letter-spacing: 1px; color: rgb(244, 183, 183); text-decoration: none; font-size: 14px;">
+                        Forgot Password?
+                    </a>
                 </p>
+                  <p style="margin-bottom: 30px; text-align: center;">
+                      <a  href="/register_hotel_brand" style="letter-spacing: 1px; color: white; text-decoration: none; font-size: 14px;">
+                          Register your brand here
+                          <i style="margin-left: 5px; color: rgb(235, 78, 78);" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                      </a>
+                  </p>
+              </div>
             </div>
         </div>
         <div class="wrapper">
-            <div style="min-height: 300px; padding: 20px 0;">
-                <h1 style="color: white; font-size: 18px; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">Login</h1>
-                <p style="font-size: 14px; text-align: center; color: white; letter-spacing: 1px;">Login and manage your properties</p>
-                <div style="width: fit-content; margin: auto; margin-top: 20px;">
-                    <!--form-->
-                        <div style="margin-bottom: 20px; min-width: 250px;">
-                            <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
-                                Email</p>
-                            <input id="listed_property_login_email_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="email" placeholder="please enter email" />
-                        </div>
-                        <div style="margin-bottom: 20px; min-width: 250px;">
-                            <p style="color: rgb(0, 195, 255); letter-spacing: 1px; font-size: 14px; font-weight: bolder; margin: 10px;">
-                                Password</p>
-                            <input id="listed_property_login_password_input" style="padding: 10px; width: 100%; border: none; border-radius: 4px; font-size: 14px; letter-spacing: 1px;" type="password" placeholder="please enter password" />
-                        </div>
-                        <div id="listed_property_login_submit_loader" style="display: none;">
-                          <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
-                              <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                              width="30px" height="30px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                              <path fill="orangered" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                              <animateTransform attributeType="xml"
-                                  attributeName="transform"
-                                  type="rotate"
-                                  from="0 25 25"
-                                  to="360 25 25"
-                                  dur="0.6s"
-                                  repeatCount="indefinite"/>
-                              </path>
-                              </svg>
-                              <p style="text-align: center; font-size: 14px; color:white;">
-                              loading...
-                              </p>
-                          </div>
-                        </div>
-                        <div style="margin-bottom: 20px; min-width: 250px;">
-                            <button id="listed_property_login_btn" style="background-color: #37a0f5; color: white; font-size: 14px; padding: 10px; width: calc(100% + 20px); border: none;">
-                                Login
-                            </button>
-                        </div>
-                    <!--/form-->
-                </div>
-                <p style="padding: 10px; text-align: center;">
-                    <a  href="/register_hotel_brand" style="letter-spacing: 1px; color: white; text-decoration: none; font-size: 14px;">
-                        Register your brand here
-                        <i style="margin-left: 5px; color: rgb(235, 78, 78);" class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </p>
-            </div>
+            
             <div class="about_anidaso_cheap_hotels">
                 <p style="font-family: 'Courgette'; font-size: 20px; letter-spacing: 1px; color: white; text-align: center; padding-top: 20px; font-weight: bolder;">
                     Why Wellgo</p>
