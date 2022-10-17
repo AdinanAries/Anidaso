@@ -350,7 +350,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property, index){
                     <p style="color: white; font-size: 13px;">Guest Status: 
                     <span style="font-size: 13px; color: rgb(255, 132, 132);"> ${guest.status}</span></p>
                 </div> 
-                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; padding-bottom: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
@@ -370,7 +370,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property, index){
                         go to checkout
                         <i style="color:rgb(255, 46, 46); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
-                    <div onclick="show_view_booking_div('${booking._id}');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                    <div onclick="show_view_booking_div('${booking._id}');" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 5px;">
                         view booking
                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>

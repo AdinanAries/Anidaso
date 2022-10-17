@@ -831,7 +831,7 @@ async function render_search_booking_results_markup(booking) {
         checkin_or_checkout_btn =  `
             <div onclick="go_to_checkout_from_inhouse_guests('${room_guests[0].id}', '${property._id}', '${booking._id}', 'booking_editor');" style="background-color: brown; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
                 <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
-                Go to Checkout
+                Checkout
             </div>
         `;
     }
@@ -988,7 +988,7 @@ async function render_search_booking_results_markup(booking) {
                         </div>
                         <div onclick="show_include_services_in_booking_div('${room_guests[0].id}', '${property._id}', 0);" style="border: 1px solid rgb(55, 97, 107); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
                             <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i>
-                            Include Service
+                            Add Service
                         </div>
                     </div>
                 </div>
