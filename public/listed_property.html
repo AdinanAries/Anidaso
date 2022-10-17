@@ -1069,9 +1069,9 @@
                         </div>
                     </div>
                     <div style="margin-top: 10px; display: flex; flex-direction: row !important; background-color: rgba(201, 243, 255, 0.2); padding: 10px;">
-                        <div style="display: flex; flex-direction: column; justify-content: center; width: 100px; height: 100px; overflow: hidden; background-color: rgba(255,255,255, 0.3); border: 1px solid rgba(255, 255, 255, 0.548);">
+                        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 90px; height: 90px; overflow: hidden; background-color: rgba(255,255,255, 0.3); border: 1px solid rgba(255, 255, 255, 0.548);">
                             <p style="text-align: center;">
-                                <i style="font-size: 100px; color: rgba(255, 255, 255, 0.548);" class="fa fa-user" aria-hidden="true"></i>
+                                <i style="font-size: 80px; color: rgba(255, 255, 255, 0.548);" class="fa fa-user" aria-hidden="true"></i>
                             </p>
                         </div>
                         <div style="margin-left: 5px; display: flex; flex-direction: column; justify-content: flex-end;">
@@ -1145,19 +1145,16 @@
             <div id="guest_manager_view_guest_profile_div" class="page_popup_content_body" style="display: none; height: calc(100% - 70px); border-top: 1px solid rgba(201, 243, 255, 0.2);">
                 <p style="font-size: 14px; color: rgb(134, 221, 255); text-align: center; font-weight: bolder; margin: 10px 0;"
                 >Guest Profile</p>
-                <div style="display: flex; flex-direction: row;">
-                    <p onclick="show_guest_manager_menu()" style="color: white; font-size: 14px; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: fit-content; border: 1px solid rgba(255, 255, 255, 0.548); background-color: rgba(0, 0, 0, 0.4);">
+                <div style="display: flex; flex-direction: row; position: absolute; left: 5px; top: 5px;">
+                    <p onclick="show_guest_manager_menu()" style="color: white; font-size: 13px; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: fit-content; border: 1px solid rgba(255, 255, 255, 0.548); background-color: rgba(0, 0, 0, 0.4);">
                         <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-bars" aria-hidden="true"></i>
-                        Guest Menu</p>
-                    <p onclick="show_guest_manager_edit_guest_div();" style="color: white; font-size: 14px; margin-left: 10px; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: fit-content; border: 1px solid rgba(255, 255, 255, 0.548); background-color: rgba(0, 0, 0, 0.4);">
-                        <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-pencil" aria-hidden="true"></i>
-                        Edit Guest</p>
+                        Menu</p>
                 </div>
-                <div style="margin-top: 20px; position: relative;">
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; background-color: rgba(201, 243, 255, 0.2); padding: 10px;">
-                        <div style="display: flex; flex-direction: column; justify-content: center; width: 100px; height: 100px; overflow: hidden; background-color: rgba(255,255,255, 0.3); border: 1px solid rgba(255, 255, 255, 0.548);">
+                <div style="position: relative;">
+                    <div style="margin-top: 5px; display: flex; flex-direction: row !important; background-color: rgba(201, 243, 255, 0.2); padding: 10px;">
+                        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 55px; height: 55px; overflow: hidden; background-color: rgba(255,255,255, 0.3); border: 1px solid rgba(255, 255, 255, 0.548);">
                             <p style="text-align: center;">
-                                <i style="font-size: 100px; color: rgba(255, 255, 255, 0.548);" class="fa fa-user" aria-hidden="true"></i>
+                                <i style="font-size: 40px; color: rgba(255, 255, 255, 0.548);" class="fa fa-user" aria-hidden="true"></i>
                             </p>
                         </div>
                         <div style="margin-left: 5px; display: flex; flex-direction: column; justify-content: flex-end;">
@@ -1169,14 +1166,49 @@
                                 <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-building" aria-hidden="true"></i>
                                 956 Anderson Avenue
                             </div>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 5px;">
+                                26years, Male</p>
                         </div>
                     </div>
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
+                    <p onclick="show_guest_manager_edit_guest_div();" style="color: white; font-size: 13px; text-align: center; padding: 8px; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.548); background-color: rgba(0, 0, 0, 0.4);">
+                        <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-pencil" aria-hidden="true"></i>
+                        Edit Guest
+                    </p>
+
+                    <div id="guest_profile_manager_activities_section" style="margin-top: 10px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                        <div style="width: calc(50% - 2px);">
+                            <p style="color:rgba(187, 234, 255, 0.752); font-size: 14px; margin-bottom: 10px; text-align: center;">
+                                Activities</p>
+                            <div style="background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);">
+                                <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
+                                    <i class="fa fa-check" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
+                                    Checked in on 23 March @ 14:00</p>
+                                <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
+                                    <i class="fa fa-check" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
+                                    Added Biscuites to invoice on 23 March @ 12:00</p>
+                            </div>
                         </div>
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
+                        <div style="width: calc(50% - 2px);">
+                            <p style="color:rgba(187, 234, 255, 0.752); font-size: 14px; margin-bottom: 10px; text-align: center;">
+                                Bookings</p>
+                            <div style="background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);">
+                                <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
+                                    <i class="fa fa-bed" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
+                                    <span style="color:rgb(235, 137, 137);">6H</span>
+                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
+                                    May 31 - April 4
+                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
+                                    staying
+                                </p>
+                                <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
+                                    <i class="fa fa-history" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
+                                    <span style="color:rgb(235, 137, 137);">5D</span>
+                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
+                                    Mar 23 - Mar 24
+                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
+                                    checked-out
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1498,7 +1530,7 @@
                     </div>
                     <div>
                         <div style="display: flex;">
-                            <div onclick="update_and_return_cheap_hotel_guest_invoice();show_prompt_to_user('Success','Invoice has been updated!');" style="background-color:rgb(0, 68, 100); color: white; padding: 10px; cursor: pointer; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);font-size: 14px;">
+                            <div onclick="update_and_return_cheap_hotel_guest_invoice();show_prompt_to_user('Success','Invoice has been updated!', 'success');" style="background-color:rgb(0, 68, 100); color: white; padding: 10px; cursor: pointer; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);font-size: 14px;">
                                 Save
                             </div>
                             <div onclick="toggle_show_include_services_in_booking_div();" style="margin-left: 10px; background-color:rgb(56, 0, 0); color: white; padding: 10px; cursor: pointer; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);font-size: 14px;">
@@ -2325,8 +2357,8 @@
         <div class="page_popup_content_container" style="overflow: hidden;">
             <div style="padding: 5px;">
                 <p onclick="hide_all_payouts();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 15px 0; margin-top: 10px;">
-                    Your Payouts
+                <p style="color:rgb(5, 44, 59); font-weight: bolder; font-size: 14px; text-align: center; margin: 10px 0;">
+                    All Payouts
                 </p>
                 <div style="background-color:rgb(0, 29, 46); font-size: 14px; padding-left: 10px;">
                     <i style="color: orangered;" class="fa fa-calendar" aria-hidden="true"></i>

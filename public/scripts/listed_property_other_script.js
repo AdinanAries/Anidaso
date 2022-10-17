@@ -350,7 +350,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property, index){
                     <p style="color: white; font-size: 13px;">Guest Status: 
                     <span style="font-size: 13px; color: rgb(255, 132, 132);"> ${guest.status}</span></p>
                 </div> 
-                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
@@ -404,7 +404,7 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
                     <p style="color: white; font-size: 13px;">Guest Status: 
                     <span style="font-size: 13px; color: rgb(255, 132, 132);"> ${guest.status}</span></p>
                 </div> 
-                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
@@ -519,7 +519,7 @@ function return_arrival_guests_markup(guest, booking, invoice, property, index){
                         leaves on ${change_date_from_iso_to_long_date(booking.checkout_date)}</span></p>
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
                     ${property.city} - ${property.street_address} (${property.country})</P>
-                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
