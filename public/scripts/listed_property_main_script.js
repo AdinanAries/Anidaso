@@ -390,6 +390,9 @@ let wellgo_invoices_for_cheap_hotels = {
 }
 let current_cheap_hotel_wellgo_invoice = wellgo_invoices_for_cheap_hotels;
 
+var current_highlighted_guests=[];
+var current_selected_guest;
+
 let todays_date = new Date();
 let todays_date2 = new Date();
 
@@ -1279,6 +1282,21 @@ async function show_guest_manager_edit_guest_div() {
     }
 
     toggle_show_guest_manager_edit_guest();
+    let first_name = current_selected_guest.first_name;
+    let last_name = current_selected_guest.last_name;
+    let guest_current_address=`
+        <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-plus" aria-hidden="true"></i>
+        add address
+    `;
+    if(current_selected_guest.home_address.street_address!==""){
+        guest_current_address=`
+            <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-building" aria-hidden="true"></i>
+            ${current_selected_guest.home_address.street_address}.., <span style="color: rgba(255,255,255,0.6);">edit<span>
+        `;
+    }
+    document.getElementById("guest_manager_edit_guest_address_btn").innerHTML= guest_current_address;
+    document.getElementById("guest_manager_edit_guest_first_name_input").value=first_name;
+    document.getElementById("guest_manager_edit_guest_last_name_input").value=last_name;
 }
 
 function toggle_show_guest_manager_menu() {
@@ -1360,8 +1378,8 @@ function toggle_show_guest_manager_view_guest_profile_div() {
     $("#guest_manager_view_guest_profile_div").toggle("up");
 }
 
-function show_guest_manager_view_guest_profile_div() {
-
+async function show_guest_manager_view_guest_profile_div(index=0) {
+    current_selected_guest = current_highlighted_guests[index];
     if (document.getElementById("guests_manager_div").style.display === "none") {
         toggle_show_guests_manager_div();
     }
@@ -1372,6 +1390,74 @@ function show_guest_manager_view_guest_profile_div() {
     document.getElementById("guest_manager_view_guest_profile_div").style.display = "none";
 
     toggle_show_guest_manager_view_guest_profile_div();
+    render_guest_full_profile_markup();
+}
+
+async function render_guest_full_profile_markup(){
+    console.log('selected guest',current_selected_guest);
+
+    let first_name=current_selected_guest.first_name;
+    let last_name=current_selected_guest.last_name;
+    let guest_current_address=`
+        <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        address not added.
+    `;
+    if(current_selected_guest.home_address.street_address!==""){
+        guest_current_address=`
+            <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-building" aria-hidden="true"></i>
+            ${current_selected_guest.home_address.street_address}, ${current_selected_guest.home_address.city}
+        `;
+    }
+    let guest_age = calculateAge(current_selected_guest.DOB);
+    let guest_gender = current_selected_guest.gender;
+
+    guest_profile_manager_basic_info.innerHTML=`
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 55px; height: 55px; overflow: hidden; background-color: rgba(255,255,255, 0.3); border: 1px solid rgba(255, 255, 255, 0.548);">
+            <p style="text-align: center;">
+                <i style="font-size: 40px; color: rgba(255, 255, 255, 0.548);" class="fa fa-user" aria-hidden="true"></i>
+            </p>
+        </div>
+        <div style="margin-left: 5px; display: flex; flex-direction: column; justify-content: flex-end;">
+            <div style="margin-bottom: 5px; font-size: 14px; color: white;">
+                <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-user" aria-hidden="true"></i>
+                ${first_name} ${last_name}
+            </div>
+            <div style="font-size: 13px; color: white;">
+                ${guest_current_address}
+            </div>
+            <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 5px;">
+                ${guest_age} years, ${guest_gender}</p>
+        </div>
+    `;
+
+    //Booking history
+    let bookings = await get_bookings_using_guest_id(current_selected_guest._id, current_selected_guest.property_id, current_selected_guest.hotel_brand_id);
+    document.getElementById("guest_profile_manager_bookings_list").innerHTML=`
+        <div style="padding: 40px 20px; font-size: 14px; text-align: center; color: white; border: 1px solid red;">
+            <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;"></i>
+            guest has no bookings
+        </div>
+    `;
+    if(bookings.length>0){
+        document.getElementById("guest_profile_manager_bookings_list").innerHTML=``;
+        for(let b=0; b<bookings.length; b++){
+            let booking = bookings[b];
+            let room_number = booking.rooms[0].number;
+            let checkin = change_iso_date_to_readable_format(booking.checkin_date);
+            let checkout = change_iso_date_to_readable_format(booking.checkout_date);
+            document.getElementById("guest_profile_manager_bookings_list").innerHTML+=`
+                <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
+                    <!--i class="fa fa-bed" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i-->
+                    <i class="fa fa-history" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
+                    <span style="color:rgb(235, 137, 137);">${room_number}</span>
+                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
+                    ${checkin} - ${checkout}
+                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
+                    ${booking.guests.length} guest(s)
+                </p>
+            `;
+        }
+    }
 }
 
 function guest_manager_save_new_guest_photo() {
@@ -3441,6 +3527,18 @@ function get_logged_in_hotel_infor() {
                         let amenity = data.amenities[i];
                         document.getElementById("logged_in_hotel_amenities_list").innerHTML += await render_each_hotel_amenity(amenity);   
                     }
+                    let properties = await get_hotel_buildings(data._id);
+                    console.log(properties);
+                    if(properties.length>0){
+                        for(let property of properties){
+                            document.getElementById("logged_in_hotel_edit_amenity_property_form_input").innerHTML+=`
+                                <option value='${property._id}'>
+                                    ${property.city} - ${property.street_address}, ${property.country} 
+                                </option>
+                            `;
+                        }
+                        
+                    }
                 })();
             }
 
@@ -3837,14 +3935,16 @@ function get_and_return_rooms(hotel_id) {
 
 //getting cheap hotel properties
 function get_hotel_buildings(hotel_id) {
-    $.ajax({
+    return $.ajax({
         type: "GET",
         url: "/get_cheap_hotel_properties/" + hotel_id,
         success: res => {
             //console.log(res);
+            return res
         },
         error: err => {
             console.log(err);
+            return err
         }
     });
 }

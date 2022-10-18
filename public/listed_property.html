@@ -1075,9 +1075,8 @@
                             </p>
                         </div>
                         <div style="margin-left: 5px; display: flex; flex-direction: column; justify-content: flex-end;">
-                            <div onclick="show_guest_manager_edit_guest_address();" style="margin-bottom: 5px; font-size: 14px; border-radius: 4px; padding: 10px; color: white; cursor: pointer; border: 1px solid rgba(137, 235, 174, 0.4); background-color: #2a4255;">
-                                <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-pencil" aria-hidden="true"></i>
-                                956 Anderson Avenue
+                            <div id="guest_manager_edit_guest_address_btn" onclick="show_guest_manager_edit_guest_address();" style="margin-bottom: 5px; font-size: 14px; border-radius: 4px; padding: 10px; color: white; cursor: pointer; border: 1px solid rgba(137, 235, 174, 0.4); background-color: #2a4255;">
+                                
                             </div>
                             <div onclick="show_guest_manager_edit_guest_photo();" style="font-size: 14px; border-radius: 4px; padding: 10px; color: white; cursor: pointer; border: 1px solid rgba(137, 235, 174, 0.4); background-color: #2a4255;">
                                 <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-pencil" aria-hidden="true"></i>
@@ -1151,24 +1150,8 @@
                         Menu</p>
                 </div>
                 <div style="position: relative;">
-                    <div style="margin-top: 5px; display: flex; flex-direction: row !important; background-color: rgba(201, 243, 255, 0.2); padding: 10px;">
-                        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 55px; height: 55px; overflow: hidden; background-color: rgba(255,255,255, 0.3); border: 1px solid rgba(255, 255, 255, 0.548);">
-                            <p style="text-align: center;">
-                                <i style="font-size: 40px; color: rgba(255, 255, 255, 0.548);" class="fa fa-user" aria-hidden="true"></i>
-                            </p>
-                        </div>
-                        <div style="margin-left: 5px; display: flex; flex-direction: column; justify-content: flex-end;">
-                            <div style="margin-bottom: 5px; font-size: 14px; color: white;">
-                                <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-user" aria-hidden="true"></i>
-                                Mohammed Adinan
-                            </div>
-                            <div style="font-size: 14px; color: white;">
-                                <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-building" aria-hidden="true"></i>
-                                956 Anderson Avenue
-                            </div>
-                            <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 5px;">
-                                26years, Male</p>
-                        </div>
+                    <div id="guest_profile_manager_basic_info" style="margin-top: 5px; display: flex; flex-direction: row !important; background-color: rgba(201, 243, 255, 0.2); padding: 10px;">
+                        
                     </div>
                     <p onclick="show_guest_manager_edit_guest_div();" style="color: white; font-size: 13px; text-align: center; padding: 8px; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.548); background-color: rgba(0, 0, 0, 0.4);">
                         <i style="margin-right: 5px; color:rgb(255, 97, 6);" class="fa fa-pencil" aria-hidden="true"></i>
@@ -1191,23 +1174,8 @@
                         <div style="width: calc(50% - 2px);">
                             <p style="color:rgba(187, 234, 255, 0.752); font-size: 14px; margin-bottom: 10px; text-align: center;">
                                 Bookings</p>
-                            <div style="background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);">
-                                <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
-                                    <i class="fa fa-bed" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
-                                    <span style="color:rgb(235, 137, 137);">6H</span>
-                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
-                                    May 31 - April 4
-                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
-                                    staying
-                                </p>
-                                <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
-                                    <i class="fa fa-history" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
-                                    <span style="color:rgb(235, 137, 137);">5D</span>
-                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
-                                    Mar 23 - Mar 24
-                                    <span style="color: rgba(255,255,255,0.3); margin: 0 6px;">|</span>
-                                    checked-out
-                                </p>
+                            <div id="guest_profile_manager_bookings_list" style="background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);">
+                                
                             </div>
                         </div>
                     </div>
@@ -3963,7 +3931,7 @@
                                     </p>
                                   </div>
                             </div>
-                            <p onclick="toggle_show_all_policies();" id="logged_in_hotel_manage_policies_btn" style="cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
+                            <p onclick="toggle_show_all_policies();" id="logged_in_hotel_manage_policies_btn" style="cursor: pointer; color: antiquewhite; font-size: 14px; padding: 10px;">
                                 manage policies
                                 <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
                             </p>
@@ -3990,8 +3958,8 @@
                                     </p>
                                   </div>
                             </div>
-                            <p id="logged_in_hotel_amenities_see_all_amenities_btn" onclick="show_all_amenities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
-                                see all amenities</p>
+                            <p id="logged_in_hotel_amenities_see_all_amenities_btn" onclick="show_all_amenities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 14px; padding: 10px;">
+                                see all amenities <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i></p>
                             <p id="logged_in_hotel_add_amenity_btn" onclick="start_edit_amenity_info('logged_in_hotel_add_amenity_btn', '', '', 'Add Amenity');" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Add
                             </p>
@@ -4082,8 +4050,9 @@
                                     no information available
                                 </p>
                             </div>
-                            <p onclick="show_all_payouts();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 13px; padding: 10px;">
-                                see all payouts</p>
+                            <p onclick="show_all_payouts();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 14px; padding: 10px;">
+                                see all payouts <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                            </p>
                             <div style="background-color: rgba(0, 0, 0, 0.5); margin-top: 10px; border: 1px solid aqua; padding: 0 10px; overflow: hidden;">
                                 <span style="color:aqua; font-size: 14px;">Payment Cycle:</span>
                                 <select class="payouts_cycle_select_input" style="border: none; background: none; padding: 10px; color: white; font-size: 14px;">
@@ -4105,8 +4074,9 @@
                             <div id="logged_in_hotel_invoices_list">
                                 
                             </div>
-                            <p onclick="show_all_invoices();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 13px; padding: 10px;">
-                                see all invoices</p>
+                            <p onclick="show_all_invoices();" style="cursor: pointer; color: antiquewhite; width: fit-content; font-size: 14px; padding: 10px;">
+                                see all invoices <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
+                            </p>
                         </div>
                         <div style="background-color: rgba(0, 58, 43, 0.23); border: 1px solid rgba(255,255,255,0.2); padding: 10px; margin-top: 10px; border-radius: 4px;">
                             <p style="color: aliceblue; text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: bolder;">
@@ -4130,8 +4100,8 @@
                                     </p>
                                   </div>
                             </div>
-                            <p id="logged_in_hotel_cities_op_see_all_cities_btn" onclick="show_all_cities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 13px; padding: 10px;">
-                                see all cities</p>
+                            <p id="logged_in_hotel_cities_op_see_all_cities_btn" onclick="show_all_cities();" style="display: none; cursor: pointer; color: antiquewhite; font-size: 14px; padding: 10px;">
+                                see all cities <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i></p>
                             <p id="logged_in_hotel_add_op_city_btn" onclick="start_edit_op_cities_info('logged_in_hotel_add_op_city_btn', '', 'Add City')" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin-top: 10px; border-radius: 4px; background-color: cornflowerblue;">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Add
                             </p>

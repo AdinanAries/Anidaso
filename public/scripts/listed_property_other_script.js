@@ -104,6 +104,7 @@ async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking
 async function hotel_guests_search_function(type){
 
     all_running_invoices=[];
+    current_highlighted_guests=[];
 
     if(type === "inhouse"){
         
@@ -329,6 +330,7 @@ function collect_checkout_guests_search_post_data(){
 function return_inhouse_guest_markup(guest, booking, invoice, property, index){
     //running_invoice = invoice;
     all_running_invoices.push(invoice);
+    current_highlighted_guests.push(guest);
     return `
         <div style="margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2);" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
@@ -383,6 +385,7 @@ function return_inhouse_guest_markup(guest, booking, invoice, property, index){
 function return_guest_checkout_markup(guest, booking, invoice, property, index){
     //running_invoice = invoice;
     all_running_invoices.push(invoice);
+    current_highlighted_guests.push(guest);
     return `
         <div style="margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2);" class="flex_row_default_flex_column_mobile">
             <div class="flex_child_of_two">
@@ -404,7 +407,7 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
                     <p style="color: white; font-size: 13px;">Guest Status: 
                     <span style="font-size: 13px; color: rgb(255, 132, 132);"> ${guest.status}</span></p>
                 </div> 
-                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div(${index});" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
@@ -468,6 +471,7 @@ function return_guest_checkout_markup(guest, booking, invoice, property, index){
 function return_arrival_guests_markup(guest, booking, invoice, property, index){
     //running_invoice = invoice;
     all_running_invoices.push(invoice);
+    current_highlighted_guests.push(guest);
     let checkin_status_dspl = `
         <p style="padding: 10px; background-color: rgba(0,0,0,0.4); margin-top: 10px; color: white; font-size: 13px; border: 1px solid lightgreen;">
             <i class="fa fa-check" style="margin-right: 5px; color: lightgreen;"></i>
@@ -1136,7 +1140,7 @@ $(function() {
     });
 });
 async function search_guest_on_submit_function(){
-
+    current_highlighted_guests=[];
     document.getElementById("guest_mamager_search_guests_list").innerHTML = `
             <div style="width: 100%; text-align: center; padding: 20px 0;" class="loader loader--style2" title="1">
                 <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -1222,7 +1226,7 @@ async function search_guest_on_submit_function(){
                 }
             }
             
-            document.getElementById("guest_mamager_search_guests_list").innerHTML += return_each_guest_manager_guest_markup(guests[i], property, guest_stay_obj, bookings[(bookings.length-1)]);
+            document.getElementById("guest_mamager_search_guests_list").innerHTML += return_each_guest_manager_guest_markup(guests[i], property, guest_stay_obj, bookings[(bookings.length-1)],i);
             //reset guest dob
             guest_manager_search_guest_DOB = "";
         }
@@ -1230,8 +1234,8 @@ async function search_guest_on_submit_function(){
 
 }
 
-function return_each_guest_manager_guest_markup(guest, property, stay, booking){
-
+function return_each_guest_manager_guest_markup(guest, property, stay, booking, index){
+    current_highlighted_guests.push(guest);
     let guest_main_action_btn='';
     if(guest.status.includes("not_staying") || guest.status.includes("unbooked")){
         guest.status="not staying";
@@ -1277,7 +1281,7 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking){
                 ${stay_info}
                 <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
                     ${property.city} - ${property.street_address} (${property.country})</P>  
-                <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div(${index});" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>

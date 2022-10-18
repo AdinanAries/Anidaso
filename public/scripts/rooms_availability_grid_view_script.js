@@ -167,9 +167,43 @@ function make_reservation_return_each_adult_guest_markup(number, index){
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <input onkeydown="$('#adult_guest_search_for_booking_auto_complete_dropdown${index}').slideDown('fast')"; style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
                 <button style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
+                <div id="adult_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
+                    <p onclick="$('#adult_guest_search_for_booking_auto_complete_dropdown${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
+                        <i style="color: red;" class="fa fa-times"></i></p>
+                    <div>
+                        <div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+                            <p style="color: lightgreen; font-size: 14px;">
+                                Mohammed Adinan
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - Male
+                            </p>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">DOB: </span>
+                                1992-03-23,
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Tel: </span>
+                                +1 7327999546, 
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
+                                m.adinan@yahoo.com
+                            </p>
+                        </div>
+                        <div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+                            <p style="color: lightgreen; font-size: 14px;">
+                                Mohammed Adinan
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - Male
+                            </p>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">DOB: </span>
+                                1992-03-23,
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Tel: </span>
+                                +1 7327999546, 
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
+                                m.adinan@yahoo.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
                 <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
@@ -210,9 +244,43 @@ function make_reservation_return_each_child_guest_markup(number, index){
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <input onkeydown="$('#child_guest_search_for_booking_auto_complete_dropdown${index}').slideDown('fast')"; style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
                 <button style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
+                <div id="child_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
+                    <p onclick="$('#child_guest_search_for_booking_auto_complete_dropdown${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
+                        <i style="color: red;" class="fa fa-times"></i></p>
+                    <div>
+                        <div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+                            <p style="color: lightgreen; font-size: 14px;">
+                                Mohammed Adinan
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - Male
+                            </p>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">DOB: </span>
+                                1992-03-23,
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Tel: </span>
+                                +1 7327999546, 
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
+                                m.adinan@yahoo.com
+                            </p>
+                        </div>
+                        <div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+                            <p style="color: lightgreen; font-size: 14px;">
+                                Mohammed Adinan
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - Male
+                            </p>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">DOB: </span>
+                                1992-03-23,
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Tel: </span>
+                                +1 7327999546, 
+                                <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
+                                m.adinan@yahoo.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
                 <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>

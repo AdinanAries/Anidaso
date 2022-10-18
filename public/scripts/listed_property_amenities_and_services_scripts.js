@@ -447,32 +447,33 @@ async function render_each_hotel_amenity(amenity_p) {
     let prop_obj;
     if(property !== "all"){
         prop_obj = await get_and_return_hotel_property_by_id(property);
-        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+        property = `${prop_obj.city} - ${prop_obj.street_address}`; //(${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = amenity_p.price;
     return `
         <div id="logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity" class="logged_in_hotel_amenity">
-            <p>
+            <p style="margin-bottom: 10px;">
                 <span style="font-size: 14px;">
                     <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
                     <span id="logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity_txt_span_elem" style="font-size: 14px;">
-                    ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    ${amenity}
+                    <span style="display: block; color: rgba(255,255,255,0.5);font-size: 13px; margin-left: 10px; padding-top: 3px;">
                     - ${property}</span></span>
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
-                    <i onclick="start_edit_amenity_info('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', 'logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity_txt_span_elem','${amenity}', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
+                    <i onclick="start_edit_amenity_info('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', 'logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity_txt_span_elem','${amenity}', 'Edit Amenity');" style="color: rgb(137, 204, 235); margin-right: 15px; display: none !important;" class="fa fa-pencil" aria-hidden="true"></i>
                     <i  onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog')" style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </p>
-            <div id="delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
-                <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
+            <div id="delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog" style="position: initial; margin: 10px 0; background: none !important; border-top: 1px solid rgba(255,255,255,0.2);  border-bottom: 1px solid rgba(255,255,255,0.2)" class="confirm_delete_dialog">
+                <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: rgba(255,255,255,0.5);">
                     Are you sure</p>
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div onclick="delete_amenity_submit('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', '${amenity}')" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="delete_amenity_submit('logged_in_hotel_${amenity.replaceAll(" ", "_")}_amenity', '${amenity}')" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Delete
                     </div>
-                    <div onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="toggle_hide_show_anything('delete_${amenity.replaceAll(" ", "_")}_aminties_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Cancel
                     </div>
                 </div>
@@ -1025,7 +1026,7 @@ async function all_amenities_return_each_amenity_markup(amenity_p, properties=[]
     let prop_obj;
     if(property !== "all"){
         prop_obj = properties.filter(each=>each._id===property)[0];//await get_and_return_hotel_property_by_id(property);
-        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+        property = `${prop_obj.city} - ${prop_obj.street_address}` //(${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = amenity_p.price;
@@ -1044,10 +1045,11 @@ async function all_amenities_return_each_amenity_markup(amenity_p, properties=[]
 
     return `
         <div id="logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
-            <p>
+            <p style="padding-top: 5px">
                 <span style="font-size: 14px; color: white;">
                     <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                    ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    ${amenity}
+                    <span style="display: block; color: rgba(255,255,255,0.5);font-size: 13px; margin-left: 10px; padding-top: 5px;">
                     - ${property}</span>
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
@@ -1097,7 +1099,7 @@ async function all_amenities_return_each_amenity_markup_after_update(amenity_p) 
     let prop_obj;
     if(property !== "all"){
         prop_obj = await get_and_return_hotel_property_by_id(property);
-        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+        property = `${prop_obj.city} - ${prop_obj.street_address}`; //(${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = amenity_p.price;
@@ -1116,11 +1118,12 @@ async function all_amenities_return_each_amenity_markup_after_update(amenity_p) 
     }
 
     return `
-        <p>
+        <p style="padding-top: 5px;">
             <span style="font-size: 14px; color: white;">
                 <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                ${amenity} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
-                - ${property}</span>
+                ${amenity}
+                <span style="display: block; color: rgba(255,255,255,0.5);font-size: 13px; margin-left: 10px; padding-top: 5px;">
+                    - ${property}</span>
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
                 <i onclick="all_amenities_start_edit_amenity_info('logged_in_hotel_all_amenities_${amenity.replaceAll(" ", "_").trim()}_amenity', '${amenity}', 'Edit Amenity');" style="color: rgb(85, 188, 226); margin-right: 15px;" class="fa fa-pencil" aria-hidden="true"></i>
@@ -1167,7 +1170,7 @@ async function all_services_return_each_service_markup_after_update(service_p) {
     let prop_obj;
     if(property !== "all"){
         prop_obj = await get_and_return_hotel_property_by_id(property);
-        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+        property = `${prop_obj.city} - ${prop_obj.street_address}`; //(${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = service_p.price;
@@ -1186,10 +1189,11 @@ async function all_services_return_each_service_markup_after_update(service_p) {
     }
 
     return `
-        <p>
+        <p style="margin-top: 5px;">
             <span style="font-size: 14px; color: white;">
                 <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                ${service} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                ${service}
+                <span style="display: block; color: rgba(255,255,255,0.5);font-size: 13px; margin-left: 10px; padding-top: 5px;">
                 - ${property} - $${price}</span>
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
@@ -1237,7 +1241,7 @@ async function all_facilities_return_each_facility_markup_after_update(facility_
     let prop_obj;
     if(property !== "all"){
         prop_obj = await get_and_return_hotel_property_by_id(property);
-        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+        property = `${prop_obj.city} - ${prop_obj.street_address}`; //(${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = facility_p.price;
@@ -1256,10 +1260,11 @@ async function all_facilities_return_each_facility_markup_after_update(facility_
     }
 
     return `
-        <p>
+        <p style="margin-top: 5px;">
             <span style="font-size: 14px; color: white;">
                 <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                ${facility} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                ${facility}
+                <span style="display: block; color: rgba(255,255,255,0.5);font-size: 13px; margin-left: 10px; padding-top: 5px;">
                 - ${property} - $${price}</span>
             </span>
             <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
@@ -1307,7 +1312,7 @@ async function all_services_return_each_service_markup(service_p, properties=[])
     let prop_obj;
     if(property !== "all"){
         prop_obj = properties.filter(each=>each._id===property)[0];//await get_and_return_hotel_property_by_id(property);
-        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+        property = `${prop_obj.city} - ${prop_obj.street_address}`; //(${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = service_p.price;
@@ -1326,10 +1331,11 @@ async function all_services_return_each_service_markup(service_p, properties=[])
 
     return `
         <div id="logged_in_hotel_all_services_${service.replaceAll(" ", "_").trim()}_service" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
-            <p>
+            <p style="padding-top: 5px;">
                 <span style="font-size: 14px; color: white;">
                     <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                    ${service} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    ${service} 
+                    <span style="display: block; color: rgba(255,255,255,0.5);font-size: 13px; margin-left: 10px; padding-top: 5px;">
                     - ${property} - $${price}</span>
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">
@@ -1384,7 +1390,7 @@ async function all_facilities_return_each_facility_markup(facility_p, properties
     let prop_obj;
     if(property !== "all"){
         prop_obj = properties.filter(each=>each._id===property)[0];//await get_and_return_hotel_property_by_id(property);
-        property = `${prop_obj.city} - ${prop_obj.street_address} (${prop_obj.country})`;
+        property = `${prop_obj.city} - ${prop_obj.street_address}`; //(${prop_obj.country})`;
     }
     property = (property==="all") ? `all properties` : property;
     let price = facility_p.price;
@@ -1403,10 +1409,11 @@ async function all_facilities_return_each_facility_markup(facility_p, properties
 
     return `
         <div id="logged_in_hotel_all_facilities_${facility.replaceAll(" ", "_").trim()}_facility" class="logged_in_hotel_amenity" style="background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 5px;">
-            <p>
+            <p style="margin-top: 5px;">
                 <span style="font-size: 14px; color: white;">
                     <i style="color: rgb(59, 116, 184); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                    ${facility} <span style="color: rgba(255,255,255,0.5);font-size: 13px;">
+                    ${facility}
+                    <span style="display: block; color: rgba(255,255,255,0.5);font-size: 13px; margin-left: 10px; padding-top: 5px;">
                     - ${property} - $${price}</span>
                 </span>
                 <span class="logged_in_hotel_amenity_edit_btns" style="padding-left: 20px;">

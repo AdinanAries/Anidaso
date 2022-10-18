@@ -480,11 +480,21 @@ header {
 }
 .logged_in_hotel_amenity p,
 .logged_in_hotel_invoice p {
+  position: relative;
   color: aqua;
   margin-bottom: 5px;
   display: flex;
   flex-direction: row !important;
   justify-content: space-between;
+}
+.logged_in_hotel_amenity_edit_btns {
+  width: fit-content !important;
+  position: absolute;
+  top: -5px;
+  right: 0;
+  padding: 0 !important;
+  padding: 5px !important;
+  z-index: 1;
 }
 .logged_in_hotel_amenity:hover .logged_in_hotel_amenity_edit_btns {
   display: block;
@@ -499,7 +509,6 @@ header {
   cursor: pointer;
 }
 .logged_in_hotel_infor_item i {
-  margin-left: 20px;
   display: none;
   cursor: pointer;
   color: rgb(114, 147, 197);

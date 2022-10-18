@@ -3245,6 +3245,18 @@ app.get('/get_all_cheap_hotel_payouts/:hotel_brand_id', async(req, res, next) =>
   
 });
 
+app.get('/get_all_guest_bookings/:guest_id', async(req, res, next)=>{
+  try{
+    let bookings = await cheap_hotel_booking.find({
+      "guests.id": req.params.guest_id
+    });
+    res.send(bookings);
+  }catch(e){
+    console.log(e.message);
+    res.send([]);
+  }
+});
+
 //Spinning the server here
 app.listen(PORT, () => {
   console.log("Server started on " + PORT);
