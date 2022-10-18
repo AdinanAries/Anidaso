@@ -1,6 +1,6 @@
 const taxRate = 0.15; //percentage
 var the_full_screen_loader = document.getElementById("full_screen_loader");
-var main_all_hotel_amenity_options= [
+var main_all_hotel_amenity_options = [
     "Business Center",
     "Coffee Shop",
     "Disabled Facilities",
@@ -390,7 +390,7 @@ let wellgo_invoices_for_cheap_hotels = {
 }
 let current_cheap_hotel_wellgo_invoice = wellgo_invoices_for_cheap_hotels;
 
-var current_highlighted_guests=[];
+var current_highlighted_guests = [];
 var current_selected_guest;
 
 let todays_date = new Date();
@@ -567,7 +567,7 @@ async function set_properties_and_rooms_for_select_inputs(properties_select, roo
             <option value='${rooms[i]._id}'>${rooms[i].room_number}</option>
         `;
     }
-    document.getElementById(rooms_select).value=current_edit_booking_object.rooms_and_guests.room_guests[index].id;
+    document.getElementById(rooms_select).value = current_edit_booking_object.rooms_and_guests.room_guests[index].id;
 
     document.getElementById(properties_select).onchange = async e => {
 
@@ -792,7 +792,7 @@ function get_and_return_booking_by_id(id) {
 async function render_search_booking_results_markup(booking) {
 
     let invoice = await get_cheap_hotel_guest_invioce(booking.guests[0].id, booking._id, localStorage.getItem("ANDSBZID"), booking.property_id);
-    all_running_invoices=[];
+    all_running_invoices = [];
     all_running_invoices.push(invoice);
     let property = await get_and_return_hotel_property_by_id(booking.property_id);
     let first_guest = await get_and_return_hotel_guest_by_id(localStorage.getItem("ANDSBZID"), booking.property_id, booking.guests[0].id);
@@ -830,8 +830,8 @@ async function render_search_booking_results_markup(booking) {
             Checkin
         </div>            
     `;
-    if(first_guest.status.includes("staying")){
-        checkin_or_checkout_btn =  `
+    if (first_guest.status.includes("staying")) {
+        checkin_or_checkout_btn = `
             <div onclick="go_to_checkout_from_inhouse_guests('${room_guests[0].id}', '${property._id}', '${booking._id}', 'booking_editor');" style="background-color: brown; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
                 <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
                 Checkout
@@ -1018,9 +1018,9 @@ function start_edit_booking() {
     toggle_show_edit_booking_edit_page()
 }
 
-async function show_view_booking_div(booking_id, source='default') {
+async function show_view_booking_div(booking_id, source = 'default') {
 
-    if(source==='all_bookings'){
+    if (source === 'all_bookings') {
         $('#booked_rooms_container').toggle('up');
     }
 
@@ -1086,14 +1086,14 @@ async function view_each_guest_running_bill(index) {
     let all_item_names = [];
     running_invoice.invoice_items.forEach(each => {
         each.guest_items.forEach(item => {
-            if(!all_item_names.includes(item.name)){
+            if (!all_item_names.includes(item.name)) {
                 all_item_names.push(item.name);
                 item_sum += parseFloat(item.total);
             }
-            
+
         })
     });
-    document.getElementById("guest_invoice_checkout_btn").onclick=()=>go_to_checkout_from_inhouse_guests(running_invoice.invoice_items[0].guest_id, running_invoice.property_id, running_invoice.bookings[0], 'invoice_div');
+    document.getElementById("guest_invoice_checkout_btn").onclick = () => go_to_checkout_from_inhouse_guests(running_invoice.invoice_items[0].guest_id, running_invoice.property_id, running_invoice.bookings[0], 'invoice_div');
     let totals = calculatePriceTotals(item_sum);
     document.getElementById("running_invoice_sub_total_display_span").innerText = `$${parseFloat(totals.base).toFixed(2)}`;
     document.getElementById("running_invoice_discount_display_span").innerText = `$${parseFloat(totals.discountAmount).toFixed(2)}`;
@@ -1284,19 +1284,19 @@ async function show_guest_manager_edit_guest_div() {
     toggle_show_guest_manager_edit_guest();
     let first_name = current_selected_guest.first_name;
     let last_name = current_selected_guest.last_name;
-    let guest_current_address=`
+    let guest_current_address = `
         <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-plus" aria-hidden="true"></i>
         add address
     `;
-    if(current_selected_guest.home_address.street_address!==""){
-        guest_current_address=`
+    if (current_selected_guest.home_address.street_address !== "") {
+        guest_current_address = `
             <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-building" aria-hidden="true"></i>
             ${current_selected_guest.home_address.street_address}.., <span style="color: rgba(255,255,255,0.6);">edit<span>
         `;
     }
-    document.getElementById("guest_manager_edit_guest_address_btn").innerHTML= guest_current_address;
-    document.getElementById("guest_manager_edit_guest_first_name_input").value=first_name;
-    document.getElementById("guest_manager_edit_guest_last_name_input").value=last_name;
+    document.getElementById("guest_manager_edit_guest_address_btn").innerHTML = guest_current_address;
+    document.getElementById("guest_manager_edit_guest_first_name_input").value = first_name;
+    document.getElementById("guest_manager_edit_guest_last_name_input").value = last_name;
 }
 
 function toggle_show_guest_manager_menu() {
@@ -1378,7 +1378,7 @@ function toggle_show_guest_manager_view_guest_profile_div() {
     $("#guest_manager_view_guest_profile_div").toggle("up");
 }
 
-async function show_guest_manager_view_guest_profile_div(index=0) {
+async function show_guest_manager_view_guest_profile_div(index = 0) {
     current_selected_guest = current_highlighted_guests[index];
     if (document.getElementById("guests_manager_div").style.display === "none") {
         toggle_show_guests_manager_div();
@@ -1393,17 +1393,17 @@ async function show_guest_manager_view_guest_profile_div(index=0) {
     render_guest_full_profile_markup();
 }
 
-async function render_guest_full_profile_markup(){
-    console.log('selected guest',current_selected_guest);
+async function render_guest_full_profile_markup() {
+    console.log('selected guest', current_selected_guest);
 
-    let first_name=current_selected_guest.first_name;
-    let last_name=current_selected_guest.last_name;
-    let guest_current_address=`
+    let first_name = current_selected_guest.first_name;
+    let last_name = current_selected_guest.last_name;
+    let guest_current_address = `
         <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
         address not added.
     `;
-    if(current_selected_guest.home_address.street_address!==""){
-        guest_current_address=`
+    if (current_selected_guest.home_address.street_address !== "") {
+        guest_current_address = `
             <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-building" aria-hidden="true"></i>
             ${current_selected_guest.home_address.street_address}, ${current_selected_guest.home_address.city}
         `;
@@ -1411,7 +1411,7 @@ async function render_guest_full_profile_markup(){
     let guest_age = calculateAge(current_selected_guest.DOB);
     let guest_gender = current_selected_guest.gender;
 
-    guest_profile_manager_basic_info.innerHTML=`
+    guest_profile_manager_basic_info.innerHTML = `
         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 55px; height: 55px; overflow: hidden; background-color: rgba(255,255,255, 0.3); border: 1px solid rgba(255, 255, 255, 0.548);">
             <p style="text-align: center;">
                 <i style="font-size: 40px; color: rgba(255, 255, 255, 0.548);" class="fa fa-user" aria-hidden="true"></i>
@@ -1432,20 +1432,20 @@ async function render_guest_full_profile_markup(){
 
     //Booking history
     let bookings = await get_bookings_using_guest_id(current_selected_guest._id, current_selected_guest.property_id, current_selected_guest.hotel_brand_id);
-    document.getElementById("guest_profile_manager_bookings_list").innerHTML=`
+    document.getElementById("guest_profile_manager_bookings_list").innerHTML = `
         <div style="padding: 40px 20px; font-size: 14px; text-align: center; color: white; border: 1px solid red;">
             <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;"></i>
             guest has no bookings
         </div>
     `;
-    if(bookings.length>0){
-        document.getElementById("guest_profile_manager_bookings_list").innerHTML=``;
-        for(let b=0; b<bookings.length; b++){
+    if (bookings.length > 0) {
+        document.getElementById("guest_profile_manager_bookings_list").innerHTML = ``;
+        for (let b = 0; b < bookings.length; b++) {
             let booking = bookings[b];
             let room_number = booking.rooms[0].number;
             let checkin = change_iso_date_to_readable_format(booking.checkin_date);
             let checkout = change_iso_date_to_readable_format(booking.checkout_date);
-            document.getElementById("guest_profile_manager_bookings_list").innerHTML+=`
+            document.getElementById("guest_profile_manager_bookings_list").innerHTML += `
                 <p style="border-bottom: 1px solid rgba(255,255,255,0.2); padding: 10px; color: white; font-size: 13px;">
                     <!--i class="fa fa-bed" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i-->
                     <i class="fa fa-history" style="margin-right: 5px; color: lightgreen;" aria-hidden="true"></i>
@@ -1490,15 +1490,15 @@ function toggle_show_hide_page_full_screen_prompt() {
     $("#page_full_screen_prompt").toggle("up");
 }
 
-function show_prompt_to_user(title, msg, status='fail') {
+function show_prompt_to_user(title, msg, status = 'fail') {
     toggle_show_hide_page_full_screen_prompt();
     document.getElementById("page_full_screen_prompt_title").innerHTML = title;
     document.getElementById("page_full_screen_prompt_msg").innerHTML = msg;
-    if(status==='success'){
-        document.getElementById("page_full_screen_prompt_title").style.backgroundColor="green";
+    if (status === 'success') {
+        document.getElementById("page_full_screen_prompt_title").style.backgroundColor = "green";
     }
-    if(status=="warning"){
-        document.getElementById("page_full_screen_prompt_title").style.backgroundColor="rgb(212, 113, 0)";
+    if (status == "warning") {
+        document.getElementById("page_full_screen_prompt_title").style.backgroundColor = "rgb(212, 113, 0)";
     }
 }
 
@@ -2228,7 +2228,7 @@ async function search_room_get_selected_room() {
 
 }
 
-async function set_search_room_inputs_options(properties, property_id="", room_id="") {
+async function set_search_room_inputs_options(properties, property_id = "", room_id = "") {
 
     document.getElementById("search_room_select_property_input").innerHTML = '';
     for (let i = 0; i < properties.length; i++) {
@@ -2237,14 +2237,14 @@ async function set_search_room_inputs_options(properties, property_id="", room_i
         `;
     }
 
-    if(property_id)
-        document.getElementById("search_room_select_property_input").value=property_id;
-    
-    await set_rooms_for_search_selection();
-    if(room_id)
-        document.getElementById("search_room_select_room_input").value=room_id;
+    if (property_id)
+        document.getElementById("search_room_select_property_input").value = property_id;
 
-    
+    await set_rooms_for_search_selection();
+    if (room_id)
+        document.getElementById("search_room_select_room_input").value = room_id;
+
+
 }
 
 async function view_selected_room_full_details(room_id) {
@@ -2320,7 +2320,7 @@ async function get_all_room_of_property(property_id) {
                 <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
                 no rooms were found
             </div>`;
-        
+
         return null;
     }
 
@@ -2833,10 +2833,10 @@ async function continue_room_reservation() {
                 `<i style='margin-right: 5px; color: rgba(255,255,255,0.5);' class='fa fa-exclamation-triangle'></i>
                 NOT ALLOWED`,
                 `You don't have any rooms on your account. Please add rooms first`);
-            setTimeout(()=>{
-                document.getElementById("make_reservation_pane").style.display="none";
+            setTimeout(() => {
+                document.getElementById("make_reservation_pane").style.display = "none";
                 toggle_show_add_room_pane();
-            },500)
+            }, 500)
             return null;
         }
     } else {
@@ -2844,10 +2844,10 @@ async function continue_room_reservation() {
             `<i style='margin-right: 5px; color: crimson;' class='fa fa-exclamation-triangle'></i>
             NOT ALLOWED`,
             `You don't have any rooms on your account. Please add rooms first`);
-        setTimeout(()=>{
-            document.getElementById("make_reservation_pane").style.display="none";
+        setTimeout(() => {
+            document.getElementById("make_reservation_pane").style.display = "none";
             toggle_show_add_room_pane();
-        },500)
+        }, 500)
         return null;
     }
 
@@ -3309,7 +3309,7 @@ function display_logged_in_hotel_description(desc) {
 //function to render each city operating in
 function render_each_operation_city(city, country) {
     return `
-        <div id="logged_in_hote_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_Op" class="logged_in_hotel_amenity">
+        <div id="logged_in_hote_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_Op" class="logged_in_hotel_amenity" style="padding-bottom: 5px;">
             <p>
                 <span style="font-size: 14px;">
                     <i style="color: rgb(137, 235, 174); margin-right: 5px;" class="fa fa-dot-circle-o" aria-hidden="true"></i>
@@ -3319,14 +3319,14 @@ function render_each_operation_city(city, country) {
                     <i style="color: rgb(235, 137, 137);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </p>
-            <div id="delete_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_confirm_dialog" style="position: initial; margin: 10px 0;" class="confirm_delete_dialog">
+            <div id="delete_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_confirm_dialog" style="position: initial; margin: 10px 0; background: none !important; border-top: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2);" class="confirm_delete_dialog">
                 <p style="font-size: 12px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 20px; color: white;">
                     Are you sure</p>
                 <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div onclick="delete_city_op_submit('logged_in_hote_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_Op', '${city}, ${country}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="delete_city_op_submit('logged_in_hote_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_Op', '${city}, ${country}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Delete
                     </div>
-                    <div onclick="toggle_hide_show_anything('delete_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="toggle_hide_show_anything('delete_${city.replaceAll(" ", "_")}_${country.replaceAll(" ", "_")}_city_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Cancel
                     </div>
                 </div>
@@ -3436,7 +3436,7 @@ function get_logged_in_hotel_infor() {
         success: data => {
 
             //console.log(data);
-            if(!data || (Array.isArray(data) && data.length===0)){
+            if (!data || (Array.isArray(data) && data.length === 0)) {
                 //basic info
                 display_logged_in_hotel_name("Not Available", false, false);
                 logged_in_hotel_ratings_area.innerHTML = return_cheap_hotel_rating_markup(0);
@@ -3467,13 +3467,13 @@ function get_logged_in_hotel_infor() {
                         Not Available<i style="color: orangered; margin-left: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                     </p>
                 `;
-                document.querySelector(".logged_in_hotel_gallery").style.display='none';
-                document.querySelector(".logged_in_hotel_reviews").style.display='none';
+                document.querySelector(".logged_in_hotel_gallery").style.display = 'none';
+                document.querySelector(".logged_in_hotel_reviews").style.display = 'none';
                 get_hotel_rooms("no id");
                 get_hotel_bookings("no id");
-                document.getElementById("logged_in_hotel_add_amenity_btn").style.display="none";
-                document.getElementById("logged_in_hotel_add_op_city_btn").style.display="none";
-                document.querySelectorAll(".logged_in_hotel_details_each_section_content")[2].innerHTML=`
+                document.getElementById("logged_in_hotel_add_amenity_btn").style.display = "none";
+                document.getElementById("logged_in_hotel_add_op_city_btn").style.display = "none";
+                document.querySelectorAll(".logged_in_hotel_details_each_section_content")[2].innerHTML = `
                     <div style="text-align: center; padding: 20px; border-radius: 4px; border: 1px solid red; background-color: rgba(0,0,0,0.5); color: white;">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true" style="margin-right: 5px; color: red;"></i>
                         No payments information can be displayed at the Moment!
@@ -3520,24 +3520,24 @@ function get_logged_in_hotel_infor() {
 
                 document.getElementById("logged_in_hotel_amenities_see_all_amenities_btn").style.display = "block";
                 document.getElementById("logged_in_hotel_amenities_list").innerHTML = "";
-                (async ()=>{
+                (async () => {
                     for (let i = 0; i < data.amenities.length; i++) {
                         if (i > 2)
                             break;
                         let amenity = data.amenities[i];
-                        document.getElementById("logged_in_hotel_amenities_list").innerHTML += await render_each_hotel_amenity(amenity);   
+                        document.getElementById("logged_in_hotel_amenities_list").innerHTML += await render_each_hotel_amenity(amenity);
                     }
                     let properties = await get_hotel_buildings(data._id);
                     console.log(properties);
-                    if(properties.length>0){
-                        for(let property of properties){
-                            document.getElementById("logged_in_hotel_edit_amenity_property_form_input").innerHTML+=`
+                    if (properties.length > 0) {
+                        for (let property of properties) {
+                            document.getElementById("logged_in_hotel_edit_amenity_property_form_input").innerHTML += `
                                 <option value='${property._id}'>
                                     ${property.city} - ${property.street_address}, ${property.country} 
                                 </option>
                             `;
                         }
-                        
+
                     }
                 })();
             }
@@ -3564,7 +3564,7 @@ function get_logged_in_hotel_infor() {
                 }
             }
 
-            //last policy
+            /*/last policy
             if (data.policies_and_restrictions) {
                 if (data.policies_and_restrictions.length > 0) {
                     render_logged_in_hotel_last_added_policy(data.policies_and_restrictions[data.policies_and_restrictions.length - 1]);
@@ -3598,7 +3598,7 @@ function get_logged_in_hotel_infor() {
                     </span>
                     </p>
                 `;
-            }
+            }*/
 
             //photos 
             if (data.photos.length > 0) {
@@ -3617,7 +3617,7 @@ function get_logged_in_hotel_infor() {
             get_hotel_bookings(data._id);
 
             //getting bills and payments and payouts
-            (async ()=>{
+            (async () => {
                 current_cheap_hotel_wellgo_invoice = await get_all_cheap_hotel_wellgo_invoices(data._id);
                 await cheap_hotel_render_initial_wellgo_invoices(current_cheap_hotel_wellgo_invoice);
                 cheap_hotel_payouts_object = await get_all_cheap_hotel_payouts(data._id);
@@ -3688,7 +3688,7 @@ function update_cheap_room(room_obj, room_id) {
     });
 }
 
-async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
+async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 3) {
 
     if (rooms_list.length === 0) {
         document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
@@ -3704,7 +3704,7 @@ async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
         `;
         return null;
     }
-    
+
     let property = await get_and_return_hotel_property_by_id(property_id);
 
     let property_city = "";
@@ -3720,19 +3720,19 @@ async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
     });
 
     //generating paginations
-    document.getElementById("hero_section_all_property_rooms_paginator").style.display="none";
-    let total_pages = (Math.ceil(rooms_sublist.length/skip));
-    if(total_pages > 1){
-        document.getElementById("hero_section_all_property_rooms_paginator").style.display="flex";
-        document.getElementById("hero_section_all_property_rooms_paginator").innerHTML=""
-        for(let pg=1; pg<=total_pages; pg++){
+    document.getElementById("hero_section_all_property_rooms_paginator").style.display = "none";
+    let total_pages = (Math.ceil(rooms_sublist.length / skip));
+    if (total_pages > 1) {
+        document.getElementById("hero_section_all_property_rooms_paginator").style.display = "flex";
+        document.getElementById("hero_section_all_property_rooms_paginator").innerHTML = ""
+        for (let pg = 1; pg <= total_pages; pg++) {
             document.getElementById("hero_section_all_property_rooms_paginator").innerHTML += `
                 <div id="hero_section_all_property_rooms_paginator_item${pg}" style="background-color: #00244a; cursor: pointer; color: white; border: 1px solid rgba(126, 177, 255, 0.285); width: 30px; height: 30px; border-radius: 100%; margin: 0 2px; display: flex; justify-content: center; align-items: center;">
                     ${pg}
                 </div>
             `;
-            if(pg===((page/skip)+1)){
-                document.getElementById("hero_section_all_property_rooms_paginator_item"+pg).style.backgroundColor="crimson";
+            if (pg === ((page / skip) + 1)) {
+                document.getElementById("hero_section_all_property_rooms_paginator_item" + pg).style.backgroundColor = "crimson";
             }
         }
     }
@@ -3740,8 +3740,8 @@ async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
     //console.log(rooms_sublist);
     let all_properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
     let all_props_markup = "";
-    if(all_properties.length>0){
-        for(let prop of all_properties){
+    if (all_properties.length > 0) {
+        for (let prop of all_properties) {
             all_props_markup += `
                 <p id="r_prop${prop._id}" style="padding: 10px; letter-spacing: 1px; text-align: center; color: white; cursor: pointer; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.2);">
                     ${prop.city},
@@ -3787,11 +3787,11 @@ async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
         </p>
     `;
 
-    let last = page+skip;
-    if(last>=rooms_sublist.length){
+    let last = page + skip;
+    if (last >= rooms_sublist.length) {
         last = (rooms_sublist.length);
     }
-    for(let r = page; r < last; r++){
+    for (let r = page; r < last; r++) {
 
         let checkin = "N/A";
         let checkout = "N/A";
@@ -3870,11 +3870,11 @@ async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
             break;
             
         }*/
-            
+
 
     }
 
-    if(rooms_sublist.length===0){
+    if (rooms_sublist.length === 0) {
         document.getElementById("dashboard_onload_displayed_rooms_list").innerHTML = `
             <div style="font-weight: initial; padding: 30px; min-width: 280px; text-align: center; margin-top: 10px; color: white; font-size: 14px; border: 1px solid red; background-color: rgba(0,0,0,0.5);">
                 <i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orangered;" aria-hidden="true"></i>
@@ -3884,19 +3884,19 @@ async function render_hotel_rooms(rooms_list, property_id, page=0, skip=3) {
     }
 
     //property select onclicks
-    if(all_properties.length>0){
-        for(let prop of all_properties){
-            document.getElementById("r_prop"+prop._id).onclick=()=>{
+    if (all_properties.length > 0) {
+        for (let prop of all_properties) {
+            document.getElementById("r_prop" + prop._id).onclick = () => {
                 render_hotel_rooms(rooms_list, prop._id, 0, 3);
             }
         }
     }
 
     //pagination onclicks
-    if(total_pages > 1){
-        for(let pg=1; pg<=total_pages; pg++){
-            document.getElementById("hero_section_all_property_rooms_paginator_item"+pg).onclick=()=>{
-                render_hotel_rooms(rooms_list, property_id, ((pg-1)*skip), skip);
+    if (total_pages > 1) {
+        for (let pg = 1; pg <= total_pages; pg++) {
+            document.getElementById("hero_section_all_property_rooms_paginator_item" + pg).onclick = () => {
+                render_hotel_rooms(rooms_list, property_id, ((pg - 1) * skip), skip);
             }
         }
     }
@@ -4070,7 +4070,7 @@ function get_hotel_bookings(hotel_id) {
             let recent_booking = res[res.length - 1];
             if (recent_booking) {
                 render_recent_hotel_booking(recent_booking);
-            }else{
+            } else {
                 document.getElementById("logged_in_hotel_recently_booked_rooms_list").innerHTML = `
                     <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); max-width: 500px; margin: auto;">
                         <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
