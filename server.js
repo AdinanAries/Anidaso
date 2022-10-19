@@ -3097,6 +3097,28 @@ app.get("/get_all_facilities/:hotel_brand_id", async (req, res, next) => {
 
 });
 
+app.post("/add_new_cheap_hotel_policy/:brand_id", async(req, res, next) => {
+  try{
+    let policy_obj = {
+      type: req.body.type,
+      property: req.body.property,
+      description: req.body.description
+    };
+    console.log(req.body.description)
+    let hotel = await cheap_hotel.findById(req.params.brand_id);
+    hotel.policies_and_restrictions.push(policy_obj);
+    let new_ = await new cheap_hotel(hotel);
+    let saved = await new_.save();
+    res.send(saved.policies_and_restrictions);
+  }catch(e){
+    console.log(e.message);
+    res.send([]);
+  }
+  
+
+
+});
+
 //get all cheap hotel policies
 app.get("/get_all_policies/:hotel_brand_id", async (req, res, next) => {
 
@@ -3181,6 +3203,28 @@ app.delete("/remove_facility/:hotel_brand_id", async(req, res, next) => {
 
   res.send(update_hotel.facilities);
 
+});
+
+app.post('/delete_cheap_hotel_policy_item/:hotel_brand_id', async(req, res, next) => {
+
+  try{
+    let type=req.body.type;
+    let property=req.body.property;
+    let policy=req.body.description;
+    let brand_id=req.params.hotel_brand_id;
+
+    let hotel = await cheap_hotel.findById(brand_id);
+    hotel.policies_and_restrictions=hotel.policies_and_restrictions.filter(each=>{
+      return (each.type.trim().toLowerCase()===type.trim().toLowerCase() && each.property===property && each.description.trim().toLowerCase()===policy.trim().toLowerCase()) ? false : true
+    });
+    
+    let new_hotel = await new cheap_hotel(hotel);
+    let saved = await new_hotel.save();
+    res.send(saved.policies_and_restrictions);
+  }catch(e){
+    console.log(e.message);
+    res.send([])
+  }
 });
 
 app.get("/get_all_cheap_hotel_wellgo_invoices/:hotel_brand_id", async(req, res, next) => {

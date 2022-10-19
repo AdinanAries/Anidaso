@@ -3055,10 +3055,9 @@ async function get_and_render_all_policies() {
             }
         } else {
             document.getElementById("all_hotel_policies_list").innerHTML = `
-                <p class="logged_in_payments_card_display" style="margin-top: 10px; color: white;">
-                    <i style="color: crimson; margin-right: 5px;" aria-hidden="true" class="fa fa-exclamation-triangle"></i>
-                    <span style="font-weight: bolder; color: orangered; font-size: 14px;">You have not added any policies:</span>
-                    Your hotel policies help inform your guests about restrictions and rules. 
+                <p style="margin-top: 10px; color: white; background-color: rgba(0,0,0,0.5); border: 1px solid red; padding: 30px 10px; text-align: center;">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true" style="margin-right: 5px; color: red;" ></i>
+                    You don't have any policies
                 </p>
             `;
         }
@@ -3072,14 +3071,18 @@ function toggle_show_all_policies() {
     get_and_render_all_policies();
 
 }
-
+async function all_policies_remove_each_policy(elem_id, type, description, property){
+    await all_policies_delete_policty_item(type, description, property);
+    $("#"+elem_id).toggle('up');
+}
 function all_policies_return_each_policy_markup(number, policy) {
     return `
-        <div id="all_logged_in_hotel_policies_${number}_policy">
+        <div id="all_logged_in_hotel_policies_${number}_policy" style="padding: 10px; background-color: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.2);">
             <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
                 <div>
-                    <p style="color: orangered; font-size: 14px; font-weight: bolder; margin-bottom: 5px;">
-                    ${policy.type}:</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 5px;">
+                    <i class="fa fa-circle-dot" style="color: orangered; margin-right: 5px;"></i>
+                    ${policy.type}</p>
                     <p style="margin-top: 10px; color: white; font-size: 13px; letter-spacing: 1px;">
                         ${policy.description} 
                     </p>
@@ -3088,14 +3091,14 @@ function all_policies_return_each_policy_markup(number, policy) {
                     <i style="color: rgb(258, 112, 112);" class="fa fa-trash" aria-hidden="true"></i>
                 </span>
             </div>
-            <div id="all_policies_delete_${number}_policy_confirm_dialog" style="position: initial; margin: 10px 0; padding: 0; background: none; width: 100%;" class="confirm_delete_dialog">
-                <p style="color: white; font-weight: bolder; font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
+            <div id="all_policies_delete_${number}_policy_confirm_dialog" style="position: initial; margin: 10px 0; border-top: 1px solid rgba(255,255,255,0.2); padding: 0; padding-top: 10px; background: none; width: 100%;" class="confirm_delete_dialog">
+                <p style="color: rgba(255,255,255,0.5); font-size: 13px; display: block; letter-spacing: 1px; text-align: center; margin-bottom: 10px;">
                     Are you sure</p>
-                <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                    <div onclick="all_cities_op_remove_each_city_op('all_logged_in_hotel_policies_${number}_policy', '${policy.type}, ${policy.description.replaceAll("'", "@apostrophe@")}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: crimson; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                <div style="margin-top: 10px; display: flex; flex-direction: row !important; border: 1px solid rgba(255,255,255,0.2);">
+                    <div onclick="all_policies_remove_each_policy('all_logged_in_hotel_policies_${number}_policy', '${policy.type}', '${policy.description.replaceAll("'", "@apostrophe@")}', '${policy.property}');" style="cursor: pointer; width: 50%; border-top-left-radius: 4px; border-bottom-left-radius: 4px; background-color: brown; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Delete
                     </div>
-                    <div onclick="toggle_hide_show_anything('all_policies_delete_${number}_policy_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: darkslateblue; color: white; font-size: 13px; text-align: center; padding: 10px 0;">
+                    <div onclick="toggle_hide_show_anything('all_policies_delete_${number}_policy_confirm_dialog')" style="cursor: pointer; width: 50%; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgba(41, 66, 88, 0.555); color: white; font-size: 13px; text-align: center; padding: 10px 0;">
                         Cancel
                     </div>
                 </div>
@@ -4208,17 +4211,17 @@ function get_all_cities(hotel_id) {
     });
 }
 
-function add_new_policy(type_param, description_param) {
-
+function add_new_policy(type_param, description_param, property_id, brand_id=localStorage.getItem("ANDSBZID")) {
     return $.ajax({
         type: "POST",
-        url: "/add_new_cheap_hotel_policy",
+        url: "/add_new_cheap_hotel_policy/"+brand_id,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        data: {
+        data: JSON.stringify({
             type: type_param,
-            description: description_param
-        },
+            description: description_param,
+            property: property_id
+        }),
         success: data => {
             console.log(data);
             return data
@@ -4229,6 +4232,42 @@ function add_new_policy(type_param, description_param) {
         }
     });
 
+}
+
+function render_all_policies(policies){
+    if (policies) {
+        if (policies.length > 0) {
+            for (let i = 0; i < policies.length; i++) {
+                document.getElementById("all_hotel_policies_list").innerHTML = all_policies_return_each_policy_markup(i, policies[i]);
+            }
+        } else {
+            document.getElementById("all_hotel_policies_list").innerHTML = `
+                <p style="margin-top: 10px; color: white; background-color: rgba(0,0,0,0.5); border: 1px solid red; padding: 30px 10px; text-align: center;">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true" style="margin-right: 5px; color: red;" ></i>
+                    You don't have any policies
+                </p>
+            `;
+        }
+    }
+}
+
+function all_policies_delete_policty_item(type, description_p, property, brand_id=localStorage.getItem("ANDSBZID")){
+    let description=description_p.replaceAll("@apostrophe@", "'");
+    return $.ajax({
+        type: "POST",
+        url: "/delete_cheap_hotel_policy_item/"+brand_id,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+            type, description, property
+        }),
+        success: res => {
+            return res;
+        },
+        error: err => {
+            return err;
+        }
+    });
 }
 
 function get_all_policies(hotel_id) {
@@ -4255,6 +4294,20 @@ async function render_all_logged_in_hotel_cities() {
         document.getElementById("all_cities_list").innerHTML += all_cities_return_each_city_markup(all_cities[i]);
     }
 
+}
+
+async function add_new_hotel_policy_onclick(){
+    let type = document.getElementById("logged_in_hotel_all_policies_type_select").value;
+    let property = document.getElementById("logged_in_hotel_all_policies_property_select").value;
+    let description = document.getElementById("logged_in_hotel_all_policies_description_input").value;
+    //description=description.replaceAll("'","@apostrophe@");
+    if(description.trim()===""){
+        document.getElementById("logged_in_hotel_all_policies_description_input").style.border="2px solid red";
+        return;
+    }
+    let all_policies = await add_new_policy(type, description.trim(), property);
+    render_all_policies(all_policies);
+    toggle_show_finish_add_new_policy_form();
 }
 
 function all_cities_return_each_city_markup(city_param) {

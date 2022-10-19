@@ -3388,39 +3388,91 @@
     </div>
     <div id="all_policies_list_container" style="display: none;" class="page_pop_up_cover">
         <div class="page_popup_content_container">
-            <div style="padding: 10px; background-color:rgb(3, 70, 97);">
-                <div id="logged_in_hotel_all_amenities_add_amenity_info_form" style="margin-top: 10px;">
-                    <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: bolder;">
-                    Add New Policy</p>
-                    <p style="color: white; font-weight: bolder; font-size: 13px; margin-top: 10px; margin-bottom: 5px;">Select policy type below</p>
+            <div style="padding: 5px; background-color:#2a4255;">
+                <div id="logged_in_hotel_all_amenities_add_amenity_info_form">
+                    <p id="logged_in_hotel_all_amenities_add_amenity_form_title" style="color: aliceblue; text-align: center; margin: 10px 0; font-size: 14px;">
+                        Your Policy</p>
                     <div style="margin-top: 10px; display: flex; flex-direction: row !important;">
-                        <select id="logged_in_hotel_all_amenities_add_amenity_form_input" style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 14px; width: calc(100% - 100px); border: none;" type="text" placeholder="enter amenity here" value="" >
-                            <option>Policy Type</option>
+                        <select id="logged_in_hotel_all_policies_type_select" style="padding: 10px; border-radius: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; font-size: 14px; width: calc(50% - 101px); border: none;">
+                            <option value="all">Select Type</option>
+                            <option value="SMOKING-FREE">SMOKING-FREE</option>
+                            <option value="CANDLE, INCENSE, ESSENTIAL OILS">CANDLE, INCENSE, ESSENTIAL OILS</option>
+                            <option value="CHECK-IN TIME">CHECK-IN TIME</option>
+                            <option value="PAYMENT AT CHECK-IN">PAYMENT AT CHECK-IN</option>
+                            <option value="GUEST REGISTRATION">GUEST REGISTRATION</option>
+                            <option value="CHECK-OUT TIME">CHECK-OUT TIME</option>
+                            <option value="CHECK-OUT PROCEDURE">CHECK-OUT PROCEDURE</option>
+                            <option value="EARLY DEPARTURE">EARLY DEPARTURE</option>
+                            <option value="PAYMENT">PAYMENT</option>
+                            <option value="CHECKS AND CHECK CASHING">CHECKS AND CHECK CASHING</option>
+                            <option value="DEPOSITS AND GUARANTEES">DEPOSITS AND GUARANTEES</option>
+                            <option value="PAYEMENT BY THIRD-PARTIES">PAYEMENT BY THIRD-PARTIES</option>
+                            <option value="GIFT CERTIFICATES & PREPAID BOOKINGS">GIFT CERTIFICATES & PREPAID BOOKINGS</option>
+                            <option value="TAX EXEMPT GUESTS">TAX EXEMPT GUESTS</option>
+                            <option value="RIGHT TO REFUSE SERVICE">RIGHT TO REFUSE SERVICE</option>
+                            <option value="QUIET HOURS">QUIET HOURS</option>
+                            <option value="VISITORS">VISITORS</option>
+                            <option value="CONNECTING ROOM POLICY">CONNECTING ROOM POLICY</option>
+                            <option value="DISCOUNTS">DISCOUNTS</option>
+                            <option value="CANCELLATION">CANCELLATION</option>
+                            <option value="NO SHOW CHARGES">NO SHOW CHARGES</option>
+                            <option value="GROUP RESERVATIONS">PAYMENT</option>
+                            <option value="HOUSE RULES">HOUSE RULES</option>
+                            <option value="DO-NOT DISTURB AND ACCESS TO ROOMS">DO-NOT DISTURB AND ACCESS TO ROOMS</option>
+                            <option value="CHILDREN">CHILDREN</option>
+                            <option value="ADDITIONAL BEDDING">ADDITIONAL BEDDING</option>
+                            <option value="MAXIMUM OCCUPANCY">MAXIMUM OCCUPANCY</option>
+                            <option value="ROOM KEYS">ROOM KEYS</option>
+                            <option value="HOUSEKEEPING/ROOM INSPECTION">HOUSEKEEPING/ROOM INSPECTION</option>
+                            <option value="LINEN CHANGING">LINEN CHANGING</option>
+                            <option value="CONNECTING ROOM POLICY">CONNECTING ROOM POLICY</option>
+                            <option value="LOST & FOUND POLICY">LOST & FOUND POLICY</option>
+                            <option value="FOUND ITEMS">FOUND ITEMS</option>
+                            <option value="RETURN ITEMS">RETURN ITEMS</option>
+                            <option value="ALCOHOL POLICY">ALCOHOL POLICY</option>
+                            <option value="NO FIREARMS AND WEAPONS">NO FIREARMS AND WEAPONS</option>
+                            <option value="BICYCLES AND MOTORBIKE">BICYCLES AND MOTORBIKE</option>
+                            <option value="IN CASE OF EMERGENCY OR FIRE">IN CASE OF EMERGENCY OR FIRE</option>
+                            <option value="FIRE SAFETY POLICY">FIRE SAFETY POLICY</option>
+                            <option value="NO IN-ROOM PARTY">NO IN-ROOM PARTY</option>
+                            <option value="ENFORCEMENT">ENFORCEMENT</option>
+                            <option value="TERMS & CONDITIONS">TERMS & CONDITIONS</option>
+                            <option value="ILLNESS AND EPIDEMICS">ILLNESS AND EPIDEMICS</option>
+                            <option value="INFESTATION">INFESTATION</option>
+                            <option value="PARKING AT OWN RISK">PARKING AT OWN RISK</option>
+                            <option value="DAMAGE AND/OR THEFT OF HOTEL PROPERTY">DAMAGE AND/OR THEFT OF HOTEL PROPERTY</option>
+                            <option value="DAMAGE DISCOVERED AFTER CHECK-OUT">DAMAGE DISCOVERED AFTER CHECK-OUT</option>
+                            <option value="DAMAGE TO ROOM">DAMAGE TO ROOM</option>
+                            <option value="DAMAGE TO MATTRESSES AND BEDDING">DAMAGE TO MATTRESSES AND BEDDING</option>
+                            <option value="FRONT OFFICE DESK SERVICE">FRONT OFFICE DESK SERVICE</option>
+                            <option value="OTHER">OTHER</option>
                         </select>
-                        <div onclick="toggle_show_finish_add_new_policy_form();" style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color: rgb(211, 87, 5); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
-                            Add
+                        <select id="logged_in_hotel_all_policies_property_select" style="padding: 10px; border-radius: 0; border-radius: 0 !important; font-size: 14px; width: calc(50%); border: none; border-left: 1px solid rgba(0,0,0,0.3);">
+                            <option value="all">Select Property</option>
+                            <option value="all">All Properties</option>
+                        </select>
+                        <div onclick="toggle_show_finish_add_new_policy_form();" style="cursor: pointer; width: 100px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; background-color:rgb(0, 28, 29); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 14px; text-align: center; padding: 10px 0;">
+                            Continue <i class="fa fa-caret-down" style="color: orangered; margin-left: 5px;" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div id="add_new_policy_additional_info_form" style="position: fixed; margin-top: 20px; left: 0; width: 100%; display: none;">
-                        <div style="width: calc(100% - 20px); max-width: 650px; margin: auto; padding: 10px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.9);">
-                            <p style="color: white; font-weight: bolder; font-size: 13px; margin-top: 10px; margin-bottom: 15px;">Add policy description below</p>
-                            <textarea style="width: calc(100% - 20px); border: none; border-radius: 4px; padding: 10px;"></textarea>
-                            <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
-                                <button style="width: 100%; padding: 10px; border: none; background-color: cadetblue; color: white; margin-top: 10px;">Save</button>
-                                <div  onclick="toggle_show_finish_add_new_policy_form();" style="text-align: center; font-size: 13px; color: white; padding-top: 20px; width: 150px; cursor: pointer;">
-                                    <i style="margin-right: 5px; color: rgb(248, 16, 16);" class="fa fa-times" aria-hidden="true"></i>
-                                    Cancle
-                                </div>
+                </div>
+                <p onclick="toggle_show_all_policies();" class="page_popup_close_btn" style="top: -5px !important"><i aria-hidden="true" class="fa fa-times"></i></p>
+            </div>
+            <div class="page_popup_content_body" style="height: calc(100% - 90px); position: relative;">
+                <div id="add_new_policy_additional_info_form" style="position: absolute; top: 0; left: 0; width: 100%; display: none;">
+                    <div style="width: calc(100% - 20px); margin: auto; padding: 10px; background-color:rgb(0, 14, 30); border-top: 1px solid orangered;">
+                        <p style="color: white; font-size: 13px; margin-top: 10px; margin-bottom: 15px;">Policy Description</p>
+                        <textarea id="logged_in_hotel_all_policies_description_input" style="width: calc(100% - 20px); border: none; border-radius: 4px; padding: 10px;"></textarea>
+                        <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 10px; border: 1px solid rgba(255,255,255,0.3);">
+                            <button onclick="add_new_hotel_policy_onclick();" style="width: 100%; padding: 10px; border: none; background-color: rgba(41, 66, 88, 0.555);; color: white;">Save</button>
+                            <div onclick="toggle_show_finish_add_new_policy_form();" style="text-align: center; font-size: 13px; background-color: brown; color: white; padding: 10px; width: 150px; cursor: pointer;">
+                                <i style="margin-right: 5px; color: rgb(248, 16, 16);" class="fa fa-times" aria-hidden="true"></i>
+                                Cancle
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <p onclick="toggle_show_all_policies();" class="page_popup_close_btn"><i aria-hidden="true" class="fa fa-times"></i></p>
-            <div class="page_popup_content_body" style="height: calc(100% - 120px);">
-                <p style="color: white; font-size: 13px; font-weight: bolder; letter-spacing: 1px; text-align: center; margin: 20px 0;">
-                    Your Policies</p>
-                <div id="all_hotel_policies_list" style="padding: 10px;">
+                <div id="all_hotel_policies_list">
                     
                 </div>
             </div>
