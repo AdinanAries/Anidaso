@@ -3051,7 +3051,7 @@ async function get_and_render_all_policies() {
     if (policies) {
         if (policies.length > 0) {
             for (let i = 0; i < policies.length; i++) {
-                document.getElementById("all_hotel_policies_list").innerHTML = all_policies_return_each_policy_markup(i, policies[i]);
+                document.getElementById("all_hotel_policies_list").innerHTML += all_policies_return_each_policy_markup(i, policies[i]);
             }
         } else {
             document.getElementById("all_hotel_policies_list").innerHTML = `
@@ -4238,7 +4238,7 @@ function render_all_policies(policies){
     if (policies) {
         if (policies.length > 0) {
             for (let i = 0; i < policies.length; i++) {
-                document.getElementById("all_hotel_policies_list").innerHTML = all_policies_return_each_policy_markup(i, policies[i]);
+                document.getElementById("all_hotel_policies_list").innerHTML += all_policies_return_each_policy_markup(i, policies[i]);
             }
         } else {
             document.getElementById("all_hotel_policies_list").innerHTML = `
@@ -4308,6 +4308,7 @@ async function add_new_hotel_policy_onclick(){
     let all_policies = await add_new_policy(type, description.trim(), property);
     render_all_policies(all_policies);
     toggle_show_finish_add_new_policy_form();
+    document.getElementById("logged_in_hotel_all_policies_description_input").value='';
 }
 
 function all_cities_return_each_city_markup(city_param) {
