@@ -2208,6 +2208,208 @@ app.post("/search_cheap_hotel_arrival_guests/", async(req, res, next)=>{
 
 });
 
+app.post("/search_cheap_hotel_guests_auto_completion/:hotel_brand_id", async(req, res, next) => {
+  
+  let res_objects = [];
+  
+  let q_parts = req.body.q.trim().split(" ");
+
+  let f_name=q_parts[0].trim();
+  let l_name=q_parts[0].trim();
+  let req_email=q_parts[0].trim();
+  let req_mobile=q_parts[0].trim();
+  
+  if(q_parts.length>1){
+    l_name=q_parts[1].trim();
+    req_email=q_parts[1].trim();
+    req_mobile=q_parts[1].trim();
+  }
+  if(q_parts.length>2){
+    req_email=q_parts[2].trim();
+    req_mobile=q_parts[2].trim();
+  }
+  if(q_parts.length>3){
+    req_mobile = q_parts[3];
+  }
+  let bookings = null;
+  let the_guests = [];
+  let the_invoices = null;
+
+  if(f_name && l_name && req_email && req_mobile && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
+      mobile: req_mobile,
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(f_name && l_name && req_email && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(f_name && l_name && req_mobile && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      mobile: req_mobile,
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(f_name && l_name && the_guests.length === 0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(f_name && req_mobile && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      mobile: req_mobile,
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(l_name && req_mobile && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      mobile: req_mobile,
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(f_name && req_email && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(l_name && req_email && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(f_name && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      first_name: new RegExp('\\b' +f_name+ '\\b', 'i'),
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(l_name && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      last_name: new RegExp('\\b' +l_name+ '\\b', 'i'),
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(req_mobile && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      mobile: req_mobile,
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  if(req_email && the_guests.length===0){
+    let g = await cheap_hotel_guest.find({
+      hotel_brand_id: req.params.hotel_brand_id,
+      email: new RegExp('\\b' +req_email+ '\\b', 'i'),
+    }).exec();
+    the_guests=[...the_guests,...g];
+  }
+  let unique = [];
+  the_guests.forEach((guest) => {
+    let found=false;
+    unique.forEach(un=>{
+      if(un.email===guest.email && un.first_name===guest.first_name && un.last_name === guest.last_name && un.mobile===guest.mobile){
+        found=true;
+      }
+    });
+    if(!found){
+      unique.push(guest);
+    }
+  });
+  the_guests=unique;
+  let chosen=[];
+  if(f_name!==l_name){
+    the_guests.forEach(each=>{
+      if(each.first_name===f_name && each.last_name===l_name){
+        chosen.push(each);
+      }
+    })
+  }
+  if(chosen.length>0){
+    the_guests=chosen;
+  }
+  //console.log(the_guests);
+  if(the_guests.length > 0){
+
+    for(let g=0; g < the_guests.length; g++){
+      res_objects.push({
+        guest: the_guests[g],
+        booking: "",
+        invoice: ""
+      })
+    };
+    
+    if(res_objects.length > 0){
+      for(let i=0; i<res_objects.length; i++){
+        
+        bookings = await cheap_hotel_booking.find({
+          hotel_brand_id: req.body.hotel_brand_id,
+          property_id: req.body.property_id,
+          "guests.id": res_objects[i].guest._id.toString(),
+        }).exec();
+        
+        //the for loop below enforces checkin date being the same as today.
+        
+        for(let b=0; b < bookings.length; b++){
+
+          res_objects[i].booking = bookings[b];
+
+        }
+
+      }
+    }
+
+    if(res_objects.length > 0){
+      for(let i=0; i<res_objects.length; i++){
+        
+        if(res_objects[i].booking !== ""){
+          the_invoices = await cheap_hotel_invoice.find({
+            hotel_brand_id: req.body.hotel_brand_id,
+            property_id: req.body.property_id,
+            "invoice_items.booking_id": res_objects[i].booking._id.toString(),
+            "invoice_items.guest_id": res_objects[i].guest._id.toString()
+          }).exec();
+          res_objects[i].invoice = the_invoices[0];
+        }
+
+      }
+    }
+
+  }
+
+  //res_objects = res_objects.filter( each => each.booking !== "");
+
+  res.send(res_objects);
+
+});
+
 app.post("/search_booking_by_booking_info/", async(req, res, next)=>{
 
   console.log(req.body);

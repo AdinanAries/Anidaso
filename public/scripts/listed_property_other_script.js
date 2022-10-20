@@ -1387,3 +1387,55 @@ function go_to_checkout_from_invoice(){
     document.getElementById("in_guests_checkout_div").style.display="flex";
     $("#guests_invoice_div").toggle("up");
 }
+
+//Too lazy to MOVE this into the right. Will do that later.
+function search_guest_autocomplete(q, hotel_brand_id=localStorage.getItem("ANDSBZID")){
+    return $.ajax({
+        type: "POST",
+        url: '/search_cheap_hotel_guests_auto_completion/'+hotel_brand_id,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({q}),
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
+async function guest_search_auto_complete_on_input(input_elem, list_item, autocomplete_container){
+
+    if(autocomplete_container){
+        $("#"+autocomplete_container).slideDown('fast');
+    }
+    let q=document.getElementById(input_elem).value.trim();
+    let items = await search_guest_autocomplete(q);
+    console.log('items',items);
+    document.getElementById(list_item).innerHTML=``;
+
+    for(let g=0; g<items.length; g++){
+        let guest = items[g].guest;
+        if(g>4)break;
+        document.getElementById(list_item).innerHTML += `
+            <div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+                <p style="color: lightgreen; font-size: 14px;">
+                    ${guest.first_name} ${guest.last_name}
+                    <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - ${guest.gender}
+                </p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;">DOB: </span>
+                    ${guest.DOB},
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Tel: </span>
+                    ${guest.mobile}, 
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
+                    ${guest.email}
+                </p>
+            </div>
+        `;
+    }
+
+}

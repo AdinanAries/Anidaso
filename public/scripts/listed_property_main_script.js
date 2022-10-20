@@ -3539,6 +3539,11 @@ function get_logged_in_hotel_infor() {
                                     ${property.city} - ${property.street_address}, ${property.country} 
                                 </option>
                             `;
+                            document.getElementById("logged_in_hotel_all_policies_property_select").innerHTML += `
+                                <option value='${property._id}'>
+                                    ${property.city} - ${property.street_address}, ${property.country} 
+                                </option>
+                            `;
                         }
 
                     }
@@ -4237,6 +4242,7 @@ function add_new_policy(type_param, description_param, property_id, brand_id=loc
 function render_all_policies(policies){
     if (policies) {
         if (policies.length > 0) {
+            document.getElementById("all_hotel_policies_list").innerHTML=``;
             for (let i = 0; i < policies.length; i++) {
                 document.getElementById("all_hotel_policies_list").innerHTML += all_policies_return_each_policy_markup(i, policies[i]);
             }
