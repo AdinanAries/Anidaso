@@ -141,6 +141,78 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
 
 }
 
+function autocomplete_add_selected_guest_from_search(id, first_name, last_name, gender, DOB, tel, email, index, type){
+    make_reservations_post_data.guests[index].id=id;
+    make_reservations_post_data.guests[index].first_name=first_name;
+    make_reservations_post_data.guests[index].last_name=last_name;
+    make_reservations_post_data.guests[index].gender=gender;
+    make_reservations_post_data.guests[index].DOB=DOB;
+    if(type==="adult"){
+        document.getElementById("selected_adult_guest_from_search_info"+index).innerHTML=`
+            <p onclick="$('#selected_adult_guest_from_search_info${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
+                <i style="color: red;" class="fa fa-times"></i></p>
+            <p style="color: white; font-size: 14px; margin-top: 10px;">
+                <i class="fa fa-check" style="color: lightgreen; margin-right: 5px;"></i>    
+                You have selected a guest
+            </p>
+            <div style="cursor: pointer; padding: 10px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2);">
+                <p style="color: lightgreen; font-size: 14px;">
+                    ${first_name} ${last_name}
+                    <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - ${gender}
+                </p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;">DOB: </span>
+                    ${DOB}
+                </p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Tel: </span>
+                    ${tel}
+                </p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
+                    ${email}
+                </p>
+            </div>
+            <div style="background-color: rgba(255,0,0,0.3); border: 1px solid red; padding: 10px; width: 120px; text-align: center; margin: auto; margin-top: 20px; color: white; cursor: pointer; font-size: 14px; border-radius: 4px;">
+                <i class="fa fa-minus" style="margin-right: 10px; color: red;"></i>remove
+            </div>
+        `;
+        $("#selected_adult_guest_from_search_info"+index).slideDown('fast');
+    }
+    if(type==="child"){
+        document.getElementById("selected_child_guest_from_search_info"+index).innerHTML=`
+            <p onclick="$('#selected_child_guest_from_search_info${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
+                <i style="color: red;" class="fa fa-times"></i></p>
+            <p style="color: white; font-size: 14px; margin-top: 10px;">
+                <i class="fa fa-check" style="color: lightgreen; margin-right: 5px;"></i>    
+                You have selected a guest
+            </p>
+            <div style="cursor: pointer; padding: 10px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2);">
+                <p style="color: lightgreen; font-size: 14px;">
+                    ${first_name} ${last_name}
+                    <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - Male
+                </p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;">DOB: </span>
+                    ${DOB}
+                </p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Tel: </span>
+                    ${tel}
+                </p>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 3px;">
+                    <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
+                    ${email}
+                </p>
+            </div>
+            <div style="background-color: rgba(255,0,0,0.3); border: 1px solid red; padding: 10px; width: 120px; text-align: center; margin: auto; margin-top: 20px; color: white; cursor: pointer; font-size: 14px; border-radius: 4px;">
+                <i class="fa fa-minus" style="margin-right: 10px; color: red;"></i>remove
+            </div>
+        `;
+        $("#selected_child_guest_from_search_info"+index).slideDown('fast');
+    }
+}
+
 //add guest information inputs onchange functions
 function add_a_guest_first_name(input, index){
     make_reservations_post_data.guests[index].first_name = document.getElementById(input).value
@@ -167,15 +239,15 @@ function make_reservation_return_each_adult_guest_markup(number, index){
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input onkeyup="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}');" id="adult_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
-                <button onclick="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}');" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
+                <input onkeyup="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index});" id="adult_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <button onclick="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
                 <div id="adult_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
                     <p onclick="$('#adult_guest_search_for_booking_auto_complete_dropdown${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
                         <i style="color: red;" class="fa fa-times"></i></p>
                     <div id="adult_guest_search_for_booking_auto_complete_dropdown_list${index}">
                         
-                        <div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+                        <!--div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
                             <p style="color: lightgreen; font-size: 14px;">
                                 Mohammed Adinan
                                 <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - Male
@@ -188,9 +260,12 @@ function make_reservation_return_each_adult_guest_markup(number, index){
                                 <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
                                 m.adinan@yahoo.com
                             </p>
-                        </div>
+                        </div-->
                     </div>
                 </div>
+            </div>
+            <div id="selected_adult_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); z-index: 1; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
+                
             </div>
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
                 <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
@@ -231,14 +306,14 @@ function make_reservation_return_each_child_guest_markup(number, index){
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input onkeyup="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}');" id="child_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
-                <button onclick="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}');" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
+                <input onkeyup="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index});" id="child_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <button onclick="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
                 <div id="child_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
                     <p onclick="$('#child_guest_search_for_booking_auto_complete_dropdown${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
                         <i style="color: red;" class="fa fa-times"></i></p>
                     <div id="child_guest_search_for_booking_auto_complete_dropdown_list${index}">
-                        <div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+                        <!--div style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
                             <p style="color: lightgreen; font-size: 14px;">
                                 Mohammed Adinan
                                 <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - Male
@@ -265,9 +340,12 @@ function make_reservation_return_each_child_guest_markup(number, index){
                                 <span style="color: rgba(255,255,255,0.6); font-size: 14px;"> Email: </span>
                                 m.adinan@yahoo.com
                             </p>
-                        </div>
+                        </div-->
                     </div>
                 </div>
+            </div>
+            <div id="selected_child_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); z-index: 1; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
+                
             </div>
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
                 <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
