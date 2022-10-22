@@ -734,6 +734,9 @@ footer a {
   #logged_in_hotel_recently_booked_rooms_list{
     padding: 10px 0;
   }
+  .all_rooms_list_table tr td {
+    background-color: rgba(0, 30, 23, 0.75);
+  }
   #your_rooms_title_at_recently_booked_rooms_content{
     padding-top: 25px;
     color: rgba(255,255,255,0.5) !important;
@@ -749,6 +752,7 @@ footer a {
   }
   .all_rooms_list_table .rooms_list_edit_room_icon{
     text-align: center;
+    background-color: #001429 !important
   }
   #guest_profile_manager_activities_section{
     display: block !important;
