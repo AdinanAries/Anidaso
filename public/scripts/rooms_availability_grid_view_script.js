@@ -270,26 +270,28 @@ function make_reservation_return_each_adult_guest_markup(number, index){
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
                 <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
                 Adult ${number + 1}</p>
-            <div class="flex_row_default_flex_column_mobile">
-                <div class="flex_child_of_two">
-                    <div style="margin-top: 10px;">
+            <div style="margin-top: 10px;">
+                <div class="flex_row_default_flex_column_mobile">
+                    <div class="flex_child_of_two" style="width: calc(50% - 2px);" style="margin-top: 10px;">
                         <p style="color: white; font-size: 13px; margin-bottom: 10px;">First Name:</p>
                         <input id="mk_reservationS_adult_first_name_input_${number}" onchange="add_a_guest_first_name('mk_reservationS_adult_first_name_input_${number}', ${index});" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
                     </div>
-                    <div style="margin-top: 20px;">
+                    <div class="flex_child_of_two g_flex_non_first_child" style="width: calc(50% - 2px);">
                         <p style="color: white; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
                         <input id="mk_reservationS_adult_last_name_input_${number}" onchange="add_a_guest_last_name('mk_reservationS_adult_last_name_input_${number}', ${index});" style="font-size: 14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
                     </div>
                 </div>
-                <div class="flex_child_of_two flex_non_first_child">
-                    <div style="margin-top: 10px;">
-                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">
-                            Gender</p>
-                        <select id="mk_reservationS_adult_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_adult_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                        <div style="margin-top: 20px;">
+                <div style="margin-top: 10px;">
+                    <div class="flex_row_default_flex_column_mobile" style="margin-top: 10px;">
+                        <div class="flex_child_of_two" style="width: calc(50% - 2px);">
+                            <p style="color: white; font-size: 13px; margin-bottom: 10px;">
+                                Gender</p>
+                            <select id="mk_reservationS_adult_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_adult_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="flex_child_of_two g_flex_non_first_child" style="width: calc(50% - 2px);">
                             <p style="color: white; font-size: 13px; margin-bottom: 10px;">
                                 Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(above 17)</span></p>
                             <input id="mk_reservationS_adult_DOB_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
@@ -350,26 +352,28 @@ function make_reservation_return_each_child_guest_markup(number, index){
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
                 <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
                 Child ${number + 1}</p>
-            <div class="flex_row_default_flex_column_mobile">
-                <div class="flex_child_of_two">
-                    <div style="margin-top: 10px;">
+            <div style="margin-top: 10px;">
+                <div class="flex_row_default_flex_column_mobile">
+                    <div class="flex_child_of_two">
                         <p style="color: white; font-size: 13px; margin-bottom: 10px;">First Name:</p>
                         <input id="mk_reservationS_child_first_name_input_${number}" onchange="add_a_guest_first_name('mk_reservationS_child_first_name_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add first name here"/>
                     </div>
-                    <div style="margin-top: 20px;">
+                    <div class="flex_child_of_two g_flex_non_first_child">
                         <p style="color: white; font-size: 13px; margin-bottom: 10px;">Last Name:</p>
                         <input id="mk_reservationS_child_last_name_input_${number}" onchange="add_a_guest_last_name('mk_reservationS_child_last_name_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="add last name here"/>
                     </div>
                 </div>
-                <div class="flex_child_of_two flex_non_first_child">
-                    <div style="margin-top: 10px;">
-                        <p style="color: white; font-size: 13px; margin-bottom: 10px;">
-                            Gender</p>
-                        <select id="mk_reservationS_child_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_child_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                        <div style="margin-top: 20px;">
+                <div style="margin-top: 10px;">
+                    <div class="flex_row_default_flex_column_mobile">
+                        <div class="flex_child_of_two">
+                            <p style="color: white; font-size: 13px; margin-bottom: 10px;">
+                                Gender</p>
+                            <select id="mk_reservationS_child_gender_input_${number}" onchange="add_a_guest_gender('mk_reservationS_child_gender_input_${number}', ${index});" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: 100%;">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="flex_child_of_two g_flex_non_first_child">
                             <p style="color: white; font-size: 13px; margin-bottom: 10px;">
                                 Date Of Birth: <span style="color:rgba(0, 0, 0, 0.705); font-size: 13px;">(below 18)</span></p>
                             <input id="mk_reservationS_child_DOB_input_${number}" style="font-size:  14px; padding: 10px; border: none; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="YYYY-MM-DD eg. 1992-03-23"/>
@@ -760,8 +764,6 @@ function return_bookings_grid_view_current_room_markup(current_room){
     return tr_tag;
 
 }
-
-
 
 function return_bookings_grid_view_other_rooms_markup(rooms_list, current_room){
 

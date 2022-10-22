@@ -3696,7 +3696,7 @@ function update_cheap_room(room_obj, room_id) {
     });
 }
 
-async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 3) {
+async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 7) {
 
     if (rooms_list.length === 0) {
         document.getElementById("dashboard_onload_displayed_rooms").innerHTML = `
@@ -3895,7 +3895,7 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 3) {
     if (all_properties.length > 0) {
         for (let prop of all_properties) {
             document.getElementById("r_prop" + prop._id).onclick = () => {
-                render_hotel_rooms(rooms_list, prop._id, 0, 3);
+                render_hotel_rooms(rooms_list, prop._id, 0, 6);
             }
         }
     }
@@ -4019,8 +4019,8 @@ async function render_recent_hotel_booking(recent_booking) {
     }
 
     document.getElementById("logged_in_hotel_recently_booked_rooms_list").innerHTML = `
-        <div style="padding: 10px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); max-width: 500px; margin: auto;">
-            <p style="margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
+        <div>
+            <p style="margin-bottom: 15px; color:rgb(209, 84, 0); text-align: center; font-size: 14px; font-weight: bolder;">Last Booked</p>
             <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
                 Room ${room_number}:
                 <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">

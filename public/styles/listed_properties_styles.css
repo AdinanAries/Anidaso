@@ -687,13 +687,19 @@ footer a {
   background-color: rgb(0, 12, 21);
   box-shadow: 1px 2px 3px rgba(0,0,0,0.5);
   border-radius: 4px;
-  padding: 10px 0;
-  padding-left: 10px;
   display: flex;
   justify-content: center;
+  width: 100%;
+}
+.recently_booked_and_rooms_div > div{
+  width: 50%;
 }
 #logged_in_hotel_recently_booked_rooms_list{
-  min-width: 450px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 10px;
+  /*min-width: 320px;
+  background-color: rgba(41, 66, 88, 0.7);
+  background-color:rgba(41, 66, 88, 0.555);*/
 }
 .logged_in_hotel_gallery{
   border: 1px solid rgba(255,255,255,0.2);
@@ -706,6 +712,26 @@ footer a {
   }
 }
 @media only screen and (max-width: 1000px) {
+  .g_flex_non_first_child{
+    margin-top: 10px !important;
+  }
+  .hero_section_flex_content_container{
+    padding: 0 !important;
+  }
+  .recently_booked_and_rooms_div{
+    padding-top: 10px;
+    background-color: #000b15ca;
+    border: none !important;
+  }
+  .recently_booked_and_rooms_div > div{
+    width: calc(100% - 20px);
+  }
+  #logged_in_hotel_recently_booked_rooms_list{
+    padding: 10px 0;
+  }
+  .logged_in_hotel_recent_rooms_list{
+    width: 100% !important;
+  }
   #guest_profile_manager_activities_section{
     display: block !important;
   }
