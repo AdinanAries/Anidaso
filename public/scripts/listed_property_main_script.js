@@ -3895,7 +3895,7 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 7) {
     if (all_properties.length > 0) {
         for (let prop of all_properties) {
             document.getElementById("r_prop" + prop._id).onclick = () => {
-                render_hotel_rooms(rooms_list, prop._id, 0, 6);
+                render_hotel_rooms(rooms_list, prop._id, 0, 7);
             }
         }
     }

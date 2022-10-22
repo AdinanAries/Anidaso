@@ -712,6 +712,9 @@ footer a {
   }
 }
 @media only screen and (max-width: 1000px) {
+  body{
+    padding-top: 45px;
+  }
   .g_flex_non_first_child{
     margin-top: 10px !important;
   }
@@ -720,7 +723,6 @@ footer a {
   }
   .recently_booked_and_rooms_div{
     padding-top: 10px;
-    background-color: #000b15ca;
     border: none !important;
   }
   .recently_booked_and_rooms_div > div{
