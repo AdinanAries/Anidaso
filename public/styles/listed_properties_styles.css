@@ -715,6 +715,9 @@ footer a {
   body{
     padding-top: 30px;
   }
+  header{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
   .g_flex_non_first_child{
     margin-top: 10px !important;
   }
