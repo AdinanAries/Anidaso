@@ -713,7 +713,7 @@ footer a {
 }
 @media only screen and (max-width: 1000px) {
   body{
-    padding-top: 45px;
+    padding-top: 30px;
   }
   .g_flex_non_first_child{
     margin-top: 10px !important;
@@ -731,8 +731,21 @@ footer a {
   #logged_in_hotel_recently_booked_rooms_list{
     padding: 10px 0;
   }
+  #your_rooms_title_at_recently_booked_rooms_content{
+    padding-top: 20px;
+    color: rgba(255,255,255,0.5) !important;
+  }
   .logged_in_hotel_recent_rooms_list{
     width: 100% !important;
+    
+  }
+  .logged_in_hotel_recent_rooms_list .all_rooms_list_table{
+    width: 100%;
+    max-width: 500%;
+    margin-bottom: 5px !important;
+  }
+  .all_rooms_list_table .rooms_list_edit_room_icon{
+    text-align: center;
   }
   #guest_profile_manager_activities_section{
     display: block !important;
