@@ -621,7 +621,14 @@ header {
   border: none;
   font-weight: bolder;
 }
-.rooms_list_edit_room_icon{
+#dashboard_onload_displayed_rooms_list tr.closed td, #dashboard_onload_displayed_rooms_list tr.booked td{
+  background-color: rgba(51, 14, 0, 0.337) !important;
+  color: rgba(255, 255, 255, 0.5);
+}
+.rooms_list_edit_room_icon,
+#dashboard_onload_displayed_rooms_list tr.booked td.rooms_list_edit_room_icon,
+#dashboard_onload_displayed_rooms_list tr.closed td.rooms_list_edit_room_icon,
+.all_rooms_list_table tr:hover td.rooms_list_edit_room_icon{
   border: none !important;
   background: none !important;
   padding: 0 !important;

@@ -3685,7 +3685,11 @@
                             <div class="flex_child_of_two flex_non_first_child" style="margin: 10px 0; margin-bottom: 0; border-radius: 4px; width: calc(100% - 2px) !important;">
                                 <p style="margin-bottom: 11px; color:rgba(255,255,255,0.5); text-align: center; letter-spacing: 1px; font-size: 14px;">
                                 Add date and guests</p>
-                                <input id="make_reservation_date_range_input" style="padding: 10px; border-radius: 4px; color: white; font-size: 14px; width: calc(100% - 20px) !important; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2);" type="text" readonly="true" placeholder="checkin - checkout"/>
+                                <div style="padding-left: 10px; border-radius: 4px; font-size: 14px; background-color:rgb(0, 16, 27); border: 1px solid rgba(255,255,255,0.2);">
+                                    <i style="color: rgba(255,255,255,0.5);" class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                                    <input id="make_reservation_date_range_input" style="width: calc(100% - 50px) !important; padding: 10px; border: none; background: none; color: white; font-size: 14px;"  type="text" readonly="true" placeholder="checkin - checkout"/>
+                                </div>
+                                
                                 
                                 <div style="margin-top: 10px; display: flex; flex-direction: row !important; width: 100% !important;">
                                     <div style="width: 50%;">
@@ -3795,15 +3799,15 @@
                                         3
                                     </div>
                                 </div>
-                                <div style="display: flex; flex-direction: row !important; margin: auto; border-radius: 4px; margin-top: 20px; overflow: hidden;">
-                                    <div onclick="toggle_show_add_room_pane();" style="padding: 10px 0; width: 33.3%; cursor: pointer; background-color: rgb(209, 84, 0); font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                                        <i class="fa fa-plus" aria-hidden="true"></i> add room
+                                <div style="border: 1px solid rgba(255,255,255,0.2); display: flex; flex-direction: row !important; margin: auto; border-radius: 4px; margin-top: 20px; overflow: hidden;">
+                                    <div onclick="toggle_show_add_room_pane();" style="padding: 10px 0; width: 33.3%; cursor: pointer; background-color: rgb(22, 34, 39); font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                        <i style="color: rgba(255,255,255,0.5); margin-right: 5px;" class="fa fa-plus" aria-hidden="true"></i> add room
                                     </div>
-                                    <div onclick="toggle_show_search_room_pane();" style="padding: 10px 0; width: 33.3%; cursor: pointer; background-color: rgb(3, 70, 97); font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
-                                        <i class="fa fa-search" aria-hidden="true"></i> search room
+                                    <div onclick="toggle_show_search_room_pane();" style="border-left: 1px solid rgba(255,255,255,0.2); padding: 10px 0; width: 33.3%; cursor: pointer; background-color: rgb(3, 30, 37); font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
+                                        <i style="color: rgba(255,255,255,0.5); margin-right: 5px;" class="fa fa-search" aria-hidden="true"></i> search room
                                     </div>
-                                    <div onclick="toggle_show_all_hotel_properties();" style="cursor: pointer; width: 33.3%; font-size: 13px; letter-spacing: 1px; text-align: center; background-color: rgb(1, 110, 160); color: white; padding: 10px 0; margin: auto; border-bottom-right-radius: 4px;">
-                                        view properties
+                                    <div onclick="toggle_show_all_hotel_properties();" style="border-left: 1px solid rgba(255,255,255,0.2); cursor: pointer; width: 33.3%; font-size: 13px; letter-spacing: 1px; text-align: center; background-color: rgb(1, 40, 60); color: white; padding: 10px 0; margin: auto; border-bottom-right-radius: 4px;">
+                                        <i style="color: rgba(255,255,255,0.5); margin-right: 5px;" class="fa fa-building" aria-hidden="true"></i> properties
                                     </div>
                                 </div>
                             </div>
