@@ -3783,7 +3783,7 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
                 <tr>
                     <td>Room</td>
                     <td class="mobile_hidden_elem">Checkin</td>
-                    <td class="mobile_hidden_elem">Checkout</td>
+                    <td>Checkout</td>
                     <td>Price</td>
                     <td>Status</td>
                 </tr>
@@ -3886,7 +3886,7 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
             <tr onclick="view_selected_room_full_details('${rooms_sublist[r]._id}');" class="${tr_status_style}">
                 <td>${room_number}</td>
                 <td class="mobile_hidden_elem">${checkin}</td>
-                <td class="mobile_hidden_elem">${checkout}</td>
+                <td>${checkout}</td>
                 <td>$${room_price}</td>
                 <td>
                     ${room_booked}
