@@ -3869,7 +3869,9 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 7) {
                     ${room_booked}
                 </td>
                 <td onclick="view_selected_room_full_details('${rooms_sublist[r]._id}');" class="rooms_list_edit_room_icon">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <div>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </div>
                 </td>
             </tr>
         `;

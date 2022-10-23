@@ -621,14 +621,26 @@ header {
   border: none;
   font-weight: bolder;
 }
-.rooms_list_edit_room_icon {
+.rooms_list_edit_room_icon{
+  border: none !important;
+  background: none !important;
+  padding: 0 !important;
+  padding-left: 5px !important;
+}
+.rooms_list_edit_room_icon div{
   cursor: pointer;
   color: rgb(114, 147, 197) !important;
   background-color: #00244a !important;
   border-radius: 100% !important;
-  border-color: rgba(126, 177, 255, 0.285) !important;
+  border: 1px solid rgba(126, 177, 255, 0.285) !important;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.all_rooms_list_table tr:hover .rooms_list_edit_room_icon{
+.all_rooms_list_table tr:hover .rooms_list_edit_room_icon div{
   color: rgb(255, 125, 125) !important;
   background-color: #8c00004d !important;
 }
@@ -701,6 +713,9 @@ footer a {
   background-color: rgba(41, 66, 88, 0.7);
   background-color:rgba(41, 66, 88, 0.555);*/
 }
+#your_rooms_title_at_recently_booked_rooms_content{
+  padding-top: 10px;
+}
 .logged_in_hotel_gallery{
   border: 1px solid rgba(255,255,255,0.2);
   padding-top: 20px;
@@ -713,7 +728,7 @@ footer a {
 }
 @media only screen and (max-width: 1000px) {
   body{
-    padding-top: 30px;
+    padding-top: 55px;
   }
   header{
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -738,19 +753,20 @@ footer a {
     background-color: rgba(0, 30, 23, 0.75);
   }
   #your_rooms_title_at_recently_booked_rooms_content{
-    padding-top: 25px;
+    padding-top: 20px;
     color: rgba(255,255,255,0.5) !important;
   }
   .logged_in_hotel_recent_rooms_list{
     width: 100% !important;
     background-color:rgba(41, 66, 88, 0.555);
+    border-top: 1px solid rgba(255,255,255,0.2);
   }
   .logged_in_hotel_recent_rooms_list .all_rooms_list_table{
     width: 100%;
     max-width: 500%;
     margin-bottom: 5px !important;
   }
-  .all_rooms_list_table .rooms_list_edit_room_icon{
+  .all_rooms_list_table .rooms_list_edit_room_icon div{
     text-align: center;
     background-color: #001429 !important
   }
@@ -797,9 +813,9 @@ footer a {
     border: none;
     padding: 0;
   }
-.logged_in_hotel_recent_rooms_list{
-  margin-top: 20px;
-}
+  .logged_in_hotel_recent_rooms_list{
+    /*margin-top: 20px;*/
+  }
   .wrapper {
     margin: 0;
   }
