@@ -600,7 +600,8 @@ header {
   width: 33%;
 }
 .all_rooms_list_table {
-  border-spacing: 5px;
+  /*border-spacing: 5px;*/
+  border-spacing: 0 !important;
   margin: auto;
 }
 .all_rooms_list_table tr td {
@@ -609,7 +610,7 @@ header {
   color: white;
   background-color: rgba(0, 82, 61, 0.23);
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 4px;
+  /*border-radius: 4px;*/
   font-size: 13px;
   letter-spacing: 1px;
 }
