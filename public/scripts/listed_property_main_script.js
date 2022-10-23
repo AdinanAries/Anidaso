@@ -3883,7 +3883,7 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 7) {
         }
 
         document.getElementById("dashboard_onload_displayed_rooms_list").innerHTML += `
-            <tr class="${tr_status_style}">
+            <tr onclick="view_selected_room_full_details('${rooms_sublist[r]._id}');" class="${tr_status_style}">
                 <td>${room_number}</td>
                 <td class="mobile_hidden_elem">${checkin}</td>
                 <td class="mobile_hidden_elem">${checkout}</td>
@@ -3891,7 +3891,7 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 7) {
                 <td>
                     ${room_booked}
                 </td>
-                <td onclick="view_selected_room_full_details('${rooms_sublist[r]._id}');" class="rooms_list_edit_room_icon">
+                <td onclick="event.stopPropagation(); edit_hotel_room_func('${rooms_sublist[r]._id}');false;" class="rooms_list_edit_room_icon">
                     <div>
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </div>

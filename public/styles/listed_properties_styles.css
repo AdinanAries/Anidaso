@@ -604,6 +604,7 @@ header {
   margin: auto;
 }
 .all_rooms_list_table tr td {
+  cursor: pointer;
   padding: 10px;
   color: white;
   background-color: rgba(0, 82, 61, 0.23);
@@ -613,6 +614,9 @@ header {
   letter-spacing: 1px;
 }
 .all_rooms_list_table tr:hover td {
+  border: 1px solid lightgreen !important;
+}
+#dashboard_onload_displayed_rooms_list tr.closed:hover td, #dashboard_onload_displayed_rooms_list tr.booked:hover td{
   border: 1px solid rgb(255, 38, 0) !important;
 }
 .all_rooms_list_table tr:nth-child(1) td {
