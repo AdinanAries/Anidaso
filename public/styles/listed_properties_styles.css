@@ -14,7 +14,7 @@ header{
 body{
   padding-top: 70px;
 }
-select, input {
+select {
   -webkit-appearance: none;
 }
 select:focus {
