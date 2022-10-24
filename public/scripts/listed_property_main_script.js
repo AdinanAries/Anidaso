@@ -680,7 +680,22 @@ $(function () {
         search_booking_DOB = start.format('YYYY-MM-DD');
     });
 });
+$(function () {
+    $('#guest_manager_edit_guest_DOB_input').daterangepicker({
+        singleDatePicker: true,
+        autoUpdateInput: false,
+        showDropdowns: true,
 
+        minYear: 1901,
+        maxYear: parseInt(moment().format('YYYY'), 10)
+    }, function (start, end, label) {
+        setTimeout(() => {
+            document.getElementById("search_booking_DOB_input").value = start.format('YYYY-MM-DD');
+        }, 100);
+
+        search_booking_DOB = start.format('YYYY-MM-DD');
+    });
+});
 async function search_booking_onclick() {
 
     document.getElementById("view_booking_result_details").innerHTML = `
@@ -1284,6 +1299,11 @@ async function show_guest_manager_edit_guest_div() {
     toggle_show_guest_manager_edit_guest();
     let first_name = current_selected_guest.first_name;
     let last_name = current_selected_guest.last_name;
+    let email = current_selected_guest.email;
+    let DOB = current_selected_guest.DOB;
+    let mobile = current_selected_guest.mobile.split(" ")[1];
+    let country_code = current_selected_guest.mobile.split(" ")[0];
+    let property = current_selected_guest.property_id;
     let guest_current_address = `
         <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-plus" aria-hidden="true"></i>
         add address
@@ -1297,6 +1317,11 @@ async function show_guest_manager_edit_guest_div() {
     document.getElementById("guest_manager_edit_guest_address_btn").innerHTML = guest_current_address;
     document.getElementById("guest_manager_edit_guest_first_name_input").value = first_name;
     document.getElementById("guest_manager_edit_guest_last_name_input").value = last_name;
+    document.getElementById("guest_manager_edit_guest_mobile_input").value = mobile;
+    document.getElementById("guest_manager_edit_guest_country_calling_code_input").value = country_code;
+    document.getElementById("guest_manager_edit_guest_email_input").value=email;
+    document.getElementById("guest_manager_edit_guest_DOB_input").placeholder=DOB;
+    document.getElementById("guest_manager_edit_guest_property_select").value=property;
 }
 
 function toggle_show_guest_manager_menu() {
@@ -3789,7 +3814,7 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
                 </tr>
             </tbody>
         </table>
-        <p onclick="show_all_hotel_property_rooms('${property_id}')" style="padding: 10px; width: 150px; margin: auto; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white; ;">
+        <p onclick="show_all_hotel_property_rooms('${property_id}')" style="padding: 10px; width: 150px; margin: auto; margin-top: 10px; cursor: pointer; font-size: 13px; text-align: center; letter-spacing: 1px; color: white;">
             view all rooms
             <i style="margin-left: 5px; color:rgb(235, 137, 137);" aria-hidden="true" class="fa fa-long-arrow-right"></i>
         </p>
@@ -3839,11 +3864,11 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
                 if (`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}` === `${the_date.getDate()}/${the_date.getMonth()}/${the_date.getFullYear()}`) {
                     checkin = `
                         <i aria-hidden="true" class="fa fa-bed" style="color:crimson; margin-right: 5px;"></i> 
-                        ${change_date_from_iso_to_long_date(booking[y].checkin_date)}
+                        ${change_date_from_iso_to_long_date(booking[y].checkin_date).split(",")[0]}
                     `;
                     checkout = `
                         <i aria-hidden="true" class="fa fa-bed" style="color:crimson; margin-right: 5px;"></i> 
-                        ${change_date_from_iso_to_long_date(booking[y].checkout_date)}
+                        ${change_date_from_iso_to_long_date(booking[y].checkout_date).split(",")[0]}
                     `;
                     rooms_sublist[r].booked = true;
                     tr_status_style='booked';

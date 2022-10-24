@@ -146,7 +146,17 @@ function autocomplete_add_selected_guest_from_search(id, first_name, last_name, 
     make_reservations_post_data.guests[index].first_name=first_name;
     make_reservations_post_data.guests[index].last_name=last_name;
     make_reservations_post_data.guests[index].gender=gender;
+    make_reservations_post_data.guests[index].type=type;
     make_reservations_post_data.guests[index].DOB=DOB;
+    make_reservations_post_data.guest_contact.mobile=tel;
+    make_reservations_post_data.guest_contact.email=email;
+    if(!document.getElementById("mk_reservation_guest_email_input").value){
+        document.getElementById("mk_reservation_guest_email_input").value=email;
+    }
+    if(!document.getElementById("mk_reservation_guest_mobile_input").value){
+        document.getElementById("mk_reservation_guest_mobile_input").value=tel.split(" ")[1];
+        document.getElementById("mk_reservation_guest_mobile_country_code_select").value=tel.split(" ")[0];
+    }
     if(type==="adult"){
         document.getElementById("selected_adult_guest_from_search_info"+index).innerHTML=`
             <p onclick="$('#selected_adult_guest_from_search_info${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
@@ -173,11 +183,13 @@ function autocomplete_add_selected_guest_from_search(id, first_name, last_name, 
                     ${email}
                 </p>
             </div>
-            <div style="background-color: rgba(255,0,0,0.3); border: 1px solid red; padding: 10px; width: 120px; text-align: center; margin: auto; margin-top: 20px; color: white; cursor: pointer; font-size: 14px; border-radius: 4px;">
+            <div style="color: red; padding: 10px; width: fit-content; text-align: center; margin: auto; margin-top: 20px; cursor: pointer; font-size: 14px; border-radius: 4px;">
                 <i class="fa fa-minus" style="margin-right: 10px; color: red;"></i>remove
+                <span style="color: rgba(255,255,255,0.5); font-size: 14px;"> ${first_name}</span>
             </div>
         `;
         $("#selected_adult_guest_from_search_info"+index).slideDown('fast');
+        $("#adult_guest_search_for_booking_auto_complete_dropdown"+index).slideUp('fast');
     }
     if(type==="child"){
         document.getElementById("selected_child_guest_from_search_info"+index).innerHTML=`
@@ -205,11 +217,13 @@ function autocomplete_add_selected_guest_from_search(id, first_name, last_name, 
                     ${email}
                 </p>
             </div>
-            <div style="background-color: rgba(255,0,0,0.3); border: 1px solid red; padding: 10px; width: 120px; text-align: center; margin: auto; margin-top: 20px; color: white; cursor: pointer; font-size: 14px; border-radius: 4px;">
+            <div style="color: red; padding: 10px; width: fit-content; text-align: center; margin: auto; margin-top: 20px; cursor: pointer; font-size: 14px; border-radius: 4px;">
                 <i class="fa fa-minus" style="margin-right: 10px; color: red;"></i>remove
+                <span style="color: rgba(255,255,255,0.5); font-size: 14px;"> ${first_name}</span>
             </div>
         `;
         $("#selected_child_guest_from_search_info"+index).slideDown('fast');
+        $("#child_guest_search_for_booking_auto_complete_dropdown"+index).slideUp('fast');
     }
 }
 
@@ -239,7 +253,7 @@ function make_reservation_return_each_adult_guest_markup(number, index){
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input onkeyup="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index});" id="adult_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <input onkeyup="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index});" id="adult_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" autocomplete="off" placeholder="enter guest name, email, or phone" />
                 <button onclick="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
                 <div id="adult_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
@@ -264,7 +278,7 @@ function make_reservation_return_each_adult_guest_markup(number, index){
                     </div>
                 </div>
             </div>
-            <div id="selected_adult_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); z-index: 1; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
+            <div id="selected_adult_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 
             </div>
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
@@ -308,7 +322,7 @@ function make_reservation_return_each_child_guest_markup(number, index){
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input onkeyup="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index});" id="child_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" placeholder="enter guest name, email, or phone" />
+                <input onkeyup="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index});" id="child_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" autocomplete="off" placeholder="enter guest name, email, or phone" />
                 <button onclick="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
                 <div id="child_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
@@ -346,7 +360,7 @@ function make_reservation_return_each_child_guest_markup(number, index){
                     </div>
                 </div>
             </div>
-            <div id="selected_child_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); z-index: 1; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
+            <div id="selected_child_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 
             </div>
             <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
@@ -1098,16 +1112,18 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
     }
 
     for(let g=0; g< make_reservations_post_data.guests.length; g++){
+        if(!make_reservations_post_data.guests[g].id){
+            alert('creating guest');
+            let new_guest = await create_guest_record(window.localStorage.getItem("ANDSBZID"), make_reservations_post_data.property_id, "", 
+            make_reservations_post_data.guests[g].first_name, make_reservations_post_data.guests[g].last_name,
+            make_reservations_post_data.guests[g].type, make_reservations_post_data.guests[g].DOB, 
+            make_reservations_post_data.guests[g].gender, document.getElementById("mk_reservation_guest_email_input").value, 
+            `${document.getElementById("mk_reservation_guest_mobile_country_code_select").value} ${document.getElementById("mk_reservation_guest_mobile_input").value}`, 0, "booked"/*status*/, ""/*booking_id*/, 
+                make_reservations_post_data.rooms[0].id, make_reservations_post_data.rooms[0].number, 
+                ""/*street_address*/, ""/*city*/, ""/*town*/, ""/*country*/, ""/*zipcode*/);
 
-        let new_guest = await create_guest_record(window.localStorage.getItem("ANDSBZID"), make_reservations_post_data.property_id, "", 
-        make_reservations_post_data.guests[g].first_name, make_reservations_post_data.guests[g].last_name,
-        make_reservations_post_data.guests[g].type, make_reservations_post_data.guests[g].DOB, 
-        make_reservations_post_data.guests[g].gender, document.getElementById("mk_reservation_guest_email_input").value, 
-        `${document.getElementById("mk_reservation_guest_mobile_country_code_select").value} ${document.getElementById("mk_reservation_guest_mobile_input").value}`, 0, "booked"/*status*/, ""/*booking_id*/, 
-            make_reservations_post_data.rooms[0].id, make_reservations_post_data.rooms[0].number, 
-            ""/*street_address*/, ""/*city*/, ""/*town*/, ""/*country*/, ""/*zipcode*/);
-
-        make_reservations_post_data.guests[g].id = new_guest._id;
+            make_reservations_post_data.guests[g].id = new_guest._id;
+        }
     }
 
     make_a_reservation_post_function()
