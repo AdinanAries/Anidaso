@@ -1536,7 +1536,7 @@ app.get("/get_and_return_guest_by_id/:hotel_brand_id/:property_id/:guest_id", as
   let the_guest = await cheap_hotel_guest.findOne({
     _id: req.params.guest_id,
     hotel_brand_id: req.params.hotel_brand_id,
-    property_id: req.params.property_id,
+    /*property_id: req.params.property_id,*/
   }).exec();
 
   res.send(the_guest);
@@ -1803,7 +1803,6 @@ app.get("/delete_inventory_item/:code/:name/:property_id/:brand_id", async(req, 
 });
 
 app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
-  
   let res_objects = [];
   
   let f_name = req.body.first_name;
@@ -1923,7 +1922,13 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
       status: "staying"
     }).exec();
   }
-
+  if(!f_name && !l_name && !req_email && !req_mobile ){
+    the_guests = await cheap_hotel_guest.find({
+      hotel_brand_id: req.body.hotel_brand_id,
+      property_id: req.body.property_id,
+      status: "staying"
+    }).exec();
+  }
   if(the_guests.length > 0){
 
     for(let g=0; g < the_guests.length; g++){
@@ -1939,7 +1944,7 @@ app.post("/search_cheap_hotel_inhouse_guests/", async(req, res, next)=>{
         
         bookings = await cheap_hotel_booking.find({
           hotel_brand_id: req.body.hotel_brand_id,
-          property_id: req.body.property_id,
+          /*property_id: req.body.property_id,*/
           "guests.id": res_objects[i].guest._id.toString(),
           /*"guests.first_name": first_name,
           "guests.last_name": last_name,
@@ -2001,7 +2006,7 @@ app.get("/get_cheap_hotel_bookings_by_guest/:guest_id/:property_id/:brand_id/", 
 
   bookings = await cheap_hotel_booking.find({
     hotel_brand_id: req.params.brand_id,
-    property_id: req.params.property_id,
+    /*property_id: req.params.property_id,*/
     "guests.id": req.params.guest_id
   }).exec();
 

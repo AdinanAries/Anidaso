@@ -11,17 +11,25 @@ var guest_search_post_data = {
 
 async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking_id, source='inhouse_guests'){ //remove these parameters if not needed
     
+    let guest = await get_and_return_hotel_guest_by_id(localStorage.getItem("ANDSBZID"), "property_id", guest_id);
+    if(guest){
+        guest_search_post_data.first_name = guest.first_name;
+        guest_search_post_data.last_name = guest.last_name;
+        guest_search_post_data.mobile = guest.mobile;
+        guest_search_post_data.email = guest.email;
+    }
+
     if(source==='guest_manager'){
-        guest_search_post_data.property_id=property_id;
+        guest_search_post_data.property_id=guest.property_id;
         toggle_show_guests_manager_div();
     }
     if(source==="booking_editor"){
-        guest_search_post_data.property_id=property_id;
+        guest_search_post_data.property_id=guest.property_id;
         toggle_show_view_booking_div();
     }
     if(source==="invoice_div"){
         document.getElementById("view_booking_div").style.display='none';
-        guest_search_post_data.property_id=property_id;
+        guest_search_post_data.property_id=guest.property_id;
         toggle_show_guests_invoice_div();
     }
 
@@ -44,14 +52,6 @@ async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking
         `; 
     }
     document.getElementById("checkout_guests_search_property_select").value = guest_search_post_data.property_id;
-
-    let guest = await get_and_return_hotel_guest_by_id(localStorage.getItem("ANDSBZID"), property_id, guest_id);
-    if(guest){
-        guest_search_post_data.first_name = guest.first_name;
-        guest_search_post_data.last_name = guest.last_name;
-        guest_search_post_data.mobile = guest.mobile;
-        guest_search_post_data.email = guest.email;
-    }
 
     guest_search_post_data.hotel_brand_id = localStorage.getItem("ANDSBZID");
     document.getElementById("checkout_guests_search_first_name_input").value = guest_search_post_data.first_name;
@@ -1025,7 +1025,7 @@ async function guest_manager_save_new_or_existing_guest_onsubmit(type){
             show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
                     Guest Added`, 
-                "New Guest Added Successfully!");
+                "New Guest Added Successfully!", 'success');
 
     }else{
 

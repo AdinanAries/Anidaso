@@ -1304,6 +1304,11 @@ async function show_guest_manager_edit_guest_div() {
     let mobile = current_selected_guest.mobile.split(" ")[1];
     let country_code = current_selected_guest.mobile.split(" ")[0];
     let property = current_selected_guest.property_id;
+    let street_address = current_selected_guest.home_address.street_address;
+    let town = current_selected_guest.home_address.town;
+    let city = current_selected_guest.home_address.city;
+    let zip = current_selected_guest.home_address.zipcode;
+    let country = current_selected_guest.home_address.country;
     let guest_current_address = `
         <i style="margin-right: 5px; color: rgb(137, 235, 174);" class="fa fa-plus" aria-hidden="true"></i>
         add address
@@ -1322,6 +1327,11 @@ async function show_guest_manager_edit_guest_div() {
     document.getElementById("guest_manager_edit_guest_email_input").value=email;
     document.getElementById("guest_manager_edit_guest_DOB_input").placeholder=DOB;
     document.getElementById("guest_manager_edit_guest_property_select").value=property;
+    document.getElementById("guest_manager_edit_guest_street_address_input").value = street_address;
+    document.getElementById("guest_manager_edit_guest_town_input").value = town;
+    document.getElementById("guest_manager_edit_guest_city_input").value=city;
+    document.getElementById("guest_manager_edit_guest_country_input").value=country;
+    document.getElementById("guest_manager_edit_guest_zipcode_input").value=zip;
 }
 
 function toggle_show_guest_manager_menu() {
@@ -4051,6 +4061,15 @@ async function render_recent_hotel_booking(recent_booking) {
     }
 
     for (let g = 0; g < room_guests.length; g++) {
+        if(g>0){
+            room_guests_markup += `
+                <p style="padding-left: 10px; color: rgba(255,255,255,0.5); font-size: 13px;">
+                <i class="fa fa-users" style="margin-right: 5px;" aria-hidden="true"></i>
+                    and ${(room_guests.length - 1)} other guest(s)
+                </p>
+            `;
+            break;
+        }
         room_guests_markup += `
             <div style="padding-bottom: 10px;">
                 <p style="letter-spacing: 1px; color: slateblue; font-size: 13px; margin-bottom: 5px;">
