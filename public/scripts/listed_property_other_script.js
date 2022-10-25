@@ -18,6 +18,8 @@ async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking
         guest_search_post_data.mobile = guest.mobile;
         guest_search_post_data.email = guest.email;
     }
+    current_highlighted_guests=[];
+    current_highlighted_guests.push(guest);
 
     if(source==='guest_manager'){
         guest_search_post_data.property_id=guest.property_id;
