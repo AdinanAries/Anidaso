@@ -3527,6 +3527,24 @@ app.get('/get_hotel_room_stats/:brand_id', async(req, res, next) => {
     });
     stats.num_rooms = rooms.length;
 
+    let todays_db_date = convert_date_object_to_db_string_format(new Date());
+    let booking = await cheap_hotel_booking.find({
+      hotel_brand_id: req.params.brand_id,
+      all_dates_of_occupancy: todays_db_date,
+    }).exec();
+
+    stats.num_occpied_rooms += booking.length;
+
+    for (let r = 0; r < rooms.length; r++) {
+
+      if (rooms[r].closed) {
+        stats.num_closed_rooms++;
+      }
+
+    }
+
+    stats.num_vacant_rooms = (stats.num_rooms - stats.num_occpied_rooms);
+
     res.send(stats);
   }catch(e){
     console.log(e.message);
