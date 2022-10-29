@@ -4030,6 +4030,53 @@ function get_and_return_hotel_buildings(hotel_id) {
     });
 }
 
+function get_hotel_room_stats(hotel_brand_id=localStorage.getItem("ANDSBZID")){
+    return $.ajax({
+        type: "GET",
+        url: "/get_hotel_room_stats/"+hotel_brand_id,
+        success: res => {
+            console.log("room stats:", res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    })
+}
+async function render_dashboard_rooms_stats(){
+
+    let stats = await get_hotel_room_stats();
+    let props_dsplay = stats.num_properties > 1 ? `${stats.num_properties} properties` : `${stats.num_properties} property`;
+    let rooms_dsplay = stats.num_rooms > 1 ? `${stats.num_rooms} rooms` : `${stats.num_rooms} room`;
+    let closed_dsplay = `${stats.num_closed_rooms} closed`;
+    let vacant_dsplay = `${stats.num_vacant_rooms} vacant`;
+    let ocpied_dsplay = `${stats. num_occpied_rooms} occupied`;
+
+    document.getElementById("dashboard_room_stats_display").innerHTML = `
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
+            <i aria-hidden="true" class="fa fa-building" style="color: orange; margin-right: 5px;"></i>
+            ${props_dsplay}
+        </p>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
+            <i aria-hidden="true" class="fa fa-lock" style="color: orangered; margin-right: 5px;"></i>
+            ${closed_dsplay}
+        </p>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
+            <i aria-hidden="true" class="fa fa-key" style="color:rgb(88, 236, 51); margin-right: 5px;"></i>
+            ${vacant_dsplay}
+        </p>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
+            <i aria-hidden="true" class="fa fa-bed" style="color: crimson; margin-right: 5px;"></i>
+            ${ocpied_dsplay}
+        </p>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 7px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <i aria-hidden="true" class="fa-solid fa-door-open" style="color: skyblue; margin-right: 5px;"></i>
+            ${rooms_dsplay}
+        </p>
+    `;
+}
+
 async function render_recent_hotel_booking(recent_booking) {
 
     let property = await get_and_return_hotel_property_by_id(recent_booking.property_id);
@@ -4128,27 +4175,11 @@ async function render_recent_hotel_booking(recent_booking) {
                 <div style="margin-top: 10px; padding-left: 10px; margin-left: 10px;">
                     <p style="color: rgba(255,255,255,0.5); font-size: 14px;">
                         Room Stats</p>
-                    <div style="padding: 10px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); background-color: rgba(0,0,0,0.2);">
-                        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
-                            <i aria-hidden="true" class="fa fa-building" style="color: orange; margin-right: 5px;"></i>
-                            4 properties
-                        </p>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
-                            <i aria-hidden="true" class="fa fa-lock" style="color: orangered; margin-right: 5px;"></i>
-                            1 closed
-                        </p>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
-                            <i aria-hidden="true" class="fa fa-key" style="color:rgb(88, 236, 51); margin-right: 5px;"></i>
-                            13 vacant
-                        </p>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
-                            <i aria-hidden="true" class="fa fa-bed" style="color: crimson; margin-right: 5px;"></i>
-                            1 occupied
-                        </p>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 7px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
-                            <i aria-hidden="true" class="fa fa-bell" style="color: skyblue; margin-right: 5px;"></i>
-                            1 notification(s)
-                        </p>
+                    <div id="dashboard_room_stats_display" style="padding: 10px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); background-color: rgba(0,0,0,0.2);">
+                        <p style="color: white; font-size: 13px">
+                            <i style="margin-right: 5px; color: lightgreen;" class="fa fa-info-circle"></i>
+                            Rooms Stats Info 
+                        <p>
                     </div>
                 </div>
             </div>
@@ -4164,6 +4195,8 @@ async function render_recent_hotel_booking(recent_booking) {
             
         </div>
     `;
+
+    render_dashboard_rooms_stats();
 }
 
 function get_hotel_bookings(hotel_id) {

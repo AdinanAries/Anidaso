@@ -3508,6 +3508,33 @@ app.get('/get_all_guest_bookings/:guest_id', async(req, res, next)=>{
   }
 });
 
+app.get('/get_hotel_room_stats/:brand_id', async(req, res, next) => {
+  let stats = {
+    num_properties: 0,
+    num_closed_rooms: 0,
+    num_vacant_rooms: 0,
+    num_occpied_rooms: 0,
+    num_rooms: 0,
+  }
+  try{
+
+    let properties = await cheap_hotel_property.find({
+      hotel_brand_id: req.params.brand_id
+    });
+    stats.num_properties = properties.length;
+    let rooms = await cheap_hotel_room.find({
+      hotel_brand_id: req.params.brand_id
+    });
+    stats.num_rooms = rooms.length;
+
+    res.send(stats);
+  }catch(e){
+    console.log(e.message);
+    res.send(stats);
+  }
+  
+});
+
 //Spinning the server here
 app.listen(PORT, () => {
   console.log("Server started on " + PORT);
