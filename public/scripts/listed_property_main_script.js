@@ -4050,10 +4050,14 @@ async function render_dashboard_rooms_stats(){
     let props_dsplay = stats.num_properties > 1 ? `${stats.num_properties} properties` : `${stats.num_properties} property`;
     let rooms_dsplay = stats.num_rooms > 1 ? `${stats.num_rooms} rooms` : `${stats.num_rooms} room`;
     let closed_dsplay = `${stats.num_closed_rooms} closed`;
-    let vacant_dsplay = `${stats.num_vacant_rooms} vacant`;
-    let ocpied_dsplay = `${stats. num_occpied_rooms} occupied`;
+    let vacant_dsplay = `${stats.num_vacant_rooms} not booked`;
+    let ocpied_dsplay = `${stats. num_occpied_rooms} booked`;
+
+    let _today = new Date();
+    let date_dsplay = `${_today.toDateString()}`;
 
     document.getElementById("dashboard_room_stats_display").innerHTML = `
+        <p style="color: rgb(255,255,0); font-size: 12px; margin-bottom: 10px; text-align: center;">${date_dsplay}</p>
         <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 7px;">
             <i aria-hidden="true" class="fa fa-building" style="color: orange; margin-right: 5px;"></i>
             ${props_dsplay}
@@ -4175,7 +4179,7 @@ async function render_recent_hotel_booking(recent_booking) {
                 <div style="margin-top: 10px; padding-left: 10px; margin-left: 10px;">
                     <p style="color: rgba(255,255,255,0.5); font-size: 14px;">
                         Room Stats</p>
-                    <div id="dashboard_room_stats_display" style="padding: 10px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2); background-color: rgba(0,0,0,0.2);">
+                    <div id="dashboard_room_stats_display" style="padding: 10px; margin-top: 5px; border: 1px solid rgba(255,255,255,0.2); background-color: rgba(0,0,0,0.2);">
                         <p style="color: white; font-size: 13px">
                             <i style="margin-right: 5px; color: lightgreen;" class="fa fa-info-circle"></i>
                             Rooms Stats Info 

@@ -4,6 +4,15 @@
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
+.submenu p:hover{
+  color: rgb(255, 128, 0) !important;
+}
+.wide_screen_top_nav > div:hover > p{
+  color:rgb(255, 70, 70) !important;
+}
+.wide_screen_top_nav > div:hover > p i{
+  color:rgb(70, 172, 255) !important;
+}
 header{
   position: fixed;
   width: calc(100vw - 40px);
