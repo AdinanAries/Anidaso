@@ -117,6 +117,7 @@ app.use(async(req, res,next)=>{
   } 
 });
 
+//Helpers
 function convert_date_object_to_db_string_format(dateObj){
     
   let the_month = dateObj.toLocaleString().split(",")[0].split("/")[0];
@@ -132,6 +133,33 @@ function convert_date_object_to_db_string_format(dateObj){
 
 }
 
+function build_dates_list_from_range(first_date, last_date){
+
+  let the_year = first_date.split("-")[0];
+  let the_month = first_date.split("-")[1];
+  let the_day = first_date.split("-")[2];
+
+  let the_year2 = last_date.split("-")[0];
+  let the_month2 = last_date.split("-")[1];
+  let the_day2 = last_date.split("-")[2];
+
+  let endDate = new Date(`${the_year2}/${the_month2}/${the_day2}`);
+
+  let startDate = new Date(first_date);
+
+  let currentDate = startDate;
+  let datesList = [];
+
+  while(endDate > currentDate){
+      
+      datesList.push(currentDate.toISOString().split("T")[0]);
+
+      currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+
+  }
+
+  return datesList;
+}
 
 //getting Amadues OAuth2 access token
 function Amadues_OAuth(){
@@ -1382,12 +1410,17 @@ app.get("/is_room_booked_on_a_certain_date/:booking_date/:room_id/:room_number",
 app.post('/get_all_bookings_based_on_date_ranges/', async(req, res, next) => {
  
   try{
+
+    let dates = build_dates_list_from_range(req.body.first_date, req.body.last_date);
+   
     let bookings = await cheap_hotel_booking.find({
-      /*all_dates_of_occupancy: {
-        "$all": req.body.first_date,
-        "$all": req.body.last_date
-      },*/
+      all_dates_of_occupancy: {
+        //"$all": dates
+        "$in": dates
+      },
       hotel_brand_id: req.body.brand_id,
+      //checkin_date: {$lte: req.body.first_date},
+      //checkout_date: {$gte: req.body.last_date}
     }).exec();
     res.send(bookings);
 
