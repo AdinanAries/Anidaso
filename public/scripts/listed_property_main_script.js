@@ -1824,10 +1824,25 @@ function toggle_show_add_new_photo_div() {
     $("#add_new_photo_div").toggle("up");
 }
 
-function return_cheap_hotel_rating_markup(rating_number = 1) {
+function return_cheap_hotel_rating_markup(rating_number = 1, QOS=null) {
+
+    //QOS values
+    let location_perc=0;
+    let hygene_perc=0;
+    let service_perc=0;
+    let value_perc=0;
+    let amenity_perc=0;
+
+    if(QOS){
+        location_perc=QOS.location || 1;
+        hygene_perc=QOS.hygiene || 1;
+        service_perc=QOS.service || 1;
+        value_perc=QOS.value || 1;
+        amenity_perc=QOS.amenity || 1;
+    }
 
     let rating_remark;
-
+    rating_number = parseInt(Math.round(rating_number)/20);
     if (rating_number === 1) {
         rating_remark = `
             <i style="color: orangered; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -1864,39 +1879,43 @@ function return_cheap_hotel_rating_markup(rating_number = 1) {
                         ${rating_remark}
                     </span>
                 </p>
-            <div style="position: relative; width: 300px; background: linear-gradient(to right, rgb(201, 43, 15), tomato, rgb(206, 255, 71),rgb(88, 236, 51),rgb(6, 175, 14));">
+            <div style="border-left: 1px solid aqua; position: relative; width: 300px; background: linear-gradient(to right, rgb(201, 43, 15), tomato, rgb(206, 255, 71),rgb(88, 236, 51),rgb(6, 175, 14)); overflow: hidden;">
                 <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 2px; left: 4px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
-                    Overall Rating<p>    
-                <div style="padding: 3px; border-right: black 4px solid; width: calc(${rating_percentage}% - 12px);">
-                    <p style="font-size: 12px; font-weight: bolder; text-align: right;">${rating_percentage}%</p>
+                    <p>    
+                <div style="padding: 3px; color: aqua; border: 1px solid aqua; border-left: 0; border-top-right-radius: 6px; border-bottom-right-radius: 6px; width: calc(${rating_percentage}% - 12px); background-color: rgba(0,0,0,0.6);">
+                    <p style="font-size: 12px; text-align: right;">${rating_percentage}%</p>
                 </div>
             </div>
             <div style="width: 300px; height: 60px; display: flex; flex-direction: row !important; margin: 10px 0; margin-top: 5px;">
                 <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
-                        Verified Account<p>   
-                    <div style="background-color: rgb(201, 43, 15);  height: 45%;"></div>
+                    <p style="position: absolute; text-align: center; color: white; width: 100%; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                        Location<p>   
+                    <div style="background-color: rgb(201, 43, 15);  height: ${location_perc}%;">
+                        <p style="font-size: 12px; text-align: center;">${location_perc}%</p></div>
                 </div>
                 <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
-                        Room Quality<p>
-                    <div style="background-color: tomato; height: 30%;"></div>
+                    <p style="position: absolute; text-align: center; color: white; width: 100%; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                    Value<p>
+                    <div style="background-color: tomato; height: ${value_perc}%;">
+                        <p style="font-size: 12px; text-align: center;">${value_perc}%</p></div>
                 </div>
                 <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
-                        Guest Review<p>
-                    <div style="background-color: rgb(206, 255, 71); height: 40%;"></div>
+                    <p style="position: absolute; text-align: center; color: white; width: 100%; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                    Hygiene<p>
+                    <div style="background-color: rgb(206, 255, 71); height: ${hygene_perc}%;">
+                        <p style="font-size: 12px; text-align: center;">${hygene_perc}%</p></div>
                 </div>
                 <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
-                        Amenity Mark<p>
-                    <div style="background-color: rgb(88, 236, 51); height: 35%;"></div>
+                    <p style="position: absolute; text-align: center; color: white; width: 100%; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                    Service<p>
+                    <div style="background-color: rgb(88, 236, 51); height: ${service_perc}%;">
+                        <p style="font-size: 12px; text-align: center;">${service_perc}%</p></div>
                 </div>
                 <div style="position: relative; width: 20%; height: 100%; display: flex; flex-direction: column !important; justify-content: flex-end;">
-                    <p style="position: absolute; text-align: center; color: white; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
-                        Market
-                        Access<p>    
-                    <div style="background-color: rgb(6, 175, 14); height: 90%;"></div>
+                    <p style="position: absolute; text-align: center; color: white; width: 100%; font-size: 12px; top: 1px; text-shadow: 1px 2px 3px rgba(0,0,0,0.8)">
+                        Amenity<p>    
+                    <div style="background-color: rgb(6, 175, 14); height: ${amenity_perc}%;">
+                        <p style="font-size: 12px; text-align: center;">${amenity_perc}%</p></div>
                 </div>
                 <div style="display: flex; flex-direction: column; justify-content: space-between; background-color: rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 3px; align-items: center;">
                     <p style="font-size: 11px; color: orange; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 2px;">
@@ -3535,7 +3554,7 @@ function get_logged_in_hotel_infor() {
 
             //basic info
             display_logged_in_hotel_name(data.name, data.subscribed, data.approved);
-            logged_in_hotel_ratings_area.innerHTML = return_cheap_hotel_rating_markup(data.rating);
+            
             //contact info
             render_each_loggin_hotel_info_item("logged_in_hotel_email_infor_item", "Email", data.email, "start_edit_contact_info");
             render_each_loggin_hotel_info_item("logged_in_hotel_mobile_infor_item", "Mobile", data.mobile, "start_edit_contact_info");
@@ -3659,12 +3678,14 @@ function get_logged_in_hotel_infor() {
             //getting hotel bookings
             get_hotel_bookings(data._id);
 
-            //getting bills and payments and payouts
+            //getting bills and payments and payouts and QOS
             (async () => {
                 current_cheap_hotel_wellgo_invoice = await get_all_cheap_hotel_wellgo_invoices(data._id);
                 await cheap_hotel_render_initial_wellgo_invoices(current_cheap_hotel_wellgo_invoice);
                 cheap_hotel_payouts_object = await get_all_cheap_hotel_payouts(data._id);
                 await cheap_hotel_render_initial_payout_information(cheap_hotel_payouts_object);
+                let QOS = await get_and_return_cheap_hotel_QOS_ratings();
+                logged_in_hotel_ratings_area.innerHTML = return_cheap_hotel_rating_markup(QOS.overall, QOS);
             })()
 
         },
@@ -3844,7 +3865,8 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
             <i aria-hidden="true" class="fa fa-check" style="color:lightgreen; margin-right: 5px;"></i> 
             bookable
         `;
-        tr_status_style="";
+        let tr_status_style="";
+        let room_number_style="text-align: center; border: rgb(143, 191, 255) 1px solid; background-color: rgb(11, 67, 104) !important; color: rgb(143, 191, 255); font-weight: bolder; border-top-left-radius: 6px; border-bottom-left-radius: 6px;";
 
         let room_price = parseFloat(rooms_sublist[r].price).toFixed(2);
 
@@ -3891,6 +3913,8 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
                 <i aria-hidden="true" class="fa fa-circle" style="color: crimson; margin-right: 5px;"></i> 
                 occupied
             `;
+            room_number_style="text-align: center; border: red 1px solid; background-color: rgba(255, 20, 10,0.4) !important; color: red; font-weight: bolder; border-top-left-radius: 6px; border-bottom-left-radius: 6px;";
+
             /*if(booking[0]){
                 checkin = change_date_from_iso_to_long_date(booking[0].checkin_date);
                 checkout = change_date_from_iso_to_long_date(booking[0].checkout_date);
@@ -3911,6 +3935,8 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
                 unbookable
             `;
             tr_status_style='closed';
+            room_number_style="text-align: center; border: red 1px solid; background-color: rgba(255, 20, 10,0.4) !important; color: red; font-weight: bolder; border-top-left-radius: 6px; border-bottom-left-radius: 6px;";
+
             /*if(booking[0]){
                 checkin = change_date_from_iso_to_long_date(booking[0].checkin_date);
                 checkout = change_date_from_iso_to_long_date(booking[0].checkout_date);
@@ -3919,7 +3945,8 @@ async function render_hotel_rooms(rooms_list, property_id, page = 0, skip = 8) {
 
         document.getElementById("dashboard_onload_displayed_rooms_list").innerHTML += `
             <tr onclick="view_selected_room_full_details('${rooms_sublist[r]._id}');" class="${tr_status_style}">
-                <td>${room_number}</td>
+                <td style="${room_number_style}">
+                ${room_number}</td>
                 <td class="mobile_hidden_elem">${checkin}</td>
                 <td>${checkout}</td>
                 <td>$${room_price}</td>
@@ -5017,4 +5044,47 @@ function get_bookings_using_guest_id(guest_id, property_id, brand_id) {
 
 document.getElementById("add_hotel_property_form_save_btn").addEventListener("click", e => {
     save_new_property();
-})
+});
+
+function get_and_return_cheap_hotel_QOS_ratings(hotel_brand_id=localStorage.getItem("ANDSBZID")){
+    return $.ajax({
+        type: "GET",
+        url: `/get_cheap_hotel_QOS/${hotel_brand_id}`,
+        success: res => {
+            return res;
+        },
+        error: err => {
+            return err;
+        }
+    });
+}
+
+let cheap_hotel_QOS = 
+{
+    hotel_brand_id: "",
+    location: 25,
+    value: 56,
+    service: 33,
+    amenity: 29,
+    hygiene: 60,
+    byBuilding: [],
+    overall: 40.6
+}
+
+function save_new_QOS(QOS_obj, hotel_brand_id=localStorage.getItem("ANDSBZID")){
+    $.ajax({
+        type: "POST",
+        url: `/save_cheap_hotel_QOS/${hotel_brand_id}`,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(QOS_obj),
+        success: res => {
+            console.log("QOS:", res);
+        },
+        error: err => {
+            console.log("QOS error:", err);
+        }
+    })
+}
+
+//save_new_QOS(cheap_hotel_QOS);

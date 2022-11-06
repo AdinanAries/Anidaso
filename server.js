@@ -64,6 +64,8 @@ let bookings_data = require("./models/bookings_log_model");
 let wellgo_invoices_for_cheap_hotels = require("./models/wellgo_invoices_for_cheap_hotels_model");
 let wellgo_cheap_hotel_account_status = require("./models/wellgo_cheap_hotel_account_status_model");
 let cheap_hotel_payouts = require('./models/cheap_hotel_payouts_info_model');
+let cheap_hotel_QOS_scores = require('./models/cheap_hotel_QOS_scores_model');
+const { EC2 } = require("aws-sdk");
 //var booked_hotel_data = require("./models/booked_hotels_log");
 
 
@@ -3584,6 +3586,31 @@ app.get('/get_hotel_room_stats/:brand_id', async(req, res, next) => {
     res.send(stats);
   }
   
+});
+
+app.get("/get_cheap_hotel_QOS/:brand_id", async(req, res, next) => {
+  try{
+    let QOS = await cheap_hotel_QOS_scores.findOne({
+      hotel_brand_id: req.params.brand_id
+    });
+    res.send(QOS);
+  }catch(e){
+    console.log(e.message);
+    res.send({});
+  }
+});
+
+app.post("/save_cheap_hotel_QOS/:brand_id", async(req, res, next) => {
+  try{
+    let Qos = req.body;
+    Qos.hotel_brand_id = req.params.brand_id;
+    let new_QOS = await new cheap_hotel_QOS_scores(Qos);
+    let saved_QOS = await new_QOS.save();
+    res.send(saved_QOS);
+  }catch(e){
+    console.log(e.message);
+    res.send({});
+  }
 });
 
 //Spinning the server here
