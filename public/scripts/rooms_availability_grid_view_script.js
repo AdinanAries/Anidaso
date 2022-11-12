@@ -64,7 +64,7 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
     }
 
     document.getElementById("make_reseervation_guest_section_room_additional_info").innerHTML = `
-        <div style="color: white; font-size: 13px; padding: 10px; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; border-radius: 4px; margin: 10px 0;">
+        <div style="color: white; font-size: 13px; padding: 10px; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; border-radius: 4px; margin-bottom: 10px;">
             <i class="fa fa-info-circle" aria-hidden="true" style="margin-right: 5px; color: lightgreen;"></i>
             This room can take up to ${room_adults_num} adult(s), and ${room_children_num} children
         </div>

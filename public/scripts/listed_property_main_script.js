@@ -805,6 +805,42 @@ function get_and_return_booking_by_id(id) {
 }
 
 async function render_search_booking_results_markup(booking) {
+    try{
+        let first_guest_id = booking.guests[0].id
+    }catch(e){
+        console.log(e.message);
+        document.getElementById("view_booking_result_details").innerHTML = `
+            <div style="background-color: rgba(0,0,0,0.5); padding: 10px;">
+                <div>
+                    <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                        Room ${booking.rooms[0].number}:
+                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                            Booked
+                            <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
+                        </span>
+                    </p>
+                </div>
+                <div style="border: 1px solid red; color: white; font-size: 14px; padding: 10px; margin-top: 10px;">
+                    <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    You cannot view a booking without guests.
+                    <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 5px;">
+                        Please edit this booking to complete guest(s) information.
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 10px;">
+                    <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color: green; color: white; border: 1px solid rgba(255,255,255,0.2);">
+                        <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
+                        Edit Booking
+                    </div>
+                    <div style="cursor: pointer; padding: 10px; color: white; font-size: 14px;">
+                        <i aria-hidden="true" class="fa fa-trash" style="margin-right: 5px; color:rgb(255, 53, 53);"></i>
+                        Cancel Booking
+                    </div>
+                </div>
+            </div>
+        `;
+        return;
+    }
 
     let invoice = await get_cheap_hotel_guest_invioce(booking.guests[0].id, booking._id, localStorage.getItem("ANDSBZID"), booking.property_id);
     all_running_invoices = [];

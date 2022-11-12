@@ -188,7 +188,7 @@ async function render_all_bookings_markup(bookings){
     let bookings_total_made = 0;
 
     for(let i=0; i<bookings.length; i++){
-
+        console.log(bookings[i])
         let property = await get_and_return_hotel_property_by_id(bookings[i].property_id);
         let property_city = property.city;
         let property_country = property.country;
@@ -237,6 +237,15 @@ async function render_all_bookings_markup(bookings){
             break; //will change if needed so that all guests will be displayed
         }
 
+        if(room_guests.length===0){
+            room_guests_markup = `
+                <div style="background-color: rgba(0,0,0,0.5); border: 1px solid red; color: white; font-size: 14px; padding: 10px; margin-top: 10px;">
+                    <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    This booking has no guest(s).
+                </div>
+            `;
+        }
+
         document.getElementById("booked_rooms_list").innerHTML += `
             <div class="each_booked_room" style="background-color:rgba(0, 0, 0, 0.8); padding-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.2);">
                 <div style="display: flex; justify-content: space-between; padding: 10px; padding-top: 0;">
@@ -245,7 +254,10 @@ async function render_all_bookings_markup(bookings){
                             ${room_number}
                             <span style="color: rgba(255,255,255,0.2); margin-left: 5px;">|</span>
                             <span style="letter-spacing: 1px; margin-left: 5px; font-size: 13px; color:rgb(168, 195, 218);">
-                            ${room_guests[0].first_name} ${room_guests[0].last_name}
+                            ${room_guests[0] ? room_guests[0].first_name : 
+                                "<span style='font-size: 14px; color: white;'>"+
+                                "<i class='fa fa-exclamation-triangle' style='margin-right: 5px; color: red;'></i>"+
+                                "no guest found</span>"} ${room_guests[0] ? room_guests[0].last_name : ""}
                             </span>
                         </p>
                         <p style="color: rgba(255,255,255,0.5); font-size: 13px;">

@@ -13,13 +13,18 @@ async function preprocess_bookings_rooms_and_guests(){
     document.getElementById("edit_booking_guest_mobile_input").value = current_edit_booking_object.booking.guest_contact.mobile.split(" ")[1];
     document.getElementById("edit_booking_guest_mobile_country_code_select").value = current_edit_booking_object.booking.guest_contact.mobile.split(" ")[0];
     document.getElementById("edit_booking_checkin_checkout_input").placeholder = `${current_edit_booking_object.booking.checkin_date} - ${current_edit_booking_object.booking.checkout_date}`;
-    
-    let invoice = await get_cheap_hotel_guest_invioce(
+    let invoice;
+    try{
+        invoice = await get_cheap_hotel_guest_invioce(
         current_edit_booking_object.booking.guests[0].id, 
         current_edit_booking_object.booking._id,
         localStorage.getItem('ANDSBZID'),
         current_edit_booking_object.booking.property_id);
-    all_running_invoices.push(invoice);
+        all_running_invoices.push(invoice);
+    }catch(e){
+        console.log(e.message);
+    }
+    
 
     for(let i=0; i <current_edit_booking_object.booking.rooms.length; i++){
 
@@ -224,6 +229,39 @@ function edit_booking_check_all_guest_inputs_added(){
     return pass;
 }
 
+function edit_booking_check_all_added_rooms_have_guest(){
+
+    let pass = true;
+    
+    for(let i=0; i<current_edit_booking_object.rooms_and_guests.room_guests.length; i++){
+        if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length<1){
+            pass = false;
+            break;
+        }
+    }
+    return pass;
+}
+
+function edit_booking_check_all_added_rooms_are_different(){
+
+    let pass = true;
+    let found=false;
+    let unique=[];
+    for(let i=0; i<current_edit_booking_object.rooms_and_guests.room_guests.length; i++){
+        unique.forEach(each=>{
+            if(each.id===current_edit_booking_object.rooms_and_guests.room_guests[i].id){
+                found=true;
+                pass = false;
+            }
+        });
+        if(!found){
+            unique.push(current_edit_booking_object.rooms_and_guests.room_guests[i]);
+        }
+    }
+    
+    return pass;
+}
+
 //Edit booking functions
 async function add_new_room_to_edit_booking(){
 
@@ -324,7 +362,7 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
         let number_of_children_display = current_edit_booking_object.rooms_and_guests.room_guests[new_index].total_children > 1 ? `${current_edit_booking_object.rooms_and_guests.room_guests[new_index].total_children} Children` : `${current_edit_booking_object.rooms_and_guests.room_guests[new_index].total_children} Child`;
 
     document.getElementById("edit_booking_rooms_and_guestslist").innerHTML += `
-        <div id="edit_booking_another_room_${new_index}" style="padding: 20px 0; margin-bottom: 5px;">
+        <div id="edit_booking_another_room_${new_index}" style="padding: 20px 0; margin-bottom: 5px; background-color: rgba(0,0,0,0.4);">
             <div style="display: flex; flex-direction: row !important; justify-content: space-between;">
                 <p style="margin-left: 5px; font-size: 16px; color:rgb(168, 195, 218); font-weight: bolder;">
                     <i style="margin-right: 5px; color:rgb(255, 97, 6);" aria-hidden="true" class="fa fa-building"></i>
@@ -955,12 +993,28 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
 
 async function save_updated_hotel_booking(){
 
+    if(!edit_booking_check_all_added_rooms_are_different()){
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+            Not Finished`, 
+            "Please make sure each room is included only once", "warning");
+        return null;
+    }
+
+    if(!edit_booking_check_all_added_rooms_have_guest()){
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+            Not Finished`, 
+            "Please make sure all added rooms include at least one guest", "warning");
+        return null;
+    }
+
     let is_good_to_go = await edit_booking_check_all_guest_inputs_added();
     if(!is_good_to_go){
         show_prompt_to_user(`
             <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
             Not Finished`, 
-            "Please add all guest(s) information");
+            "Please add all guest(s) information", "warning");
         return null;
     }
 
@@ -969,7 +1023,7 @@ async function save_updated_hotel_booking(){
             show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
                 Not Finished`, 
-                "Please add guest emial");
+                "Please add guest emial", "warning");
             return null;
         }
     }
@@ -979,7 +1033,7 @@ async function save_updated_hotel_booking(){
             show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
                 Not Finished`, 
-                "Please add guest mobile");
+                "Please add guest mobile", "warning");
             return null;
         }
     }
@@ -1014,7 +1068,7 @@ async function save_updated_hotel_booking(){
             show_prompt_to_user(`
                 <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
                  Booking Update`, 
-            "Booking Update Finished Successfully!");
+            "Booking Update Finished Successfully!", "success");
             
         },
         error: err => {
