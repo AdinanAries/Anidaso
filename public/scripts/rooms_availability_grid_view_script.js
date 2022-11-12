@@ -33,7 +33,7 @@ function add_a_guest_obj(type){
 let global_guests_array_index_position = 0;
 let global_guests_array_date_index_position = 0;
 
-function make_guests_list_from_number_input_values(adult_iput_fld, child_input_fld, initial){
+function make_guests_list_from_number_input_values(adult_iput_fld, child_input_fld, initial, room_adults_num, room_children_num){
 
     global_guests_array_index_position = 0;
     global_guests_array_date_index_position = 0;
@@ -63,6 +63,15 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
         document.getElementById("make_reservation_popup_number_Of_children_input").value = number_of_children;
     }
 
+    document.getElementById("make_reseervation_guest_section_room_additional_info").innerHTML = `
+        <div style="color: white; font-size: 13px; padding: 10px; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; border-radius: 4px; margin: 10px 0;">
+            <i class="fa fa-info-circle" aria-hidden="true" style="margin-right: 5px; color: lightgreen;"></i>
+            This room can take up to ${room_adults_num} adult(s), and ${room_children_num} children
+        </div>
+    `
+    document.getElementById("make_reservation_popup_number_Of_adults_input").max=room_adults_num;
+    document.getElementById("make_reservation_popup_number_Of_children_input").max=room_children_num;
+
     let children_text_display = number_of_children > 1 ? ` ${number_of_children} Children` : ` ${number_of_children} Child`;
     let adults_text_display = number_of_adults > 1 ? `${number_of_adults} Adults` : `${number_of_adults} Adult`;
 
@@ -72,9 +81,13 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
 
     if(remainder.children > 0 && remainder.adults > 0){
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
-            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
-            ${adults_text_display},${children_text_display}</p>
-            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
+            <!--p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p-->
+            <div style="color: white; font-size: 13px; padding: 10px; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; border-radius: 4px; margin: 10px 0;">
+                <i class="fa fa-info-circle" aria-hidden="true" style="margin-right: 5px; color: lightgreen;"></i>
+                You have selected ${adults_text_display}, and ${children_text_display}
+            </div>
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.5); border: 1px solid red; margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
                 <p style="padding-right: 5px;">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
                 <p style="color: white; font-size: 13px;  margin-left: 5px;">
@@ -82,41 +95,53 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
                 for remaining ${reaminder_guests_text_display}</p>
             </div>
         `;
-        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,120,120)";
-        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,120,120)";
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgba(255, 20, 10,0.4)";
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgba(255, 20, 10,0.4)";
     }else if(remainder.adults > 0){
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
-            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
-            ${adults_text_display},${children_text_display}</p>
-            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
+            <!--p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p-->
+            <div style="color: white; font-size: 13px; padding: 10px; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; border-radius: 4px; margin: 10px 0;">
+                <i class="fa fa-info-circle" aria-hidden="true" style="margin-right: 5px; color: lightgreen;"></i>
+                You have selected ${adults_text_display}, and ${children_text_display}
+            </div>
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.5); border: 1px solid red; margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
                 <p style="padding-right: 5px;">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
                 <p style="color: white; font-size: 13px; margin-left: 5px;">All adults cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
                 for remaining ${remainder_children_text_display}</p>
             </div>
         `;
-        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,120,120)";
-        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,255,255)";
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgba(255, 20, 10,0.4)";
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(0, 16, 27)";
     }else if(remainder.children > 0){
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
-            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
-            ${adults_text_display},${children_text_display}</p>
-            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.4); margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
+            <!--p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p-->
+            <div style="color: white; font-size: 13px; padding: 10px; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; border-radius: 4px; margin: 10px 0;">
+                <i class="fa fa-info-circle" aria-hidden="true" style="margin-right: 5px; color: lightgreen;"></i>
+                You have selected ${adults_text_display}, and ${children_text_display}
+            </div>
+            <div style="font-size: 13px; display: flex; flex-direction: row !important; background-color: rgba(0,0,0,0.5); border: 1px solid red; margin-top: 5px; border-radius: 4px; padding: 10px; justify-content: center;">
                 <p style="padding-right: 5px;">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: orangered;"></i></p>
                 <p style="color: white; font-size: 13px; margin-left: 5px;">All children cant go in room ${make_reservations_post_data.current_room.number}. You may later add additional rooms 
                 for remaining ${remainder_adults_text_display}</p>
             </div>
         `;
-        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,120,120)";
-        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,255,255)";
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgba(255, 20, 10,0.4)";
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(0, 16, 27)";
     }else{
         document.getElementById("make_reservation_number_guests_display_p").innerHTML = `
-            <p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
-            ${adults_text_display},${children_text_display}</p>
+            <!--p style="color: white; font-size: 13px; margin: 10px 0; letter-spacing: 1px;"><span style="color:rgb(255, 97, 6); font-size: 13px; margin-right: 5px;">Guests(s)</span>
+            ${adults_text_display},${children_text_display}</p-->
+            <div style="color: white; font-size: 13px; padding: 10px; background-color: rgba(0,0,0,0.5); border: 1px solid lightgreen; border-radius: 4px; margin: 10px 0;">
+                <i class="fa fa-info-circle" aria-hidden="true" style="margin-right: 5px; color: lightgreen;"></i>
+                You have selected ${adults_text_display}, and ${children_text_display}
+            </div>
         `; 
-        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(255,255,255)";
-        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(255,255,255)";
+        document.getElementById("make_reservation_popup_number_Of_adults_input").style.backgroundColor = "rgb(0, 16, 27)";
+        document.getElementById("make_reservation_popup_number_Of_children_input").style.backgroundColor = "rgb(0, 16, 27)";
     }
 
     for(let i=0; i<number_of_adults; i++){
@@ -141,7 +166,29 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
 
 }
 
-function autocomplete_add_selected_guest_from_search(id, first_name, last_name, gender, DOB, tel, email, index, type){
+function autocomplete_remove_selected_guest(index, type, email, mobile){
+    make_reservations_post_data.guests[index].id="";
+    make_reservations_post_data.guests[index].first_name="";
+    make_reservations_post_data.guests[index].last_name="";
+    make_reservations_post_data.guests[index].gender="Male";
+    //make_reservations_post_data.guests[index].type="";
+    //make_reservations_post_data.guests[index].DOB="";
+    if(document.getElementById("mk_reservation_guest_email_input").value===email){
+        document.getElementById("mk_reservation_guest_email_input").value="";
+        make_reservations_post_data.guest_contact.email="";
+    }
+    if(document.getElementById("mk_reservation_guest_mobile_input").value===mobile.split(" ")[1]){
+        document.getElementById("mk_reservation_guest_mobile_input").value="";
+        make_reservations_post_data.guest_contact.mobile="";
+    }
+    if(type==="adult"){
+        $('#selected_adult_guest_from_search_info'+index).slideUp('fast');
+    }else if(type==="child"){
+        $('#selected_child_guest_from_search_info'+index).slideUp('fast');
+    }
+}
+
+function autocomplete_add_selected_guest_from_search(id, first_name, last_name, gender, DOB, tel, email, index, type, number){
     make_reservations_post_data.guests[index].id=id;
     make_reservations_post_data.guests[index].first_name=first_name;
     make_reservations_post_data.guests[index].last_name=last_name;
@@ -159,7 +206,7 @@ function autocomplete_add_selected_guest_from_search(id, first_name, last_name, 
     }
     if(type==="adult"){
         document.getElementById("selected_adult_guest_from_search_info"+index).innerHTML=`
-            <p onclick="$('#selected_adult_guest_from_search_info${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
+            <p onclick="autocomplete_remove_selected_guest(${index}, '${type}', '${email}', '${tel}');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
                 <i style="color: red;" class="fa fa-times"></i></p>
             <p style="color: white; font-size: 14px; margin-top: 10px;">
                 <i class="fa fa-check" style="color: lightgreen; margin-right: 5px;"></i>    
@@ -183,17 +230,23 @@ function autocomplete_add_selected_guest_from_search(id, first_name, last_name, 
                     ${email}
                 </p>
             </div>
-            <div style="color: red; padding: 10px; width: fit-content; text-align: center; margin: auto; margin-top: 20px; cursor: pointer; font-size: 14px; border-radius: 4px;">
+            <div onclick="autocomplete_remove_selected_guest(${index}, '${type}', '${email}', '${tel}');" style="color: red; padding: 10px; width: fit-content; text-align: center; margin: auto; margin-top: 20px; cursor: pointer; font-size: 14px; border-radius: 4px;">
                 <i class="fa fa-minus" style="margin-right: 10px; color: red;"></i>remove
                 <span style="color: rgba(255,255,255,0.5); font-size: 14px;"> ${first_name}</span>
             </div>
         `;
         $("#selected_adult_guest_from_search_info"+index).slideDown('fast');
         $("#adult_guest_search_for_booking_auto_complete_dropdown"+index).slideUp('fast');
+
+        //clearing inputs
+        document.getElementById("mk_reservationS_adult_first_name_input_"+number).value="";
+        document.getElementById("mk_reservationS_adult_last_name_input_"+number).value="";
+        document.getElementById("mk_reservationS_adult_gender_input_"+number).value="Male";
+        //document.getElementById("mk_reservationS_adult_DOB_input_"+number).value=""
     }
     if(type==="child"){
         document.getElementById("selected_child_guest_from_search_info"+index).innerHTML=`
-            <p onclick="$('#selected_child_guest_from_search_info${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
+            <p onclick="autocomplete_remove_selected_guest(${index}, '${type}', '${email}', '${tel}');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
                 <i style="color: red;" class="fa fa-times"></i></p>
             <p style="color: white; font-size: 14px; margin-top: 10px;">
                 <i class="fa fa-check" style="color: lightgreen; margin-right: 5px;"></i>    
@@ -217,13 +270,20 @@ function autocomplete_add_selected_guest_from_search(id, first_name, last_name, 
                     ${email}
                 </p>
             </div>
-            <div style="color: red; padding: 10px; width: fit-content; text-align: center; margin: auto; margin-top: 20px; cursor: pointer; font-size: 14px; border-radius: 4px;">
+            <div onclick="autocomplete_remove_selected_guest(${index}, '${type}', '${email}', '${tel}');" style="color: red; padding: 10px; width: fit-content; text-align: center; margin: auto; margin-top: 20px; cursor: pointer; font-size: 14px; border-radius: 4px;">
                 <i class="fa fa-minus" style="margin-right: 10px; color: red;"></i>remove
                 <span style="color: rgba(255,255,255,0.5); font-size: 14px;"> ${first_name}</span>
             </div>
         `;
         $("#selected_child_guest_from_search_info"+index).slideDown('fast');
         $("#child_guest_search_for_booking_auto_complete_dropdown"+index).slideUp('fast');
+
+        //clearing inputs
+        document.getElementById("mk_reservationS_child_first_name_input_"+number).value="";
+        document.getElementById("mk_reservationS_child_last_name_input_"+number).value="";
+        document.getElementById("mk_reservationS_child_gender_input_"+number).value="Male";
+        //document.getElementById("mk_reservationS_child_DOB_input_"+number).value="";
+
     }
 }
 
@@ -252,11 +312,14 @@ function make_reservation_return_each_adult_guest_markup(number, index){
     return `
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
-                <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input onkeyup="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index});" id="adult_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" autocomplete="off" placeholder="enter guest name, email, or phone" />
-                <button onclick="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
+                <p style="font-size: 14px; color: lightgreen; letter-spacing: 1px; margin-bottom: 5px;">
+                    <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
+                    Adult ${number + 1}</p>
+                <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>
+                <input onkeyup="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index}, ${number});" id="adult_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" autocomplete="off" placeholder="enter guest name, email, or phone" />
+                <button onclick="guest_search_auto_complete_on_input('adult_guest_search_for_booking_auto_complete_input${index}', 'adult_guest_search_for_booking_auto_complete_dropdown_list${index}', 'adult_guest_search_for_booking_auto_complete_dropdown${index}', 'adult', ${index}, ${number});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
-                <div id="adult_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
+                <div id="adult_guest_search_for_booking_auto_complete_dropdown${index}" style="z-index: 1; background-color: black; display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
                     <p onclick="$('#adult_guest_search_for_booking_auto_complete_dropdown${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
                         <i style="color: red;" class="fa fa-times"></i></p>
                     <div id="adult_guest_search_for_booking_auto_complete_dropdown_list${index}">
@@ -281,9 +344,6 @@ function make_reservation_return_each_adult_guest_markup(number, index){
             <div id="selected_adult_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 
             </div>
-            <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
-                <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
-                Adult ${number + 1}</p>
             <div style="margin-top: 10px;">
                 <div class="flex_row_default_flex_column_mobile">
                     <div class="flex_child_of_two" style="width: calc(50% - 2px);" style="margin-top: 10px;">
@@ -321,11 +381,14 @@ function make_reservation_return_each_child_guest_markup(number, index){
     return `
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
+                <p style="font-size: 14px; color: lightgreen; letter-spacing: 1px; margin-bottom: 5px;">
+                    <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
+                    Child ${number + 1}</p>    
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
-                <input onkeyup="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index});" id="child_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" autocomplete="off" placeholder="enter guest name, email, or phone" />
-                <button onclick="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
+                <input onkeyup="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index}, ${number});" id="child_guest_search_for_booking_auto_complete_input${index}" style="font-size: 13px; padding: 10px; width: calc(100% - 117px); border: 1px solid rgba(255,255,255,0.2); color: white; background-color: rgba(255,255,255,0.2);" autocomplete="off" placeholder="enter guest name, email, or phone" />
+                <button onclick="guest_search_auto_complete_on_input('child_guest_search_for_booking_auto_complete_input${index}', 'child_guest_search_for_booking_auto_complete_dropdown_list${index}', 'child_guest_search_for_booking_auto_complete_dropdown${index}', 'child', ${index}, ${number});" style="font-size: 13px; color: white; padding: 10px; width: 90px; border: 1px solid rgba(255,255,255,0.2); background-color: rgb(3, 70, 97); text-align: center;">
                 Search</button>
-                <div id="child_guest_search_for_booking_auto_complete_dropdown${index}" style="display: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
+                <div id="child_guest_search_for_booking_auto_complete_dropdown${index}" style="z-index: 1; display: none; background-color: black; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 5px; margin-top: 10px; position: relative;">
                     <p onclick="$('#child_guest_search_for_booking_auto_complete_dropdown${index}').slideUp('fast');" style="position: absolute; top: 0; right: 0; padding: 10px; cursor: pointer;">
                         <i style="color: red;" class="fa fa-times"></i></p>
                     <div id="child_guest_search_for_booking_auto_complete_dropdown_list${index}">
@@ -363,9 +426,6 @@ function make_reservation_return_each_child_guest_markup(number, index){
             <div id="selected_child_guest_from_search_info${index}" style="display: none; position: absolute; height: calc(100% - 20px); top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
                 
             </div>
-            <p style="font-size: 14px; color:rgb(167, 2, 2); letter-spacing: 1px;">
-                <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
-                Child ${number + 1}</p>
             <div style="margin-top: 10px;">
                 <div class="flex_row_default_flex_column_mobile">
                     <div class="flex_child_of_two">
@@ -905,7 +965,7 @@ document.getElementById("make_reservation_room_select").addEventListener("change
     make_reservations_post_data.current_room.id = room._id;
     make_reservations_post_data.current_room.number = room.room_number;
 
-    make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false);
+    make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false, room.guest_capacitance.adults, room.guest_capacitance.children);
     toggle_show_make_reservation_find_spot_pane();
     generate_and_display_grid_view_bookings();
 
@@ -938,7 +998,7 @@ document.getElementById("make_reservation_property_select").addEventListener("ch
     make_reservations_post_data.current_room.number = room.room_number;
     make_reservations_post_data.price_paid = room.price;
 
-    make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false);
+    make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false, room.guest_capacitance.adults, room.guest_capacitance.children);
     toggle_show_make_reservation_find_spot_pane();
     generate_and_display_grid_view_bookings();
 
@@ -1113,7 +1173,7 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
 
     for(let g=0; g< make_reservations_post_data.guests.length; g++){
         if(!make_reservations_post_data.guests[g].id){
-            alert('creating guest');
+            //alert('creating guest');
             let new_guest = await create_guest_record(window.localStorage.getItem("ANDSBZID"), make_reservations_post_data.property_id, "", 
             make_reservations_post_data.guests[g].first_name, make_reservations_post_data.guests[g].last_name,
             make_reservations_post_data.guests[g].type, make_reservations_post_data.guests[g].DOB, 

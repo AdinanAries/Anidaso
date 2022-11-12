@@ -1409,7 +1409,7 @@ function search_guest_autocomplete(q, hotel_brand_id=localStorage.getItem("ANDSB
     });
 }
 
-async function guest_search_auto_complete_on_input(input_elem, list_item, autocomplete_container, type, index){
+async function guest_search_auto_complete_on_input(input_elem, list_item, autocomplete_container, type, index, number){
 
     if(autocomplete_container){
         $("#"+autocomplete_container).slideDown('fast');
@@ -1423,7 +1423,7 @@ async function guest_search_auto_complete_on_input(input_elem, list_item, autoco
         let guest = items[g].guest;
         if(g>4)break;
         document.getElementById(list_item).innerHTML += `
-            <div onclick="autocomplete_add_selected_guest_from_search('${guest._id}', '${guest.first_name}', '${guest.last_name}', '${guest.gender}', '${guest.DOB}', '${guest.mobile}', '${guest.email}',${index}, '${type}')" style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
+            <div onclick="autocomplete_add_selected_guest_from_search('${guest._id}', '${guest.first_name}', '${guest.last_name}', '${guest.gender}', '${guest.DOB}', '${guest.mobile}', '${guest.email}',${index}, '${type}', ${number})" style="cursor: pointer; padding: 10px; margin-bottom: 2px; background-color: rgba(255,255,255,0.2);">
                 <p style="color: lightgreen; font-size: 14px;">
                     ${guest.first_name} ${guest.last_name}
                     <span style="font-size: 14px; color: rgba(255,255,255,0.9);"> - ${guest.gender}
