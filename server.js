@@ -1239,6 +1239,20 @@ app.post("/create_new_hotel_room/", async (req, res, next) =>{
   }
 });
 
+//assigning room to guest
+app.post("/assign_room_to_guest/:brand_id", async (req, res, next)=>{
+  let guest = await cheap_hotel_guest.findOne({
+    _id: req.body.guest_id,
+    hotel_brand_id: req.params.brand_id
+  });
+  guest.assigned_room.booking_id=req.body.booking_id;
+  guest.assigned_room.room_id=req.body.room_id;
+  guest.assigned_room.room_number=req.body.room_number;
+  let updated_guest = await new cheap_hotel_guest(guest);
+  let saved_guest = await updated_guest.save();
+  res.send(saved_guest);
+});
+
 //getting cheap hotel rooms
 app.get("/get_cheap_hotel_rooms/:id", async (req, res, next) =>{
 
@@ -1285,6 +1299,15 @@ app.post("/get_cheap_hotel_guest_invoice/", async (req,res, next)=>{
     property_id: req.body.property_id,
     "invoice_items.booking_id": req.body.booking_id,
     "invoice_items.guest_id": req.body.guest_id
+  }).exec();
+  res.send(the_invoice);
+});
+
+app.post("/get_cheap_hotel_booking_invoice/", async (req,res, next)=>{
+  let the_invoice = await cheap_hotel_invoice.findOne({
+    hotel_brand_id: req.body.hotel_brand_id,
+    property_id: req.body.property_id,
+    "invoice_items.booking_id": req.body.booking_id,
   }).exec();
   res.send(the_invoice);
 });

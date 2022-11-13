@@ -22,6 +22,11 @@ async function preprocess_bookings_rooms_and_guests(){
         current_edit_booking_object.booking.property_id);
         all_running_invoices.push(invoice);
     }catch(e){
+        invoice = await get_cheap_hotel_booking_invioce(
+            current_edit_booking_object.booking._id,
+            localStorage.getItem('ANDSBZID'),
+            current_edit_booking_object.booking.property_id);
+            all_running_invoices.push(invoice);
         console.log(e.message);
     }
     

@@ -841,8 +841,9 @@ async function render_search_booking_results_markup(booking) {
         `;
         return;
     }
-
+    console.log("the booking", booking);
     let invoice = await get_cheap_hotel_guest_invioce(booking.guests[0].id, booking._id, localStorage.getItem("ANDSBZID"), booking.property_id);
+    console.log("the invoice:", invoice)
     all_running_invoices = [];
     all_running_invoices.push(invoice);
     let property = await get_and_return_hotel_property_by_id(booking.property_id);
@@ -1105,7 +1106,7 @@ async function show_view_booking_div(booking_id, source = 'default') {
         toggle_show_edit_booking_results_page();
 
         let booking = await get_and_return_booking_by_id(booking_id);
-        console.log(booking);
+        
         if (booking.empty) {
             document.getElementById("view_booking_result_details").innerHTML = `
             <div style="padding: 40px 10px; text-align: center; font-size: 14px; color: white; background-color: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.2);">
@@ -3021,7 +3022,7 @@ async function show_room_availability(room_id, property_id) {
 
 }
 
-function toggle_show_make_reservation_add_guests_pane() {
+async function toggle_show_make_reservation_add_guests_pane() {
 
     if (is_there_overlap) {
         show_prompt_to_user(`
@@ -3038,7 +3039,9 @@ function toggle_show_make_reservation_add_guests_pane() {
         document.getElementById("make_reservation_pane_back_btn").style.opacity = 1;
     }
 
-    //make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false);
+    rooms_grid_view_config.rooms_id = document.getElementById("make_reservation_room_select").value;
+    let room = await get_and_return_hotel_room_by_id(rooms_grid_view_config.rooms_id);
+    make_guests_list_from_number_input_values('make_reservation_popup_number_Of_adults_input', 'make_reservation_popup_number_Of_children_input', false, room.guest_capacitance.adults, room.guest_capacitance.children);
 }
 
 function toggle_show_make_reservation_find_spot_pane() {
@@ -4199,6 +4202,15 @@ async function render_recent_hotel_booking(recent_booking) {
                     </p>
             </div>
         `
+    }
+
+    if(room_guests.length<1){
+        room_guests_markup = `
+            <div style="background-color: rgba(0,0,0,0.5); border: 1px solid red; color: white; font-size: 14px; padding: 10px; margin-top: 10px;">
+                <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                This booking has no guest(s).
+            </div>
+        `;
     }
 
     document.getElementById("logged_in_hotel_recently_booked_rooms_list").innerHTML = `

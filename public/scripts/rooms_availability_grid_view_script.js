@@ -381,7 +381,7 @@ function make_reservation_return_each_child_guest_markup(number, index){
     return `
         <div class="each_room_reservation_guest" style="position: relative; background-color: #37a0f5; padding: 10px; padding-top: 100px; margin-bottom: 10px;">
             <div style="position: absolute; top: 0; left: 0; background-color: black; border: 1px solid rgba(255,255,255,0.2); padding: 10px; width: calc(100% - 22px);">
-                <p style="font-size: 14px; color: lightgreen; letter-spacing: 1px; margin-bottom: 5px;">
+                <p style="font-size: 14px; color: orange; letter-spacing: 1px; margin-bottom: 5px;">
                     <i class="fa fa-user" aria-hidden='true' style="margin-right: 5px;"></i>
                     Child ${number + 1}</p>    
                 <p style="font-size: 13px; color: white; margin-bottom: 10px;">Search Guest or Add New Below</p>    
@@ -1183,6 +1183,8 @@ document.getElementById("make_reservation_submit_button").addEventListener("clic
                 ""/*street_address*/, ""/*city*/, ""/*town*/, ""/*country*/, ""/*zipcode*/);
 
             make_reservations_post_data.guests[g].id = new_guest._id;
+        }else{
+            let the_guest = await assign_room_to_guest(make_reservations_post_data.guests[g].id, make_reservations_post_data.rooms[0].id, make_reservations_post_data.rooms[0].number)
         }
     }
 
@@ -1358,6 +1360,24 @@ function get_all_bookings_withing_date_range(first_date, last_date, brand_id){
             return err;
         }
     })
+}
+
+function assign_room_to_guest(guest_id, room_id, room_number, booking_id="", brand_id=localStorage.getItem("ANDSBZID")){
+    return $.ajax({
+        type: "POST",
+        url: `/assign_room_to_guest/${brand_id}`,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({guest_id,room_id,room_number,booking_id}),
+        success: res => {
+            console.log('guest room assigned', res);
+            return res;
+        },
+        error: err => {
+            console.log(err)
+            return err;
+        }
+    });
 }
 
 $(document).ready(function(){

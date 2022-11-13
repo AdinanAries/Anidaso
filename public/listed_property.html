@@ -36,6 +36,9 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+    <div id="all_photos_container" style="display: none; z-index: 113;" class="page_pop_up_cover">
+
+    </div>
     <div id="mobile_menu_div" style="display: none; z-index: 10;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden; background-color: rgba(0, 0, 0, 0.863);">
             <div style="padding: 10px; height: 40px;">
@@ -4336,8 +4339,8 @@
                         <p onclick="toggle_show_add_new_photo_div();" class="photos_section_btns_set" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin: 0; background-color:rgb(0, 68, 100); width: 50%;">
                             <i style="margin-right: 10px; color:rgb(0, 179, 233)" class="fa fa-plus" aria-hidden="true"></i> Add Photo
                         </p>
-                        <p class="photos_section_btns_set" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin: 0; background-color:rgb(0, 124, 83); width: 50%;">
-                            <i style="margin-right: 10px; color:rgb(55, 209, 158);" class="fa fa-photo" aria-hidden="true"></i> View Photos
+                        <p onclick="show_all_photos();" class="photos_section_btns_set" style="cursor: pointer; text-align: center; font-size: 13px; color: white; padding: 10px; margin: 0; background-color:rgb(0, 124, 83); width: 50%;">
+                            <i style="margin-right: 10px; color:rgb(55, 209, 158);" class="fa fa-photo" aria-hidden="true"></i> View All Photos
                         </p>
                     </div>
                 </div>
@@ -4773,6 +4776,7 @@
     <script src="scripts/include_service_to_booking_scripts.js" type="text/javascript"></script>
     <script src="scripts/guests_and_rooms_tracker.js" type="text/javascript"></script>
     <script src="scripts/wellgo_cheap_hotel_invoices.js" type="text/javascript"></script>
+    <script src="scripts/listed_properties_all_photos_script.js"></script>
     <script src="scripts/listed_property_payouts_script.js" type="text/javascript"></script>
 </body>
 </html>

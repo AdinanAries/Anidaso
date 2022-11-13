@@ -14,7 +14,22 @@ function get_cheap_hotel_guest_invioce(guest_id, booking_id, hotel_brand_id, pro
         }
     })
 }
-
+function get_cheap_hotel_booking_invioce(booking_id, hotel_brand_id, property_id){
+    
+    return $.ajax({
+        url: '/get_cheap_hotel_booking_invoice/',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({booking_id,hotel_brand_id,property_id}),
+        success: (res) => {
+            return res;
+        },
+        error: (err) => {
+            return err;
+        }
+    })
+}
 async function include_guest_in_running_invoice(booking_id,guest_id,room_id,items=[],index){
     //let guest = await get_and_return_hotel_guest_by_id(guest_id);
     let room = await get_and_return_hotel_room_by_id(room_id);
