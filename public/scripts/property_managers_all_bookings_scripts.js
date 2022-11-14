@@ -17,8 +17,66 @@ async function get_and_render_all_bookings(){
         get_all_bookings_config.first_date, get_all_bookings_config.last_date, get_all_bookings_config.room, 
         get_all_bookings_config.room_number, get_all_bookings_config.property, get_all_bookings_config.dates);
     
+    //sorting bookings
+    console.log(bookings)
+    let sort = document.getElementById("all_booked_rooms_sort_select").value;
+    if(sort==="ascending-by-checkin"){
+        bookings = bookings_selection_sort (bookings, "ascending-by-checkin");
+    }else if(sort==="descending-by-checkin"){
+        bookings = bookings_selection_sort (bookings, "descending-by-checkin");
+    }else if(sort==="ascending-by-checkout"){
+        bookings = bookings_selection_sort (bookings, "ascending-by-checkout");
+    }else if(sort==="descending-by-checkout"){
+        bookings = bookings_selection_sort (bookings, "descending-by-checkout");
+    }
+
     render_all_bookings_markup(bookings)
 }
+
+function bookings_selection_sort (array, type) {
+
+    for(var i = 0; i < array.length; i++){
+
+        if(type==="ascending-by-checkin" || type==="descending-by-checkin"){
+            array[i].sort_param=new Date(array[i].checkin_date);
+        }else if(type==="ascending-by-checkout" || type==="descending-by-checkout"){
+            array[i].sort_param=new Date(array[i].checkout_date);
+        }
+
+        //set min to the current iteration of i
+        let min = i;
+        let max = i;
+        for(let j = i+1; j < array.length; j++){
+
+            if(type==="ascending-by-checkin" || type==="descending-by-checkin"){
+                array[j].sort_param=new Date(array[j].checkin_date);
+            }else if(type==="ascending-by-checkout" || type==="descending-by-checkout"){
+                array[j].sort_param=new Date(array[j].checkout_date);
+            }
+
+            if(type==="ascending-by-checkin" || type==="ascending-by-checkout"){
+               if(array[j].sort_param < array[min].sort_param){
+                    min = j;
+                }
+            }else if(type==="descending-by-checkout" || type==="descending-by-checkin"){
+                if(array[j].sort_param > array[max].sort_param){
+                    max = j;
+                }
+            } 
+        }
+
+        if(type==="ascending-by-checkin" || type==="ascending-by-checkout"){
+            let temp = array[i];
+            array[i] = array[min];
+            array[min] = temp;
+        }else if(type==="descending-by-checkout" || type==="descending-by-checkin"){
+            let temp = array[i];
+            array[i] = array[max];
+            array[max] = temp;
+        }
+    }
+    return array;
+  };
 
 async function toggle_show_booked_rooms(){
 

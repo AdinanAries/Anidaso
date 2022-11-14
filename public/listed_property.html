@@ -3202,10 +3202,12 @@
                         <select id="booked_rooms_filter_by_room_input" style="width: 60%; padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
                             
                         </select>
-                        <select style="width: calc(40% - 5px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
-                            <option>Sort</option>
-                            <option>Ascending</option>
-                            <option>Descending</option>
+                        <select id="all_booked_rooms_sort_select" onchange="get_and_render_all_bookings();" style="width: calc(40% - 5px); padding: 10px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
+                            <option value="unsort">Sort</option>
+                            <option value="ascending-by-checkin">Ascending-Checkin</option>
+                            <option value="descending-by-checkin">Descending-Checkin</option>
+                            <option value="ascending-by-checkout">Ascending-Checkout</option>
+                            <option value="descending-by-checkout">Descending-Checkout</option>
                         </select>
                         <!--button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button-->
                     </div>
