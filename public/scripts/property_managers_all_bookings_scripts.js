@@ -452,8 +452,9 @@ document.getElementById("booked_rooms_filter_by_room_input").addEventListener("c
     get_all_bookings_config.room_number = document.getElementById("booked_rooms_filter_by_room_input").value
     get_all_bookings_config.room_number = get_all_bookings_config.room_number.split("%r%s%p%")[1];
 
-    document.getElementById("booked_rooms_filter_by_properties_input").value = "all";
-    get_all_bookings_config.property = "all";
+    //document.getElementById("booked_rooms_filter_by_properties_input").value = "all";
+    //get_all_bookings_config.property = "all";
+    get_all_bookings_config.guest_id = "all";
 
     document.getElementById("booked_rooms_list").innerHTML = `
         <div style="width: 100%; text-align: center; margin-top: 50px" class="loader loader--style2" title="1">
@@ -478,12 +479,26 @@ document.getElementById("booked_rooms_filter_by_room_input").addEventListener("c
     get_and_render_all_bookings();
 });
 
-document.getElementById("booked_rooms_filter_by_properties_input").addEventListener("change", e => {
+document.getElementById("booked_rooms_filter_by_properties_input").addEventListener("change", async e => {
 
     get_all_bookings_config.property = document.getElementById("booked_rooms_filter_by_properties_input").value;
+    let rooms = await get_and_return_cheap_hotel_rooms_by_property_id(get_all_bookings_config.property);
+    document.getElementById("booked_rooms_filter_by_room_input").innerHTML=`
+        <option value="all%r%s%p%all">
+            All Rooms
+        </option>
+    `;
+    if(rooms.length>0){
+        for(let room of rooms){
+            document.getElementById("booked_rooms_filter_by_room_input").innerHTML+=`
+                <option value="${room._id}%r%s%p%${room.room_number}">${room.room_number}</option>
+            `;
+        }
+    }
     document.getElementById("booked_rooms_filter_by_room_input").value = "all%r%s%p%all";
     get_all_bookings_config.room = "all";
     get_all_bookings_config.room_number = "all";
+    get_all_bookings_config.guest_id = "all";
 
     document.getElementById("booked_rooms_list").innerHTML = `
         <div style="width: 100%; text-align: center; margin-top: 50px" class="loader loader--style2" title="1">

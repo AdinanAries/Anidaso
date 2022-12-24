@@ -4627,10 +4627,10 @@ function update_info_item(update_type, new_info, hotel_brand_id) {
 
 }
 
-function get_and_return_cheap_hotel_rooms_by_property_id(property_id) {
+function get_and_return_cheap_hotel_rooms_by_property_id(property_id, brand_id=localStorage.getItem("ANDSBZID")) {
     return $.ajax({
         type: "GET",
-        url: "/get_cheap_hotel_rooms_by_property_id/" + property_id,
+        url: "/get_cheap_hotel_rooms_by_property_id/"+brand_id+"/" + property_id,
         success: res => {
             //console.log(res);
             return res;
@@ -5159,6 +5159,16 @@ async function render_all_guests_to_select_input(select_input_id, brand_id=local
         `;
     }else{
         document.getElementById(select_input_id).innerHTML='<option value="all">All Guests</option>';
+        //Alphabetical ordering of guest names
+        guests.sort(function (a, b) {
+            if (`${a.first_name} ${a.last_name}` < `${b.first_name} ${b.last_name}`) {
+              return -1;
+            }
+            if (`${a.first_name} ${a.last_name}` > `${b.first_name} ${b.last_name}`) {
+              return 1;
+            }
+            return 0;
+          });
         for(let guest of guests){
             document.getElementById(select_input_id).innerHTML+=`
             <option value="${guest._id}">${guest.first_name} ${guest.last_name}</option>

@@ -1272,11 +1272,20 @@ app.get("/get_room_by_id/:room_id", async (req, res, next) =>{
 });
 
 //getting rooms by property id
-app.get("/get_cheap_hotel_rooms_by_property_id/:property_id", async (req, res, next) => {
+app.get("/get_cheap_hotel_rooms_by_property_id/:brand_id/:property_id", async (req, res, next) => {
   
-  let rooms = await cheap_hotel_room.find({
-    property_id: req.params.property_id
-  }).exec();
+  let rooms = [];
+  if(req.params.property_id!=="all"){
+    rooms = await cheap_hotel_room.find({
+      property_id: req.params.property_id,
+      hotel_brand_id: req.params.brand_id
+    }).exec();
+  }else{
+    rooms = await cheap_hotel_room.find({
+      hotel_brand_id: req.params.brand_id
+    }).exec();
+  }
+  
 
   res.send(rooms);
 
@@ -1537,9 +1546,36 @@ app.post("/get_all_bookings_based_date_range_and_rooms_filter/:hotel_id/:first_d
       hotel_brand_id: hotel_id
     }).exec();
   }else if(property_id_p === "all" && room_id_p === "all"){
-    console.log("here");
     bookings = await cheap_hotel_booking.find({
       "guests.id": guest_id_p,
+      hotel_brand_id: hotel_id
+    }).exec();
+  }else if(property_id_p === "all"){
+    bookings = await cheap_hotel_booking.find({
+      "guests.id": guest_id_p,
+      rooms: {
+        "$all": {
+          id: room_id_p,
+          number: room_number
+        }
+      },
+      hotel_brand_id: hotel_id
+    }).exec();
+  }else if(room_id_p === "all"){
+    bookings = await cheap_hotel_booking.find({
+      "guests.id": guest_id_p,
+      property_id: property_id_p,
+      hotel_brand_id: hotel_id
+    }).exec();
+  }else if(guest_id_p === "all"){
+    bookings = await cheap_hotel_booking.find({
+      property_id: property_id_p,
+      rooms: {
+        "$all": {
+          id: room_id_p,
+          number: room_number
+        }
+      },
       hotel_brand_id: hotel_id
     }).exec();
   }
