@@ -1227,6 +1227,7 @@ function after_reservation_clean_up_func(booking_id=""){
         toggle_show_make_reservation_find_spot_pane();
     
     generate_and_display_grid_view_bookings();
+    get_hotel_rooms(localStorage.getItem("ANDSBZID"));
     if(booking_id){
         document.getElementById("make_reservation_pane").style.display="none";
         show_view_booking_div(booking_id, '');

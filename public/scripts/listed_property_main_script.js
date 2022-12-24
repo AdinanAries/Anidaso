@@ -5135,4 +5135,35 @@ function save_new_QOS(QOS_obj, hotel_brand_id=localStorage.getItem("ANDSBZID")){
     })
 }
 
+function get_all_cheap_hotel_guests(brand_id=localStorage.getItem("ANDSBZID"), property_id="all", room_id="all"){
+    return $.ajax({
+        type: "GET",
+        url: `/get_cheap_hotel_all_guests?brand_id=${brand_id}&property_id=${property_id}&room_id=${room_id}`,
+        success: res => {
+            console.log("all guests", res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return err;
+        }
+    });
+}
+
+async function render_all_guests_to_select_input(select_input_id, brand_id=localStorage.getItem("ANDSBZID"), property_id="all", room_id="all"){
+    let guests = await get_all_cheap_hotel_guests(brand_id, property_id, room_id);
+    document.getElementById(select_input_id).innerHTML='';
+    if(guests.length===0){
+        document.getElementById(select_input_id).innerHTML=`
+            <option value="all">No Guest Found!</option>
+        `;
+    }else{
+        document.getElementById(select_input_id).innerHTML='<option value="all">All Guests</option>';
+        for(let guest of guests){
+            document.getElementById(select_input_id).innerHTML+=`
+            <option value="${guest._id}">${guest.first_name} ${guest.last_name}</option>
+        `;
+        }
+    }
+}
 //save_new_QOS(cheap_hotel_QOS);
