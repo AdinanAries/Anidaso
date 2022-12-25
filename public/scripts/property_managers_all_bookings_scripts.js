@@ -79,7 +79,11 @@ function bookings_selection_sort (array, type) {
     return array;
 }
 
-async function toggle_show_booked_rooms(){
+async function toggle_show_booked_rooms(current_guest=0){
+
+    if(!current_guest){
+        get_all_bookings_config.guest_id="all";
+    }
 
     $("#booked_rooms_container").toggle("up");
 
@@ -142,7 +146,7 @@ async function toggle_show_booked_rooms(){
         return convert_date_object_to_db_string_format(date.obj);
     });
 
-    render_all_guests_to_select_input("booked_rooms_filter_by_guest_select_input");
+    render_all_guests_to_select_input("booked_rooms_filter_by_guest_select_input", current_guest);
 
     get_and_render_all_bookings();
 
@@ -152,6 +156,14 @@ async function toggle_show_booked_rooms(){
     
     render_all_bookings_markup(bookings)*/
     
+}
+
+function show_guest_booking_history(guest_id, source=""){
+    get_all_bookings_config.guest_id=guest_id;
+    toggle_show_booked_rooms(guest_id);
+    if(source="all_guests_search"){
+        document.getElementById("guests_manager_div").style.display="none";
+    }
 }
 
 async function view_a_room_bookings(room_id, room_number){
@@ -475,7 +487,7 @@ document.getElementById("booked_rooms_filter_by_room_input").addEventListener("c
             </p>
         </div>
     `;
-    render_all_guests_to_select_input("booked_rooms_filter_by_guest_select_input", localStorage.getItem("ANDSBZID"), get_all_bookings_config.property, get_all_bookings_config.room);
+    render_all_guests_to_select_input("booked_rooms_filter_by_guest_select_input", 0, localStorage.getItem("ANDSBZID"), get_all_bookings_config.property, get_all_bookings_config.room);
     get_and_render_all_bookings();
 });
 
@@ -519,7 +531,7 @@ document.getElementById("booked_rooms_filter_by_properties_input").addEventListe
             </p>
         </div>
     `;
-    render_all_guests_to_select_input("booked_rooms_filter_by_guest_select_input", localStorage.getItem("ANDSBZID"), get_all_bookings_config.property);
+    render_all_guests_to_select_input("booked_rooms_filter_by_guest_select_input", 0, localStorage.getItem("ANDSBZID"), get_all_bookings_config.property);
     get_and_render_all_bookings();
 })
 

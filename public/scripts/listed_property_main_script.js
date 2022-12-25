@@ -5150,7 +5150,7 @@ function get_all_cheap_hotel_guests(brand_id=localStorage.getItem("ANDSBZID"), p
     });
 }
 
-async function render_all_guests_to_select_input(select_input_id, brand_id=localStorage.getItem("ANDSBZID"), property_id="all", room_id="all"){
+async function render_all_guests_to_select_input(select_input_id, current_guest=0, brand_id=localStorage.getItem("ANDSBZID"), property_id="all", room_id="all"){
     let guests = await get_all_cheap_hotel_guests(brand_id, property_id, room_id);
     document.getElementById(select_input_id).innerHTML='';
     if(guests.length===0){
@@ -5174,6 +5174,8 @@ async function render_all_guests_to_select_input(select_input_id, brand_id=local
             <option value="${guest._id}">${guest.first_name} ${guest.last_name}</option>
         `;
         }
+        if(current_guest)
+            document.getElementById(select_input_id).value=current_guest;
     }
 }
 //save_new_QOS(cheap_hotel_QOS);

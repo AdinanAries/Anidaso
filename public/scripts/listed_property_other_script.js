@@ -1352,7 +1352,7 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
                         <i style="color:rgb(255, 46, 46); margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
                         delete guest
                     </div>
-                    <div onclick="" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
+                    <div onclick="show_guest_booking_history('${guest._id}', 'all_guests_search')" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                         booking history
                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </div>
@@ -1361,14 +1361,14 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
                     <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
                         CHANGE GUEST STATUS</p>
                     <p style="margin: 5px 0;">
-                        <select id="all_guests_search_status_change_select" style="padding: 10px; width: 100%; font-size: 14px;">
+                        <select id="all_guests_search_status_change_select_${index}" style="padding: 10px; width: 100%; font-size: 14px;">
                             <option value="staying">staying</option>
                             <option value="not_staying">not staying</option>
                             <option value="unbooked">unbooked</option>
                             <option value="booked">booked</option>
                         </select>
                     </p>
-                    <div onclick="guest_status_reset_onlick('${guest._id}', '${guest.property_id}','all_guests_search_status_change_select', '${guest.hotel_brand_id}', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                    <div onclick="guest_status_reset_onlick('${guest._id}', '${guest.property_id}','all_guests_search_status_change_select_${index}', '${guest.hotel_brand_id}', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
                         save
                     </div>
                 </div>
