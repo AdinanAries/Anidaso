@@ -1301,7 +1301,7 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
             </div>`;
     }else if(guest.status.includes("booked")){
         guest_main_action_btn = `
-            <div onclick="" style="border: 1px solid rgb(55, 97, 107); background-color: rgba(41, 66, 88, 0.555); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+            <div onclick="go_to_guest_checkin('${guest._id}', '${property._id}', '${guest.mobile}', 'guests_manager_div');" style="border: 1px solid rgb(55, 97, 107); background-color: rgba(41, 66, 88, 0.555); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                 <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-bed" aria-hidden="true"></i>
                 Go to Checkin
             </div>`;

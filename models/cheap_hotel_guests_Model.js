@@ -13,6 +13,9 @@ let cheap_hotel_guests_schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: ""
     },
+    properties: {
+        type: Array
+    },
     profile_pic: {
         type: String
     },

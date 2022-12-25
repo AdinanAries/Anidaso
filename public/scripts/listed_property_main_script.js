@@ -1540,11 +1540,11 @@ function toggle_show_hide_arrival_guests_div() {
     $("#arrival_guests_div").toggle("up");
 }
 
-async function show_arrival_guests() {
+async function show_arrival_guests(current=0) {
     document.getElementById("guests_manager_div").style.display = "none";
     toggle_show_hide_arrival_guests_div();
     setTimeout(() => {
-        load_country_calling_codes_on_select_input("arrival_guests_search_country_calling_code_select");
+        load_country_calling_codes_on_select_input("arrival_guests_search_country_calling_code_select", current);
     }, 510);
 
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));
@@ -1555,6 +1555,24 @@ async function show_arrival_guests() {
             <option value='${properties[i]._id}'>${properties[i].city}, ${properties[i].street_address}, ${properties[i].country}</option>
         `;
     }
+
+}
+
+async function go_to_guest_checkin(guest_id, property_id, tel=0, source=""){
+    let country_calling_code = tel ? tel.split(" ")[0] : 0;
+    show_arrival_guests(country_calling_code);
+    let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), property_id, guest_id);
+    if(source==="guests_manager_div"){
+        document.getElementById("guests_manager_div").style.display="none";
+    }
+    //setting input values
+    document.getElementById("arrival_guests_search_first_name_input").value=guest.first_name;
+    document.getElementById("arrival_guests_search_last_name_input").value=guest.last_name;
+    document.getElementById("arrival_guests_search_email_input").value=guest.email;
+    document.getElementById("arrival_guests_search_property_select").value=property_id;
+    document.getElementById("arrival_guests_search_mobile_input").value = guest.mobile.split(" ")[1];
+    
+    hotel_guests_search_function("arrival");
 
 }
 
