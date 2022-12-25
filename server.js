@@ -1356,6 +1356,33 @@ app.post("/get_cheap_hotel_booking_invoice/", async (req,res, next)=>{
   res.send(the_invoice);
 });
 
+app.get("/reset_cheap_hotel_guest_status/:brand_id/:guest_id", async (req, res, next)=>{
+  try{
+
+    let guest_id = req.params.guest_id;
+    let brand_id = req.params.brand_id;
+    let new_status = req.query.s;
+    let the_guest = await cheap_hotel_guest.findOne({
+      _id: guest_id,
+      hotel_brand_id: brand_id,
+    });
+
+    if(the_guest){
+      the_guest.status = new_status;
+      let new_guest = new cheap_hotel_guest(the_guest);
+      new_guest = await new_guest.save();
+      res.send({msg: "updated guest status", success: true});
+    }else{
+      res.send({msg: "guest not found", success: false});
+    }
+
+  }catch(e){
+    console.log(e);
+    res.send({msg: "error on server", success: false});
+  }
+  
+});
+
 //booking a room
 app.post("/book_a_cheap_room/", async (req, res, next) => {
 

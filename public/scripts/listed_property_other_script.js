@@ -8,7 +8,34 @@ var guest_search_post_data = {
     mobile: "",
     date: "",
 }
+async function guest_status_reset_onlick(guest_id, property_id, status_select="no_status", hotel_brand_id=localStorage.getItem("ANDSBZID"), source='inhouse_guests'){
+    let status;
+    if(status_select==="no_status"){
+        status = status_select;
+    }else{
+        status = document.getElementById(status_select).value;
+    }
+    
+    let the_guest = await get_and_return_hotel_guest_by_id(hotel_brand_id, property_id, guest_id);
 
+    $.ajax({
+        url: `/reset_cheap_hotel_guest_status/${hotel_brand_id}/${guest_id}?s=${status}`,
+        type: "GET",
+        success: res => {
+            console.log("guest_status_change: ",res);
+            if(source==="inhouse_guests"){
+                //hotel_guests_search_function('inhouse');
+                document.getElementById("in_house_guests_div").style.display="none";
+                go_to_main_search_page_and_search_guest(the_guest.first_name, the_guest.last_name, the_guest.mobile, the_guest.property_id, the_guest.DOB)
+            }else if(source==="all_guests_search"){
+                search_guest_on_submit_function();
+            }
+        },
+        error: err => {
+            console.log(err)
+        }
+    });
+}
 async function go_to_checkout_from_inhouse_guests(guest_id, property_id, booking_id, source='inhouse_guests'){ //remove these parameters if not needed
     
     let guest = await get_and_return_hotel_guest_by_id(localStorage.getItem("ANDSBZID"), "property_id", guest_id);
@@ -353,6 +380,10 @@ function return_inhouse_guest_markup(guest, booking, invoice, property, index){
                 <div style="background-color: rgba(0,0,0,0.5); padding: 10px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.2);">
                     <p style="color: white; font-size: 13px;">Guest Status: 
                     <span style="font-size: 13px; color: rgb(255, 132, 132);"> ${guest.status}</span></p>
+                    <div onclick="guest_status_reset_onlick('${guest._id}', '${guest.property_id}');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                        <i class="fa fa-refresh" aria-hidden="true" style="margin-right: 5px; color: lightgreen;"></i>
+                        reset status
+                    </div>
                 </div> 
                 <p onclick="show_guest_manager_view_guest_profile_div();" style="cursor: pointer; font-size: 13px; margin: 10px; padding-bottom: 10px; color:rgb(162, 187, 199);">
                     see full profile
@@ -1236,6 +1267,22 @@ async function search_guest_on_submit_function(){
 
 }
 
+function go_to_main_search_page_and_search_guest(f_name, l_name, tel, prop_id, dob){
+    if(document.getElementById("guests_manager_div").style.display!=="block" &&
+    document.getElementById("guests_manager_div").style.display!=="flex"){
+        show_guests_manager();
+        show_guest_manager_find_guest();
+    }
+    document.getElementById("guests_manager_search_guest_first_name_input").value = f_name;
+    document.getElementById("guests_manager_search_guest_last_name_input").value = l_name;
+    document.getElementById("guests_manager_search_guest_calling_code_select").value = tel.split(" ")[0];
+    document.getElementById("guests_manager_search_mobile_input").value = tel.split(" ")[1];
+    document.getElementById("guests_manager_search_property_select").value = prop_id;
+    document.getElementById("guests_manager_search_guest_DOB_input").value = dob;
+
+    search_guest_on_submit_function();
+}
+
 function return_each_guest_manager_guest_markup(guest, property, stay, booking, index){
     current_highlighted_guests.push(guest);
     let guest_main_action_btn='';
@@ -1261,7 +1308,7 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
     }
 
     let stay_info = stay.room ? `
-        <p style="margin-top: 5px; margin-left: 20px; color:rgb(65, 141, 255); font-size: 14px;">
+        <p style="margin-top: 5px; color:rgb(65, 141, 255); font-size: 14px;">
             Room ${stay.room}, <span style="font-size: 13px; color:rgba(255, 208, 187, 0.815);">
                 ${change_iso_date_to_readable_format(stay.checkin)} - ${change_iso_date_to_readable_format(stay.checkout)}</span></p>` : "";
 
@@ -1280,13 +1327,17 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
                         (${guest.status})
                     </span>
                 </p>
-                ${stay_info}
-                <P style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px; margin-left: 20px;">
-                    ${property.city} - ${property.street_address} (${property.country})</P>  
-                <p onclick="show_guest_manager_view_guest_profile_div(${index});" style="cursor: pointer; font-size: 13px; margin: 10px; margin-bottom: 20px; color:rgb(162, 187, 199);">
+                <p onclick="show_guest_manager_view_guest_profile_div(${index});" style="cursor: pointer; font-size: 13px; margin-left: 0; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
                     <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 </p>
+                <div style="padding: 10px; background-color: rgba(0,255,0,0.1); border: 1px solid lightgreen; margin-top: 15px;  margin-bottom: 20px;">
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                        RECENT BOOKING</p>
+                    ${stay_info}
+                    <p style="color:rgb(206, 255, 221); font-size: 13px; margin-top: 5px;">
+                        ${property.city} - ${property.street_address} (${property.country})</p>
+                </div>
             </div>
             <div class="flex_child_of_two flex_non_first_child">
                 <div style="display: flex; flex-direction: row !important;">
@@ -1304,6 +1355,21 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
                     <div onclick="" style="font-size: 13px; color: rgb(132, 216, 255); padding: 10px; padding-left: 0; cursor: pointer; margin-top: 10px;">
                         booking history
                         <i style="color:rgb(136, 255, 199); margin-left: 5px;" class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin: 15px 0;">
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                        CHANGE GUEST STATUS</p>
+                    <p style="margin: 5px 0;">
+                        <select id="all_guests_search_status_change_select" style="padding: 10px; width: 100%; font-size: 14px;">
+                            <option value="staying">staying</option>
+                            <option value="not_staying">not staying</option>
+                            <option value="unbooked">unbooked</option>
+                            <option value="booked">booked</option>
+                        </select>
+                    </p>
+                    <div onclick="guest_status_reset_onlick('${guest._id}', '${guest.property_id}','all_guests_search_status_change_select', '${guest.hotel_brand_id}', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                        save
                     </div>
                 </div>
             </div>
