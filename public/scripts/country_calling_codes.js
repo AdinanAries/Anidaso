@@ -258,7 +258,7 @@ var calling_codes = [
     {country: "Zimbabwe", code: "+263"}
 ]
 
-function load_country_calling_codes_on_select_input(input_id){
+function load_country_calling_codes_on_select_input(input_id, current=0){
 
     let select_input = document.getElementById(input_id);
     select_input.innerHTML = "";
@@ -272,6 +272,9 @@ function load_country_calling_codes_on_select_input(input_id){
             <option value="${calling_codes[i].code}">${calling_codes[i].code} - ${calling_codes[i].country}</option>
         `;
     }
+
+    if(current)
+        select_input.value=current;
 
     return {done: true};
 

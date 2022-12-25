@@ -1289,13 +1289,13 @@ function toggle_show_guest_manager_find_guest() {
     $("#guest_manager_search_guest_div").toggle("up");
 }
 
-async function show_guest_manager_find_guest() {
+async function show_guest_manager_find_guest(calling_code=0) {
     document.getElementById("guest_manager_menu_div").style.display = "none";
     document.getElementById("guest_manager_add_new_guest_div").style.display = "none";
     toggle_show_guest_manager_find_guest()
 
     setTimeout(() => {
-        load_country_calling_codes_on_select_input("guests_manager_search_guest_calling_code_select");
+        load_country_calling_codes_on_select_input("guests_manager_search_guest_calling_code_select", calling_code);
     }, 510);
 
     let properties = await get_and_return_hotel_buildings(window.localStorage.getItem("ANDSBZID"));

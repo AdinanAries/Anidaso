@@ -1267,15 +1267,15 @@ async function search_guest_on_submit_function(){
 
 }
 
-function go_to_main_search_page_and_search_guest(f_name, l_name, tel, prop_id, dob){
+async function go_to_main_search_page_and_search_guest(f_name, l_name, tel, prop_id, dob){
     if(document.getElementById("guests_manager_div").style.display!=="block" &&
     document.getElementById("guests_manager_div").style.display!=="flex"){
         show_guests_manager();
-        show_guest_manager_find_guest();
+        await show_guest_manager_find_guest(tel.split(" ")[0]);
     }
     document.getElementById("guests_manager_search_guest_first_name_input").value = f_name;
     document.getElementById("guests_manager_search_guest_last_name_input").value = l_name;
-    document.getElementById("guests_manager_search_guest_calling_code_select").value = tel.split(" ")[0];
+    //document.getElementById("guests_manager_search_guest_calling_code_select").value = tel.split(" ")[0];
     document.getElementById("guests_manager_search_mobile_input").value = tel.split(" ")[1];
     document.getElementById("guests_manager_search_property_select").value = prop_id;
     document.getElementById("guests_manager_search_guest_DOB_input").value = dob;
