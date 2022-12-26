@@ -1289,7 +1289,7 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
     if(guest.status.includes("not_staying") || guest.status.includes("unbooked")){
         guest.status="not staying";
         guest_main_action_btn = `
-            <div onclick="" style="border: 1px solid rgb(55, 97, 107); background-color: rgb(3, 70, 97); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
+            <div onclick="go_to_make_reservation_from_other_place('${guest._id}', '${guest.hotel_brand_id}', '${property._id}', 'guests_manager_div');" style="border: 1px solid rgb(55, 97, 107); background-color: rgb(3, 70, 97); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 10px; border-radius: 4px; font-size: 13px;">
                 <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-ticket" aria-hidden="true"></i>
                 Make Reservation
             </div>`;

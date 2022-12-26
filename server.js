@@ -2670,8 +2670,10 @@ app.post("/search_booking_by_booking_info/", async(req, res, next)=>{
       "rooms.id": room_id_p,
       checkin_date: req.body.dates.checkin_date,
       checkout_date: req.body.dates.checkout_date,
-      "guests.first_name": g_first_name,
-      "guests.last_name": g_last_name,
+      //"guests.first_name": g_first_name,
+      //"guests.last_name": g_last_name,
+      "guests.first_name": new RegExp('\\b' +g_first_name+ '\\b', 'i'),
+      "guests.last_name": new RegExp('\\b' +g_last_name+ '\\b', 'i'),
       //"guests.DOB": g_DOB,
       //"guests.gender": g_gender
     });
@@ -2730,11 +2732,14 @@ app.get("/cheap_hotel_checkin_guest/:guest_id/:booking_id/:brand_id/:property_id
         let new_guest = await new cheap_hotel_guest(guest);
         await new_guest.save();
       });
-      
-      if(!booking)
+      let updated_booking = new cheap_hotel_booking(booking);
+      booking = await updated_booking.save(); 
+    }
+
+    if(!booking)
         res.send({checkedIn: false});
       else res.send({checkedIn: true, booking});
-    }
+  
   }catch(e){
     console.log(e.message);
     res.send({error: "server error!"})

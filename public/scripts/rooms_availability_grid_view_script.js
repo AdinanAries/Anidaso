@@ -164,6 +164,14 @@ function make_guests_list_from_number_input_values(adult_iput_fld, child_input_f
         global_guests_array_index_position++;
     }
 
+    //Adding pre selected guest
+    if(make_reservation_initial_guest._id){
+        autocomplete_add_selected_guest_from_search(
+            make_reservation_initial_guest._id, make_reservation_initial_guest.first_name, 
+            make_reservation_initial_guest.last_name, make_reservation_initial_guest.gender, 
+            make_reservation_initial_guest.DOB, make_reservation_initial_guest.mobile, 
+            make_reservation_initial_guest.email, 0, make_reservation_initial_guest.type, 0);
+    }
 }
 
 function autocomplete_remove_selected_guest(index, type, email, mobile){
@@ -187,7 +195,7 @@ function autocomplete_remove_selected_guest(index, type, email, mobile){
         $('#selected_child_guest_from_search_info'+index).slideUp('fast');
     }
 }
-
+//
 function autocomplete_add_selected_guest_from_search(id, first_name, last_name, gender, DOB, tel, email, index, type, number){
     make_reservations_post_data.guests[index].id=id;
     make_reservations_post_data.guests[index].first_name=first_name;
@@ -1211,10 +1219,10 @@ function after_reservation_clean_up_func(booking_id=""){
     make_reservations_post_data.booking_date = "";
     make_reservations_post_data.rooms = [];
     //make_reservations_post_data.full_property_location = "New York, 1223 Mont Gomery, United States";
-    make_reservations_post_data.all_dates_of_occupancy = [];
+    //make_reservations_post_data.all_dates_of_occupancy = [];
     make_reservations_post_data.price_paid = 0;
-    make_reservations_post_data.checkin_date = "";
-    make_reservations_post_data.checkout_date = "";
+    //make_reservations_post_data.checkin_date = "";
+    //make_reservations_post_data.checkout_date = "";
     make_reservations_post_data.checkin_time = "12:00";
     make_reservations_post_data.checkout_time = "12:00";
     make_reservations_post_data.guests = [];
@@ -1231,6 +1239,10 @@ function after_reservation_clean_up_func(booking_id=""){
     if(booking_id){
         document.getElementById("make_reservation_pane").style.display="none";
         show_view_booking_div(booking_id, '');
+    }
+
+    make_reservation_initial_guest = {
+        type: 'adult',
     }
 }
 

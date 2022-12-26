@@ -303,6 +303,10 @@ var make_reservations_post_data = {
         }
     }
 }
+var make_reservation_initial_guest = {
+    type: 'adult',
+}
+
 var search_inventory_item_post_data = {
     hotel_brand_id: "",
     property_id: "all",
@@ -882,7 +886,7 @@ async function render_search_booking_results_markup(booking) {
             Checkin
         </div>            
     `;
-    if (first_guest.status.includes("staying")) {
+    if (first_guest.status.includes("staying") && booking?.booking_status==="staying") {
         checkin_or_checkout_btn = `
             <div onclick="go_to_checkout_from_inhouse_guests('${room_guests[0].id}', '${property._id}', '${booking._id}', 'booking_editor');" style="background-color: brown; color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
                 <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
@@ -2924,6 +2928,12 @@ function toggle_show_make_room_reservation_div() {
     $("#make_reservation_pane").toggle("up");
 }
 
+async function go_to_make_reservation_from_other_place(guest_id, brand_id, property_id, source=""){
+    make_reservation_initial_guest = await get_and_return_hotel_guest_by_id(brand_id, property_id, guest_id);
+    make_reservation_initial_guest.type="adult";
+    continue_room_reservation();
+}
+//
 async function continue_room_reservation() {
 
     toggle_show_make_room_reservation_div();
