@@ -880,6 +880,8 @@ async function render_search_booking_results_markup(booking) {
         other_rooms_included += "</p>"
     }
 
+    let guest_status_markup='';
+    let change_booking_status_form='';
     let checkin_or_checkout_btn = `
         <div id="booking_editor_checkin_btn_main" onclick="start_guest_checkin('${first_guest._id}','${booking._id}', '${property._id}', 0, 'booking_editor');" style="border: 1px solid rgb(55, 97, 107); background-color: rgba(41, 66, 88, 0.555); color: white; cursor: pointer; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
             <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-bed" aria-hidden="true"></i>
@@ -892,6 +894,60 @@ async function render_search_booking_results_markup(booking) {
                 <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
                 Checkout
             </div>
+        `;
+        guest_status_markup=`
+            <span style="font-size: 14px;">
+                <i style="color:lightgreen; margin-right: 5px;" class="fa fa-check" aria-hidden="true"></i>
+                Checked-in
+            </span>
+        `;
+    }else if (!first_guest.status.includes("staying") && booking?.booking_status==="staying") {
+        checkin_or_checkout_btn = `
+            <div style="background-color: darkgrey; color: white; cursor: not-allowed; width: fit-content; padding: 10px; margin-right: 5px; border-radius: 4px; font-size: 13px;">
+                <i style="color:rgb(255, 179, 136); margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>
+                Checkout
+            </div>
+        `;
+        guest_status_markup=`
+            <span style="font-size: 14px; color: red;">
+                <i style="color:orange; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                This booking is checked-in while guest is not staying
+            </span>
+        `;
+        change_booking_status_form=`
+            <div>
+                <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin: 15px 0;">
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                        <i style="color:orange; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        PLEASE CHANGE BOOKING STATUS</p>
+                    <p style="margin: 5px 0;">
+                        <select id="all_guests_search_status_change_select_0" style="padding: 10px; width: 100%; font-size: 14px;">
+                            <option value="before-stay">reset for guest to checkin again</option>
+                            <option value="after-stay">set to checkout</option>
+                            <option value="no-show">set to "no show"</option>
+                            <option value="cancelled">cancel booking</option>
+                            <!--option value="staying">guest checked in</option-->
+                        </select>
+                    </p>
+                    <div onclick="" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                        save
+                    </div>
+                </div> 
+            </div>
+        `;
+    }else if(first_guest.status.includes("staying")){
+        guest_status_markup=`
+            <span style="font-size: 14px; color: red;">
+                <i style="color:orange; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                This guest has already checked-in on another booking
+            </span>
+        `;
+    }else if(!first_guest.status.includes("staying")){
+        guest_status_markup=`
+            <span style="font-size: 14px;">
+                <i style="color:lightgreen; margin-right: 5px;" class="fa fa-check" aria-hidden="true"></i>
+                ${first_guest.status}
+            </span>
         `;
     }
 
@@ -993,9 +1049,10 @@ async function render_search_booking_results_markup(booking) {
             <div style="background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); padding: 10px;">
                 <p style="letter-spacing: 1px; margin-bottom: 10px; font-size: 13px; color:rgb(127, 144, 175); font-weight: bolder;">
                     Summary & Actions</p>
-                <p style="color: rgba(255,255,255,0.5); margin-bottom: 10px; font-size: 14px;">Guest(s) Status: <span style="color: lightgreen; font-size: 14px;">
-                    ${first_guest.status}
+                <p style="color: rgba(255,255,255,0.5); margin-bottom: 10px; font-size: 14px;">Guest(s) Status: <span style="color: white; font-size: 14px;">
+                    ${guest_status_markup}
                 </span></p>
+                ${change_booking_status_form}
                 <div style="border-top: 1px solid rgba(255,255,255,0.2); padding: 10px 0;">
                     <p style="color: rgba(255,255,255,0.5); margin-bottom: 10px; font-size: 14px;">
                         <i style="color:lightgreen; margin-right: 5px;" class="fa fa-info-circle" aria-hidden="true"></i>

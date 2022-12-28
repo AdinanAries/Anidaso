@@ -1244,16 +1244,20 @@ async function search_guest_on_submit_function(){
                     if(is_today_covered_in_date_range(booking.checkin_date, booking.checkout_date)){//"2022-09-26"
                         //alert("guest is staying");
                         if(guests[i].status!=="staying"){
-                            guests[i].status = `${guests[i].status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkin past due</span>`;
+                            guests[i].status = `${guests[i].status}, <span style="color: rgba(255,255,255,0.6); font-size: 13px;">
+                            <i class="fa fa-exclamation-triangle" style="margin-right: 2px; color: red;" aria-hidden="true"></i>
+                            ${change_iso_date_to_readable_format(booking.checkin_date)} => checkin past due</span>`;
                         }
                         guest_stay_obj.room = booking.rooms[0].number;
                         guest_stay_obj.checkin = booking.checkin_date;
                         guest_stay_obj.checkout = booking.checkout_date;
                         //update guest information here
-                        break;
+                        //break;
                     }else if(!is_today_before_date(booking.checkout_date)){//today is after checkout date
                         if(guests[i].status==="staying"){
-                            guests[i].status = `${guests[i].status} - <span style="color: rgba(255,255,255,0.6); font-size: 13px;"><i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: red;" aria-hidden="true"></i>checkout past due</span>`;
+                            guests[i].status = `${guests[i].status}, <span style="color: rgba(255,255,255,0.6); font-size: 13px;">
+                            <i class="fa fa-exclamation-triangle" style="margin-right: 2px; color: red;" aria-hidden="true"></i>
+                            ${change_iso_date_to_readable_format(booking.checkout_date)} => checkout past due</span>`;
                         }
                     }
                 }
@@ -1323,9 +1327,13 @@ function return_each_guest_manager_guest_markup(guest, property, stay, booking, 
                     ${change_date_from_iso_to_long_date(guest.DOB)}</p>
                 <p style="margin-left: 20px; color:rgb(177, 208, 255); font-size: 14px;">
                     <span style="color: rgb(215,255,255); font-size: 12px;">Gender:</span> ${guest.gender}
-                    <span style="margin-left: 10px; color:rgb(235, 137, 137); font-size: 14px;">
+                    <!--span style="color:rgb(235, 137, 137); font-size: 14px;">
                         (${guest.status})
-                    </span>
+                    </span-->
+                </p>
+                <p style="margin-left: 20px; color:rgb(235, 137, 137); font-size: 14px;">
+                    <span style="color: rgb(215,255,255); font-size: 12px;">Status:</span>
+                    ${guest.status}
                 </p>
                 <p onclick="show_guest_manager_view_guest_profile_div(${index});" style="cursor: pointer; font-size: 13px; margin-left: 0; margin: 10px; color:rgb(162, 187, 199);">
                     see full profile
