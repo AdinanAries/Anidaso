@@ -68,3 +68,38 @@ function bind_user_id_to_running_invoice(guest_id, guest_position){
     if(running_invoice.invoice_items[guest_position].guest_id==='guest_id_before_creation')
         running_invoice.invoice_items[guest_position].guest_id=guest_id;
 }
+
+function fix_invoice_remove_unwanted_guest(brand_id, invoice_id){
+    return $.ajax({
+        type: "GET",
+        url: `/remove_unwanted_guests_from_invoice/${brand_id}/${invoice_id}`,
+        success: res => {
+            return res;
+        },
+        error: err => {
+            return err;
+        }
+    });
+}
+
+async function delete_guest_from_current_invoice(brand_id, invoice_id, guest_index, invoice_index){
+    running_invoice = all_running_invoices[invoice_index];
+    running_invoice.invoice_items.splice(guest_index,1);
+    let res = await post_update_current_invoice(brand_id, invoice_id);
+}
+
+function post_update_current_invoice(brand_id, invoice_id){
+    return $.ajax({
+        type: "POST",
+        url: `/update_booking_invoice/${brand_id}/${invoice_id}`,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({data: running_invoice}),
+        success: res => {
+            return res;
+        },
+        error: err => {
+            return err;
+        }
+    });
+}

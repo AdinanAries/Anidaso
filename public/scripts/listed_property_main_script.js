@@ -811,8 +811,9 @@ function get_and_return_booking_by_id(id) {
 async function render_search_booking_results_markup(booking) {
     try{
         let first_guest_id = booking.guests[0].id
+        let room_id = booking.rooms[0].id;
     }catch(e){
-        console.log(e.message);
+        console.log(e);
         document.getElementById("view_booking_result_details").innerHTML = `
             <div style="background-color: rgba(0,0,0,0.5); padding: 10px;">
                 <div>
@@ -850,7 +851,12 @@ async function render_search_booking_results_markup(booking) {
     try{
        invoice = await get_cheap_hotel_guest_invioce(booking.guests[0].id, booking._id, localStorage.getItem("ANDSBZID"), booking.property_id);
     }catch(e){
-        console.log(e.message);
+        console.log(e);
+        let invc = await get_cheap_hotel_booking_invioce(booking._id, localStorage.getItem("ANDSBZID"), booking.property_id);
+        invc.invoice_items = [];
+        all_running_invoices = [];
+        all_running_invoices.push(invc);
+        include_guest_in_running_invoice(booking._id, booking.guests[0].id, booking.rooms[0].id, items=[], 0);
         document.getElementById("view_booking_result_details").innerHTML = `
             <div style="background-color: rgba(0,0,0,0.5); padding: 10px;">
                 <div>
@@ -864,15 +870,15 @@ async function render_search_booking_results_markup(booking) {
                 </div>
                 <div style="border: 1px solid red; color: white; font-size: 14px; padding: 10px; margin-top: 10px;">
                     <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                    You cannot view a booking without invoice.
+                    INVOICE CORRUPTED
                     <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 5px;">
-                        Please add invoice to this booking.
+                        Due to some user activities on this booking, the invoice got corrupted. Please reset the invoice below.
                     </p>
                 </div>
                 <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 10px;">
-                    <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color: green; color: white; border: 1px solid rgba(255,255,255,0.2);">
-                        <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
-                        Add Invoice
+                    <div onclick="update_and_return_cheap_hotel_guest_invoice();show_prompt_to_user('Success','Invoice has been updated!', 'success');show_view_booking_div('${booking._id}', '');" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color: green; color: white; border: 1px solid rgba(255,255,255,0.2);">
+                        <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+                        Reset Invoice
                     </div>
                     <div style="cursor: pointer; padding: 10px; color: white; font-size: 14px;">
                         <i aria-hidden="true" class="fa fa-trash" style="margin-right: 5px; color:rgb(255, 53, 53);"></i>
@@ -1008,7 +1014,10 @@ async function render_search_booking_results_markup(booking) {
     }
 
     document.getElementById("view_booking_result_details").innerHTML = `
-        <div style="padding: 10px 5px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555);">
+        <div style="padding: 10px 5px; border-radius: 4px; background-color:rgba(41, 66, 88, 0.555); position: relative;">
+            <div onclick="show_view_booking_div('${booking._id}', '');" style="position: absolute; top: 5px; right: 5px; cursor: pointer; padding: 10px; border-radius: 4px; background-color: rgb(0, 25, 54); border: 1px solid lightgreen;">
+                <i style="color:rgb(137, 235, 174);" aria-hidden="true" class="fa fa-refresh"></i>
+            </div>
             <p style="display: none; margin: 15px; color:rgb(209, 84, 0); font-size: 14px; font-weight: bolder;">Last Booked</p>
             <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
                 Room ${room_number}:
@@ -1243,7 +1252,8 @@ function show_guests_invoice_div() {
 }
 
 async function view_each_guest_running_bill(index) {
-    show_guests_invoice_div();
+    if(document.getElementById("guests_invoice_div").style.display==="none")
+        show_guests_invoice_div();
     console.log(all_running_invoices);
     let item_sum = 0;
     running_invoice = all_running_invoices[index];
@@ -1257,6 +1267,66 @@ async function view_each_guest_running_bill(index) {
 
         })
     });
+
+    // Fixing invoice with unwanted Items
+    for(let i = 0; i < running_invoice.invoice_items.length; i++){
+        if(running_invoice.invoice_items[i].guest_id==="guest_id_before_creation"){
+            let invc = await fix_invoice_remove_unwanted_guest(window.localStorage.getItem("ANDSBZID"), running_invoice._id);
+            //console.log(all_running_invoices);
+            all_running_invoices[index] = invc;
+            item_sum = 0;
+            running_invoice = all_running_invoices[index];
+            all_item_names = [];
+            running_invoice.invoice_items.forEach(each => {
+                each.guest_items.forEach(item => {
+                    if (!all_item_names.includes(item.name)) {
+                        all_item_names.push(item.name);
+                        item_sum += parseFloat(item.total);
+                    }
+
+                })
+            });
+            break;
+        }       
+    }
+
+    document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML = "";
+    if(running_invoice.invoice_items.length===0){
+        document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML = `
+            <div style="background-color: rgba(0,0,0,0.5); padding: 10px;">
+                <div style="border: 1px solid red; color: white; font-size: 14px; padding: 10px; margin-top: 10px;">
+                    <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    EMPTY INVOICE.
+                    <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 5px;">
+                        There are no items to display on this invoice.
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 10px;">
+                    <div onclick="toggle_show_guests_invoice_div();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color: rgb(4, 35, 47); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                        <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa-solid fa-caret-left" aria-hidden="true"></i>
+                        Go Back
+                    </div>
+                    <div style="cursor: pointer; padding: 10px; color: white; font-size: 14px;">
+                        <i aria-hidden="true" class="fa fa-trash" style="margin-right: 5px; color:rgb(255, 53, 53);"></i>
+                        Delete Booking
+                    </div>
+                </div>
+            </div>
+        `;
+        item_sum = 0;
+        running_invoice = all_running_invoices[index];
+        all_item_names = [];
+        running_invoice.invoice_items.forEach(each => {
+            each.guest_items.forEach(item => {
+                if (!all_item_names.includes(item.name)) {
+                    all_item_names.push(item.name);
+                    item_sum += parseFloat(item.total);
+                }
+
+            })
+        });
+    }
+
     document.getElementById("guest_invoice_checkout_btn").onclick = () => go_to_checkout_from_inhouse_guests(running_invoice.invoice_items[0].guest_id, running_invoice.property_id, running_invoice.bookings[0], 'invoice_div');
     let totals = calculatePriceTotals(item_sum);
     document.getElementById("running_invoice_sub_total_display_span").innerText = `$${parseFloat(totals.base).toFixed(2)}`;
@@ -1265,17 +1335,17 @@ async function view_each_guest_running_bill(index) {
     document.getElementById("running_invoice_main_total_display_span").innerText = `$${parseFloat(totals.total).toFixed(2)}`;
     document.getElementById("running_invoice_number_display_span").innerHTML = `${running_invoice._id.toString().substring(0, 10)}...`;
     document.getElementById("guests_invoices_date_created").innerText = change_iso_date_to_readable_format(running_invoice.date_created);
-    document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML = "";
+    
     for (let i = 0; i < running_invoice.invoice_items.length; i++) {
 
         let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), running_invoice.property_id, running_invoice.invoice_items[i].guest_id);
 
         document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML += `
-            <div>
+            <div id="invoice_items_each_guest_container_${i}_${index}">
                 <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px;">
                     <span style="font-size: 13px; color: rgba(255,255,255,0.5);">
                         Guest ${i + 1}</span>
-                    <span style="display: none; cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
+                    <span onclick="delete_guest_from_current_invoice('${window.localStorage.getItem("ANDSBZID")}', '${running_invoice._id}', ${i}, ${index});view_each_guest_running_bill(${index});//document.getElementById('invoice_items_each_guest_container_${i}_${index}').style.display='none';" style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
                         <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
                         Remove Guest
                     </span>

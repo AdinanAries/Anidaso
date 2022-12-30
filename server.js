@@ -1351,9 +1351,54 @@ app.post("/get_cheap_hotel_booking_invoice/", async (req,res, next)=>{
   let the_invoice = await cheap_hotel_invoice.findOne({
     hotel_brand_id: req.body.hotel_brand_id,
     property_id: req.body.property_id,
-    "invoice_items.booking_id": req.body.booking_id,
+    bookings:{ $all: 
+      [req.body.booking_id]
+    },
+    //"invoice_items.booking_id": req.body.booking_id,
   }).exec();
+  //{bookings: ["63a632efc7b0077ce4f75000"]}
+  console.log(the_invoice);
   res.send(the_invoice);
+});
+
+app.get('/remove_unwanted_guests_from_invoice/:brand_id/:invoice_id', async(req, res, next)=>{
+  let the_invoice = await cheap_hotel_invoice.findOne({
+    hotel_brand_id: req.params.brand_id,
+    _id: req.params.invoice_id,
+  }).exec();
+
+  //removing unwanted invoice guest items
+  the_invoice.invoice_items = the_invoice.invoice_items.filter(each=>each.guest_id!=="guest_id_before_creation");
+  let to_update_invoice = new cheap_hotel_invoice(the_invoice);
+  await to_update_invoice.save();
+
+  res.send(the_invoice);
+});
+
+app.post('/update_booking_invoice/:brand_id/:invoice_id', async(req, res, next)=>{
+  try{
+    console.log('the_post:', req.body.data);
+    let the_invoice = await cheap_hotel_invoice.findOne({
+      hotel_brand_id: req.params.brand_id,
+      _id: req.params.invoice_id,
+    }).exec();
+    console.log('the_invoice:', the_invoice);
+    console.log('the_post:', req.body.data);
+
+    the_invoice.bookings = req.body.data.bookings;
+    the_invoice.invoice_items = req.body.data.invoice_items;
+    the_invoice.hotel_brand_id = req.body.data.hotel_brand_id;
+    the_invoice.property_id = req.body.data.property_id;
+    the_invoice.date_checkedout = req.body.data.date_checkedout;
+
+    let to_update_invoice = new cheap_hotel_invoice(the_invoice);
+    let updated_invoice = await to_update_invoice.save();
+
+    res.send(updated_invoice);
+  }catch(e){
+    console.log(e);
+    res.send({});
+  }
 });
 
 app.get("/reset_cheap_hotel_guest_status/:brand_id/:guest_id", async (req, res, next)=>{
