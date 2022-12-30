@@ -2698,6 +2698,30 @@ app.post("/search_booking_by_booking_info/", async(req, res, next)=>{
 
 });
 
+app.get("/cheap_hotel_change_booking_status/:brand_id", async(req, res, next)=>{
+  try{
+
+    let brand_id = req.params.brand_id;
+    let new_status = req.query.ns;
+    let booking_id = req.query.bk;
+
+    let the_booking = await cheap_hotel_booking.findOne({
+      _id: booking_id,
+      hotel_brand_id: brand_id,
+    });
+
+    the_booking.booking_status = new_status;
+    let updated_booking = await new cheap_hotel_booking(the_booking);
+    let saved_booking = await updated_booking.save();
+
+    res.send(saved_booking);
+  }catch(e){
+    console.log(e);
+    res.send({});
+  }
+  
+});
+
 app.get("/get_booking_by_id/:id/", async(req, res, next)=>{
   let booking = await cheap_hotel_booking.findById(req.params.id).exec();
   res.send(booking);

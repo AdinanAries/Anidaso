@@ -817,7 +817,7 @@ async function render_search_booking_results_markup(booking) {
             <div style="background-color: rgba(0,0,0,0.5); padding: 10px;">
                 <div>
                     <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
-                        Room ${booking.rooms[0].number}:
+                        Room ${booking.rooms[0]?.number || '<span style="font-size: 14px; color: rgba(255,255,255,0.5);"><i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i> N/A</span>'}:
                         <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
                             Booked
                             <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
@@ -846,7 +846,44 @@ async function render_search_booking_results_markup(booking) {
         return;
     }
     console.log("the booking", booking);
-    let invoice = await get_cheap_hotel_guest_invioce(booking.guests[0].id, booking._id, localStorage.getItem("ANDSBZID"), booking.property_id);
+    let invoice;
+    try{
+       invoice = await get_cheap_hotel_guest_invioce(booking.guests[0].id, booking._id, localStorage.getItem("ANDSBZID"), booking.property_id);
+    }catch(e){
+        console.log(e.message);
+        document.getElementById("view_booking_result_details").innerHTML = `
+            <div style="background-color: rgba(0,0,0,0.5); padding: 10px;">
+                <div>
+                    <p style="letter-spacing: 1px; color: white; font-size: 15px; text-align: center; font-weight: bolder;">
+                        Room ${booking.rooms[0]?.number || '<span style="font-size: 14px; color: rgba(255,255,255,0.5);"><i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i> N/A</span>'}:
+                        <span style="letter-spacing: 1px; margin-left: 10px; font-size: 14px; color:rgb(168, 195, 218);">
+                            Booked
+                            <i style="color:rgb(137, 235, 174); margin-left: 5px;" aria-hidden="true" class="fa fa-check"></i>
+                        </span>
+                    </p>
+                </div>
+                <div style="border: 1px solid red; color: white; font-size: 14px; padding: 10px; margin-top: 10px;">
+                    <i style="margin-right: 5px; color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    You cannot view a booking without invoice.
+                    <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 5px;">
+                        Please add invoice to this booking.
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 10px;">
+                    <div onclick="start_edit_booking();" style="cursor: pointer; font-size: 14px; padding: 10px; border-radius: 4px; background-color: green; color: white; border: 1px solid rgba(255,255,255,0.2);">
+                        <i style="color: rgb(124, 240, 255); margin-right: 5px;" class="fa fa-pencil" aria-hidden="true"></i>
+                        Add Invoice
+                    </div>
+                    <div style="cursor: pointer; padding: 10px; color: white; font-size: 14px;">
+                        <i aria-hidden="true" class="fa fa-trash" style="margin-right: 5px; color:rgb(255, 53, 53);"></i>
+                        Delete Booking
+                    </div>
+                </div>
+            </div>
+        `;
+        return;
+    }
+     
     console.log("the invoice:", invoice)
     all_running_invoices = [];
     all_running_invoices.push(invoice);
@@ -921,7 +958,7 @@ async function render_search_booking_results_markup(booking) {
                         <i style="color:orange; margin-right: 5px;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                         PLEASE CHANGE BOOKING STATUS</p>
                     <p style="margin: 5px 0;">
-                        <select id="all_guests_search_status_change_select_0" style="padding: 10px; width: 100%; font-size: 14px;">
+                        <select id="search_booking_result_change_status_select_${booking._id}" style="padding: 10px; width: 100%; font-size: 14px;">
                             <option value="before-stay">reset for guest to checkin again</option>
                             <option value="after-stay">set to checkout</option>
                             <option value="no-show">set to "no show"</option>
@@ -929,7 +966,7 @@ async function render_search_booking_results_markup(booking) {
                             <!--option value="staying">guest checked in</option-->
                         </select>
                     </p>
-                    <div onclick="" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                    <div onclick="change_booking_status('${booking._id}','${localStorage.getItem("ANDSBZID")}','search_booking_results_page', 'search_booking_result_change_status_select_${booking._id}');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
                         save
                     </div>
                 </div> 
@@ -1122,6 +1159,20 @@ async function render_search_booking_results_markup(booking) {
             
         </div>
     `;
+}
+
+function change_booking_status(booking_id, brand_id, source="search_booking_results_page", input_elem_id){
+    let new_status = document.getElementById(input_elem_id);
+    $.ajax({
+        type: "GET",
+        url: `/cheap_hotel_change_booking_status/${brand_id}?ns=${new_status}&bk=${booking_id}`,
+        success: res => {
+            show_view_booking_div(booking_id, '');
+        },
+        error: err => {
+            console.log("change_booking_statu:", err)
+        }
+    });
 }
 
 function start_edit_booking() {

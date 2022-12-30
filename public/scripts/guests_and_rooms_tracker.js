@@ -267,6 +267,10 @@ function edit_booking_check_all_added_rooms_are_different(){
     return pass;
 }
 
+function edit_booking_check_if_booking_has_atleast_one_room(){
+    return current_edit_booking_object.rooms_and_guests.room_guests.length;
+}
+
 //Edit booking functions
 async function add_new_room_to_edit_booking(){
 
@@ -299,6 +303,14 @@ async function add_new_room_to_edit_booking(){
 }
 
 function remove_existing_room_from_edit_booking(i){
+
+    if(current_edit_booking_object.rooms_and_guests.room_guests.length===1){
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            Not Finished`, 
+            "Booking must have atleast one room", "warning");
+        return null;
+    }
 
     for(let g=0; g<current_edit_booking_object.rooms_and_guests.room_guests[i].guests.length; g++){
 
@@ -998,9 +1010,17 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
 
 async function save_updated_hotel_booking(){
 
+    if(!edit_booking_check_if_booking_has_atleast_one_room()){
+        show_prompt_to_user(`
+            <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            Not Finished`, 
+            "Please include at least one room", "warning");
+        return null;
+    }
+
     if(!edit_booking_check_all_added_rooms_are_different()){
         show_prompt_to_user(`
-            <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+            <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             Not Finished`, 
             "Please make sure each room is included only once", "warning");
         return null;
@@ -1008,7 +1028,7 @@ async function save_updated_hotel_booking(){
 
     if(!edit_booking_check_all_added_rooms_have_guest()){
         show_prompt_to_user(`
-            <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+            <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             Not Finished`, 
             "Please make sure all added rooms include at least one guest", "warning");
         return null;
@@ -1017,7 +1037,7 @@ async function save_updated_hotel_booking(){
     let is_good_to_go = await edit_booking_check_all_guest_inputs_added();
     if(!is_good_to_go){
         show_prompt_to_user(`
-            <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+            <i style="margin-right: 10px; font-size: 20px; color: yello2;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             Not Finished`, 
             "Please add all guest(s) information", "warning");
         return null;
@@ -1026,7 +1046,7 @@ async function save_updated_hotel_booking(){
     if(document.getElementById("edit_booking_guest_email_input").value === ""){
         if(!is_good_to_go){
             show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 Not Finished`, 
                 "Please add guest emial", "warning");
             return null;
@@ -1036,7 +1056,7 @@ async function save_updated_hotel_booking(){
     if(document.getElementById("edit_booking_guest_mobile_input").value === ""){
         if(!is_good_to_go){
             show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: rgb(0, 177, 139);" class="fa fa-check" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 Not Finished`, 
                 "Please add guest mobile", "warning");
             return null;
