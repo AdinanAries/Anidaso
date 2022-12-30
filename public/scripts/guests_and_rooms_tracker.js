@@ -646,9 +646,9 @@ function edit_booking_add_new_guest(guest_type, room_index){
         //console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_adults, added_adults.length)
         if(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_adults <= added_adults.length){
             show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Action Not Allowed`, 
-            "Room's adult capacitance reached");
+            "Room's adult capacitance reached", "warning");
             return null;
         }
 
@@ -713,9 +713,9 @@ function edit_booking_add_new_guest(guest_type, room_index){
         //console.log(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_children, added_children.length)
         if(current_edit_booking_object.rooms_and_guests.room_guests[room_index].total_children <= added_children.length){
             show_prompt_to_user(`
-                <i style="margin-right: 10px; font-size: 20px; color: orangered;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i style="margin-right: 10px; font-size: 20px; color: yellow;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                  Action Not Allowed`, 
-            "Room's child capacitance reached");
+            "Room's child capacitance reached", "warning");
             return null;
         }
 
