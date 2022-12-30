@@ -46,25 +46,23 @@ async function preprocess_bookings_rooms_and_guests(){
             total_children: room.guest_capacitance.children,
             guests: []
         });
+    }
 
-        for(let g=0; g<current_edit_booking_object.booking.guests.length; g++){
+    for(let g=0; g<current_edit_booking_object.booking.guests.length; g++){
 
-            let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), current_edit_booking_object.booking.property_id, current_edit_booking_object.booking.guests[g].id);
-            if(guest.assigned_room.room_id){
-                for(let k=0; k<current_edit_booking_object.rooms_and_guests.room_guests.length; k++){
-                    if(current_edit_booking_object.rooms_and_guests.room_guests[i].id === guest.assigned_room.room_id){
-                        current_edit_booking_object.rooms_and_guests.room_guests[i].guests.push(guest);
+        let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), current_edit_booking_object.booking.property_id, current_edit_booking_object.booking.guests[g].id);
+        if(guest.assigned_room.room_id){
+            for(let k=0; k<current_edit_booking_object.rooms_and_guests.room_guests.length; k++){
+                if(current_edit_booking_object.rooms_and_guests.room_guests[k].id === guest.assigned_room.room_id){
+                    current_edit_booking_object.rooms_and_guests.room_guests[k].guests.push(guest);
+                    if(guest.guest_type === "adult"){
+                        current_edit_booking_object.rooms_and_guests.booking_total_adults += 1;
+                    }else{
+                        current_edit_booking_object.rooms_and_guests.booking_total_children += 1;
                     }
                 }
             }
-    
-            if(guest.guest_type === "adult"){
-                current_edit_booking_object.rooms_and_guests.booking_total_adults += 1;
-            }else{
-                current_edit_booking_object.rooms_and_guests.booking_total_children += 1;
-            }
-        }
-
+        }    
     }
 
     console.log(current_edit_booking_object);
