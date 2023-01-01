@@ -37,7 +37,129 @@
 </head>
 <body>
     <div id="all_photos_container" style="display: none; z-index: 113;" class="page_pop_up_cover">
-
+        <div style="height: 100vh; background-color:rgb(5, 44, 59);">
+            <div style="background-color:rgb(0, 28, 54); display: flex; justify-content: space-between; align-items: center;">
+                <div class="wrapper" style="display: flex; width: 100%; justify-content: space-between;">
+                    <div class="site_logo_container" style="height: 40px;">
+                        <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <p><span>We</span>l<span>l</span>g<span>o</span><sup style="font-size: 12px;">®</sup></p>
+                        </div>
+                    </div>
+                    <div onclick="toggle_show_add_new_photo_div();" style="cursor: pointer; padding: 5px 10px; margin: 5px; margin-left: 20px; background:rgb(0, 77, 108); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-size: 13px;">
+                        <i class="fa fa-plus" style="margin-right: 5px; color:rgb(6, 205, 255)" aria-hidden="true"></i>
+                        Add New
+                    </div>
+                    <p onclick="$('#all_photos_container').toggle('up');" class="page_popup_close_btn" style="margin-right: 20px; margin-top: -6px;"><i aria-hidden="true" class="fa fa-times"></i></p>
+                </div>
+            </div>
+            <div style="height: calc(100% - 190px); position: relative; text-align: center; border:rgb(0, 179, 233) 1px solid;">
+                <div style="position: absolute; background-color: rgba(0,0,0,0.4); top: 0; left: 0; width: 100%;">
+                    <div style="padding: 10px;">
+                        <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                        <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    </div>
+                </div>
+                <img src="./images/Cairo.jpg" style="margin: auto; height: 100%; width: auto;" alt="" />
+            </div>
+            <div style="overflow: auto; display: flex; justify-content: center;">
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                        <div style="padding: 10px;">
+                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="mobile_menu_div" style="display: none; z-index: 10;" class="page_pop_up_cover">
         <div class="page_popup_content_container" style="overflow: hidden; background-color: rgba(0, 0, 0, 0.863);">
@@ -2214,7 +2336,7 @@
           <img id="full_page_picture_viewer_img"  src="" alt=""/>
         </div>
     </div>
-    <div id="add_new_photo_div" style="display: none; z-index: 11;" class="page_pop_up_cover">
+    <div id="add_new_photo_div" style="display: none; z-index: 114;" class="page_pop_up_cover">
         <div style="padding: 10px; width: calc(100% - 30px); max-width: 700px; margin: auto; border-radius: 4px; background-color: white;">
             <p style="color:rgb(5, 44, 59); font-weight: bolder; text-align: center; font-size: 14px; margin: 10px 0;">
                 Upload new photo</p>

@@ -1252,6 +1252,7 @@ function show_guests_invoice_div() {
 }
 
 async function view_each_guest_running_bill(index) {
+    let seen_invc_items=[];
     if(document.getElementById("guests_invoice_div").style.display==="none")
         show_guests_invoice_div();
     console.log(all_running_invoices);
@@ -1343,15 +1344,16 @@ async function view_each_guest_running_bill(index) {
         document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML += `
             <div id="invoice_items_each_guest_container_${i}_${index}">
                 <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px;">
-                    <span style="font-size: 13px; color: rgba(255,255,255,0.5);">
+                    <span style="display: none; font-size: 13px; color: rgba(255,255,255,0.5);">
                         Guest ${i + 1}</span>
+                    <span style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
+                        ${guest.first_name} ${guest.last_name}
+                    </span>
                     <span onclick="delete_guest_from_current_invoice('${window.localStorage.getItem("ANDSBZID")}', '${running_invoice._id}', ${i}, ${index});view_each_guest_running_bill(${index});//document.getElementById('invoice_items_each_guest_container_${i}_${index}').style.display='none';" style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
                         <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
                         Remove Guest
                     </span>
                 </p>
-                <p style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
-                    ${guest.first_name} ${guest.last_name}</p>
                 <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
                     ${guest.gender}, ${calculateAge(guest.DOB)}yrs</p>
                 <div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
@@ -1378,19 +1380,48 @@ async function view_each_guest_running_bill(index) {
         `;
 
         for (let k = 0; k < running_invoice.invoice_items[i].guest_items.length; k++) {
+            
+            let price = running_invoice.invoice_items[i].guest_items[k].price;
+            let name = running_invoice.invoice_items[i].guest_items[k].name;
+            let quantity = running_invoice.invoice_items[i].guest_items[k].quantity;
+            let total = running_invoice.invoice_items[i].guest_items[k].total
+
+            //Styles
+            backgroundColor='background-color: rgba(0, 0, 0, 0.4);';
+            textColor='color: white;';
+            
+            let found=false;
+            seen_invc_items.forEach(each=>{
+                if(each.name===name&&each.price===price){
+                    found=true;
+                }
+            });
+            if(found){
+                name=`<i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orange;"></i>${name} (included)`;
+                price='-';;
+                quantity='-';
+                total='-';
+
+                //Styles
+                backgroundColor='background-color: rgba(0, 0, 0, 0.2);';
+                textColor='color: rgba(255,255,255,0.5);';
+            }
+
+            seen_invc_items.push(running_invoice.invoice_items[i].guest_items[k]);
+
             document.getElementById(`each_guest_invoice_items_list_${i}`).innerHTML += `
                 <tr>
-                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                        ${running_invoice.invoice_items[i].guest_items[k].name}
+                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                        ${name}
                     </td>
-                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                        ${running_invoice.invoice_items[i].guest_items[k].quantity}
+                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                        ${quantity}
                     </td>
-                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                        ${running_invoice.invoice_items[i].guest_items[k].price}
+                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                        ${price}
                     </td>
-                    <td style="font-size: 13px; color: white; padding: 5px; background-color: rgba(0, 0, 0, 0.4); border-radius: 4px;">
-                        ${running_invoice.invoice_items[i].guest_items[k].total}
+                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                        ${total}
                     </td>
                 </tr>
             `;
