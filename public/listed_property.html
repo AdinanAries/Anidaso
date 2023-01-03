@@ -36,10 +36,10 @@
     <link href="./styles/listed_properties_styles.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <div id="all_photos_container" style="display: none; z-index: 113;" class="page_pop_up_cover">
-        <div style="height: 100vh; background-color:rgb(5, 44, 59);">
+    <div id="all_photos_container" style="display: none; z-index: 113; width: calc(100vw - 18px);" class="page_pop_up_cover">
+        <div style="height: 100vh; overflow-y: auto; background-color:rgb(5, 44, 59);">
             <div style="background-color:rgb(0, 28, 54); display: flex; justify-content: space-between; align-items: center;">
-                <div class="wrapper" style="display: flex; width: 100%; justify-content: space-between;">
+                <div class="wrapper" style="display: flex; width: 100%; padding: 0 10px; justify-content: space-between;">
                     <div class="site_logo_container" style="height: 40px;">
                         <div style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
                         <p><span>We</span>l<span>l</span>g<span>o</span><sup style="font-size: 12px;">®</sup></p>
@@ -49,10 +49,9 @@
                         <i class="fa fa-plus" style="margin-right: 5px; color:rgb(6, 205, 255)" aria-hidden="true"></i>
                         Add New
                     </div>
-                    <p onclick="$('#all_photos_container').toggle('up');" class="page_popup_close_btn" style="margin-right: 20px; margin-top: -6px;"><i aria-hidden="true" class="fa fa-times"></i></p>
                 </div>
             </div>
-            <div style="height: calc(100% - 190px); position: relative; text-align: center; border:rgb(0, 179, 233) 1px solid;">
+            <div style="height: calc(100% - 212px); position: relative; text-align: center; border:rgb(0, 179, 233) 1px solid;">
                 <div style="position: absolute; background-color: rgba(0,0,0,0.4); top: 0; left: 0; width: 100%;">
                     <div style="padding: 10px;">
                         <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
@@ -60,101 +59,225 @@
                     </div>
                 </div>
                 <img src="./images/Cairo.jpg" style="margin: auto; height: 100%; width: auto;" alt="" />
+                <p onclick="$('#all_photos_container').toggle('up');" class="page_popup_close_btn" style="padding: 10px; margin-right: 5px; margin-top: 5px; border: 1px solid red; border-radius: 4px; background-color: rgba(255, 0, 0, 0.208);">
+                    <i aria-hidden="true" class="fa fa-times"></i></p>
             </div>
-            <div style="overflow: auto; display: flex; justify-content: center;">
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+            <div style="display: flex; justify-content: center;">
+                <div style="overflow: auto; display: flex;">
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgba(255,255,255,0.1); background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                    <div style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
-                        <div style="padding: 10px;">
-                            <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
-                            <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                    <div class="hidden_overlay-parent" style="cursor: pointer; position: relative; min-width: 150px; height: 150px; border: 1px solid rgb(0, 179, 233); border-top: none; border-right: none; background-image: url('./images/AccraGhana.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                        <div class="hidden_overlay aflex" style="position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                                <p style="color: red; font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </p>
+                                <p style="color:rgb(112, 222, 255); font-size: 13px; background-color: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px;">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden_overlay" style="position: absolute; background-color: rgba(0,0,0,0.8); bottom: 0; left: 0; width: 100%;">
+                            <div style="padding: 10px;">
+                                <p style="color:rgb(112, 222, 255); font-size: 13px;">Picture Title Here</p>
+                                <p style="color:rgb(255, 232, 232); font-size: 13px;">23-03-1992</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3297,7 +3420,7 @@
                 <div style="display: flex; flex-direction: row !important; justify-content: space-between; position: relative;">
                     <div style="width: calc(50% - 5px); border: none; border-radius: 4px; border: rgb(5, 44, 59) 1px solid; background-color: rgba(255,255,255,0.7);">
                         <i style="margin-left: 10px;" class="fa fa-calendar" aria-hidden="true"></i>
-                        <input id="all_bookings_date_range_input" readonly="true" style="width: calc(100% - 60px); border: none; cursor: pointer; font-size: 13px; background: none; font-weight: bolder; padding: 10px;" value="" type="text" />
+                        <input id="all_bookings_date_range_input" readonly="true" style="width: calc(100% - 60px); border: none; cursor: pointer; font-size: 13px; background: none; padding: 10px;" value="" type="text" />
                     </div>
                     <div style="width: 50%; display: flex;">
                         <div style="background-color: rgb(177, 208, 255); border-radius: 4px; width: calc(100% - 60px);">
@@ -3316,7 +3439,7 @@
                                 <i style="margin-right: 5px; color: orangered;" class="fa fa-user" aria-hidden="true"></i>
                                 Enter Guest Name</p>
                             <div style="border: none; border-radius: 4px; border: rgb(5, 44, 59) 1px solid; display: flex;">
-                                <input id="" style="width: calc(100% - 105px); border-radius: 4px; border: none; font-size: 13px; background-color: rgba(255,255,255,0.2); color: white; font-weight: bolder; padding: 10px;" value="" type="text" />
+                                <input id="" style="width: calc(100% - 105px); border-radius: 4px; border: none; font-size: 13px; background-color: rgba(255,255,255,0.2); color: white; padding: 10px;" placeholder="enter name here" value="" type="text" />
                                 <div style="display: flex; overflow: hidden;  width: 105px;">
                                     <div style="width: 50%; font-size: 13px; cursor: pointer; border-radius: 4px; margin-right: 3px; margin-left: 2px; text-align: center; padding: 10px; background-color:rgb(0, 124, 83); color: white;">
                                         <i class="fa fa-search" aria-hidden="true"></i>

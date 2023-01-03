@@ -20,6 +20,15 @@ header{
   left: 0;
   z-index: 9;
 }
+.hidden_overlay{
+  display: none;
+}
+.hidden_overlay-parent:hover .hidden_overlay._flex{
+  display: flex !important;
+}
+.hidden_overlay-parent:hover .hidden_overlay{
+  display: block;
+}
 body{
   padding-top: 70px;
 }
