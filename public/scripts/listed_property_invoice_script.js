@@ -82,10 +82,20 @@ function fix_invoice_remove_unwanted_guest(brand_id, invoice_id){
     });
 }
 
-async function delete_guest_from_current_invoice(brand_id, invoice_id, guest_index, invoice_index){
+async function delete_guest_from_current_invoice(brand_id, invoice_id, guest_index, invoice_index, source=""){
     running_invoice = all_running_invoices[invoice_index];
-    running_invoice.invoice_items.splice(guest_index,1);
-    let res = await post_update_current_invoice(brand_id, invoice_id);
+    //Deleting guest from booking
+    let guest_id=running_invoice.invoice_items[guest_index].guest_id;
+    let booking_id=running_invoice.bookings[0];
+    let res_bk=await deleteGuestFromBooking(brand_id, booking_id, guest_id);
+    //Deleting guest from invoice
+    if(res_bk){
+        running_invoice.invoice_items.splice(guest_index,1);
+        let res = await post_update_current_invoice(brand_id, invoice_id);
+        if(source="invoice_div"){
+            view_each_guest_running_bill(invoice_index);
+        }
+    }
 }
 
 function post_update_current_invoice(brand_id, invoice_id){

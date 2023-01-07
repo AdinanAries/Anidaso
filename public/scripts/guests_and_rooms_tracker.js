@@ -694,7 +694,24 @@ function edit_booking_add_new_guest(guest_type, room_index){
                         </select>
                     </div>
                 </div>
-                
+                <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin: 15px 0;">
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                        SELECT STATUS</p>
+                    <p style="color: white; font-size: 13px; margin-bottom: 5px;">
+                        <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
+                        Please note that it is important to select appropriate status for this guest</p>
+                    <p style="margin: 5px 0;">
+                        <select id="all_guests_search_status_change_select_${room_index}_${guest_index}" style="padding: 10px; width: 100%; font-size: 14px;">
+                            <option value="booked">booked</option>    
+                            <option value="staying">staying</option>
+                            <option value="not_staying">not staying</option>
+                            <option value="unbooked">unbooked</option>
+                        </select>
+                    </p>
+                    <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                        save
+                    </div-->
+                </div>
             </div>
         `;
 
@@ -760,6 +777,24 @@ function edit_booking_add_new_guest(guest_type, room_index){
                             <option value="Female">Female</option>
                         </select>
                     </div>
+                </div>
+                <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin: 15px 0;">
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                        SELECT STATUS</p>
+                    <p style="color: white; font-size: 13px; margin-bottom: 5px;">
+                        <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
+                        Please note that it is important to select appropriate status for this guest</p>
+                    <p style="margin: 5px 0;">
+                        <select id="all_guests_search_status_change_select_${room_index}_${guest_index}" style="padding: 10px; width: 100%; font-size: 14px;">
+                            <option value="booked">booked</option>    
+                            <option value="staying">staying</option>
+                            <option value="not_staying">not staying</option>
+                            <option value="unbooked">unbooked</option>
+                        </select>
+                    </p>
+                    <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                        save
+                    </div-->
                 </div>
             </div>
         `;

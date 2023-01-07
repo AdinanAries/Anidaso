@@ -950,6 +950,24 @@ document.getElementById("logged_in_hotel_add_new_photo_cancel_btn").addEventList
     }
 });
 
+function deleteGuestFromBooking(brand_id, booking_id, guest_id){
+    return $.ajax({
+        type: "POST",
+        url: "/delete_guest_from_booking",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({brand_id,booking_id,guest_id}),
+        success: res => {
+            console.log(res);
+            return res;
+        },
+        error: err => {
+            console.log(err);
+            return 0;
+        }
+    });
+}
+
 //guest manager
 var add_or_edit_guest_current_age;
 var add_or_edit_guest_DOB = "";

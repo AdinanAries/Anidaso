@@ -1338,95 +1338,125 @@ async function view_each_guest_running_bill(index) {
     document.getElementById("guests_invoices_date_created").innerText = change_iso_date_to_readable_format(running_invoice.date_created);
     
     for (let i = 0; i < running_invoice.invoice_items.length; i++) {
+        
+        if(running_invoice.invoice_items[i]){
+            let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), running_invoice.property_id, running_invoice.invoice_items[i].guest_id);
 
-        let guest = await get_and_return_hotel_guest_by_id(window.localStorage.getItem("ANDSBZID"), running_invoice.property_id, running_invoice.invoice_items[i].guest_id);
-
-        document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML += `
-            <div id="invoice_items_each_guest_container_${i}_${index}">
-                <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px;">
-                    <span style="display: none; font-size: 13px; color: rgba(255,255,255,0.5);">
-                        Guest ${i + 1}</span>
-                    <span style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
-                        ${guest.first_name} ${guest.last_name}
-                    </span>
-                    <span onclick="delete_guest_from_current_invoice('${window.localStorage.getItem("ANDSBZID")}', '${running_invoice._id}', ${i}, ${index});view_each_guest_running_bill(${index});//document.getElementById('invoice_items_each_guest_container_${i}_${index}').style.display='none';" style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
-                        <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
-                        Remove Guest
-                    </span>
-                </p>
-                <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
-                    ${guest.gender}, ${calculateAge(guest.DOB)}yrs</p>
-                <div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
-                    <table style="width: 100%; border-spacing: 5px;">
-                        <tbody id="each_guest_invoice_items_list_${i}">
-                            <tr>
-                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                    Item
-                                </td>
-                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                    Quantity
-                                </td>
-                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                    Unit Cost
-                                </td>
-                                <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
-                                    Total
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            document.getElementById("guests_invoice_div_all_guests_items_list").innerHTML += `
+                <div id="invoice_items_each_guest_container_${i}_${index}">
+                    <p style="display: flex; flex-direction: row !important; justify-content: space-between; margin-top: 15px; margin-bottom: 5px;">
+                        <span style="display: none; font-size: 13px; color: rgba(255,255,255,0.5);">
+                            Guest ${i + 1}</span>
+                        <span style=" margin-left: 10px; font-weight: bolder; font-size: 13px; color:rgb(82, 177, 255);">
+                            ${guest.first_name} ${guest.last_name}
+                        </span>
+                        <span onclick="delete_guest_from_current_invoice('${window.localStorage.getItem("ANDSBZID")}', '${running_invoice._id}', ${i}, ${index}, 'invoice_div');//view_each_guest_running_bill(${index});//document.getElementById('invoice_items_each_guest_container_${i}_${index}').style.display='none';" style="cursor: pointer; font-size: 14px; color:rgb(255, 79, 79); margin-left: 20px; font-weight: in;">
+                            <i style="margin-right: 5px; color: crimson;" class="fa fa-trash" aria-hidden="true"></i>
+                            Remove Guest
+                        </span>
+                    </p>
+                    <p style=" margin-left: 10px; font-size: 13px; color:rgb(157, 211, 255);">
+                        ${guest.gender}, ${calculateAge(guest.DOB)}yrs</p>
+                    <div style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                        <table style="width: 100%; border-spacing: 5px;">
+                            <tbody id="each_guest_invoice_items_list_${i}">
+                                <tr>
+                                    <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Item
+                                    </td>
+                                    <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Quantity
+                                    </td>
+                                    <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Unit Cost
+                                    </td>
+                                    <td style="font-size: 13px; color: rgba(255,255,255,0.5); padding: 5px; border-bottom: 2px solid rgb(255, 165, 62);">
+                                        Total
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        `;
-
-        for (let k = 0; k < running_invoice.invoice_items[i].guest_items.length; k++) {
+            `;
             
-            let price = running_invoice.invoice_items[i].guest_items[k].price;
-            let name = running_invoice.invoice_items[i].guest_items[k].name;
-            let quantity = running_invoice.invoice_items[i].guest_items[k].quantity;
-            let total = running_invoice.invoice_items[i].guest_items[k].total
-
-            //Styles
-            backgroundColor='background-color: rgba(0, 0, 0, 0.4);';
-            textColor='color: white;';
-            
-            let found=false;
-            seen_invc_items.forEach(each=>{
-                if(each.name===name&&each.price===price){
-                    found=true;
-                }
-            });
-            if(found){
-                name=`<i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orange;"></i>${name} (included)`;
-                price='-';;
-                quantity='-';
-                total='-';
+            for (let k = 0; k < running_invoice.invoice_items[i].guest_items.length; k++) {
+                
+                let price = running_invoice.invoice_items[i].guest_items[k].price;
+                let name_only=running_invoice.invoice_items[i].guest_items[k].name;
+                let name = `
+                    <i class="fa fa-trash" style="color: red; margin-right: 10px; cursor: pointer;" aria-hidden="true"></i>
+                    <i onclick="$('#each_guest_invoice_item_edt_form_${i}_${k}').toggle('up');$('#each_guest_invoice_item_dsp_${i}_${k}').toggle('up');" class="fa fa-pencil" style="color: lightgreen; margin-right: 10px; cursor: pointer;" aria-hidden="true"></i>
+                    ${running_invoice.invoice_items[i].guest_items[k].name}`;
+                let quantity = running_invoice.invoice_items[i].guest_items[k].quantity;
+                let total = running_invoice.invoice_items[i].guest_items[k].total
 
                 //Styles
-                backgroundColor='background-color: rgba(0, 0, 0, 0.2);';
-                textColor='color: rgba(255,255,255,0.5);';
+                backgroundColor='background-color: rgba(0, 0, 0, 0.4);';
+                textColor='color: white;';
+                
+                let found=false;
+                seen_invc_items.forEach(each=>{
+                    if(each.name===name_only&&each.price===price){
+                        found=true;
+                    }
+                });
+                if(found){
+                    name=`<i class="fa fa-exclamation-triangle" style="margin-right: 5px; color: orange;"></i>${name} (included)`;
+                    price='-';;
+                    quantity='-';
+                    total='-';
+
+                    //Styles
+                    backgroundColor='background-color: rgba(0, 0, 0, 0.2);';
+                    textColor='color: rgba(255,255,255,0.5);';
+                }
+
+                seen_invc_items.push(running_invoice.invoice_items[i].guest_items[k]);
+
+                document.getElementById(`each_guest_invoice_items_list_${i}`).innerHTML += `
+                    <tr id="each_guest_invoice_item_dsp_${i}_${k}">
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            ${name}
+                        </td>
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            ${quantity}
+                        </td>
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            ${price}
+                        </td>
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            ${total}
+                        </td>
+                    </tr>
+                    <tr style="display: none;" id="each_guest_invoice_item_edt_form_${i}_${k}">
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            <input style="background: none; border: 1px solid rgba(255,255,255,0.1); width: calc(100% - 10px); color: white; padding: 5px; font-size: 14px;"
+                                type="text" value="${name_only}" />
+                        </td>
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            <input style="background: none; border: 1px solid rgba(255,255,255,0.1); width: calc(100% - 10px); color: white; padding: 5px; font-size: 14px;"
+                                type="number" value="${quantity}" />
+                        </td>
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            <input style="background: none; border: 1px solid rgba(255,255,255,0.1); width: calc(100% - 10px); color: white; padding: 5px; font-size: 14px;"
+                                type="number" value="${price}" />
+                        </td>
+                        <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
+                            <input style="background: none; border: 1px solid rgba(255,255,255,0.1); width: calc(100% - 10px); color: white; padding: 5px; font-size: 14px;"
+                                type="number" readonly value="${total}" />
+                        </td>
+                        <td style="font-size: 13px; padding: 5px 15px; color: white; background-color: darkslateblue; border-radius: 4px; cursor: pointer;">
+                            Save
+                        </td>
+                        <td style="font-size: 13px; padding: 5px; color: white; background-color: crimson; border-radius: 4px; cursor: pointer;">
+                            cancel
+                        </td>
+                    </tr>
+                `;
             }
-
-            seen_invc_items.push(running_invoice.invoice_items[i].guest_items[k]);
-
-            document.getElementById(`each_guest_invoice_items_list_${i}`).innerHTML += `
-                <tr>
-                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
-                        ${name}
-                    </td>
-                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
-                        ${quantity}
-                    </td>
-                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
-                        ${price}
-                    </td>
-                    <td style="font-size: 13px; ${textColor} padding: 5px; ${backgroundColor} border-radius: 4px;">
-                        ${total}
-                    </td>
-                </tr>
-            `;
+            
         }
-
     }
 }
 

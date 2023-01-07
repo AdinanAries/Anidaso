@@ -1428,6 +1428,29 @@ app.get("/reset_cheap_hotel_guest_status/:brand_id/:guest_id", async (req, res, 
   
 });
 
+app.post("/delete_guest_from_booking/", async(req,res,next)=>{
+  try{
+    let brand_id=req.body.brand_id;
+    let booking_id=req.body.booking_id;
+    let guest_id=req.body.guest_id;
+
+    let booking=await cheap_hotel_booking.findOne({
+      hotel_brand_id: brand_id,
+      _id:booking_id,
+    });
+
+    if(booking){
+      booking.guests=booking.guests.filter(each=>each.id!==guest_id);
+      let updted_booking = await new cheap_hotel_booking(booking);
+      let saved_booking = await updted_booking.save();
+    }
+
+    res.send(booking);
+  }catch(e){
+    console.log(e);
+    res.send({})
+  }
+});
 //booking a room
 app.post("/book_a_cheap_room/", async (req, res, next) => {
 
@@ -2821,6 +2844,7 @@ app.post("/add_new_cheap_hotel_guest/", async (req, res, next)=> {
   let new_guest = await new cheap_hotel_guest({
     hotel_brand_id: req.body.hotel_brand_id,
     property_id: req.body.property_id,
+    properties: [req.body.property_id],
     profile_pic: req.body.profile_pic,
     first_name: req.body.first_name,
     last_name: req.body.last_name,

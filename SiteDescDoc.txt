@@ -9,3 +9,11 @@ like -> ads on the site.
 New Business model.
 1. build anidaso platform to find cheap hotels
 2. then build reservation system for the individual hotels based on a template.
+
+New Business Workflow
+1. A person goes to hotel providers and tells them he can help them sell their rooms
+2. Person creates account on Wellgo
+3. Person creates a Property on Wellgo
+4. Person adds Property rooms on Wellgo
+5. Person sells Rooms on Wellgo
+6. Person recieves commission from Hotels
