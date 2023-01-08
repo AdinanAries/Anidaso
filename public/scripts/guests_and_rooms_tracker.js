@@ -112,7 +112,33 @@ async function prepare_edit_booking_post_object_for_db(){
 
             //creating guest records in DB
             if(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id){
+                console.log('current guest: ', current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]);
                 //update guest here
+                let first_name=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].first_name;
+                let last_name=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].last_name;
+                let email=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].email;
+                let mobile=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].mobile;
+                let guest_id=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id;
+                let hotel_brand_id=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].hotel_brand_id;
+                let profile_pic=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].profile_pic;
+                let property_id=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].property_id;
+                let guest_type=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].guest_type;
+                let DOB=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].DOB;
+                let gender=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].gender;
+                let price_paid=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].price_paid;
+                let status=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].status;
+                let booking_id=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].assigned_room.booking_id;
+                let room_id=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].assigned_room.room_id;
+                let room_number=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].assigned_room.room_number;
+                let city=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].home_address.city;
+                let country=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].home_address.country;
+                let street_address=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].home_address.street_address;
+                let town=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].home_address.town;
+                let zipcode=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].home_address.zipcode;
+
+                edit_existing_guest_record(guest_id, hotel_brand_id, property_id, profile_pic, first_name, last_name,
+                    guest_type, DOB, gender, email, mobile, price_paid, status, booking_id, 
+                    room_id, room_number, street_address, city, town, country, zipcode);
             }else{
                 let new_guest_rec = await create_guest_record_in_DB(current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]);
                 current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id = new_guest_rec._id;
@@ -500,6 +526,38 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
         let child_number = 0;
         let dt_g = 0;
         for(let g=0; g<rooms[i].guests.length; g++){
+
+            rooms[i].guests[g].status='booked';
+            let chng_booking_status_select_markup=`
+                <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                    <option value="booked">booked</option>    
+                    <option value="staying">staying</option>
+                    <option value="not_staying">not staying</option>
+                    <option value="unbooked">unbooked</option>
+                </select>
+            `;
+            if(current_edit_booking_object.booking?.booking_status==="staying"){//staying, before-stay, after-stay, no-show, cancelled
+                rooms[i].guests[g].status='staying';
+                chng_booking_status_select_markup=`
+                    <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                        <option value="staying">staying</option>
+                        <option value="booked">booked</option>
+                        <option value="not_staying">not staying</option>
+                        <option value="unbooked">unbooked</option>
+                    </select>
+                `;
+            }else if(current_edit_booking_object.booking?.booking_status==="after-stay"){
+                rooms[i].guests[g].status='not_staying';
+                chng_booking_status_select_markup=`
+                    <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                        <option value="not_staying">checked out</option>
+                        <option value="staying">staying</option>
+                        <option value="booked">booked</option>
+                        <option value="unbooked">unbooked</option>
+                    </select>
+                `;
+            }
+
             if(rooms[i].guests[g].guest_type === "adult"){
 
                 document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML += `
@@ -537,6 +595,19 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                                     </select>
                                 </div>
                             </div>
+                            <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin-top: 10px;">
+                                <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                                    SELECT STATUS</p>
+                                <p style="color: white; font-size: 13px; margin-bottom: 5px;">
+                                    <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
+                                    Please note that it is important to select appropriate status for this guest</p>
+                                <p style="margin: 5px 0;">
+                                    ${chng_booking_status_select_markup}
+                                </p>
+                                <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                                    save
+                                </div-->
+                            </div>
                         </div>
                     </div>
                 `;
@@ -555,7 +626,7 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                         <div style="background-color: yellow; padding: 5px 10px; text-align: center;">
                             <p style="font-size: 14px;" >
                                 <i onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="cursor: pointer; color: brown; margin-right: 15px;" class="fa fa-trash" aria-hidden="true"></i>
-                                remove ${rooms[i].guests[g].first_name}, ${rooms[i].number}
+                                ${rooms[i].guests[g].first_name}, ${rooms[i].number}
                             </p>
                         </div>
                         <div style="padding: 5px;">
@@ -582,6 +653,19 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
                                         <option value="Female">Female</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin-top: 10px;">
+                                <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                                    SELECT STATUS</p>
+                                <p style="color: white; font-size: 13px; margin-bottom: 5px;">
+                                    <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
+                                    Please note that it is important to select appropriate status for this guest</p>
+                                <p style="margin: 5px 0;">
+                                    ${chng_booking_status_select_markup}
+                                </p>
+                                <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                                    save
+                                </div-->
                             </div>
                         </div>
                         <!--div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="padding: 10px; border-radius: 4px; cursor: pointer; margin-top: 10px;">
@@ -641,6 +725,37 @@ function edit_booking_add_new_guest(guest_type, room_index){
     //let room_index = (current_edit_booking_object.rooms_and_guests.room_guests.length - 1);
     let guest_index = current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.length
 
+    let guest_status_value='booked';
+    let chng_booking_status_select_markup=`
+        <select id="edit_booking_set_guest_status_select_${room_index}_${guest_index}" style="padding: 10px; width: 100%; font-size: 14px;">
+            <option value="booked">booked</option>    
+            <option value="staying">staying</option>
+            <option value="not_staying">not staying</option>
+            <option value="unbooked">unbooked</option>
+        </select>
+    `;
+    if(current_edit_booking_object.booking?.booking_status==="staying"){//staying, before-stay, after-stay, no-show, cancelled
+        guest_status_value='staying';
+        chng_booking_status_select_markup=`
+            <select id="edit_booking_set_guest_status_select_${room_index}_${guest_index}" style="padding: 10px; width: 100%; font-size: 14px;">
+                <option value="staying">staying</option>
+                <option value="booked">booked</option>
+                <option value="not_staying">not staying</option>
+                <option value="unbooked">unbooked</option>
+            </select>
+        `;
+    }else if(current_edit_booking_object.booking?.booking_status==="after-stay"){
+        guest_status_value='not_staying';
+        chng_booking_status_select_markup=`
+            <select id="edit_booking_set_guest_status_select_${room_index}_${guest_index}" style="padding: 10px; width: 100%; font-size: 14px;">
+                <option value="not_staying">checked out</option>
+                <option value="staying">staying</option>
+                <option value="booked">booked</option>
+                <option value="unbooked">unbooked</option>
+            </select>
+        `;
+    }
+
     if(guest_type === "adult"){
 
         let added_adults = current_edit_booking_object.rooms_and_guests.room_guests[room_index].guests.filter( guest => {
@@ -658,7 +773,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
 
         let new_guest = return_new_hotel_guest_obj(window.localStorage.getItem("ANDSBZID"), document.getElementById(`edit_booking_properties_select_${room_index}`).value,
         ''/*profile_pic*/, ''/*first_name*/, ''/*last_name*/, 'adult', ''/*DOB*/, 'Male'/*gender*/, 
-        ''/*email*/, ''/*mobile*/, ''/*price_paid*/, 'booked'/*status*/, current_edit_booking_object.booking._id, 
+        ''/*email*/, ''/*mobile*/, ''/*price_paid*/, guest_status_value/*'booked'status*/, current_edit_booking_object.booking._id, 
         document.getElementById(`edit_booking_rooms_select_${room_index}`).value/*room_id*/, 
         current_edit_booking_object.rooms_and_guests.room_guests[room_index].number/*room_number*/,
         ''/*street_address*/, ''/*city*/, ''/*town*/, ''/*country*/, ''/*zipcode*/);
@@ -706,12 +821,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
                             <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
                             Please note that it is important to select appropriate status for this guest</p>
                         <p style="margin: 5px 0;">
-                            <select id="all_guests_search_status_change_select_${room_index}_${guest_index}" style="padding: 10px; width: 100%; font-size: 14px;">
-                                <option value="booked">booked</option>    
-                                <option value="staying">staying</option>
-                                <option value="not_staying">not staying</option>
-                                <option value="unbooked">unbooked</option>
-                            </select>
+                            ${chng_booking_status_select_markup}
                         </p>
                         <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
                             save
@@ -744,7 +854,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
 
         let new_guest = return_new_hotel_guest_obj(window.localStorage.getItem("ANDSBZID"), document.getElementById(`edit_booking_properties_select_${room_index}`).value,
         ''/*profile_pic*/, ''/*first_name*/, ''/*last_name*/, 'child', ''/*DOB*/, 'Male'/*gender*/, 
-        ''/*email*/, ''/*mobile*/, ''/*price_paid*/, 'booked'/*status*/, current_edit_booking_object.booking._id, 
+        ''/*email*/, ''/*mobile*/, ''/*price_paid*/, guest_status_value/*'booked'status*/, current_edit_booking_object.booking._id, 
         document.getElementById(`edit_booking_rooms_select_${room_index}`).value/*room_id*/, 
         current_edit_booking_object.rooms_and_guests.room_guests[room_index].number/*room_number*/,
         ''/*street_address*/, ''/*city*/, ''/*town*/, ''/*country*/, ''/*zipcode*/);
@@ -792,12 +902,7 @@ function edit_booking_add_new_guest(guest_type, room_index){
                             <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
                             Please note that it is important to select appropriate status for this guest</p>
                         <p style="margin: 5px 0;">
-                            <select id="all_guests_search_status_change_select_${room_index}_${guest_index}" style="padding: 10px; width: 100%; font-size: 14px;">
-                                <option value="booked">booked</option>    
-                                <option value="staying">staying</option>
-                                <option value="not_staying">not staying</option>
-                                <option value="unbooked">unbooked</option>
-                            </select>
+                            ${chng_booking_status_select_markup}
                         </p>
                         <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
                             save

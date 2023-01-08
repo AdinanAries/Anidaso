@@ -2880,8 +2880,8 @@ app.post("/edit_existing_cheap_hotel_guest/:guest_id", async (req, res, next)=> 
   the_guest.gender = req.body.gender;
   the_guest.email = req.body.email;
   the_guest.mobile = req.body.mobile;
-  /*the_guest.price_paid = req.body.price_paid;
   the_guest.status = req.body.status;
+  /*the_guest.price_paid = req.body.price_paid;
   the_guest.assigned_room = req.body.assigned_room;*/
   the_guest.home_address = req.body.home_address;
 
