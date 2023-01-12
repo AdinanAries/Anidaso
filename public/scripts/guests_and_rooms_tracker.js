@@ -464,6 +464,14 @@ async function edit_booking_render_new_room_markup(skip_rooms, skip_properties, 
     
 }
 
+function edit_booking_change_guest_status(room_index, guest_index){
+    let status=document.getElementById(`edit_booking_set_guest_status_select_${room_index}_${guest_index}`).value;
+    current_edit_booking_object
+    .rooms_and_guests
+    .room_guests[room_index]
+    .guests[guest_index].status = status;
+}
+
 async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_properties, rooms){
 
     document.getElementById("edit_booking_rooms_and_guestslist").innerHTML = "";
@@ -529,7 +537,8 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
 
             rooms[i].guests[g].status='booked';
             let chng_booking_status_select_markup=`
-                <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                <select id="edit_booking_set_guest_status_select_${i}_${g}"
+                        onchange="edit_booking_change_guest_status(${i}, ${g});" style="padding: 10px; width: 100%; font-size: 14px;">
                     <option value="booked">booked</option>    
                     <option value="staying">staying</option>
                     <option value="not_staying">not staying</option>
@@ -539,7 +548,8 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
             if(current_edit_booking_object.booking?.booking_status==="staying"){//staying, before-stay, after-stay, no-show, cancelled
                 rooms[i].guests[g].status='staying';
                 chng_booking_status_select_markup=`
-                    <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                    <select id="edit_booking_set_guest_status_select_${i}_${g}"
+                            onchange="edit_booking_change_guest_status(${i}, ${g});" style="padding: 10px; width: 100%; font-size: 14px;">
                         <option value="staying">staying</option>
                         <option value="booked">booked</option>
                         <option value="not_staying">not staying</option>
@@ -549,7 +559,8 @@ async function edit_booking_render_initial_rooms_markup(skip_rooms, skip_propert
             }else if(current_edit_booking_object.booking?.booking_status==="after-stay"){
                 rooms[i].guests[g].status='not_staying';
                 chng_booking_status_select_markup=`
-                    <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                    <select id="edit_booking_set_guest_status_select_${i}_${g}"
+                            onchange="edit_booking_change_guest_status(${i}, ${g});" style="padding: 10px; width: 100%; font-size: 14px;">
                         <option value="not_staying">checked out</option>
                         <option value="staying">staying</option>
                         <option value="booked">booked</option>
