@@ -1046,40 +1046,92 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                 continue;
             }
 
+            let guest_status_value='booked';
+            let chng_booking_status_select_markup=`
+                <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                    <option value="booked">booked</option>    
+                    <option value="staying">staying</option>
+                    <option value="not_staying">not staying</option>
+                    <option value="unbooked">unbooked</option>
+                </select>
+            `;
+            if(current_edit_booking_object.booking?.booking_status==="staying"){//staying, before-stay, after-stay, no-show, cancelled
+                guest_status_value='staying';
+                chng_booking_status_select_markup=`
+                    <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                        <option value="staying">staying</option>
+                        <option value="booked">booked</option>
+                        <option value="not_staying">not staying</option>
+                        <option value="unbooked">unbooked</option>
+                    </select>
+                `;
+            }else if(current_edit_booking_object.booking?.booking_status==="after-stay"){
+                guest_status_value='not_staying';
+                chng_booking_status_select_markup=`
+                    <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
+                        <option value="not_staying">checked out</option>
+                        <option value="staying">staying</option>
+                        <option value="booked">booked</option>
+                        <option value="unbooked">unbooked</option>
+                    </select>
+                `;
+            }
+
             document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML += `
-                <div id="edit_booking_room_guest_form_${i}_${g}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
-                    <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
-                        Adult ${++adult_number}</p>
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
-                            <input id="edit_booking_room_guest_first_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="${room.guests[g].first_name}" />
+                <div id="edit_booking_room_guest_form_${i}_${g}" style="padding-bottom: 15px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
+                    <!--p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                        Adult {++adult_number}</p-->
+                    <div style="background-color: yellow; padding: 5px 10px; text-align: center;">
+                        <p style="font-size: 14px;">
+                            <i onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="cursor: pointer; color: brown; margin-right: 15px;" class="fa fa-trash" aria-hidden="true"></i>
+                            Adult ${++adult_number}, ${current_edit_booking_object.rooms_and_guests.room_guests[i].number}
+                        </p>
+                    </div>
+                    <div style="padding: 5px;">
+                        <div style="margin-top: 7px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">First Name</p>
+                                <input id="edit_booking_room_guest_first_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="${room.guests[g].first_name}" />
+                            </div>
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">Last Name</p>
+                                <input id="edit_booking_room_guest_last_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="${room.guests[g].last_name}" />
+                            </div>
                         </div>
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
-                            <input id="edit_booking_room_guest_last_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="${room.guests[g].last_name}" />
+                        <div style="margin-top: 7px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">Date Of Birth</p>
+                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${room.guests[g].DOB}" value="" />
+                            </div>
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">Gender</p>
+                                <select id="edit_booking_room_guest_gender_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
+                                    <option value="${room.guests[g].gender}">${room.guests[g].gender}</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin-top: 10px;">
+                            <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                                SELECT STATUS</p>
+                            <p style="color: white; font-size: 13px; margin-bottom: 5px;">
+                                <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
+                                Please note that it is important to select appropriate status for this guest</p>
+                            <p style="margin: 5px 0;">
+                                ${chng_booking_status_select_markup}
+                            </p>
+                            <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                                save
+                            </div-->
                         </div>
                     </div>
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${room.guests[g].DOB}" value="" />
-                        </div>
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
-                            <select id="edit_booking_room_guest_gender_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
-                                <option value="${room.guests[g].gender}">${room.guests[g].gender}</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
-                    <p style="font-size: 14px; color: white; text-align: center;">
-                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
-                        remove adult ${adult_number}
-                    </p>
-                </div>
+                    <!--div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                        <p style="font-size: 14px; color: white; text-align: center;">
+                            <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                            remove adult ${adult_number}
+                        </p>
+                    </div-->
                 </div>
             `;
 
@@ -1095,39 +1147,60 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
             }
 
             document.getElementById("edit_booking_room_guests_forms_list_"+i).innerHTML += `
-                <div id="edit_booking_room_guest_form_${i}_${g}" style="padding: 10px 5px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
-                    <p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
-                        Child ${++child_number}</p>
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">First Name</p>
-                            <input id="edit_booking_room_guest_first_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="${room.guests[g].first_name}" />
+                <div id="edit_booking_room_guest_form_${i}_${g}" style="padding-bottom: 15px; background-color: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.3);">
+                    <!--p style="color:rgba(255, 208, 187, 0.815); font-size: 13px; font-weight: bolder;">
+                        Child {++child_number}</p-->
+                    <div style="background-color: yellow; padding: 5px 10px; text-align: center;">
+                        <p style="font-size: 14px;">
+                            <i onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="cursor: pointer; color: brown; margin-right: 15px;" class="fa fa-trash" aria-hidden="true"></i>
+                            Child ${++child_number}, ${current_edit_booking_object.rooms_and_guests.room_guests[i].number}
+                        </p>
+                    </div>
+                    <div style="padding: 5px;">
+                        <div style="margin-top: 7px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">First Name</p>
+                                <input id="edit_booking_room_guest_first_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter first name here" value="${room.guests[g].first_name}" />
+                            </div>
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">Last Name</p>
+                                <input id="edit_booking_room_guest_last_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="${room.guests[g].last_name}" />
+                            </div>
                         </div>
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Last Name</p>
-                            <input id="edit_booking_room_guest_last_name_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="enter last name here" value="${room.guests[g].last_name}" />
+                        <div style="margin-top: 7px; display: flex; flex-direction: row !important; justify-content: space-between;">
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">Date Of Birth</p>
+                                <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${room.guests[g].DOB}" value="" />
+                            </div>
+                            <div style="width: calc(50% - 5px);">
+                                <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 5px;">Gender</p>
+                                <select id="edit_booking_room_guest_gender_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
+                                    <option value="${room.guests[g].gender}">${room.guests[g].gender}</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="padding: 10px; background-color: rgba(255,0,0,0.3); border: 1px solid red; margin-top: 10px;">
+                            <p style="color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px;">
+                                SELECT STATUS</p>
+                            <p style="color: white; font-size: 13px; margin-bottom: 5px;">
+                                <i class="fa fa-info-circle" style="margin-right: 5px; color: lightgreen;"></i>
+                                Please note that it is important to select appropriate status for this guest</p>
+                            <p style="margin: 5px 0;">
+                                ${chng_booking_status_select_markup}
+                            </p>
+                            <!--div onclick="guest_status_reset_onlick('63b6399281e8f8723080de85', '607304a562a84645bccdf40b','all_guests_search_status_change_select_0', '6063dd3fb6dfe50bc800dd5f', 'all_guests_search');" style="font-size: 13px; padding: 10px; text-align: center; border-radius: 4px; margin-top: 10px; border: 1px solid lightgreen; color: white; background-color: rgba(0,255,0,0.2); cursor: pointer;">
+                                save
+                            </div-->
                         </div>
                     </div>
-                    <div style="margin-top: 20px; display: flex; flex-direction: row !important; justify-content: space-between;">
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Date Of Birth</p>
-                            <input id="edit_booking_room_guest_DOB_input_${i}_${g}" readonly="true" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: calc(100% - 20px);" type="text" placeholder="${room.guests[g].DOB}" value="" />
-                        </div>
-                        <div style="width: calc(50% - 5px);">
-                            <p style="color:rgb(30, 184, 255); font-size: 14px; margin-bottom: 10px;">Gender</p>
-                            <select id="edit_booking_room_guest_gender_input_${i}_${g}" style="border: none; padding: 10px; border-radius: 0; border-radius: 4px; width: 100%;" >
-                                <option value="${room.guests[g].gender}">${room.guests[g].gender}</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
-                    <p style="font-size: 14px; color: white; text-align: center;">
-                        <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
-                        remove child ${child_number}
-                    </p>
-                </div>
+                    <!--div onclick="remove_existing_guest_from_edit_booking(${i}, ${g});" style="margin-top: 20px; padding: 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px;">
+                        <p style="font-size: 14px; color: white; text-align: center;">
+                            <i style="color: orangered; margin-right: 5px;" class="fa fa-trash" aria-hidden="true"></i>
+                            remove child ${child_number}
+                        </p>
+                    </div-->
                 </div>
             `;
 
