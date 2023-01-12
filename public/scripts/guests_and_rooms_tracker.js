@@ -1039,6 +1039,15 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
     let child_number = 0;
     let dt_g = 0;
     for(let g=0; g<room.guests.length; g++){
+
+        //Assigning new room to this guest
+        current_edit_booking_object.rooms_and_guests
+        .room_guests[i].guests[g].assigned_room.room_id = new_room._id;
+
+        current_edit_booking_object.rooms_and_guests
+        .room_guests[i].guests[g].assigned_room.room_number = new_room.room_number;
+
+        //To do: Update invoice to have the same room as new room
         
         if(room.guests[g].guest_type === "adult"){
 
@@ -1046,7 +1055,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                 continue;
             }
 
-            let guest_status_value='booked';
+            current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].status='booked';
             let chng_booking_status_select_markup=`
                 <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
                     <option value="booked">booked</option>    
@@ -1056,7 +1065,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                 </select>
             `;
             if(current_edit_booking_object.booking?.booking_status==="staying"){//staying, before-stay, after-stay, no-show, cancelled
-                guest_status_value='staying';
+                current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].status='staying';
                 chng_booking_status_select_markup=`
                     <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
                         <option value="staying">staying</option>
@@ -1066,7 +1075,7 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
                     </select>
                 `;
             }else if(current_edit_booking_object.booking?.booking_status==="after-stay"){
-                guest_status_value='not_staying';
+                current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g].status='not_staying';
                 chng_booking_status_select_markup=`
                     <select id="edit_booking_set_guest_status_select_${i}_${g}" style="padding: 10px; width: 100%; font-size: 14px;">
                         <option value="not_staying">checked out</option>
