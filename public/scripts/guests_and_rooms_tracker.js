@@ -1047,8 +1047,22 @@ async function edit_booking_onchange_rooms_select_render_room_markup(skip_rooms,
         current_edit_booking_object.rooms_and_guests
         .room_guests[i].guests[g].assigned_room.room_number = new_room.room_number;
 
-        //To do: Update invoice to have the same room as new room
-        
+        // Update invoice to have the same room as new room
+        // Getting tatal guest for previous rooms
+        let total_g=0;
+        for(let hh=0;hh<i;hh++){
+            total_g=(total_g+current_edit_booking_object.rooms_and_guests.room_guests[hh].guests.length);
+        }
+        running_invoice = all_running_invoices[0];
+        running_invoice.invoice_items[(total_g+g)].guest_id=current_edit_booking_object.rooms_and_guests.room_guests[i].guests[g]._id || 'guest_id_before_creation';
+        running_invoice.invoice_items[(total_g+g)].booking_id=current_edit_booking_object.booking._id;
+        running_invoice.invoice_items[(total_g+g)].guest_items[0]={
+            name: `Room ${new_room.room_number}`, 
+            price: new_room.price,
+            quantity: 1, 
+            total: new_room.price
+        };
+
         if(room.guests[g].guest_type === "adult"){
 
             if(current_edit_booking_object.rooms_and_guests.room_guests[i].total_adults <= adult_number){
