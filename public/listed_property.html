@@ -45,9 +45,33 @@
                         <p><span>We</span>l<span>l</span>g<span>o</span><sup style="font-size: 12px;">®</sup></p>
                         </div>
                     </div>
-                    <div onclick="toggle_show_add_new_photo_div();" style="cursor: pointer; padding: 5px 10px; margin: 5px; margin-left: 20px; background:rgb(0, 77, 108); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-size: 13px;">
-                        <i class="fa fa-plus" style="margin-right: 5px; color:rgb(6, 205, 255)" aria-hidden="true"></i>
-                        Add New
+                    <div style="display: flex; margin-left: 20px;">
+                        <div class="flex_row_default_flex_column_mobile" style="margin: 5px;">
+                            <div class="flex_child_of_two" style="width: calc(50% - 2px); display: flex;">
+                                <select id="booked_rooms_filter_by_properties_input" style="padding: 5px; width: 100%; border: none; background-color: rgb(69, 130, 133); border-radius: 4px; font-size: 13px; color: white;">
+                                    <option value="all">
+                                        All Properties
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="flex_child_of_two flex_non_first_child" style="display: flex; justify-content: space-between; width: calc(50% - 2px);">
+                                <select id="booked_rooms_filter_by_room_input" style="width: 60%; padding: 5px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
+                                    <option value="all%r%s%p%all">
+                                        All Rooms
+                                    </option>
+                                </select>
+                                <select id="all_booked_rooms_sort_select" onchange="get_and_render_all_bookings();" style="width: calc(40% - 5px); padding: 5px; border: none; background-color: rgb(177, 208, 255); border-radius: 4px; font-size: 13px;">
+                                    <option value="unsort">Sort</option>
+                                    <option value="ascending-by-checkin">Ascending-Date</option>
+                                    <option value="descending-by-checkin">Descending-Date</option>
+                                </select>
+                                <!--button style="width: calc(30% - 5px); padding: 10px; border:none; background-color:rgb(8, 40, 66); color: white; border-radius: 4px; font-size: 13px;">Search</button-->
+                            </div>
+                        </div>
+                        <div onclick="toggle_show_add_new_photo_div();" style="cursor: pointer; padding: 5px 10px; margin: 5px; background:rgb(0, 77, 108); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-size: 13px;">
+                            <i class="fa fa-plus" style="margin-right: 5px; color:rgb(6, 205, 255)" aria-hidden="true"></i>
+                            Add New
+                        </div>
                     </div>
                 </div>
             </div>
